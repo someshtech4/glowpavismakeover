@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Glow Pavi's Makeover</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --gold:#C9A84C;--gold-light:#E8C97A;--gold-dark:#9A7A32;
+    --blush:#F2D0C8;--blush-deep:#E8A89A;--blush-soft:#FAF0EC;
+    --rose-gold:#C5846A;--rose-light:#EBC4B8;
+    --white:#FFFFFF;--off-white:#FDF8F5;--cream:#FAF3EE;
+    --text-dark:#2C1810;--text-mid:#6B4C3B;--text-light:#A07060;
+    --copper:#B5622A;--copper-light:#D4895A;
+  }
+  html{scroll-behavior:smooth;overflow-x:hidden}
+  body{font-family:'Inter',sans-serif;background:var(--off-white);color:var(--text-dark);overflow-x:hidden}
+
+  /* NAV */
+  nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:1rem 4rem;display:flex;justify-content:space-between;align-items:center;transition:all 0.4s ease;background:transparent}
+  nav.scrolled{background:rgba(253,248,245,0.96);backdrop-filter:blur(20px);border-bottom:1px solid rgba(197,132,106,0.15);padding:0.7rem 4rem}
+  .nav-logo img{height:48px;object-fit:contain;filter:drop-shadow(0 2px 8px rgba(197,132,106,0.3))}
+  .nav-links{display:flex;gap:2.5rem;list-style:none}
+  .nav-links a{text-decoration:none;color:var(--white);font-size:0.82rem;font-weight:400;letter-spacing:0.12em;text-transform:uppercase;transition:color 0.3s}
+  nav.scrolled .nav-links a{color:var(--text-mid)}
+  .nav-links a:hover{color:var(--gold)}
+  .nav-cta{background:linear-gradient(135deg,var(--gold),var(--copper));color:var(--white);padding:0.55rem 1.5rem;border-radius:30px;text-decoration:none;font-size:0.78rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;transition:all 0.3s;border:none;cursor:pointer;box-shadow:0 4px 20px rgba(197,132,106,0.4)}
+  .nav-cta:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(197,132,106,0.5)}
+
+  /* HAMBURGER — hidden on desktop */
+  .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;z-index:1100;background:none;border:none}
+  .hamburger span{display:block;width:24px;height:2px;background:var(--white);border-radius:2px;transition:all 0.35s ease}
+  nav.scrolled .hamburger span{background:var(--text-dark)}
+  .hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+  .hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+  /* MOBILE DRAWER — always off-screen until .open is added */
+  .mobile-nav{
+    position:fixed;
+    top:0;
+    right:-100%;          /* hidden off right edge by default */
+    width:min(320px,85vw);
+    height:100vh;
+    background:linear-gradient(160deg,#1a0e08 0%,#0d0806 60%,#180f08 100%);
+    z-index:1050;
+    transition:right 0.45s cubic-bezier(0.77,0,0.175,1);
+    padding:5rem 2.5rem 3rem;
+    display:flex;
+    flex-direction:column;
+    gap:0;
+    border-left:1px solid rgba(201,168,76,0.12);
+    /* Ensure it never bleeds into page layout */
+    visibility:hidden;
+    pointer-events:none;
+  }
+  .mobile-nav.open{
+    right:0;
+    visibility:visible;
+    pointer-events:all;
+  }
+  .mobile-nav a{display:block;color:rgba(255,255,255,0.75);text-decoration:none;font-size:1.05rem;font-weight:300;letter-spacing:0.08em;padding:0.9rem 0;border-bottom:1px solid rgba(201,168,76,0.08);transition:color 0.3s,padding-left 0.3s}
+  .mobile-nav a:hover{color:var(--gold-light);padding-left:0.5rem}
+  .mobile-nav .mobile-section-label{font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(201,168,76,0.5);margin-top:1.5rem;margin-bottom:0.4rem;display:block}
+  .mobile-nav .mobile-cta{margin-top:2rem;background:linear-gradient(135deg,var(--gold),var(--copper));color:var(--white);text-align:center;padding:0.9rem;border-radius:30px;font-size:0.82rem;letter-spacing:0.1em;text-transform:uppercase;font-weight:500;border-bottom:none}
+  .mobile-nav .mobile-cta:hover{padding-left:0;opacity:0.9}
+  .mobile-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:1040;opacity:0;pointer-events:none;transition:opacity 0.4s}
+  .mobile-overlay.show{opacity:1;pointer-events:all}
+
+  /* HERO */
+  #hero{height:100vh;min-height:650px;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#0d0806}
+  .hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,rgba(197,132,106,0.18) 0%,transparent 60%),radial-gradient(ellipse at 80% 20%,rgba(201,168,76,0.12) 0%,transparent 50%),linear-gradient(135deg,#1a0e08 0%,#0d0806 40%,#180f08 100%);z-index:0}
+  .hero-particles{position:absolute;inset:0;z-index:1;pointer-events:none}
+  .particle{position:absolute;width:2px;height:2px;background:var(--gold-light);border-radius:50%;animation:float-particle linear infinite;opacity:0}
+  .hero-content{position:relative;z-index:3;text-align:center;max-width:900px;padding:2rem}
+  .hero-eyebrow{display:inline-flex;align-items:center;gap:1rem;margin-bottom:1.5rem;opacity:0;animation:fadeUp 1s 0.5s forwards}
+  .hero-line{width:40px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+  .hero-eyebrow span{font-family:'Inter',sans-serif;font-size:0.72rem;font-weight:400;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold-light)}
+  .hero-title{font-family:'Playfair Display',serif;font-size:clamp(2.8rem,7vw,5.5rem);font-weight:400;line-height:1.1;color:var(--white);margin-bottom:1.2rem;opacity:0;animation:fadeUp 1s 0.8s forwards}
+  .hero-title em{font-style:italic;background:linear-gradient(135deg,var(--gold-light),var(--copper-light),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:block}
+  .hero-subtitle{font-family:'Cormorant Garamond',serif;font-size:clamp(1rem,2.5vw,1.4rem);font-weight:300;color:rgba(255,255,255,0.65);line-height:1.8;max-width:600px;margin:0 auto 2.5rem;opacity:0;animation:fadeUp 1s 1.1s forwards;font-style:italic}
+  .hero-actions{display:flex;gap:1.2rem;justify-content:center;flex-wrap:wrap;opacity:0;animation:fadeUp 1s 1.4s forwards}
+  .btn-primary{background:linear-gradient(135deg,var(--gold),var(--copper));color:var(--white);padding:0.9rem 2.2rem;border-radius:50px;text-decoration:none;font-size:0.82rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;transition:all 0.4s;box-shadow:0 4px 30px rgba(201,168,76,0.4);border:none;cursor:pointer;display:inline-flex;align-items:center;gap:0.6rem}
+  .btn-primary:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(201,168,76,0.5)}
+  .btn-secondary{background:transparent;color:var(--white);padding:0.9rem 2.2rem;border-radius:50px;text-decoration:none;font-size:0.82rem;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;transition:all 0.4s;border:1px solid rgba(201,168,76,0.5);display:inline-flex;align-items:center;gap:0.6rem}
+  .btn-secondary:hover{background:rgba(201,168,76,0.1);border-color:var(--gold);transform:translateY(-2px)}
+  .hero-scroll{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:0.5rem;opacity:0;animation:fadeIn 1s 2s forwards}
+  .scroll-text{font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.4)}
+  .scroll-dot{width:1px;height:40px;background:linear-gradient(180deg,var(--gold),transparent);animation:scroll-pulse 2s ease-in-out infinite}
+  .hero-ornament{position:absolute;width:600px;height:600px;border-radius:50%;border:1px solid rgba(201,168,76,0.08);top:50%;left:50%;transform:translate(-50%,-50%);z-index:1;animation:slow-rotate 30s linear infinite}
+  .hero-ornament::before{content:'';position:absolute;inset:40px;border-radius:50%;border:1px solid rgba(201,168,76,0.06)}
+
+  /* STATS BAR */
+  .stats-bar{background:linear-gradient(135deg,#1a0e08,#2d1710);padding:2rem 4rem;display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;border-top:1px solid rgba(201,168,76,0.1);border-bottom:1px solid rgba(201,168,76,0.1)}
+  .stat-item{text-align:center}
+  .stat-num{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:400;background:linear-gradient(135deg,var(--gold-light),var(--copper-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1}
+  .stat-label{font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-top:0.3rem}
+
+  /* SECTION COMMON */
+  section{padding:5rem 0}
+  .section-eyebrow{display:inline-flex;align-items:center;gap:0.8rem;margin-bottom:1rem}
+  .section-eyebrow span{font-size:0.7rem;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold-dark)}
+  .eyebrow-line{width:30px;height:1px;background:var(--gold)}
+  .section-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3.4rem);font-weight:400;line-height:1.15;color:var(--text-dark)}
+  .section-title em{font-style:italic;color:var(--rose-gold)}
+  .container{max-width:1200px;margin:0 auto;padding:0 4rem}
+
+  /* PROCESS SECTION */
+  #story{background:var(--cream);padding:5rem 0}
+  .process-header{text-align:center;margin-bottom:3.5rem}
+  .process-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;max-width:1100px;margin:0 auto;padding:0 4rem;position:relative}
+  .process-grid::before{content:'';position:absolute;top:90px;left:calc(16.66% + 2rem);right:calc(16.66% + 2rem);height:1px;background:linear-gradient(90deg,transparent,var(--gold),var(--gold),transparent);opacity:0.4;pointer-events:none}
+  .process-card{padding:2rem 2rem 2rem;text-align:center;position:relative;transition:transform 0.4s ease}
+  .process-card:hover{transform:translateY(-6px)}
+  .process-step-wrap{position:relative;display:inline-flex;align-items:center;justify-content:center;margin-bottom:1.5rem}
+  .process-circle{width:80px;height:80px;border-radius:50%;border:1.5px solid rgba(201,168,76,0.35);display:flex;align-items:center;justify-content:center;position:relative;background:var(--cream);transition:all 0.4s}
+  .process-card:hover .process-circle{border-color:var(--gold);background:linear-gradient(135deg,rgba(201,168,76,0.08),rgba(197,132,106,0.05));box-shadow:0 0 30px rgba(201,168,76,0.15)}
+  .process-circle-inner{width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--copper));display:flex;align-items:center;justify-content:center;font-size:1.5rem;box-shadow:0 4px 20px rgba(197,132,106,0.35)}
+  .process-num-badge{position:absolute;top:-6px;right:-6px;width:22px;height:22px;border-radius:50%;background:var(--cream);border:1.5px solid rgba(201,168,76,0.4);display:flex;align-items:center;justify-content:center;font-size:0.6rem;font-weight:600;color:var(--gold-dark);letter-spacing:0;font-family:'Playfair Display',serif}
+  .process-tag{font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold-dark);margin-bottom:0.5rem;display:block;font-weight:500}
+  .process-title{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:400;color:var(--text-dark);margin-bottom:0.8rem;line-height:1.3}
+  .process-title em{font-style:italic;color:var(--rose-gold)}
+  .process-body{font-size:0.88rem;line-height:1.8;color:var(--text-mid);font-weight:300}
+  .process-divider{width:30px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:1rem auto 0}
+
+  /* SERVICES */
+  #services{background:var(--off-white);padding:5rem 0}
+  .services-intro{text-align:center;margin-bottom:3rem}
+  .services-subtitle{font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--text-light);font-style:italic;margin-top:0.8rem;line-height:1.7}
+  .bento-grid{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:auto auto;gap:1.2rem}
+  .bento-card{border-radius:20px;overflow:hidden;position:relative;cursor:pointer;transition:transform 0.4s ease,box-shadow 0.4s ease}
+  .bento-card:hover{transform:translateY(-8px);box-shadow:0 30px 60px rgba(0,0,0,0.12)}
+  .bento-card.large{grid-column:span 2}
+  .bento-inner{padding:2rem;height:100%;min-height:260px;display:flex;flex-direction:column;justify-content:flex-end;position:relative;overflow:hidden}
+  .bento-bg{position:absolute;inset:0;z-index:0;transition:transform 0.6s ease}
+  .bento-card:hover .bento-bg{transform:scale(1.05)}
+  .bento-bg.bridal{background:linear-gradient(135deg,#1a0e08 0%,#3d1f12 40%,#2a1508 100%)}
+  .bento-bg.party{background:linear-gradient(135deg,#0d0518 0%,#1e0a30 50%,#120520 100%)}
+  .bento-bg.skin{background:linear-gradient(135deg,#05121a 0%,#0a2030 50%,#051520 100%)}
+  .bento-bg.hair{background:linear-gradient(135deg,#140810 0%,#2a1020 50%,#180810 100%)}
+  .bento-bg.bridal::after,.bento-bg.party::after,.bento-bg.skin::after,.bento-bg.hair::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 30%,rgba(0,0,0,0.6) 100%)}
+  .bento-icon{position:absolute;top:1.5rem;left:1.8rem;font-size:2.2rem;z-index:1;opacity:0.7}
+  .bento-content{position:relative;z-index:1}
+  .bento-tag{font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold-light);margin-bottom:0.4rem;display:block}
+  .bento-title{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:400;color:var(--white);margin-bottom:0.4rem;line-height:1.2}
+  .bento-desc{font-size:0.82rem;color:rgba(255,255,255,0.6);line-height:1.6;font-weight:300;max-width:300px}
+  .bento-hover-reveal{position:absolute;inset:0;background:rgba(201,168,76,0.08);backdrop-filter:blur(0);opacity:0;transition:opacity 0.4s;z-index:1;border:1px solid rgba(201,168,76,0.2);border-radius:20px}
+  .bento-card:hover .bento-hover-reveal{opacity:1}
+  .bento-arrow{position:absolute;bottom:1.5rem;right:1.5rem;width:36px;height:36px;border-radius:50%;border:1px solid rgba(201,168,76,0.4);display:flex;align-items:center;justify-content:center;color:var(--gold-light);font-size:1rem;z-index:2;transition:all 0.3s;opacity:0}
+  .bento-card:hover .bento-arrow{opacity:1;transform:scale(1.1)}
+
+  /* TRANSFORMATION */
+  #transformation{background:#0d0806;padding:5rem 0;overflow:hidden}
+  .transform-header{text-align:center;margin-bottom:3rem}
+  .transform-header .section-title{color:var(--white)}
+  .transform-header .section-title em{color:var(--gold-light)}
+  .transform-subtitle{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:rgba(255,255,255,0.5);font-style:italic;margin-top:0.6rem}
+  .carousel-wrap{position:relative;overflow:hidden}
+  .carousel-track{display:flex;gap:1.5rem;padding:1rem 4rem;transition:transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94)}
+  .carousel-card{min-width:320px;border-radius:20px;overflow:hidden;position:relative;flex-shrink:0;background:linear-gradient(135deg,#1a0e08,#2d1710)}
+  .carousel-card-inner{padding:2.5rem;min-height:400px;display:flex;flex-direction:column;justify-content:flex-end;position:relative}
+  .carousel-num{position:absolute;top:1.5rem;right:1.5rem;font-family:'Playfair Display',serif;font-size:3rem;font-weight:700;color:rgba(201,168,76,0.12);line-height:1}
+  .before-after-badge{position:absolute;top:1.5rem;left:1.5rem;background:linear-gradient(135deg,var(--gold),var(--copper));color:var(--white);font-size:0.6rem;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;padding:0.35rem 0.9rem;border-radius:20px}
+  .bride-icon{font-size:4.5rem;text-align:center;display:block;margin-bottom:0.8rem;opacity:0.4}
+  .carousel-name{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:400;color:var(--white);margin-bottom:0.3rem}
+  .carousel-occasion{font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold-light);margin-bottom:0.7rem;display:block}
+  .carousel-quote{font-family:'Cormorant Garamond',serif;font-size:0.95rem;color:rgba(255,255,255,0.55);font-style:italic;line-height:1.7}
+  .carousel-controls{display:flex;justify-content:center;align-items:center;gap:1.5rem;margin-top:2.5rem;padding:0 4rem}
+  .carousel-btn{width:44px;height:44px;border-radius:50%;border:1px solid rgba(201,168,76,0.3);background:transparent;color:var(--gold-light);font-size:1rem;cursor:pointer;transition:all 0.3s;display:flex;align-items:center;justify-content:center}
+  .carousel-btn:hover{background:rgba(201,168,76,0.15);border-color:var(--gold);transform:scale(1.05)}
+  .carousel-dots{display:flex;gap:0.5rem}
+  .carousel-dot{width:6px;height:6px;border-radius:50%;background:rgba(201,168,76,0.2);transition:all 0.3s;cursor:pointer}
+  .carousel-dot.active{background:var(--gold);width:22px;border-radius:3px}
+
+  /* TESTIMONIALS */
+  #trust{background:var(--cream);padding:5rem 0;overflow:hidden}
+  .trust-header{text-align:center;margin-bottom:3rem}
+  .testimonials-slider-outer{position:relative;overflow:hidden;padding:1rem 0 2rem}
+  .testimonials-track-wrap{overflow:hidden;cursor:grab;user-select:none}
+  .testimonials-track-wrap:active{cursor:grabbing}
+  .testimonials-track{display:flex;gap:1.5rem;transition:transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94);will-change:transform}
+  .testimonials-track.no-transition{transition:none}
+  .review-card{flex-shrink:0;width:360px;background:var(--white);border-radius:20px;padding:2rem;border:1px solid rgba(197,132,106,0.1);position:relative;overflow:hidden}
+  .review-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--blush-deep),var(--gold),var(--blush-deep))}
+  .review-stars{display:flex;gap:0.3rem;margin-bottom:0.8rem}
+  .star{color:var(--gold);font-size:0.9rem}
+  .review-text{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-style:italic;color:var(--text-mid);line-height:1.8;margin-bottom:1.2rem}
+  .review-author{display:flex;align-items:center;gap:0.8rem}
+  .author-avatar{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:500;color:var(--white);flex-shrink:0}
+  .author-avatar.rose{background:linear-gradient(135deg,var(--rose-gold),var(--copper))}
+  .author-avatar.gold{background:linear-gradient(135deg,var(--gold-dark),var(--gold))}
+  .author-avatar.blush{background:linear-gradient(135deg,var(--blush-deep),var(--rose-gold))}
+  .author-name{font-size:0.85rem;font-weight:500;color:var(--text-dark)}
+  .author-type{font-size:0.7rem;color:var(--text-light);margin-top:0.1rem}
+  .review-quote-mark{position:absolute;top:0.8rem;right:1.2rem;font-family:'Playfair Display',serif;font-size:4rem;color:rgba(201,168,76,0.07);line-height:1;font-weight:700}
+  .testimonials-fade-left{position:absolute;top:0;left:0;bottom:0;width:80px;background:linear-gradient(90deg,var(--cream),transparent);z-index:2;pointer-events:none}
+  .testimonials-fade-right{position:absolute;top:0;right:0;bottom:0;width:80px;background:linear-gradient(270deg,var(--cream),transparent);z-index:2;pointer-events:none}
+
+  /* JOURNEY */
+  #timeline{background:var(--off-white);padding:5rem 0;overflow:hidden}
+  .timeline-header{text-align:center;margin-bottom:4rem}
+  .journey-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:0;max-width:1100px;margin:0 auto;padding:0 4rem;position:relative;align-items:start}
+  .journey-connector{position:absolute;top:52px;left:calc(10% + 1.5rem);right:calc(10% + 1.5rem);height:2px;background:linear-gradient(90deg,transparent,var(--gold) 20%,var(--gold) 80%,transparent);opacity:0.25;pointer-events:none}
+  .journey-card{text-align:center;padding:0 0.8rem;position:relative;cursor:default}
+  .journey-year-wrap{display:flex;justify-content:center;margin-bottom:1.2rem}
+  .journey-circle{width:54px;height:54px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--copper));display:flex;align-items:center;justify-content:center;box-shadow:0 6px 24px rgba(197,132,106,0.35);position:relative;transition:transform 0.4s ease,box-shadow 0.4s ease;margin:0 auto}
+  .journey-card:hover .journey-circle{transform:scale(1.1);box-shadow:0 12px 36px rgba(197,132,106,0.5)}
+  .journey-circle-icon{font-size:1.3rem}
+  .journey-year{font-size:0.65rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold-dark);font-weight:600;margin-bottom:0.4rem;display:block}
+  .journey-title{font-family:'Playfair Display',serif;font-size:0.92rem;font-weight:600;color:var(--text-dark);margin-bottom:0.5rem;line-height:1.35}
+  .journey-desc{font-size:0.75rem;line-height:1.7;color:var(--text-light);font-weight:300}
+  .journey-dot-line{width:1px;height:20px;background:linear-gradient(180deg,var(--gold),transparent);margin:0.6rem auto 0;opacity:0.4}
+
+  /* FINAL CTA */
+  #cta{position:relative;overflow:hidden;padding:7rem 0;background:#0d0806;text-align:center}
+  .cta-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 30%,rgba(201,168,76,0.15) 0%,transparent 60%),radial-gradient(ellipse at 20% 80%,rgba(197,132,106,0.1) 0%,transparent 50%),radial-gradient(ellipse at 80% 70%,rgba(181,98,42,0.08) 0%,transparent 50%)}
+  .cta-ornament{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:600px;border:1px solid rgba(201,168,76,0.06);border-radius:50%;pointer-events:none}
+  .cta-ornament::before{content:'';position:absolute;inset:60px;border:1px solid rgba(201,168,76,0.04);border-radius:50%}
+  .cta-content{position:relative;z-index:2}
+  .cta-eyebrow{font-size:0.68rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem;display:block}
+  .cta-title{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,6vw,4.5rem);font-weight:400;color:var(--white);line-height:1.15;margin-bottom:1.2rem}
+  .cta-title em{font-style:italic;background:linear-gradient(135deg,var(--gold-light),var(--copper-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+  .cta-subtitle{font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:rgba(255,255,255,0.5);font-style:italic;margin-bottom:2.5rem;line-height:1.7}
+  .cta-actions{display:flex;gap:1.2rem;justify-content:center;flex-wrap:wrap}
+  .btn-gold{background:linear-gradient(135deg,var(--gold),var(--gold-dark));color:var(--white);padding:1rem 2.5rem;border-radius:50px;text-decoration:none;font-size:0.82rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;transition:all 0.4s;box-shadow:0 4px 30px rgba(201,168,76,0.35);display:inline-flex;align-items:center;gap:0.7rem}
+  .btn-gold:hover{transform:translateY(-3px);box-shadow:0 15px 45px rgba(201,168,76,0.45)}
+  .btn-whatsapp{background:linear-gradient(135deg,#25D366,#128C7E);color:var(--white);padding:1rem 2.5rem;border-radius:50px;text-decoration:none;font-size:0.82rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;transition:all 0.4s;box-shadow:0 4px 30px rgba(37,211,102,0.25);display:inline-flex;align-items:center;gap:0.7rem}
+  .btn-whatsapp:hover{transform:translateY(-3px);box-shadow:0 15px 40px rgba(37,211,102,0.35)}
+
+  /* FOOTER */
+  footer{background:#080503;padding:3.5rem 4rem 2rem;border-top:1px solid rgba(201,168,76,0.1)}
+  .footer-main{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:4rem;margin-bottom:2.5rem}
+  .footer-brand{}
+  .footer-logo img{height:42px;object-fit:contain;opacity:0.85;filter:brightness(0.9);margin-bottom:0.8rem;display:block}
+  .footer-slogan{font-family:'Cormorant Garamond',serif;font-style:italic;color:rgba(255,255,255,0.4);font-size:0.95rem;line-height:1.6;max-width:220px}
+  .footer-social{display:flex;gap:0.7rem;margin-top:1.2rem}
+  .social-btn{width:34px;height:34px;border-radius:50%;border:1px solid rgba(201,168,76,0.2);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.35);font-size:0.8rem;transition:all 0.3s;text-decoration:none}
+  .social-btn:hover{border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,0.08)}
+  .footer-col-title{font-size:0.65rem;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:1.2rem;display:block}
+  .footer-col-links{display:flex;flex-direction:column;gap:0.5rem}
+  .footer-col-links a{color:rgba(255,255,255,0.38);text-decoration:none;font-size:0.82rem;letter-spacing:0.04em;transition:all 0.3s;line-height:1.5}
+  .footer-col-links a:hover{color:rgba(255,255,255,0.75);padding-left:4px}
+  .footer-bottom{border-top:1px solid rgba(201,168,76,0.08);padding-top:1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.8rem}
+  .footer-copy{color:rgba(255,255,255,0.18);font-size:0.72rem;letter-spacing:0.05em}
+  .footer-bottom-links{display:flex;gap:1.5rem}
+  .footer-bottom-links a{color:rgba(255,255,255,0.2);font-size:0.7rem;text-decoration:none;transition:color 0.3s}
+  .footer-bottom-links a:hover{color:rgba(255,255,255,0.5)}
+  .footer-location{color:rgba(255,255,255,0.2);font-size:0.7rem;display:flex;align-items:center;gap:0.4rem}
+
+  /* SCROLL REVEAL */
+  .reveal{opacity:0;transform:translateY(30px);transition:opacity 0.7s ease,transform 0.7s ease}
+  .reveal.visible{opacity:1;transform:translateY(0)}
+
+  @keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+  @keyframes float-particle{0%{opacity:0;transform:translateY(100vh) scale(0)}10%{opacity:0.8}90%{opacity:0.4}100%{opacity:0;transform:translateY(-100px) scale(1.5)}}
+  @keyframes slow-rotate{from{transform:translate(-50%,-50%) rotate(0deg)}to{transform:translate(-50%,-50%) rotate(360deg)}}
+  @keyframes scroll-pulse{0%,100%{opacity:0.3}50%{opacity:1}}
+
+  /* ── RESPONSIVE ── */
+  @media(max-width:900px){
+    nav{padding:0.9rem 1.2rem}
+    nav.scrolled{padding:0.7rem 1.2rem}
+    /* Hide desktop nav links on mobile */
+    .nav-links{display:none}
+    /* Show hamburger on mobile */
+    .hamburger{display:flex}
+    .container{padding:0 1.2rem}
+    .process-grid{grid-template-columns:1fr;padding:0 1.2rem;gap:1rem}
+    .process-grid::before{display:none}
+    .bento-grid{grid-template-columns:1fr;gap:0.8rem}
+    .bento-card.large{grid-column:span 1}
+    .stats-bar{grid-template-columns:repeat(2,1fr);padding:1.5rem 1.2rem}
+    .journey-grid{grid-template-columns:1fr 1fr;gap:1.5rem 1rem;padding:0 1.2rem}
+    .journey-connector{display:none}
+    footer{padding:2.5rem 1.2rem 1.5rem}
+    .footer-main{grid-template-columns:1fr;gap:2rem}
+    .footer-bottom{flex-direction:column;align-items:flex-start}
+    .carousel-track{padding:1rem 1.2rem}
+    .carousel-controls{padding:0 1.2rem}
+    #cta{padding:5rem 0}
+    section{padding:4rem 0}
+    .trust-header{padding:0 1.2rem}
+  }
+  @media(max-width:600px){
+    .journey-grid{grid-template-columns:1fr}
+    .hero-title{font-size:2.5rem}
+    .footer-bottom-links{flex-wrap:wrap;gap:0.8rem}
+  }
+  /* On large screens: hamburger and mobile-nav are completely invisible */
+  @media(min-width:901px){
+    .hamburger{display:none !important}
+    .mobile-nav{display:none !important}
+    .mobile-overlay{display:none !important}
+  }
+</style>
+</head>
+<body>
+
+<!-- MOBILE OVERLAY -->
+<div class="mobile-overlay" id="mobileOverlay"></div>
+
+<!-- MOBILE DRAWER NAV — rendered off-screen, only slides in when .open is added -->
+<nav class="mobile-nav" id="mobileNav" aria-hidden="true">
+  <span class="mobile-section-label">Main</span>
+  <a href="#story" onclick="closeMobileNav()">Bridal</a>
+  <a href="#services" onclick="closeMobileNav()">Makeup</a>
+  <a href="#services" onclick="closeMobileNav()">Skin Care</a>
+  <a href="#cta" onclick="closeMobileNav()">Contact</a>
+
+  <span class="mobile-section-label">Services</span>
+  <a href="#services" onclick="closeMobileNav()">Bridal Makeup</a>
+  <a href="#services" onclick="closeMobileNav()">Party Makeup</a>
+  <a href="#services" onclick="closeMobileNav()">Skin Care</a>
+  <a href="#services" onclick="closeMobileNav()">Bridal Hair</a>
+  <a href="#services" onclick="closeMobileNav()">Engagement &amp; Reception</a>
+
+  <a href="#cta" class="mobile-cta" onclick="closeMobileNav()">✦ Book Now</a>
+</nav>
+
+<!-- MAIN NAV -->
+<nav id="mainNav">
+  <div class="nav-logo">
+    <img src="/mnt/user-data/uploads/1776098061941_Logo.png" alt="Glow Pavi's Makeover"
+      onerror="this.style.display='none';this.parentElement.innerHTML='<span style=\'font-family:Playfair Display,serif;font-size:1.2rem;font-weight:600;background:linear-gradient(135deg,#C9A84C,#C5846A);-webkit-background-clip:text;-webkit-text-fill-color:transparent\'>Glow Pavi\'s</span>'">
+  </div>
+  <ul class="nav-links">
+    <li><a href="#story">Story</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#transformation">Gallery</a></li>
+    <li><a href="#trust">Reviews</a></li>
+    <li><a href="#timeline">Journey</a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:1rem">
+    <a href="#cta" class="nav-cta">Book Now</a>
+    <button class="hamburger" id="hamburgerBtn" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-particles" id="particlesContainer"></div>
+  <div class="hero-ornament"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">
+      <div class="hero-line"></div>
+      <span>Bridal Artistry by Pavi</span>
+      <div class="hero-line"></div>
+    </div>
+    <h1 class="hero-title">
+      Every bride has<br>
+      <em>a silent dream</em>
+    </h1>
+    <p class="hero-subtitle">We bring it to life — one brushstroke, one glow, one unforgettable moment at a time.</p>
+    <div class="hero-actions">
+      <a href="#cta" class="btn-primary">
+        <span>✦</span> Book Your Glow
+      </a>
+      <a href="https://wa.me/91XXXXXXXXXX" class="btn-secondary">
+        <span>💬</span> WhatsApp Now
+      </a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span class="scroll-text">Scroll</span>
+    <div class="scroll-dot"></div>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stat-item reveal">
+    <div class="stat-num">500+</div>
+    <div class="stat-label">Brides Transformed</div>
+  </div>
+  <div class="stat-item reveal" style="transition-delay:0.1s">
+    <div class="stat-num">8+</div>
+    <div class="stat-label">Years of Artistry</div>
+  </div>
+  <div class="stat-item reveal" style="transition-delay:0.2s">
+    <div class="stat-num">100%</div>
+    <div class="stat-label">Pure Satisfaction</div>
+  </div>
+  <div class="stat-item reveal" style="transition-delay:0.3s">
+    <div class="stat-num">5★</div>
+    <div class="stat-label">Rated by Brides</div>
+  </div>
+</div>
+
+<!-- PROCESS SECTION -->
+<section id="story">
+  <div class="process-header reveal">
+    <div class="section-eyebrow" style="justify-content:center">
+      <div class="eyebrow-line"></div>
+      <span>Our Process</span>
+      <div class="eyebrow-line"></div>
+    </div>
+    <h2 class="section-title" style="text-align:center">Three steps to your<br><em>most beautiful moment</em></h2>
+  </div>
+  <div class="process-grid">
+    <div class="journey-connector" style="top:52px"></div>
+    <div class="process-card reveal">
+      <div class="process-step-wrap">
+        <div class="process-circle">
+          <div class="process-circle-inner">👰</div>
+        </div>
+        <div class="process-num-badge">01</div>
+      </div>
+      <span class="process-tag">✦ The Dream</span>
+      <h3 class="process-title">She imagined her<br><em>perfect moment</em></h3>
+      <p class="process-body">Every bride carries a vision — the way she wants to feel, the way she wants to be seen. We listen to that dream before we touch a single brush.</p>
+      <div class="process-divider"></div>
+    </div>
+    <div class="process-card reveal" style="transition-delay:0.15s">
+      <div class="process-step-wrap">
+        <div class="process-circle">
+          <div class="process-circle-inner">🎨</div>
+        </div>
+        <div class="process-num-badge">02</div>
+      </div>
+      <span class="process-tag">✦ The Artistry</span>
+      <h3 class="process-title">Where skill meets<br><em>pure emotion</em></h3>
+      <p class="process-body">With hands trained by passion and eyes tuned to beauty, Pavi sculpts not just a look — but a feeling. Each stroke is intentional, each shade chosen for her alone.</p>
+      <div class="process-divider"></div>
+    </div>
+    <div class="process-card reveal" style="transition-delay:0.3s">
+      <div class="process-step-wrap">
+        <div class="process-circle">
+          <div class="process-circle-inner">✨</div>
+        </div>
+        <div class="process-num-badge">03</div>
+      </div>
+      <span class="process-tag">✦ The Transformation</span>
+      <h3 class="process-title">The mirror reveals<br><em>her true glow</em></h3>
+      <p class="process-body">When she finally sees herself — that quiet gasp, those eyes filling with joy — that is our masterpiece. The feeling of being the most beautiful version of yourself.</p>
+      <div class="process-divider"></div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="container">
+    <div class="services-intro reveal">
+      <div class="section-eyebrow" style="justify-content:center">
+        <div class="eyebrow-line"></div>
+        <span>Our Craft</span>
+        <div class="eyebrow-line"></div>
+      </div>
+      <h2 class="section-title" style="text-align:center">Beauty is not one size —<br><em>it is uniquely yours</em></h2>
+      <p class="services-subtitle" style="text-align:center">Curated experiences for every occasion, every skin tone, every story.</p>
+    </div>
+    <div class="bento-grid">
+      <div class="bento-card large reveal">
+        <div class="bento-inner">
+          <div class="bento-bg bridal">
+            <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 60% 40%,rgba(197,132,106,0.25),transparent 60%)"></div>
+          </div>
+          <div class="bento-hover-reveal"></div>
+          <span class="bento-icon">👰</span>
+          <div class="bento-content">
+            <span class="bento-tag">✦ Signature Experience</span>
+            <h3 class="bento-title">Bridal Makeup</h3>
+            <p class="bento-desc">A full-day journey dedicated entirely to you — from trial to the aisle. Long-lasting, camera-perfect, deeply personal.</p>
+          </div>
+          <div class="bento-arrow">→</div>
+        </div>
+      </div>
+      <div class="bento-card reveal" style="transition-delay:0.1s">
+        <div class="bento-inner">
+          <div class="bento-bg party">
+            <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 40% 40%,rgba(130,60,180,0.2),transparent 60%)"></div>
+          </div>
+          <div class="bento-hover-reveal"></div>
+          <span class="bento-icon">✨</span>
+          <div class="bento-content">
+            <span class="bento-tag">✦ Celebration Glow</span>
+            <h3 class="bento-title">Party Makeup</h3>
+            <p class="bento-desc">Bold, radiant, effortless. Made to turn heads and last the night.</p>
+          </div>
+          <div class="bento-arrow">→</div>
+        </div>
+      </div>
+      <div class="bento-card reveal" style="transition-delay:0.15s">
+        <div class="bento-inner">
+          <div class="bento-bg skin">
+            <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 30%,rgba(30,100,150,0.25),transparent 60%)"></div>
+          </div>
+          <div class="bento-hover-reveal"></div>
+          <span class="bento-icon">🌿</span>
+          <div class="bento-content">
+            <span class="bento-tag">✦ Skin Wellness</span>
+            <h3 class="bento-title">Skin Care</h3>
+            <p class="bento-desc">Pre-bridal glow treatments that prepare your canvas for the big day.</p>
+          </div>
+          <div class="bento-arrow">→</div>
+        </div>
+      </div>
+      <div class="bento-card reveal" style="transition-delay:0.2s">
+        <div class="bento-inner">
+          <div class="bento-bg hair">
+            <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,rgba(180,60,100,0.2),transparent 60%)"></div>
+          </div>
+          <div class="bento-hover-reveal"></div>
+          <span class="bento-icon">💐</span>
+          <div class="bento-content">
+            <span class="bento-tag">✦ Hair Artistry</span>
+            <h3 class="bento-title">Bridal Hair</h3>
+            <p class="bento-desc">Styled to perfection — from romantic waves to intricate updo arrangements.</p>
+          </div>
+          <div class="bento-arrow">→</div>
+        </div>
+      </div>
+      <div class="bento-card reveal" style="transition-delay:0.25s">
+        <div class="bento-inner" style="min-height:200px">
+          <div class="bento-bg" style="background:linear-gradient(135deg,#0a1a08,#152510)">
+            <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,rgba(100,180,80,0.15),transparent 60%)"></div>
+          </div>
+          <div class="bento-hover-reveal"></div>
+          <span class="bento-icon" style="font-size:1.8rem">💄</span>
+          <div class="bento-content">
+            <span class="bento-tag">✦ Everyday Glow</span>
+            <h3 class="bento-title" style="font-size:1.2rem">Engagement &amp; Reception</h3>
+            <p class="bento-desc" style="font-size:0.78rem">Timeless looks for every occasion that matters.</p>
+          </div>
+          <div class="bento-arrow">→</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRANSFORMATION -->
+<section id="transformation">
+  <div class="transform-header reveal">
+    <div class="section-eyebrow" style="justify-content:center">
+      <div class="eyebrow-line" style="background:rgba(201,168,76,0.5)"></div>
+      <span style="color:var(--gold-light)">Real Brides</span>
+      <div class="eyebrow-line" style="background:rgba(201,168,76,0.5)"></div>
+    </div>
+    <h2 class="section-title">Stories of <em>pure transformation</em></h2>
+    <p class="transform-subtitle">Each face carries a unique story. Here are a few of our most cherished.</p>
+  </div>
+  <div class="carousel-wrap">
+    <div class="carousel-track" id="carouselTrack">
+      <div class="carousel-card">
+        <div class="carousel-card-inner" style="background:radial-gradient(ellipse at 40% 30%,rgba(197,132,106,0.3),transparent 60%),linear-gradient(135deg,#3d1f12,#1a0e08)">
+          <div class="before-after-badge">✦ Featured Bride</div>
+          <span class="carousel-num">01</span>
+          <span class="bride-icon">👰</span>
+          <p class="carousel-name">Meenakshi R.</p>
+          <span class="carousel-occasion">✦ South Indian Bridal</span>
+          <p class="carousel-quote">"I looked in the mirror and didn't recognize myself — in the most magical way possible."</p>
+        </div>
+      </div>
+      <div class="carousel-card">
+        <div class="carousel-card-inner" style="background:radial-gradient(ellipse at 60% 40%,rgba(130,60,180,0.25),transparent 60%),linear-gradient(135deg,#1a0830,#0d0518)">
+          <div class="before-after-badge">✦ Transformation</div>
+          <span class="carousel-num">02</span>
+          <span class="bride-icon">🌸</span>
+          <p class="carousel-name">Priya K.</p>
+          <span class="carousel-occasion">✦ Reception Night Look</span>
+          <p class="carousel-quote">"Every guest asked who did my makeup. Pavi is pure magic with a brush."</p>
+        </div>
+      </div>
+      <div class="carousel-card">
+        <div class="carousel-card-inner" style="background:radial-gradient(ellipse at 30% 60%,rgba(80,150,200,0.2),transparent 60%),linear-gradient(135deg,#051520,#0a2030)">
+          <div class="before-after-badge">✦ Our Bride</div>
+          <span class="carousel-num">03</span>
+          <span class="bride-icon">💎</span>
+          <p class="carousel-name">Deepa M.</p>
+          <span class="carousel-occasion">✦ Engagement Ceremony</span>
+          <p class="carousel-quote">"She listened to everything I wanted and gave me something even more beautiful than I imagined."</p>
+        </div>
+      </div>
+      <div class="carousel-card">
+        <div class="carousel-card-inner" style="background:radial-gradient(ellipse at 50% 40%,rgba(197,132,106,0.2),transparent 60%),linear-gradient(135deg,#2a0a18,#140510)">
+          <div class="before-after-badge">✦ Glow Story</div>
+          <span class="carousel-num">04</span>
+          <span class="bride-icon">🌺</span>
+          <p class="carousel-name">Lakshmi S.</p>
+          <span class="carousel-occasion">✦ Hindu Wedding Bridal</span>
+          <p class="carousel-quote">"My mother cried when she saw me. That alone says everything about Pavi's work."</p>
+        </div>
+      </div>
+      <div class="carousel-card">
+        <div class="carousel-card-inner" style="background:radial-gradient(ellipse at 40% 30%,rgba(80,200,100,0.12),transparent 60%),linear-gradient(135deg,#051008,#0a2010)">
+          <div class="before-after-badge">✦ Real Bride</div>
+          <span class="carousel-num">05</span>
+          <span class="bride-icon">✨</span>
+          <p class="carousel-name">Anitha V.</p>
+          <span class="carousel-occasion">✦ Christian Wedding Look</span>
+          <p class="carousel-quote">"Natural yet stunning. She understood my skin and made me glow from within."</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="carousel-controls">
+    <button class="carousel-btn" id="prevBtn">←</button>
+    <div class="carousel-dots" id="carouselDots">
+      <div class="carousel-dot active" data-index="0"></div>
+      <div class="carousel-dot" data-index="1"></div>
+      <div class="carousel-dot" data-index="2"></div>
+      <div class="carousel-dot" data-index="3"></div>
+      <div class="carousel-dot" data-index="4"></div>
+    </div>
+    <button class="carousel-btn" id="nextBtn">→</button>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="trust">
+  <div class="trust-header reveal">
+    <div class="section-eyebrow" style="justify-content:center">
+      <div class="eyebrow-line"></div>
+      <span>Love Notes</span>
+      <div class="eyebrow-line"></div>
+    </div>
+    <h2 class="section-title" style="text-align:center">Words from our<br><em>glowing brides</em></h2>
+  </div>
+  <div class="testimonials-slider-outer">
+    <div class="testimonials-fade-left"></div>
+    <div class="testimonials-fade-right"></div>
+    <div class="testimonials-track-wrap" id="testimonialsWrap">
+      <div class="testimonials-track" id="testimonialsTrack"></div>
+    </div>
+  </div>
+</section>
+
+<!-- JOURNEY -->
+<section id="timeline">
+  <div class="container">
+    <div class="timeline-header reveal">
+      <div class="section-eyebrow" style="justify-content:center">
+        <div class="eyebrow-line"></div>
+        <span>The Journey</span>
+        <div class="eyebrow-line"></div>
+      </div>
+      <h2 class="section-title" style="text-align:center">A story of <em>dedication &amp; craft</em></h2>
+    </div>
+    <div class="journey-grid">
+      <div class="journey-connector"></div>
+      <div class="journey-card reveal">
+        <div class="journey-year-wrap"><div class="journey-circle"><span class="journey-circle-icon">🌱</span></div></div>
+        <div class="journey-dot-line"></div>
+        <span class="journey-year">✦ 2016</span>
+        <h4 class="journey-title">The First Brush Stroke</h4>
+        <p class="journey-desc">Pavi began with a passion for beauty and a belief that every woman deserves to feel extraordinary on her most important day.</p>
+      </div>
+      <div class="journey-card reveal" style="transition-delay:0.1s">
+        <div class="journey-year-wrap"><div class="journey-circle"><span class="journey-circle-icon">💍</span></div></div>
+        <div class="journey-dot-line"></div>
+        <span class="journey-year">✦ 2018</span>
+        <h4 class="journey-title">100 Brides Transformed</h4>
+        <p class="journey-desc">A milestone that proved — when you do your work with soul, word spreads through the hearts of happy brides.</p>
+      </div>
+      <div class="journey-card reveal" style="transition-delay:0.2s">
+        <div class="journey-year-wrap"><div class="journey-circle"><span class="journey-circle-icon">🎓</span></div></div>
+        <div class="journey-dot-line"></div>
+        <span class="journey-year">✦ 2020</span>
+        <h4 class="journey-title">Advanced Mastery</h4>
+        <p class="journey-desc">Certified in airbrush artistry and advanced bridal techniques — elevating every look to cinematic perfection.</p>
+      </div>
+      <div class="journey-card reveal" style="transition-delay:0.3s">
+        <div class="journey-year-wrap"><div class="journey-circle"><span class="journey-circle-icon">🏛️</span></div></div>
+        <div class="journey-dot-line"></div>
+        <span class="journey-year">✦ 2022</span>
+        <h4 class="journey-title">Studio Launch</h4>
+        <p class="journey-desc">Glow Pavi's Makeover studio opened — a space designed entirely for the comfort and transformation of our brides.</p>
+      </div>
+      <div class="journey-card reveal" style="transition-delay:0.4s">
+        <div class="journey-year-wrap"><div class="journey-circle"><span class="journey-circle-icon">✨</span></div></div>
+        <div class="journey-dot-line"></div>
+        <span class="journey-year">✦ Today</span>
+        <h4 class="journey-title">500+ Stories of Glow</h4>
+        <p class="journey-desc">Every morning a bride sits in Pavi's chair carrying a dream. Every morning, she leaves having lived it.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section id="cta">
+  <div class="cta-bg"></div>
+  <div class="cta-ornament"></div>
+  <div class="container">
+    <div class="cta-content reveal">
+      <span class="cta-eyebrow">✦ Your Moment Awaits</span>
+      <h2 class="cta-title">Ready to unveil<br><em>your glow?</em></h2>
+      <p class="cta-subtitle">Your wedding day is once. Your look should be forever remembered.<br>Let's create something extraordinary together.</p>
+      <div class="cta-actions">
+        <a href="#" class="btn-gold"><span>✦</span> Book Your Glow Session</a>
+        <a href="https://wa.me/91XXXXXXXXXX" class="btn-whatsapp">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          WhatsApp Now
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-main">
+    <div class="footer-brand">
+      <img src="/mnt/user-data/uploads/1776098061941_Logo.png" alt="Glow Pavi's Makeover" onerror="this.style.display='none'">
+      <p class="footer-slogan">Every bride deserves to feel like the most beautiful version of herself.</p>
+      <div class="footer-social">
+        <a class="social-btn" href="#" title="Instagram">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        </a>
+        <a class="social-btn" href="#" title="Facebook">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        </a>
+        <a class="social-btn" href="#" title="YouTube">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205a31.247 31.247 0 0 0-.522 5.805 31.247 31.247 0 0 0 .522 5.783 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088 31.247 31.247 0 0 0 .5-5.783 31.247 31.247 0 0 0-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg>
+        </a>
+        <a class="social-btn" href="https://wa.me/91XXXXXXXXXX" title="WhatsApp">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        </a>
+      </div>
+    </div>
+    <div>
+      <span class="footer-col-title">Services</span>
+      <div class="footer-col-links">
+        <a href="#services">Bridal Makeup</a>
+        <a href="#services">Party Makeup</a>
+        <a href="#services">Skin Care</a>
+        <a href="#services">Bridal Hair</a>
+        <a href="#services">Engagement &amp; Reception</a>
+      </div>
+    </div>
+    <div>
+      <span class="footer-col-title">Policies</span>
+      <div class="footer-col-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms &amp; Conditions</a>
+        <a href="#">Booking &amp; Cancellation</a>
+        <a href="#">Delivery Timeline</a>
+        <a href="#">FAQ</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2025 Glow Pavi's Makeover. All rights reserved.</p>
+    <div class="footer-location">
+      <svg width="10" height="12" viewBox="0 0 12 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 1C3.79 1 2 2.79 2 5c0 3.25 4 9 4 9s4-5.75 4-9c0-2.21-1.79-4-4-4z"/><circle cx="6" cy="5" r="1.5"/></svg>
+      Madurai, Tamil Nadu
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── NAV SCROLL ──
+const nav = document.getElementById('mainNav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 80);
+}, {passive:true});
+
+// ── HAMBURGER MENU ──
+const hamburger = document.getElementById('hamburgerBtn');
+const mobileNav = document.getElementById('mobileNav');
+const mobileOverlay = document.getElementById('mobileOverlay');
+
+hamburger.addEventListener('click', () => {
+  const isOpen = mobileNav.classList.toggle('open');
+  hamburger.classList.toggle('open', isOpen);
+  mobileOverlay.classList.toggle('show', isOpen);
+  hamburger.setAttribute('aria-expanded', isOpen);
+  mobileNav.setAttribute('aria-hidden', !isOpen);
+  document.body.style.overflow = isOpen ? 'hidden' : '';
+});
+mobileOverlay.addEventListener('click', closeMobileNav);
+
+function closeMobileNav() {
+  mobileNav.classList.remove('open');
+  hamburger.classList.remove('open');
+  mobileOverlay.classList.remove('show');
+  hamburger.setAttribute('aria-expanded', 'false');
+  mobileNav.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+}
+
+// Close on Escape key
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && mobileNav.classList.contains('open')) closeMobileNav();
+});
+
+// ── PARTICLES ──
+const pc = document.getElementById('particlesContainer');
+for (let i = 0; i < 30; i++) {
+  const p = document.createElement('div');
+  p.className = 'particle';
+  p.style.cssText = `left:${Math.random()*100}%;animation-duration:${8+Math.random()*12}s;animation-delay:${Math.random()*10}s;width:${1+Math.random()*2}px;height:${1+Math.random()*2}px`;
+  pc.appendChild(p);
+}
+
+// ── SCROLL REVEAL ──
+const revealEls = document.querySelectorAll('.reveal');
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting){e.target.classList.add('visible');revealObs.unobserve(e.target);} });
+}, {threshold:0.1,rootMargin:'0px 0px -40px 0px'});
+revealEls.forEach(el => revealObs.observe(el));
+
+// ── TRANSFORMATION CAROUSEL ──
+const track = document.getElementById('carouselTrack');
+const dots = document.querySelectorAll('.carousel-dot');
+let currentSlide = 0;
+const totalSlides = 5;
+
+function goToSlide(n) {
+  currentSlide = ((n % totalSlides) + totalSlides) % totalSlides;
+  const cardWidth = 320 + 24;
+  track.style.transform = `translateX(-${currentSlide * cardWidth}px)`;
+  dots.forEach((d,i) => d.classList.toggle('active', i===currentSlide));
+}
+document.getElementById('nextBtn').addEventListener('click', () => goToSlide(currentSlide+1));
+document.getElementById('prevBtn').addEventListener('click', () => goToSlide(currentSlide-1));
+dots.forEach(d => d.addEventListener('click', () => goToSlide(parseInt(d.dataset.index))));
+setInterval(() => goToSlide(currentSlide+1), 4000);
+
+// ── TESTIMONIALS INFINITE CAROUSEL ──
+const testimonialsData = [
+  {init:'SR',type:'rose',name:'Sowmya R.',occasion:'Bridal Client — Chennai Wedding',text:'"I had tears in my eyes when I saw myself in the mirror. Pavi has this incredible gift of understanding exactly what you want, even when you can\'t put it into words."'},
+  {init:'PK',type:'gold',name:'Preethi K.',occasion:'Bridal Client — Temple Ceremony',text:'"The makeup lasted 14 hours — through all the ceremonies, the dancing, the crying. It was flawless from morning to night. Worth every rupee and more."'},
+  {init:'DV',type:'blush',name:'Dharini V.',occasion:'Party Makeup Client',text:'"Not just a makeup artist — she\'s a dream keeper. She remembered everything I mentioned during our trial and made it even better."'},
+  {init:'AM',type:'rose',name:'Archana M.',occasion:'Skin + Bridal Prep Client',text:'"My skin is sensitive and I was terrified. Pavi was so careful, so gentle. She used the perfect products and I had zero reactions. I actually glowed."'},
+  {init:'NK',type:'gold',name:'Nithya K.',occasion:'Reception Look Client',text:'"Pavi made me feel like royalty. The whole experience was so peaceful and personal. She has such a warm energy — you feel beautiful before she even finishes."'},
+  {init:'JS',type:'blush',name:'Janani S.',occasion:'Full Bridal Package Client',text:'"Every photo from my wedding is magazine-worthy. Even my photographer said my makeup was the best she\'s seen. That\'s Pavi\'s standard."'}
+];
+
+function buildCard(d) {
+  return `<div class="review-card">
+    <div class="review-quote-mark">"</div>
+    <div class="review-stars">${'<span class="star">★</span>'.repeat(5)}</div>
+    <p class="review-text">${d.text}</p>
+    <div class="review-author">
+      <div class="author-avatar ${d.type}">${d.init}</div>
+      <div><p class="author-name">${d.name}</p><p class="author-type">${d.occasion}</p></div>
+    </div>
+  </div>`;
+}
+
+const tTrack = document.getElementById('testimonialsTrack');
+const tWrap = document.getElementById('testimonialsWrap');
+const allCards = [...testimonialsData,...testimonialsData,...testimonialsData];
+tTrack.innerHTML = allCards.map(buildCard).join('');
+
+const CARD_W = 360 + 24;
+const SET_LEN = testimonialsData.length;
+let tPos = SET_LEN * CARD_W;
+let tPaused = false;
+
+tTrack.style.transform = `translateX(-${tPos}px)`;
+
+function animateTestimonials() {
+  if (tPaused) return;
+  tPos += 0.7;
+  if (tPos >= SET_LEN * 2 * CARD_W) {
+    tTrack.classList.add('no-transition');
+    tPos = SET_LEN * CARD_W;
+    tTrack.style.transform = `translateX(-${tPos}px)`;
+    void tTrack.offsetWidth;
+    tTrack.classList.remove('no-transition');
+  }
+  tTrack.style.transform = `translateX(-${tPos}px)`;
+  requestAnimationFrame(animateTestimonials);
+}
+
+tWrap.addEventListener('mouseenter', () => { tPaused = true; });
+tWrap.addEventListener('mouseleave', () => { tPaused = false; animateTestimonials(); });
+let tTouchStart = 0;
+tWrap.addEventListener('touchstart', e => { tPaused = true; tTouchStart = e.touches[0].clientX; }, {passive:true});
+tWrap.addEventListener('touchend', e => {
+  const diff = tTouchStart - e.changedTouches[0].clientX;
+  tPos += diff;
+  tPaused = false;
+  animateTestimonials();
+}, {passive:true});
+
+animateTestimonials();
+</script>
+</body>
+</html>
