@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skin Care — Glow Pavi's Makeover</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --gold:#C9A84C;--gold-light:#E8C97A;--gold-dark:#9A7A32;
+  --blush:#F2D0C8;--blush-deep:#E8A89A;--blush-soft:#FAF0EC;
+  --rose-gold:#C5846A;--rose-light:#EBC4B8;
+  --white:#FFFFFF;--off-white:#FDF8F5;--cream:#FAF3EE;
+  --text-dark:#2C1810;--text-mid:#6B4C3B;--text-light:#A07060;
+  --copper:#B5622A;--copper-light:#D4895A;
+  --teal-dark:#04121a;--teal-mid:#0a2030;
+}
+html{scroll-behavior:smooth;overflow-x:hidden}
+body{font-family:'Inter',sans-serif;background:var(--off-white);color:var(--text-dark);overflow-x:hidden}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:1rem 4rem;display:flex;justify-content:space-between;align-items:center;transition:all 0.4s;background:transparent}
+nav.scrolled{background:rgba(253,248,245,0.96);backdrop-filter:blur(20px);border-bottom:1px solid rgba(197,132,106,0.15);padding:0.7rem 4rem}
+.nav-logo{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:600;background:linear-gradient(135deg,#C9A84C,#C5846A);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-decoration:none}
+.nav-links{display:flex;gap:2.5rem;list-style:none}
+.nav-links a{text-decoration:none;color:var(--white);font-size:0.82rem;font-weight:400;letter-spacing:0.12em;text-transform:uppercase;transition:color 0.3s}
+nav.scrolled .nav-links a{color:var(--text-mid)}
+.nav-links a:hover{color:var(--gold)}
+.nav-cta{background:linear-gradient(135deg,var(--gold),var(--copper));color:var(--white);padding:0.55rem 1.5rem;border-radius:30px;text-decoration:none;font-size:0.78rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;transition:all 0.3s;box-shadow:0 4px 20px rgba(197,132,106,0.4)}
+.nav-cta:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(197,132,106,0.5)}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;background:none;border:none}
+.hamburger span{display:block;width:24px;height:2px;background:var(--white);border-radius:2px;transition:all 0.35s}
+nav.scrolled .hamburger span{background:var(--text-dark)}
+.mobile-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:1040;opacity:0;pointer-events:none;transition:opacity 0.4s}
+.mobile-overlay.show{opacity:1;pointer-events:all}
+.mobile-nav{position:fixed;top:0;right:-100%;width:min(320px,85vw);height:100vh;background:linear-gradient(160deg,#1a0e08,#0d0806);z-index:1050;transition:right 0.45s cubic-bezier(0.77,0,0.175,1);padding:5rem 2.5rem 3rem;display:flex;flex-direction:column;border-left:1px solid rgba(201,168,76,0.12);visibility:hidden;pointer-events:none}
+.mobile-nav.open{right:0;visibility:visible;pointer-events:all}
+.mobile-nav a{display:block;color:rgba(255,255,255,0.75);text-decoration:none;font-size:1.05rem;font-weight:300;letter-spacing:0.08em;padding:0.9rem 0;border-bottom:1px solid rgba(201,168,76,0.08);transition:color 0.3s}
+.mobile-nav a:hover{color:var(--gold-light)}
+.mobile-nav .mobile-cta{margin-top:2rem;background:linear-gradient(135deg,var(--gold),var(--copper));color:var(--white);text-align:center;padding:0.9rem;border-radius:30px;font-size:0.82rem;letter-spacing:0.1em;text-transform:uppercase;font-weight:500;border-bottom:none}
+
+/* HERO — teal/ocean theme for skin */
+#hero{height:90vh;min-height:580px;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#030d14}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 25% 50%,rgba(30,100,150,0.25) 0%,transparent 55%),radial-gradient(ellipse at 80% 30%,rgba(201,168,76,0.1) 0%,transparent 45%),linear-gradient(135deg,#051520 0%,#030d14 40%,#061018 100%);z-index:0}
+.hero-particles{position:absolute;inset:0;z-index:1;pointer-events:none}
+.particle{position:absolute;background:var(--gold-light);border-radius:50%;animation:float-particle linear infinite;opacity:0}
+.hero-content{position:relative;z-index:3;text-align:center;max-width:860px;padding:2rem}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:1rem;margin-bottom:1.5rem;opacity:0;animation:fadeUp 1s 0.4s forwards}
+.hero-line{width:40px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.hero-eyebrow span{font-size:0.72rem;font-weight:400;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold-light)}
+.hero-title{font-family:'Playfair Display',serif;font-size:clamp(2.6rem,6.5vw,5rem);font-weight:400;line-height:1.1;color:var(--white);margin-bottom:1.2rem;opacity:0;animation:fadeUp 1s 0.7s forwards}
+.hero-title em{font-style:italic;background:linear-gradient(135deg,var(--gold-light),#d4895a,var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:block}
+.hero-subtitle{font-family:'Cormorant Garamond',serif;font-size:clamp(1rem,2.5vw,1.35rem);font-weight:300;color:rgba(255,255,255,0.6);line-height:1.8;max-width:580px;margin:0 auto 2.5rem;opacity:0;animation:fadeUp 1s 1s forwards;font-style:italic}
+.hero-actions{display:flex;gap:1.2rem;justify-content:center;flex-wrap:wrap;opacity:0;animation:fadeUp 1s 1.3s forwards}
+.btn-primary{background:linear-gradient(135deg,var(--gold),var(--copper));color:var(--white);padding:0.9rem 2.2rem;border-radius:50px;text-decoration:none;font-size:0.82rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;transition:all 0.4s;box-shadow:0 4px 30px rgba(201,168,76,0.4);display:inline-flex;align-items:center;gap:0.6rem}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(201,168,76,0.5)}
+.btn-secondary{background:transparent;color:var(--white);padding:0.9rem 2.2rem;border-radius:50px;text-decoration:none;font-size:0.82rem;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;transition:all 0.4s;border:1px solid rgba(201,168,76,0.5);display:inline-flex;align-items:center;gap:0.6rem}
+.btn-secondary:hover{background:rgba(201,168,76,0.1);border-color:var(--gold);transform:translateY(-2px)}
+.hero-ornament{position:absolute;width:500px;height:500px;border-radius:50%;border:1px solid rgba(30,100,150,0.1);top:50%;left:50%;transform:translate(-50%,-50%);z-index:1;animation:slow-rotate 30s linear infinite}
+.hero-ornament::before{content:'';position:absolute;inset:40px;border-radius:50%;border:1px solid rgba(201,168,76,0.05)}
+.breadcrumb{position:absolute;bottom:3rem;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:0.6rem;opacity:0;animation:fadeIn 1s 1.6s forwards}
+.breadcrumb a,.breadcrumb span{font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.35);text-decoration:none;transition:color 0.3s}
+.breadcrumb a:hover{color:var(--gold-light)}
+.breadcrumb .sep{color:rgba(201,168,76,0.3)}
+.breadcrumb .current{color:var(--gold-light)}
+
+section{padding:5rem 0}
+.container{max-width:1200px;margin:0 auto;padding:0 4rem}
+.section-eyebrow{display:inline-flex;align-items:center;gap:0.8rem;margin-bottom:1rem}
+.section-eyebrow span{font-size:0.7rem;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold-dark)}
+.eyebrow-line{width:30px;height:1px;background:var(--gold)}
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,4.5vw,3.2rem);font-weight:400;line-height:1.2;color:var(--text-dark)}
+.section-title em{font-style:italic;color:var(--rose-gold)}
+
+/* ABOUT */
+#about{background:var(--cream)}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+.about-main-box{background:linear-gradient(135deg,#030d14,#0a2030);border-radius:24px;padding:3.5rem 2.5rem;text-align:center;position:relative;overflow:hidden}
+.about-main-box::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 30%,rgba(30,100,150,0.3),transparent 60%)}
+.about-icon{font-size:5rem;display:block;margin-bottom:1rem;position:relative;z-index:1}
+.about-badge-text{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:400;color:var(--white);position:relative;z-index:1;line-height:1.3}
+.about-badge-text em{font-style:italic;color:var(--gold-light)}
+.about-float-1,.about-float-2{position:absolute;background:var(--cream);border:1px solid rgba(201,168,76,0.2);border-radius:16px;padding:0.9rem 1.2rem;font-size:0.78rem}
+.about-float-1{bottom:-1.5rem;left:-1.5rem;font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--text-mid);max-width:170px;line-height:1.5;box-shadow:0 8px 30px rgba(0,0,0,0.07)}
+.about-float-2{top:1.5rem;right:-1.5rem;display:flex;align-items:center;gap:0.5rem;box-shadow:0 8px 30px rgba(0,0,0,0.07)}
+.about-float-2 .dot{width:8px;height:8px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--copper))}
+.about-float-2 span{color:var(--text-mid);font-size:0.75rem;font-weight:500}
+.about-lead{font-family:'Cormorant Garamond',serif;font-size:1.15rem;color:var(--text-mid);font-style:italic;line-height:1.8;margin-bottom:1.4rem}
+.about-body{font-size:0.9rem;color:var(--text-light);line-height:1.85;margin-bottom:1.5rem;font-weight:300}
+.about-pills{display:flex;flex-wrap:wrap;gap:0.6rem;margin-top:1.2rem}
+.pill{background:linear-gradient(135deg,rgba(201,168,76,0.1),rgba(197,132,106,0.08));border:1px solid rgba(201,168,76,0.25);border-radius:30px;padding:0.35rem 0.9rem;font-size:0.72rem;letter-spacing:0.08em;color:var(--gold-dark);font-weight:500}
+
+/* TREATMENTS */
+#treatments{background:var(--off-white)}
+.treat-header{text-align:center;margin-bottom:3.5rem}
+.treat-subtitle{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--text-light);font-style:italic;margin-top:0.7rem}
+.treat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem}
+.treat-card{background:var(--white);border-radius:22px;overflow:hidden;border:1px solid rgba(197,132,106,0.1);transition:all 0.4s;cursor:pointer}
+.treat-card:hover{transform:translateY(-6px);box-shadow:0 28px 55px rgba(0,0,0,0.08);border-color:rgba(201,168,76,0.25)}
+.treat-top{padding:2rem 2rem 1.5rem;position:relative;overflow:hidden}
+.treat-top.facial{background:linear-gradient(135deg,#030d14,#0a2030)}
+.treat-top.glow{background:linear-gradient(135deg,#140810,#2a1020)}
+.treat-top.detan{background:linear-gradient(135deg,#0a1008,#182018)}
+.treat-top.cleanup{background:linear-gradient(135deg,#14100a,#2a2010)}
+.treat-glow{position:absolute;inset:0;background:radial-gradient(ellipse at 80% 20%,rgba(201,168,76,0.18),transparent 50%)}
+.treat-icon{font-size:2.5rem;display:block;position:relative;z-index:1;margin-bottom:0.8rem;opacity:0.7}
+.treat-name{font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:400;color:var(--white);position:relative;z-index:1;margin-bottom:0.3rem}
+.treat-name em{font-style:italic;color:var(--gold-light)}
+.treat-tagline{font-size:0.73rem;color:rgba(255,255,255,0.38);position:relative;z-index:1;letter-spacing:0.06em}
+.treat-body{padding:1.5rem 2rem 2rem}
+.treat-desc{font-size:0.84rem;color:var(--text-mid);line-height:1.75;margin-bottom:1.2rem;font-weight:300}
+.treat-includes{display:flex;flex-direction:column;gap:0.5rem;margin-bottom:1.5rem}
+.treat-includes li{list-style:none;display:flex;align-items:flex-start;gap:0.6rem;font-size:0.8rem;color:var(--text-light);line-height:1.5;font-weight:300}
+.treat-includes li::before{content:'✦';color:var(--gold);font-size:0.55rem;margin-top:0.25rem;flex-shrink:0}
+.treat-cta{background:linear-gradient(135deg,var(--gold),var(--copper));color:var(--white);border:none;border-radius:50px;padding:0.7rem 1.6rem;font-size:0.77rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;transition:all 0.3s;text-decoration:none;display:inline-block}
+.treat-cta:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(201,168,76,0.35)}
+.treat-cta.outline{background:transparent;border:1px solid rgba(201,168,76,0.35);color:var(--gold-dark)}
+.treat-cta.outline:hover{background:rgba(201,168,76,0.08)}
+
+/* BRIDAL JOURNEY */
+#bridal-prep{background:var(--cream);overflow:hidden}
+.prep-header{text-align:center;margin-bottom:3.5rem}
+.timeline-steps{position:relative;max-width:820px;margin:0 auto;padding:0 4rem}
+.timeline-line{position:absolute;left:calc(4rem + 27px);top:0;bottom:0;width:1px;background:linear-gradient(180deg,transparent,rgba(201,168,76,0.3) 10%,rgba(201,168,76,0.3) 90%,transparent)}
+.timeline-step{display:flex;gap:2rem;margin-bottom:2.5rem;position:relative}
+.timeline-step:last-child{margin-bottom:0}
+.ts-left{flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:0}
+.ts-circle{width:54px;height:54px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--copper));display:flex;align-items:center;justify-content:center;font-size:1.2rem;box-shadow:0 6px 20px rgba(197,132,106,0.3);position:relative;z-index:1;flex-shrink:0}
+.ts-right{padding-top:0.5rem}
+.ts-week{font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold-dark);font-weight:600;margin-bottom:0.4rem;display:block}
+.ts-title{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:400;color:var(--text-dark);margin-bottom:0.5rem;line-height:1.3}
+.ts-title em{font-style:italic;color:var(--rose-gold)}
+.ts-desc{font-size:0.84rem;color:var(--text-light);line-height:1.75;font-weight:300}
+
+/* SKIN TYPES */
+#skin-types{background:var(--off-white)}
+.skin-header{text-align:center;margin-bottom:3rem}
+.skin-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem}
+.skin-card{border-radius:18px;padding:2rem;text-align:center;border:1px solid rgba(197,132,106,0.12);background:var(--white);transition:all 0.4s;cursor:pointer}
+.skin-card:hover{transform:translateY(-5px);box-shadow:0 20px 45px rgba(0,0,0,0.07);border-color:rgba(201,168,76,0.28)}
+.skin-icon{font-size:2.4rem;display:block;margin-bottom:1rem}
+.skin-type-name{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:400;color:var(--text-dark);margin-bottom:0.5rem}
+.skin-type-name em{font-style:italic;color:var(--rose-gold)}
+.skin-type-desc{font-size:0.81rem;color:var(--text-light);line-height:1.7;font-weight:300;margin-bottom:1rem}
+.skin-approach{font-size:0.72rem;letter-spacing:0.07em;border-radius:20px;padding:0.3rem 0.8rem;background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.2);color:var(--gold-dark);display:inline-block}
+
+/* INGREDIENTS */
+#ingredients{background:linear-gradient(135deg,#030d14,#051520);padding:5rem 0}
+.ing-header{text-align:center;margin-bottom:3.5rem}
+.ing-header .section-title{color:var(--white)}
+.ing-header .section-title em{color:var(--gold-light)}
+.ing-sub{font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:rgba(255,255,255,0.4);font-style:italic;margin-top:0.7rem}
+.ing-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+.ing-card{border-radius:16px;padding:1.5rem;text-align:center;border:1px solid rgba(201,168,76,0.12);background:rgba(255,255,255,0.03);transition:all 0.35s;cursor:pointer}
+.ing-card:hover{background:rgba(201,168,76,0.06);border-color:rgba(201,168,76,0.28);transform:translateY(-4px)}
+.ing-emoji{font-size:1.8rem;display:block;margin-bottom:0.7rem}
+.ing-name{font-family:'Playfair Display',serif;font-size:0.95rem;font-weight:400;color:var(--white);margin-bottom:0.3rem}
+.ing-name em{font-style:italic;color:var(--gold-light)}
+.ing-benefit{font-size:0.74rem;color:rgba(255,255,255,0.38);line-height:1.55;font-weight:300}
+
+/* FAQ */
+#faq{background:var(--cream)}
+.faq-header{text-align:center;margin-bottom:3rem}
+.faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;max-width:920px;margin:0 auto}
+.faq-item{background:var(--white);border-radius:16px;padding:1.5rem;border:1px solid rgba(197,132,106,0.1);cursor:pointer;transition:all 0.3s}
+.faq-item:hover{border-color:rgba(201,168,76,0.25);box-shadow:0 8px 30px rgba(0,0,0,0.05)}
+.faq-item.open{border-color:rgba(201,168,76,0.3)}
+.faq-q{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem}
+.faq-q-text{font-family:'Playfair Display',serif;font-size:0.95rem;font-weight:400;color:var(--text-dark);line-height:1.4}
+.faq-icon{flex-shrink:0;width:22px;height:22px;border-radius:50%;border:1px solid rgba(201,168,76,0.3);display:flex;align-items:center;justify-content:center;font-size:0.8rem;color:var(--gold-dark);transition:transform 0.3s;margin-top:2px}
+.faq-item.open .faq-icon{transform:rotate(45deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height 0.4s ease,margin-top 0.3s;font-size:0.83rem;color:var(--text-light);line-height:1.75;font-weight:300}
+.faq-item.open .faq-a{max-height:200px;margin-top:0.8rem}
+
+/* CTA */
+#cta{background:#0d0806;padding:6rem 0;text-align:center;position:relative;overflow:hidden}
+.cta-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 30%,rgba(30,100,150,0.1) 0%,transparent 60%)}
+.cta-content{position:relative;z-index:2}
+.cta-eyebrow{font-size:0.68rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem;display:block}
+.cta-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,4rem);font-weight:400;color:var(--white);line-height:1.15;margin-bottom:1rem}
+.cta-title em{font-style:italic;background:linear-gradient(135deg,var(--gold-light),var(--copper-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.cta-sub{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:rgba(255,255,255,0.45);font-style:italic;margin-bottom:2.5rem;line-height:1.7}
+.cta-btns{display:flex;gap:1.2rem;justify-content:center;flex-wrap:wrap}
+.btn-gold{background:linear-gradient(135deg,var(--gold),var(--gold-dark));color:var(--white);padding:1rem 2.5rem;border-radius:50px;text-decoration:none;font-size:0.82rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;transition:all 0.4s;box-shadow:0 4px 30px rgba(201,168,76,0.35);display:inline-flex;align-items:center;gap:0.7rem}
+.btn-gold:hover{transform:translateY(-3px);box-shadow:0 15px 45px rgba(201,168,76,0.45)}
+.btn-wa{background:linear-gradient(135deg,#25D366,#128C7E);color:var(--white);padding:1rem 2.5rem;border-radius:50px;text-decoration:none;font-size:0.82rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;transition:all 0.4s;display:inline-flex;align-items:center;gap:0.7rem}
+.btn-wa:hover{transform:translateY(-3px);box-shadow:0 12px 35px rgba(37,211,102,0.3)}
+
+footer{background:#080503;padding:2rem 4rem;border-top:1px solid rgba(201,168,76,0.1);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+.footer-links{display:flex;gap:2rem;list-style:none}
+.footer-links a{color:rgba(255,255,255,0.28);font-size:0.75rem;text-decoration:none;transition:color 0.3s;letter-spacing:0.06em}
+.footer-links a:hover{color:rgba(255,255,255,0.6)}
+.footer-copy{color:rgba(255,255,255,0.15);font-size:0.7rem;letter-spacing:0.05em}
+.footer-logo-text{font-family:'Playfair Display',serif;font-size:0.9rem;background:linear-gradient(135deg,#C9A84C,#C5846A);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:600}
+
+.reveal{opacity:0;transform:translateY(28px);transition:opacity 0.7s,transform 0.7s}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes float-particle{0%{opacity:0;transform:translateY(100vh) scale(0)}10%{opacity:0.8}90%{opacity:0.4}100%{opacity:0;transform:translateY(-100px) scale(1.5)}}
+@keyframes slow-rotate{from{transform:translate(-50%,-50%) rotate(0deg)}to{transform:translate(-50%,-50%) rotate(360deg)}}
+
+@media(max-width:900px){
+  nav{padding:0.9rem 1.2rem}nav.scrolled{padding:0.7rem 1.2rem}
+  .nav-links{display:none}.hamburger{display:flex}
+  .container{padding:0 1.2rem}
+  .about-grid{grid-template-columns:1fr;gap:2.5rem}
+  .about-float-1,.about-float-2{display:none}
+  .treat-grid{grid-template-columns:1fr;gap:1rem}
+  .skin-grid{grid-template-columns:1fr 1fr;gap:0.8rem}
+  .ing-grid{grid-template-columns:1fr 1fr;gap:0.8rem}
+  .faq-grid{grid-template-columns:1fr}
+  .timeline-steps{padding:0 1.2rem}
+  .timeline-line{left:calc(1.2rem + 27px)}
+  footer{flex-direction:column;padding:1.5rem 1.2rem;gap:0.8rem}
+  .footer-links{flex-wrap:wrap;gap:1rem}
+}
+@media(max-width:600px){
+  .skin-grid{grid-template-columns:1fr}
+  .ing-grid{grid-template-columns:1fr 1fr}
+  .hero-title{font-size:2.3rem}
+}
+@media(min-width:901px){
+  .hamburger{display:none !important}.mobile-nav{display:none !important}.mobile-overlay{display:none !important}
+}
+</style>
+</head>
+<body>
+
+<div class="mobile-overlay" id="mobileOverlay"></div>
+<nav class="mobile-nav" id="mobileNav">
+  <a href="index.html">Home</a>
+  <a href="bridal-makeup.html">Bridal Makeup</a>
+  <a href="party-makeup.html">Party Makeup</a>
+  <a href="skin-care.html">Skin Care</a>
+  <a href="#cta" onclick="closeMobileNav()" class="mobile-cta">✦ Book Now</a>
+</nav>
+
+<nav id="mainNav">
+  <a href="index.html" class="nav-logo">Glow Pavi's</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="bridal-makeup.html">Bridal</a></li>
+    <li><a href="party-makeup.html">Party</a></li>
+    <li><a href="skin-care.html" style="color:var(--gold-light)">Skin Care</a></li>
+    <li><a href="index.html#trust">Reviews</a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:1rem">
+    <a href="#cta" class="nav-cta">Book Now</a>
+    <button class="hamburger" id="hamburgerBtn" aria-label="Open menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-particles" id="particlesContainer"></div>
+  <div class="hero-ornament"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">
+      <div class="hero-line"></div>
+      <span>Skin Wellness by Pavi</span>
+      <div class="hero-line"></div>
+    </div>
+    <h1 class="hero-title">
+      Great makeup begins with<br>
+      <em>great skin.</em>
+    </h1>
+    <p class="hero-subtitle">Pre-bridal treatments, deep-cleansing facials, and glow therapies — tailored to your skin, your timeline, your story.</p>
+    <div class="hero-actions">
+      <a href="#treatments" class="btn-primary"><span>✦</span> Explore Treatments</a>
+      <a href="https://wa.me/91XXXXXXXXXX" class="btn-secondary"><span>💬</span> WhatsApp Us</a>
+    </div>
+  </div>
+  <div class="breadcrumb">
+    <a href="index.html">Home</a>
+    <span class="sep">›</span>
+    <span class="current">Skin Care</span>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-visual reveal">
+        <div class="about-main-box">
+          <span class="about-icon">🌿</span>
+          <p class="about-badge-text">Your skin is the<br>canvas. We prepare<br><em>the masterpiece.</em></p>
+        </div>
+        <div class="about-float-1">"My skin had never glowed like this before my wedding. Pure magic."</div>
+        <div class="about-float-2"><div class="dot"></div><span>Skin-safe, dermatologist-friendly</span></div>
+      </div>
+      <div class="about-text reveal" style="transition-delay:0.15s">
+        <div class="section-eyebrow">
+          <div class="eyebrow-line"></div>
+          <span>About This Service</span>
+        </div>
+        <h2 class="section-title">Skin Care —<br><em>your foundation of beauty</em></h2>
+        <p class="about-lead">The best makeup in the world cannot replace the glow of well-nurtured skin. Our skin care treatments are the quiet secret behind every breathtaking bridal look.</p>
+        <p class="about-body">At Glow Pavi's Makeover, we believe that true beauty starts beneath the surface. Our skin care services are designed to deeply nourish, brighten, and restore your skin — whether you're preparing for your wedding day, recovering from dullness, or simply treating yourself to some well-deserved care. Every treatment is customised to your skin type and concerns.</p>
+        <div class="about-pills">
+          <span class="pill">Dermatologist-Friendly</span>
+          <span class="pill">All Skin Types</span>
+          <span class="pill">Pre-Bridal Glow</span>
+          <span class="pill">Natural Ingredients</span>
+          <span class="pill">Anti-Tan</span>
+          <span class="pill">Deep Hydration</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TREATMENTS -->
+<section id="treatments">
+  <div class="container">
+    <div class="treat-header reveal">
+      <div class="section-eyebrow" style="justify-content:center">
+        <div class="eyebrow-line"></div><span>Our Treatments</span><div class="eyebrow-line"></div>
+      </div>
+      <h2 class="section-title" style="text-align:center">Every skin tells<br><em>a different story</em></h2>
+      <p class="treat-subtitle" style="text-align:center;margin-top:0.7rem">Targeted treatments for every concern, every skin tone, every occasion.</p>
+    </div>
+    <div class="treat-grid">
+      <div class="treat-card reveal">
+        <div class="treat-top facial">
+          <div class="treat-glow"></div>
+          <span class="treat-icon">💎</span>
+          <p class="treat-name">Luxury <em>Facial</em></p>
+          <p class="treat-tagline">Deep nourishment for radiant, plump skin</p>
+        </div>
+        <div class="treat-body">
+          <p class="treat-desc">A head-to-toe face treatment that cleanses, exfoliates, and intensely hydrates your skin. Leaves you with a natural lit-from-within glow that makeup simply enhances.</p>
+          <ul class="treat-includes">
+            <li>Deep pore cleansing and steam</li>
+            <li>Gentle exfoliation and brightening scrub</li>
+            <li>Customised face mask for skin type</li>
+            <li>Serum and moisturiser application</li>
+            <li>Face massage for lymphatic drainage</li>
+          </ul>
+          <a href="#cta" class="treat-cta">Book Session</a>
+        </div>
+      </div>
+      <div class="treat-card reveal" style="transition-delay:0.12s">
+        <div class="treat-top glow">
+          <div class="treat-glow"></div>
+          <span class="treat-icon">✨</span>
+          <p class="treat-name">Bridal <em>Glow</em> Package</p>
+          <p class="treat-tagline">Multi-session pre-wedding skin transformation</p>
+        </div>
+        <div class="treat-body">
+          <p class="treat-desc">Our signature pre-bridal programme designed to be started 2–3 months before your wedding. Each session builds on the last, revealing progressively brighter, smoother skin.</p>
+          <ul class="treat-includes">
+            <li>4–6 session pre-bridal programme</li>
+            <li>Skin analysis and customised plan</li>
+            <li>Tan removal and brightening therapy</li>
+            <li>Pigmentation treatment sessions</li>
+            <li>Hydration and glow-boost finishing</li>
+          </ul>
+          <a href="#cta" class="treat-cta">Book Package</a>
+        </div>
+      </div>
+      <div class="treat-card reveal" style="transition-delay:0.24s">
+        <div class="treat-top detan">
+          <div class="treat-glow"></div>
+          <span class="treat-icon">🌿</span>
+          <p class="treat-name">De-Tan & <em>Brightening</em></p>
+          <p class="treat-tagline">Restore your natural even-toned radiance</p>
+        </div>
+        <div class="treat-body">
+          <p class="treat-desc">Sun exposure, pollution, and stress all leave marks on your skin. Our de-tan treatment gently but effectively removes built-up tan and uneven pigmentation — revealing your true, even complexion.</p>
+          <ul class="treat-includes">
+            <li>Face and neck de-tan treatment</li>
+            <li>Natural brightening mask application</li>
+            <li>Vitamin C serum infusion</li>
+            <li>SPF protection finishing</li>
+          </ul>
+          <a href="#cta" class="treat-cta outline">Book Session</a>
+        </div>
+      </div>
+      <div class="treat-card reveal" style="transition-delay:0.36s">
+        <div class="treat-top cleanup">
+          <div class="treat-glow"></div>
+          <span class="treat-icon">🪷</span>
+          <p class="treat-name">Express <em>Cleanup</em></p>
+          <p class="treat-tagline">Quick refresh for busy schedules</p>
+        </div>
+        <div class="treat-body">
+          <p class="treat-desc">Short on time but still want to glow? Our express cleanup gives your skin a deep cleanse, quick exfoliation, and a fresh-faced finish — perfect before events or as a monthly maintenance routine.</p>
+          <ul class="treat-includes">
+            <li>Deep cleansing and steam</li>
+            <li>Blackhead and whitehead removal</li>
+            <li>Quick brightening mask</li>
+            <li>Moisturiser and sunscreen finishing</li>
+          </ul>
+          <a href="#cta" class="treat-cta outline">Book Session</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BRIDAL PREP TIMELINE -->
+<section id="bridal-prep">
+  <div class="container">
+    <div class="prep-header reveal">
+      <div class="section-eyebrow" style="justify-content:center">
+        <div class="eyebrow-line"></div><span>Bridal Skin Journey</span><div class="eyebrow-line"></div>
+      </div>
+      <h2 class="section-title" style="text-align:center">The path to your<br><em>wedding-day glow</em></h2>
+    </div>
+    <div class="timeline-steps" style="position:relative">
+      <div class="timeline-line"></div>
+      <div class="timeline-step reveal">
+        <div class="ts-left"><div class="ts-circle">🌱</div></div>
+        <div class="ts-right">
+          <span class="ts-week">✦ 3 Months Before</span>
+          <h4 class="ts-title">Skin Analysis & <em>First Treatment</em></h4>
+          <p class="ts-desc">We assess your skin — type, concerns, pigmentation, texture — and design your custom pre-bridal programme. First deep-cleanse session to begin your transformation.</p>
+        </div>
+      </div>
+      <div class="timeline-step reveal" style="transition-delay:0.1s">
+        <div class="ts-left"><div class="ts-circle">💧</div></div>
+        <div class="ts-right">
+          <span class="ts-week">✦ 2 Months Before</span>
+          <h4 class="ts-title">Brightening & <em>Tan Removal</em></h4>
+          <p class="ts-desc">Targeted de-tan and brightening treatments to even out your skin tone. Pigmentation and dullness are addressed with professional-grade formulas safe for all skin types.</p>
+        </div>
+      </div>
+      <div class="timeline-step reveal" style="transition-delay:0.2s">
+        <div class="ts-left"><div class="ts-circle">✨</div></div>
+        <div class="ts-right">
+          <span class="ts-week">✦ 1 Month Before</span>
+          <h4 class="ts-title">Glow Boost & <em>Hydration</em></h4>
+          <p class="ts-desc">Intensive hydration and glow-boosting sessions to plump and brighten your complexion. Your skin will start to visibly transform — smoother, softer, more luminous.</p>
+        </div>
+      </div>
+      <div class="timeline-step reveal" style="transition-delay:0.3s">
+        <div class="ts-left"><div class="ts-circle">🌟</div></div>
+        <div class="ts-right">
+          <span class="ts-week">✦ 1 Week Before</span>
+          <h4 class="ts-title">Final Prep & <em>Skin Seal</em></h4>
+          <p class="ts-desc">A gentle, calming facial to soothe and seal your skin's glow. We avoid any aggressive treatment this close to the wedding — only softening and protecting.</p>
+        </div>
+      </div>
+      <div class="timeline-step reveal" style="transition-delay:0.4s">
+        <div class="ts-left"><div class="ts-circle">👰</div></div>
+        <div class="ts-right">
+          <span class="ts-week">✦ Wedding Day</span>
+          <h4 class="ts-title">The Perfect <em>Canvas</em></h4>
+          <p class="ts-desc">By now, your skin is at its absolute best — primed, hydrated, and radiant. Makeup glides on seamlessly. The glow you see is both your skin and your joy, combined.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKIN TYPES -->
+<section id="skin-types">
+  <div class="container">
+    <div class="skin-header reveal">
+      <div class="section-eyebrow" style="justify-content:center">
+        <div class="eyebrow-line"></div><span>For Every Skin</span><div class="eyebrow-line"></div>
+      </div>
+      <h2 class="section-title" style="text-align:center">We care for<br><em>every skin type</em></h2>
+    </div>
+    <div class="skin-grid">
+      <div class="skin-card reveal">
+        <span class="skin-icon">💦</span>
+        <h3 class="skin-type-name"><em>Dry</em> Skin</h3>
+        <p class="skin-type-desc">Flaky, tight, and prone to dullness. We restore deep moisture and elasticity with rich nourishing treatments.</p>
+        <span class="skin-approach">✦ Intensive Hydration Focus</span>
+      </div>
+      <div class="skin-card reveal" style="transition-delay:0.1s">
+        <span class="skin-icon">🌊</span>
+        <h3 class="skin-type-name"><em>Oily</em> Skin</h3>
+        <p class="skin-type-desc">Prone to shine, enlarged pores, and breakouts. We balance and mattify without stripping your skin's natural barrier.</p>
+        <span class="skin-approach">✦ Balancing & Pore Refining</span>
+      </div>
+      <div class="skin-card reveal" style="transition-delay:0.2s">
+        <span class="skin-icon">🌿</span>
+        <h3 class="skin-type-name"><em>Combination</em> Skin</h3>
+        <p class="skin-type-desc">Both oily and dry zones that need different care. We treat each zone with targeted formulas for total balance.</p>
+        <span class="skin-approach">✦ Targeted Zone Treatment</span>
+      </div>
+      <div class="skin-card reveal" style="transition-delay:0.1s">
+        <span class="skin-icon">🕊️</span>
+        <h3 class="skin-type-name"><em>Sensitive</em> Skin</h3>
+        <p class="skin-type-desc">Reactive, easily irritated, and red-prone. We use the gentlest, most calming products — zero harsh chemicals.</p>
+        <span class="skin-approach">✦ Gentle Calming Approach</span>
+      </div>
+      <div class="skin-card reveal" style="transition-delay:0.2s">
+        <span class="skin-icon">☀️</span>
+        <h3 class="skin-type-name"><em>Tan-Prone</em> Skin</h3>
+        <p class="skin-type-desc">Darkened by sun exposure and uneven in tone. We gradually restore your original luminous complexion safely.</p>
+        <span class="skin-approach">✦ Brightening & De-Tan</span>
+      </div>
+      <div class="skin-card reveal" style="transition-delay:0.3s">
+        <span class="skin-icon">🌺</span>
+        <h3 class="skin-type-name"><em>Mature</em> Skin</h3>
+        <p class="skin-type-desc">Fine lines, loss of firmness, and dullness. We use firming, collagen-boosting treatments to restore youthful radiance.</p>
+        <span class="skin-approach">✦ Firming & Anti-Ageing</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INGREDIENTS -->
+<section id="ingredients">
+  <div class="container">
+    <div class="ing-header reveal">
+      <div class="section-eyebrow" style="justify-content:center">
+        <div class="eyebrow-line" style="background:rgba(201,168,76,0.5)"></div>
+        <span style="color:var(--gold-light)">Our Ingredients</span>
+        <div class="eyebrow-line" style="background:rgba(201,168,76,0.5)"></div>
+      </div>
+      <h2 class="section-title">Nature-powered<br><em>formulas</em></h2>
+      <p class="ing-sub">Carefully selected ingredients that respect your skin's natural biology.</p>
+    </div>
+    <div class="ing-grid">
+      <div class="ing-card reveal">
+        <span class="ing-emoji">🌹</span>
+        <p class="ing-name">Rose <em>Water</em></p>
+        <p class="ing-benefit">Deep hydration, natural toning, anti-inflammatory</p>
+      </div>
+      <div class="ing-card reveal" style="transition-delay:0.08s">
+        <span class="ing-emoji">🍋</span>
+        <p class="ing-name">Vitamin <em>C</em></p>
+        <p class="ing-benefit">Brightening, pigmentation fading, antioxidant protection</p>
+      </div>
+      <div class="ing-card reveal" style="transition-delay:0.16s">
+        <span class="ing-emoji">🫚</span>
+        <p class="ing-name">Aloe <em>Vera</em></p>
+        <p class="ing-benefit">Cooling, healing, soothing redness and irritation</p>
+      </div>
+      <div class="ing-card reveal" style="transition-delay:0.24s">
+        <span class="ing-emoji">🍯</span>
+        <p class="ing-name">Raw <em>Honey</em></p>
+        <p class="ing-benefit">Antibacterial, deep moisture, soft skin texture</p>
+      </div>
+      <div class="ing-card reveal" style="transition-delay:0.08s">
+        <span class="ing-emoji">🌿</span>
+        <p class="ing-name">Neem <em>Extract</em></p>
+        <p class="ing-benefit">Anti-acne, antimicrobial, pore-refining properties</p>
+      </div>
+      <div class="ing-card reveal" style="transition-delay:0.16s">
+        <span class="ing-emoji">🥥</span>
+        <p class="ing-name">Coconut <em>Oil</em></p>
+        <p class="ing-benefit">Intense nourishment, barrier protection, anti-ageing</p>
+      </div>
+      <div class="ing-card reveal" style="transition-delay:0.24s">
+        <span class="ing-emoji">☕</span>
+        <p class="ing-name">Coffee <em>Scrub</em></p>
+        <p class="ing-benefit">Exfoliation, circulation boost, anti-tan treatment</p>
+      </div>
+      <div class="ing-card reveal" style="transition-delay:0.32s">
+        <span class="ing-emoji">🌻</span>
+        <p class="ing-name">Hyaluronic <em>Acid</em></p>
+        <p class="ing-benefit">Plumping, intense hydration, fine line reduction</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="container">
+    <div class="faq-header reveal">
+      <div class="section-eyebrow" style="justify-content:center">
+        <div class="eyebrow-line"></div><span>Questions</span><div class="eyebrow-line"></div>
+      </div>
+      <h2 class="section-title" style="text-align:center">Your skin care<br><em>questions answered</em></h2>
+    </div>
+    <div class="faq-grid">
+      <div class="faq-item reveal">
+        <div class="faq-q"><span class="faq-q-text">When should I start pre-bridal skin care?</span><div class="faq-icon">+</div></div>
+        <div class="faq-a">Ideally 2–3 months before your wedding. This allows enough time for the full programme to work and for your skin to reach its peak glow on the big day.</div>
+      </div>
+      <div class="faq-item reveal" style="transition-delay:0.1s">
+        <div class="faq-q"><span class="faq-q-text">Is it safe for sensitive skin?</span><div class="faq-icon">+</div></div>
+        <div class="faq-a">Absolutely. We customise every treatment based on your skin's sensitivity level. We use only gentle, dermatologist-friendly products for reactive and sensitive skin types.</div>
+      </div>
+      <div class="faq-item reveal" style="transition-delay:0.15s">
+        <div class="faq-q"><span class="faq-q-text">How many sessions do I need?</span><div class="faq-icon">+</div></div>
+        <div class="faq-a">It depends on your skin's starting condition and your goals. The Bridal Glow Package is typically 4–6 sessions. A single facial or cleanup is a one-time session.</div>
+      </div>
+      <div class="faq-item reveal" style="transition-delay:0.2s">
+        <div class="faq-q"><span class="faq-q-text">Can I combine skin care with makeup booking?</span><div class="faq-icon">+</div></div>
+        <div class="faq-a">Yes — in fact, we strongly recommend it. Brides who complete the skin care programme before their bridal makeup session get noticeably better results. Combo packages available.</div>
+      </div>
+      <div class="faq-item reveal" style="transition-delay:0.25s">
+        <div class="faq-q"><span class="faq-q-text">Will there be any side effects?</span><div class="faq-icon">+</div></div>
+        <div class="faq-a">We avoid any aggressive chemical treatments that cause peeling or recovery time. All our treatments are designed to give visible results without downtime.</div>
+      </div>
+      <div class="faq-item reveal" style="transition-delay:0.3s">
+        <div class="faq-q"><span class="faq-q-text">Do you offer home visit sessions?</span><div class="faq-icon">+</div></div>
+        <div class="faq-a">Certain treatments are available as home visits within Madurai. Basic facials and cleanups can be done at your home. Please enquire for details and availability.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="cta-bg"></div>
+  <div class="container">
+    <div class="cta-content reveal">
+      <span class="cta-eyebrow">✦ Begin Your Glow Journey</span>
+      <h2 class="cta-title">Your skin deserves<br><em>the very best care.</em></h2>
+      <p class="cta-sub">Book a skin care session today. Your wedding day glow starts right now.</p>
+      <div class="cta-btns">
+        <a href="https://wa.me/91XXXXXXXXXX" class="btn-gold"><span>✦</span> Book Your Session</a>
+        <a href="https://wa.me/91XXXXXXXXXX" class="btn-wa">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          WhatsApp Now
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-logo-text">Glow Pavi's Makeover</span>
+  <ul class="footer-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="bridal-makeup.html">Bridal</a></li>
+    <li><a href="party-makeup.html">Party Makeup</a></li>
+    <li><a href="skin-care.html">Skin Care</a></li>
+  </ul>
+  <p class="footer-copy">© 2025 Glow Pavi's Makeover · Madurai</p>
+</footer>
+
+<script>
+const nav=document.getElementById('mainNav');
+window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',window.scrollY>80),{passive:true});
+const hamburger=document.getElementById('hamburgerBtn');
+const mobileNav=document.getElementById('mobileNav');
+const mobileOverlay=document.getElementById('mobileOverlay');
+hamburger.addEventListener('click',()=>{const isOpen=mobileNav.classList.toggle('open');hamburger.classList.toggle('open',isOpen);mobileOverlay.classList.toggle('show',isOpen);document.body.style.overflow=isOpen?'hidden':'';});
+mobileOverlay.addEventListener('click',closeMobileNav);
+function closeMobileNav(){mobileNav.classList.remove('open');hamburger.classList.remove('open');mobileOverlay.classList.remove('show');document.body.style.overflow='';}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMobileNav();});
+const pc=document.getElementById('particlesContainer');
+for(let i=0;i<25;i++){const p=document.createElement('div');p.className='particle';p.style.cssText=`left:${Math.random()*100}%;animation-duration:${8+Math.random()*12}s;animation-delay:${Math.random()*10}s;width:${1+Math.random()*2}px;height:${1+Math.random()*2}px`;pc.appendChild(p);}
+const revealObs=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');revealObs.unobserve(e.target);}});},{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>revealObs.observe(el));
+document.querySelectorAll('.faq-item').forEach(item=>{item.addEventListener('click',()=>{const wasOpen=item.classList.contains('open');document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));if(!wasOpen)item.classList.add('open');});});
+</script>
+</body>
+</html>

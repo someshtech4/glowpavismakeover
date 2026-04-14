@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Party Makeup — Glow Pavi's Makeover</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --gold:#C9A84C;--gold-light:#E8C97A;--gold-dark:#9A7A32;
+  --blush:#F2D0C8;--blush-deep:#E8A89A;--blush-soft:#FAF0EC;
+  --rose-gold:#C5846A;--rose-light:#EBC4B8;
+  --white:#FFFFFF;--off-white:#FDF8F5;--cream:#FAF3EE;
+  --text-dark:#2C1810;--text-mid:#6B4C3B;--text-light:#A07060;
+  --copper:#B5622A;--copper-light:#D4895A;
+  --purple-dark:#1e0a30;--purple-mid:#2d1045;
+}
+html{scroll-behavior:smooth;overflow-x:hidden}
+body{font-family:'Inter',sans-serif;background:var(--off-white);color:var(--text-dark);overflow-x:hidden}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:1rem 4rem;display:flex;justify-content:space-between;align-items:center;transition:all 0.4s;background:transparent}
+nav.scrolled{background:rgba(253,248,245,0.96);backdrop-filter:blur(20px);border-bottom:1px solid rgba(197,132,106,0.15);padding:0.7rem 4rem}
+.nav-logo{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:600;background:linear-gradient(135deg,#C9A84C,#C5846A);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-decoration:none}
+.nav-links{display:flex;gap:2.5rem;list-style:none}
+.nav-links a{text-decoration:none;color:var(--white);font-size:0.82rem;font-weight:400;letter-spacing:0.12em;text-transform:uppercase;transition:color 0.3s}
+nav.scrolled .nav-links a{color:var(--text-mid)}
+.nav-links a:hover{color:var(--gold)}
+.nav-cta{background:linear-gradient(135deg,var(--gold),var(--copper));color:var(--white);padding:0.55rem 1.5rem;border-radius:30px;text-decoration:none;font-size:0.78rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;transition:all 0.3s;box-shadow:0 4px 20px rgba(197,132,106,0.4)}
+.nav-cta:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(197,132,106,0.5)}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;background:none;border:none}
+.hamburger span{display:block;width:24px;height:2px;background:var(--white);border-radius:2px;transition:all 0.35s}
+nav.scrolled .hamburger span{background:var(--text-dark)}
+.mobile-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:1040;opacity:0;pointer-events:none;transition:opacity 0.4s}
+.mobile-overlay.show{opacity:1;pointer-events:all}
+.mobile-nav{position:fixed;top:0;right:-100%;width:min(320px,85vw);height:100vh;background:linear-gradient(160deg,#1a0e08,#0d0806);z-index:1050;transition:right 0.45s cubic-bezier(0.77,0,0.175,1);padding:5rem 2.5rem 3rem;display:flex;flex-direction:column;border-left:1px solid rgba(201,168,76,0.12);visibility:hidden;pointer-events:none}
+.mobile-nav.open{right:0;visibility:visible;pointer-events:all}
+.mobile-nav a{display:block;color:rgba(255,255,255,0.75);text-decoration:none;font-size:1.05rem;font-weight:300;letter-spacing:0.08em;padding:0.9rem 0;border-bottom:1px solid rgba(201,168,76,0.08);transition:color 0.3s}
+.mobile-nav a:hover{color:var(--gold-light)}
+.mobile-nav .mobile-cta{margin-top:2rem;background:linear-gradient(135deg,var(--gold),var(--copper));color:var(--white);text-align:center;padding:0.9rem;border-radius:30px;font-size:0.82rem;letter-spacing:0.1em;text-transform:uppercase;font-weight:500;border-bottom:none}
+
+/* HERO — purple/plum theme for party */
+#hero{height:90vh;min-height:580px;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#070312}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,rgba(130,60,180,0.22) 0%,transparent 55%),radial-gradient(ellipse at 80% 25%,rgba(201,168,76,0.12) 0%,transparent 45%),linear-gradient(135deg,#0d0518 0%,#070312 40%,#120520 100%);z-index:0}
+.hero-particles{position:absolute;inset:0;z-index:1;pointer-events:none}
+.particle{position:absolute;background:var(--gold-light);border-radius:50%;animation:float-particle linear infinite;opacity:0}
+.hero-content{position:relative;z-index:3;text-align:center;max-width:860px;padding:2rem}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:1rem;margin-bottom:1.5rem;opacity:0;animation:fadeUp 1s 0.4s forwards}
+.hero-line{width:40px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.hero-eyebrow span{font-size:0.72rem;font-weight:400;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold-light)}
+.hero-title{font-family:'Playfair Display',serif;font-size:clamp(2.6rem,6.5vw,5rem);font-weight:400;line-height:1.1;color:var(--white);margin-bottom:1.2rem;opacity:0;animation:fadeUp 1s 0.7s forwards}
+.hero-title em{font-style:italic;background:linear-gradient(135deg,var(--gold-light),#d4895a,var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:block}
+.hero-subtitle{font-family:'Cormorant Garamond',serif;font-size:clamp(1rem,2.5vw,1.35rem);font-weight:300;color:rgba(255,255,255,0.6);line-height:1.8;max-width:580px;margin:0 auto 2.5rem;opacity:0;animation:fadeUp 1s 1s forwards;font-style:italic}
+.hero-actions{display:flex;gap:1.2rem;justify-content:center;flex-wrap:wrap;opacity:0;animation:fadeUp 1s 1.3s forwards}
+.btn-primary{background:linear-gradient(135deg,var(--gold),var(--copper));color:var(--white);padding:0.9rem 2.2rem;border-radius:50px;text-decoration:none;font-size:0.82rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;transition:all 0.4s;box-shadow:0 4px 30px rgba(201,168,76,0.4);display:inline-flex;align-items:center;gap:0.6rem}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(201,168,76,0.5)}
+.btn-secondary{background:transparent;color:var(--white);padding:0.9rem 2.2rem;border-radius:50px;text-decoration:none;font-size:0.82rem;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;transition:all 0.4s;border:1px solid rgba(201,168,76,0.5);display:inline-flex;align-items:center;gap:0.6rem}
+.btn-secondary:hover{background:rgba(201,168,76,0.1);border-color:var(--gold);transform:translateY(-2px)}
+.hero-ornament{position:absolute;width:500px;height:500px;border-radius:50%;border:1px solid rgba(130,60,180,0.1);top:50%;left:50%;transform:translate(-50%,-50%);z-index:1;animation:slow-rotate 30s linear infinite}
+.hero-ornament::before{content:'';position:absolute;inset:40px;border-radius:50%;border:1px solid rgba(201,168,76,0.05)}
+.breadcrumb{position:absolute;bottom:3rem;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:0.6rem;opacity:0;animation:fadeIn 1s 1.6s forwards}
+.breadcrumb a,.breadcrumb span{font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.35);text-decoration:none;transition:color 0.3s}
+.breadcrumb a:hover{color:var(--gold-light)}
+.breadcrumb .sep{color:rgba(201,168,76,0.3)}
+.breadcrumb .current{color:var(--gold-light)}
+
+section{padding:5rem 0}
+.container{max-width:1200px;margin:0 auto;padding:0 4rem}
+.section-eyebrow{display:inline-flex;align-items:center;gap:0.8rem;margin-bottom:1rem}
+.section-eyebrow span{font-size:0.7rem;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold-dark)}
+.eyebrow-line{width:30px;height:1px;background:var(--gold)}
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,4.5vw,3.2rem);font-weight:400;line-height:1.2;color:var(--text-dark)}
+.section-title em{font-style:italic;color:var(--rose-gold)}
+
+/* ABOUT */
+#about{background:var(--cream)}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+.about-visual{}
+.about-main-box{background:linear-gradient(135deg,#0d0518,#1e0a30);border-radius:24px;padding:3.5rem 2.5rem;text-align:center;position:relative;overflow:hidden}
+.about-main-box::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 30%,rgba(130,60,180,0.3),transparent 60%)}
+.about-icon{font-size:5rem;display:block;margin-bottom:1rem;position:relative;z-index:1}
+.about-badge-text{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:400;color:var(--white);position:relative;z-index:1;line-height:1.3}
+.about-badge-text em{font-style:italic;color:var(--gold-light)}
+.about-float-1,.about-float-2{position:absolute;background:var(--cream);border:1px solid rgba(201,168,76,0.2);border-radius:16px;padding:0.9rem 1.2rem;font-size:0.78rem}
+.about-float-1{bottom:-1.5rem;left:-1.5rem;font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--text-mid);max-width:170px;line-height:1.5;box-shadow:0 8px 30px rgba(0,0,0,0.07)}
+.about-float-2{top:1.5rem;right:-1.5rem;display:flex;align-items:center;gap:0.5rem;box-shadow:0 8px 30px rgba(0,0,0,0.07)}
+.about-float-2 .dot{width:8px;height:8px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--copper))}
+.about-float-2 span{color:var(--text-mid);font-size:0.75rem;font-weight:500}
+.about-lead{font-family:'Cormorant Garamond',serif;font-size:1.15rem;color:var(--text-mid);font-style:italic;line-height:1.8;margin-bottom:1.4rem}
+.about-body{font-size:0.9rem;color:var(--text-light);line-height:1.85;margin-bottom:1.5rem;font-weight:300}
+.about-pills{display:flex;flex-wrap:wrap;gap:0.6rem;margin-top:1.2rem}
+.pill{background:linear-gradient(135deg,rgba(201,168,76,0.1),rgba(197,132,106,0.08));border:1px solid rgba(201,168,76,0.25);border-radius:30px;padding:0.35rem 0.9rem;font-size:0.72rem;letter-spacing:0.08em;color:var(--gold-dark);font-weight:500}
+
+/* OCCASION GRID */
+#occasions{background:var(--off-white)}
+.occ-header{text-align:center;margin-bottom:3rem}
+.occ-subtitle{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--text-light);font-style:italic;margin-top:0.7rem}
+.occ-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem}
+.occ-card{border-radius:20px;overflow:hidden;cursor:pointer;transition:transform 0.4s,box-shadow 0.4s;position:relative}
+.occ-card:hover{transform:translateY(-7px);box-shadow:0 28px 55px rgba(0,0,0,0.13)}
+.occ-inner{padding:2.2rem 1.8rem;min-height:240px;display:flex;flex-direction:column;justify-content:flex-end;position:relative;overflow:hidden}
+.occ-bg{position:absolute;inset:0;transition:transform 0.6s}
+.occ-card:hover .occ-bg{transform:scale(1.04)}
+.occ-bg.engagement{background:linear-gradient(150deg,#1a0e08,#3d2010)}
+.occ-bg.reception{background:linear-gradient(150deg,#0d0518,#2a1045)}
+.occ-bg.sangeet{background:linear-gradient(150deg,#14080e,#2a1020)}
+.occ-bg.birthday{background:linear-gradient(150deg,#060a14,#0e1c38)}
+.occ-bg.corporate{background:linear-gradient(150deg,#080f08,#14201a)}
+.occ-bg.cocktail{background:linear-gradient(150deg,#0a0a1a,#151530)}
+.occ-glow{position:absolute;inset:0}
+.occ-bg.engagement+.occ-glow{background:radial-gradient(ellipse at 50% 30%,rgba(201,168,76,0.2),transparent 55%)}
+.occ-bg.reception+.occ-glow{background:radial-gradient(ellipse at 50% 30%,rgba(130,60,180,0.22),transparent 55%)}
+.occ-bg.sangeet+.occ-glow{background:radial-gradient(ellipse at 50% 30%,rgba(197,132,106,0.2),transparent 55%)}
+.occ-bg.birthday+.occ-glow{background:radial-gradient(ellipse at 50% 30%,rgba(80,130,220,0.2),transparent 55%)}
+.occ-bg.corporate+.occ-glow{background:radial-gradient(ellipse at 50% 30%,rgba(80,180,120,0.15),transparent 55%)}
+.occ-bg.cocktail+.occ-glow{background:radial-gradient(ellipse at 50% 30%,rgba(220,80,150,0.18),transparent 55%)}
+.occ-icon{position:absolute;top:1.4rem;left:1.6rem;font-size:2rem;opacity:0.45;z-index:1}
+.occ-content{position:relative;z-index:2}
+.occ-tag{font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold-light);margin-bottom:0.4rem;display:block}
+.occ-name{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:400;color:var(--white);margin-bottom:0.35rem}
+.occ-desc{font-size:0.78rem;color:rgba(255,255,255,0.45);line-height:1.55;font-weight:300}
+.occ-hover{position:absolute;inset:0;background:rgba(201,168,76,0.06);border:1px solid rgba(201,168,76,0.18);border-radius:20px;opacity:0;transition:opacity 0.35s;z-index:1}
+.occ-card:hover .occ-hover{opacity:1}
+
+/* LOOKS */
+#looks{background:var(--cream)}
+.looks-header{text-align:center;margin-bottom:3rem}
+.looks-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem}
+.look-card{background:var(--white);border-radius:20px;padding:2rem;border:1px solid rgba(197,132,106,0.1);display:flex;align-items:flex-start;gap:1.5rem;transition:all 0.35s;cursor:pointer}
+.look-card:hover{transform:translateY(-4px);box-shadow:0 20px 45px rgba(0,0,0,0.07);border-color:rgba(201,168,76,0.25)}
+.look-icon-wrap{width:64px;height:64px;border-radius:16px;background:linear-gradient(135deg,var(--purple-dark),var(--purple-mid));display:flex;align-items:center;justify-content:center;font-size:1.8rem;flex-shrink:0;position:relative;overflow:hidden}
+.look-icon-wrap::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 30%,rgba(201,168,76,0.2),transparent)}
+.look-icon{position:relative;z-index:1}
+.look-title{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:400;color:var(--text-dark);margin-bottom:0.4rem}
+.look-title em{font-style:italic;color:var(--rose-gold)}
+.look-desc{font-size:0.82rem;color:var(--text-light);line-height:1.7;font-weight:300}
+.look-tags{display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:0.8rem}
+.look-tag{font-size:0.65rem;letter-spacing:0.07em;border-radius:20px;padding:0.2rem 0.65rem;background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.2);color:var(--gold-dark)}
+
+/* PRICING STRIP */
+#pricing{background:linear-gradient(135deg,#0d0518,#070312);padding:5rem 0}
+.pricing-header{text-align:center;margin-bottom:3rem}
+.pricing-header .section-title{color:var(--white)}
+.pricing-header .section-title em{color:var(--gold-light)}
+.pricing-sub{font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:rgba(255,255,255,0.45);font-style:italic;margin-top:0.7rem}
+.pricing-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem}
+.price-card{background:rgba(255,255,255,0.04);border:1px solid rgba(201,168,76,0.15);border-radius:20px;padding:2rem;text-align:center;transition:all 0.4s;cursor:pointer}
+.price-card:hover{background:rgba(201,168,76,0.06);border-color:rgba(201,168,76,0.35);transform:translateY(-6px)}
+.price-card.featured{border-color:rgba(201,168,76,0.4);background:rgba(201,168,76,0.05)}
+.price-icon{font-size:2rem;display:block;margin-bottom:1rem}
+.price-name{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--white);margin-bottom:0.3rem}
+.price-name em{font-style:italic;color:var(--gold-light)}
+.price-desc{font-size:0.78rem;color:rgba(255,255,255,0.38);line-height:1.6;margin-bottom:1.2rem;font-weight:300}
+.price-divider{width:40px;height:1px;background:linear-gradient(90deg,transparent,rgba(201,168,76,0.5),transparent);margin:0.8rem auto}
+.price-includes{font-size:0.75rem;color:rgba(255,255,255,0.5);line-height:1.8;font-weight:300}
+.price-cta{margin-top:1.5rem;background:linear-gradient(135deg,var(--gold),var(--copper));color:var(--white);border:none;border-radius:50px;padding:0.7rem 1.5rem;font-size:0.75rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;transition:all 0.3s;text-decoration:none;display:inline-block}
+.price-cta:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(201,168,76,0.35)}
+.price-cta.outline{background:transparent;border:1px solid rgba(201,168,76,0.35);color:rgba(255,255,255,0.6)}
+.price-cta.outline:hover{background:rgba(201,168,76,0.08);color:var(--gold-light)}
+
+/* FAQ */
+#faq{background:var(--off-white)}
+.faq-header{text-align:center;margin-bottom:3rem}
+.faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;max-width:920px;margin:0 auto}
+.faq-item{background:var(--white);border-radius:16px;padding:1.5rem;border:1px solid rgba(197,132,106,0.1);cursor:pointer;transition:all 0.3s}
+.faq-item:hover{border-color:rgba(201,168,76,0.25);box-shadow:0 8px 30px rgba(0,0,0,0.05)}
+.faq-item.open{border-color:rgba(201,168,76,0.3)}
+.faq-q{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem}
+.faq-q-text{font-family:'Playfair Display',serif;font-size:0.95rem;font-weight:400;color:var(--text-dark);line-height:1.4}
+.faq-icon{flex-shrink:0;width:22px;height:22px;border-radius:50%;border:1px solid rgba(201,168,76,0.3);display:flex;align-items:center;justify-content:center;font-size:0.8rem;color:var(--gold-dark);transition:transform 0.3s;margin-top:2px}
+.faq-item.open .faq-icon{transform:rotate(45deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height 0.4s ease,margin-top 0.3s;font-size:0.83rem;color:var(--text-light);line-height:1.75;font-weight:300}
+.faq-item.open .faq-a{max-height:200px;margin-top:0.8rem}
+
+/* CTA */
+#cta{background:#0d0806;padding:6rem 0;text-align:center;position:relative;overflow:hidden}
+.cta-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 30%,rgba(130,60,180,0.12) 0%,transparent 60%)}
+.cta-content{position:relative;z-index:2}
+.cta-eyebrow{font-size:0.68rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem;display:block}
+.cta-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,4rem);font-weight:400;color:var(--white);line-height:1.15;margin-bottom:1rem}
+.cta-title em{font-style:italic;background:linear-gradient(135deg,var(--gold-light),var(--copper-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.cta-sub{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:rgba(255,255,255,0.45);font-style:italic;margin-bottom:2.5rem;line-height:1.7}
+.cta-btns{display:flex;gap:1.2rem;justify-content:center;flex-wrap:wrap}
+.btn-gold{background:linear-gradient(135deg,var(--gold),var(--gold-dark));color:var(--white);padding:1rem 2.5rem;border-radius:50px;text-decoration:none;font-size:0.82rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;transition:all 0.4s;box-shadow:0 4px 30px rgba(201,168,76,0.35);display:inline-flex;align-items:center;gap:0.7rem}
+.btn-gold:hover{transform:translateY(-3px);box-shadow:0 15px 45px rgba(201,168,76,0.45)}
+.btn-wa{background:linear-gradient(135deg,#25D366,#128C7E);color:var(--white);padding:1rem 2.5rem;border-radius:50px;text-decoration:none;font-size:0.82rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;transition:all 0.4s;display:inline-flex;align-items:center;gap:0.7rem}
+.btn-wa:hover{transform:translateY(-3px);box-shadow:0 12px 35px rgba(37,211,102,0.3)}
+
+footer{background:#080503;padding:2rem 4rem;border-top:1px solid rgba(201,168,76,0.1);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+.footer-links{display:flex;gap:2rem;list-style:none}
+.footer-links a{color:rgba(255,255,255,0.28);font-size:0.75rem;text-decoration:none;transition:color 0.3s;letter-spacing:0.06em}
+.footer-links a:hover{color:rgba(255,255,255,0.6)}
+.footer-copy{color:rgba(255,255,255,0.15);font-size:0.7rem;letter-spacing:0.05em}
+.footer-logo-text{font-family:'Playfair Display',serif;font-size:0.9rem;background:linear-gradient(135deg,#C9A84C,#C5846A);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:600}
+
+.reveal{opacity:0;transform:translateY(28px);transition:opacity 0.7s,transform 0.7s}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes float-particle{0%{opacity:0;transform:translateY(100vh) scale(0)}10%{opacity:0.8}90%{opacity:0.4}100%{opacity:0;transform:translateY(-100px) scale(1.5)}}
+@keyframes slow-rotate{from{transform:translate(-50%,-50%) rotate(0deg)}to{transform:translate(-50%,-50%) rotate(360deg)}}
+
+@media(max-width:900px){
+  nav{padding:0.9rem 1.2rem}nav.scrolled{padding:0.7rem 1.2rem}
+  .nav-links{display:none}.hamburger{display:flex}
+  .container{padding:0 1.2rem}
+  .about-grid{grid-template-columns:1fr;gap:2.5rem}
+  .about-float-1,.about-float-2{display:none}
+  .occ-grid{grid-template-columns:1fr 1fr;gap:0.8rem}
+  .looks-grid{grid-template-columns:1fr}
+  .pricing-cards{grid-template-columns:1fr;gap:0.8rem}
+  .faq-grid{grid-template-columns:1fr}
+  footer{flex-direction:column;padding:1.5rem 1.2rem;gap:0.8rem}
+  .footer-links{flex-wrap:wrap;gap:1rem}
+}
+@media(max-width:600px){
+  .occ-grid{grid-template-columns:1fr}
+  .hero-title{font-size:2.3rem}
+}
+@media(min-width:901px){
+  .hamburger{display:none !important}.mobile-nav{display:none !important}.mobile-overlay{display:none !important}
+}
+</style>
+</head>
+<body>
+
+<div class="mobile-overlay" id="mobileOverlay"></div>
+<nav class="mobile-nav" id="mobileNav">
+  <a href="index.html">Home</a>
+  <a href="bridal-makeup.html">Bridal Makeup</a>
+  <a href="party-makeup.html">Party Makeup</a>
+  <a href="skin-care.html">Skin Care</a>
+  <a href="#cta" onclick="closeMobileNav()" class="mobile-cta">✦ Book Now</a>
+</nav>
+
+<nav id="mainNav">
+  <a href="index.html" class="nav-logo">Glow Pavi's</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="bridal-makeup.html">Bridal</a></li>
+    <li><a href="party-makeup.html" style="color:var(--gold-light)">Party</a></li>
+    <li><a href="skin-care.html">Skin Care</a></li>
+    <li><a href="index.html#trust">Reviews</a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:1rem">
+    <a href="#cta" class="nav-cta">Book Now</a>
+    <button class="hamburger" id="hamburgerBtn" aria-label="Open menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-particles" id="particlesContainer"></div>
+  <div class="hero-ornament"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">
+      <div class="hero-line"></div>
+      <span>Celebration Glow by Pavi</span>
+      <div class="hero-line"></div>
+    </div>
+    <h1 class="hero-title">
+      Turn heads. Own the room.<br>
+      <em>Be unforgettable.</em>
+    </h1>
+    <p class="hero-subtitle">Bold, radiant, effortless. Party makeup that lasts all night and looks stunning in every photo.</p>
+    <div class="hero-actions">
+      <a href="#occasions" class="btn-primary"><span>✦</span> See All Occasions</a>
+      <a href="https://wa.me/91XXXXXXXXXX" class="btn-secondary"><span>💬</span> WhatsApp Us</a>
+    </div>
+  </div>
+  <div class="breadcrumb">
+    <a href="index.html">Home</a>
+    <span class="sep">›</span>
+    <span class="current">Party Makeup</span>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-visual reveal">
+        <div class="about-main-box">
+          <span class="about-icon">✨</span>
+          <p class="about-badge-text">Made to shine,<br>built to <em>last the night</em></p>
+        </div>
+        <div class="about-float-1">"Pavi made me feel like a movie star at my cousin's reception."</div>
+        <div class="about-float-2"><div class="dot"></div><span>Every occasion, every glow</span></div>
+      </div>
+      <div class="about-text reveal" style="transition-delay:0.15s">
+        <div class="section-eyebrow">
+          <div class="eyebrow-line"></div>
+          <span>About This Service</span>
+        </div>
+        <h2 class="section-title">Party Makeup —<br><em>your night, your glow</em></h2>
+        <p class="about-lead">Whether it's a glittering reception, a Sangeet night, a birthday bash or a corporate gala — your look should be as memorable as the occasion.</p>
+        <p class="about-body">Party makeup at Glow Pavi's Makeover is crafted to be bold without being heavy, radiant without looking overdone. We match your makeup to your outfit, your personality, and the vibe of the event — then add that extra something that makes the entire room turn to look at you.</p>
+        <div class="about-pills">
+          <span class="pill">Long-Lasting Hold</span>
+          <span class="pill">Sweat-Proof</span>
+          <span class="pill">Flash-Friendly</span>
+          <span class="pill">All Skin Tones</span>
+          <span class="pill">Outfit Matched</span>
+          <span class="pill">Quick Sessions</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OCCASIONS -->
+<section id="occasions">
+  <div class="container">
+    <div class="occ-header reveal">
+      <div class="section-eyebrow" style="justify-content:center">
+        <div class="eyebrow-line"></div>
+        <span>Perfect For</span>
+        <div class="eyebrow-line"></div>
+      </div>
+      <h2 class="section-title" style="text-align:center">Every celebration<br><em>deserves its own glow</em></h2>
+      <p class="occ-subtitle" style="text-align:center;margin-top:0.7rem">From receptions to rooftop parties — we've got your look covered.</p>
+    </div>
+    <div class="occ-grid">
+      <div class="occ-card reveal">
+        <div class="occ-inner">
+          <div class="occ-bg engagement"></div><div class="occ-glow"></div>
+          <div class="occ-hover"></div>
+          <span class="occ-icon">💍</span>
+          <div class="occ-content">
+            <span class="occ-tag">✦ Milestone Event</span>
+            <h3 class="occ-name">Engagement Ceremony</h3>
+            <p class="occ-desc">Soft gold tones, warm contour. Your first big look as a couple.</p>
+          </div>
+        </div>
+      </div>
+      <div class="occ-card reveal" style="transition-delay:0.1s">
+        <div class="occ-inner">
+          <div class="occ-bg reception"></div><div class="occ-glow"></div>
+          <div class="occ-hover"></div>
+          <span class="occ-icon">🥂</span>
+          <div class="occ-content">
+            <span class="occ-tag">✦ Celebration Night</span>
+            <h3 class="occ-name">Reception Night</h3>
+            <p class="occ-desc">Dramatic eyes, sculpted contour. Born for the spotlight.</p>
+          </div>
+        </div>
+      </div>
+      <div class="occ-card reveal" style="transition-delay:0.2s">
+        <div class="occ-inner">
+          <div class="occ-bg sangeet"></div><div class="occ-glow"></div>
+          <div class="occ-hover"></div>
+          <span class="occ-icon">💃</span>
+          <div class="occ-content">
+            <span class="occ-tag">✦ Dance Night</span>
+            <h3 class="occ-name">Sangeet & Mehndi</h3>
+            <p class="occ-desc">Vibrant, playful, sweat-proof. Made for dancing all night.</p>
+          </div>
+        </div>
+      </div>
+      <div class="occ-card reveal" style="transition-delay:0.1s">
+        <div class="occ-inner">
+          <div class="occ-bg birthday"></div><div class="occ-glow"></div>
+          <div class="occ-hover"></div>
+          <span class="occ-icon">🎂</span>
+          <div class="occ-content">
+            <span class="occ-tag">✦ Your Day</span>
+            <h3 class="occ-name">Birthday Parties</h3>
+            <p class="occ-desc">Camera-ready glow that photographs beautifully all evening.</p>
+          </div>
+        </div>
+      </div>
+      <div class="occ-card reveal" style="transition-delay:0.2s">
+        <div class="occ-inner">
+          <div class="occ-bg corporate"></div><div class="occ-glow"></div>
+          <div class="occ-hover"></div>
+          <span class="occ-icon">👔</span>
+          <div class="occ-content">
+            <span class="occ-tag">✦ Professional</span>
+            <h3 class="occ-name">Corporate Events</h3>
+            <p class="occ-desc">Polished, professional, and confident — without looking overdone.</p>
+          </div>
+        </div>
+      </div>
+      <div class="occ-card reveal" style="transition-delay:0.3s">
+        <div class="occ-inner">
+          <div class="occ-bg cocktail"></div><div class="occ-glow"></div>
+          <div class="occ-hover"></div>
+          <span class="occ-icon">🌙</span>
+          <div class="occ-content">
+            <span class="occ-tag">✦ Evening Event</span>
+            <h3 class="occ-name">Cocktail & Gala</h3>
+            <p class="occ-desc">Sultry, sophisticated, and stunning. Perfect for evening affairs.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SIGNATURE LOOKS -->
+<section id="looks">
+  <div class="container">
+    <div class="looks-header reveal">
+      <div class="section-eyebrow" style="justify-content:center">
+        <div class="eyebrow-line"></div>
+        <span>Signature Looks</span>
+        <div class="eyebrow-line"></div>
+      </div>
+      <h2 class="section-title" style="text-align:center">Choose your<br><em>statement look</em></h2>
+    </div>
+    <div class="looks-grid">
+      <div class="look-card reveal">
+        <div class="look-icon-wrap"><span class="look-icon">🌟</span></div>
+        <div>
+          <h3 class="look-title">Dewy <em>Goddess</em></h3>
+          <p class="look-desc">Glass-skin finish with natural flush and luminous highlight. Effortless beauty that photographs like sunlight. Perfect for morning and afternoon events.</p>
+          <div class="look-tags"><span class="look-tag">Radiant Finish</span><span class="look-tag">Natural Glow</span><span class="look-tag">Lightweight</span></div>
+        </div>
+      </div>
+      <div class="look-card reveal" style="transition-delay:0.1s">
+        <div class="look-icon-wrap"><span class="look-icon">🌃</span></div>
+        <div>
+          <h3 class="look-title">Smoky <em>Night Queen</em></h3>
+          <p class="look-desc">Deep, sultry eyes with sculpted contour and a nude or berry lip. The ultimate evening look that commands attention the moment you walk in.</p>
+          <div class="look-tags"><span class="look-tag">Dramatic Eyes</span><span class="look-tag">Bold Contour</span><span class="look-tag">Night Events</span></div>
+        </div>
+      </div>
+      <div class="look-card reveal" style="transition-delay:0.15s">
+        <div class="look-icon-wrap"><span class="look-icon">🌹</span></div>
+        <div>
+          <h3 class="look-title">Rosy <em>Flush</em></h3>
+          <p class="look-desc">Soft rosy blush, soft-defined brows and a fresh flush of romance. Sweet yet sophisticated — ideal for engagements, mehndi, or daytime celebrations.</p>
+          <div class="look-tags"><span class="look-tag">Soft & Sweet</span><span class="look-tag">Romantic</span><span class="look-tag">Daytime</span></div>
+        </div>
+      </div>
+      <div class="look-card reveal" style="transition-delay:0.2s">
+        <div class="look-icon-wrap"><span class="look-icon">✨</span></div>
+        <div>
+          <h3 class="look-title">Golden <em>Hour</em></h3>
+          <p class="look-desc">Warm bronzed skin, gold-kissed eyes, and a glossy lip. This look captures the magic of golden evening light and keeps you glowing for every photo.</p>
+          <div class="look-tags"><span class="look-tag">Bronze & Gold</span><span class="look-tag">Reception</span><span class="look-tag">Celebrations</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="container">
+    <div class="pricing-header reveal">
+      <div class="section-eyebrow" style="justify-content:center">
+        <div class="eyebrow-line" style="background:rgba(201,168,76,0.5)"></div>
+        <span style="color:var(--gold-light)">Party Packages</span>
+        <div class="eyebrow-line" style="background:rgba(201,168,76,0.5)"></div>
+      </div>
+      <h2 class="section-title">Simple, transparent<br><em>pricing</em></h2>
+      <p class="pricing-sub">No hidden charges. Just beautiful results.</p>
+    </div>
+    <div class="pricing-cards">
+      <div class="price-card reveal">
+        <span class="price-icon">💫</span>
+        <p class="price-name">The <em>Glow</em></p>
+        <p class="price-desc">Perfect for single daytime events and intimate celebrations</p>
+        <div class="price-divider"></div>
+        <p class="price-includes">Full face makeup · Natural finish<br>60–90 minute session · Kajal & lashes</p>
+        <a href="#cta" class="price-cta outline">Enquire</a>
+      </div>
+      <div class="price-card featured reveal" style="transition-delay:0.1s">
+        <span class="price-icon">✨</span>
+        <p class="price-name">The <em>Radiance</em></p>
+        <p class="price-desc">Our most popular — for receptions, birthdays & sangeet nights</p>
+        <div class="price-divider"></div>
+        <p class="price-includes">Full glam makeup · HD finish<br>Premium lashes · Contouring<br>Hair pinning included · 2–2.5 hours</p>
+        <a href="#cta" class="price-cta">Book Now</a>
+      </div>
+      <div class="price-card reveal" style="transition-delay:0.2s">
+        <span class="price-icon">🌙</span>
+        <p class="price-name">The <em>Iconic</em></p>
+        <p class="price-desc">Complete transformation for high-profile events & galas</p>
+        <div class="price-divider"></div>
+        <p class="price-includes">Airbrush or HD glam · Full hair styling<br>False lashes & kajal · Contouring<br>Touch-up kit · Priority booking</p>
+        <a href="#cta" class="price-cta outline">Enquire</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="container">
+    <div class="faq-header reveal">
+      <div class="section-eyebrow" style="justify-content:center">
+        <div class="eyebrow-line"></div><span>Questions</span><div class="eyebrow-line"></div>
+      </div>
+      <h2 class="section-title" style="text-align:center">Everything you<br><em>need to know</em></h2>
+    </div>
+    <div class="faq-grid">
+      <div class="faq-item reveal">
+        <div class="faq-q"><span class="faq-q-text">How long does party makeup take?</span><div class="faq-icon">+</div></div>
+        <div class="faq-a">Usually 60–90 minutes for a standard look, and up to 2.5 hours for full glam with hair. We recommend booking early so you're never rushing.</div>
+      </div>
+      <div class="faq-item reveal" style="transition-delay:0.1s">
+        <div class="faq-q"><span class="faq-q-text">Can you come to my venue or home?</span><div class="faq-icon">+</div></div>
+        <div class="faq-a">Yes! Home and venue visits are available across Madurai. Travel charges apply for locations beyond a certain distance. Contact us for exact rates.</div>
+      </div>
+      <div class="faq-item reveal" style="transition-delay:0.15s">
+        <div class="faq-q"><span class="faq-q-text">How long does the makeup last?</span><div class="faq-icon">+</div></div>
+        <div class="faq-a">Party makeup is designed to last 8–12 hours with our long-hold, sweat-proof products. Great for events that go late into the night.</div>
+      </div>
+      <div class="faq-item reveal" style="transition-delay:0.2s">
+        <div class="faq-q"><span class="faq-q-text">Do I need to bring anything?</span><div class="faq-icon">+</div></div>
+        <div class="faq-a">Just yourself! We bring all professional tools and products. However, wearing a front-open outfit during the session prevents smudging when you change.</div>
+      </div>
+      <div class="faq-item reveal" style="transition-delay:0.25s">
+        <div class="faq-q"><span class="faq-q-text">Can I request a specific look?</span><div class="faq-icon">+</div></div>
+        <div class="faq-a">Absolutely. Share reference images from Pinterest or Instagram and we'll customise the look to match your vision, outfit colour, and skin tone.</div>
+      </div>
+      <div class="faq-item reveal" style="transition-delay:0.3s">
+        <div class="faq-q"><span class="faq-q-text">Do you do group bookings?</span><span class="faq-icon">+</span></div>
+        <div class="faq-a">Yes — group bookings for family functions, bachelorette parties, and friend groups are available. Special rates apply for groups of 3 or more.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="cta-bg"></div>
+  <div class="container">
+    <div class="cta-content reveal">
+      <span class="cta-eyebrow">✦ Your Celebration Awaits</span>
+      <h2 class="cta-title">Ready to be the most<br><em>beautiful one there?</em></h2>
+      <p class="cta-sub">Book your party glam session today. Limited slots — secure yours now.</p>
+      <div class="cta-btns">
+        <a href="https://wa.me/91XXXXXXXXXX" class="btn-gold"><span>✦</span> Book Your Glow</a>
+        <a href="https://wa.me/91XXXXXXXXXX" class="btn-wa">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          WhatsApp Now
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-logo-text">Glow Pavi's Makeover</span>
+  <ul class="footer-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="bridal-makeup.html">Bridal</a></li>
+    <li><a href="party-makeup.html">Party Makeup</a></li>
+    <li><a href="skin-care.html">Skin Care</a></li>
+  </ul>
+  <p class="footer-copy">© 2025 Glow Pavi's Makeover · Madurai</p>
+</footer>
+
+<script>
+const nav=document.getElementById('mainNav');
+window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',window.scrollY>80),{passive:true});
+const hamburger=document.getElementById('hamburgerBtn');
+const mobileNav=document.getElementById('mobileNav');
+const mobileOverlay=document.getElementById('mobileOverlay');
+hamburger.addEventListener('click',()=>{const isOpen=mobileNav.classList.toggle('open');hamburger.classList.toggle('open',isOpen);mobileOverlay.classList.toggle('show',isOpen);document.body.style.overflow=isOpen?'hidden':'';});
+mobileOverlay.addEventListener('click',closeMobileNav);
+function closeMobileNav(){mobileNav.classList.remove('open');hamburger.classList.remove('open');mobileOverlay.classList.remove('show');document.body.style.overflow='';}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMobileNav();});
+const pc=document.getElementById('particlesContainer');
+for(let i=0;i<25;i++){const p=document.createElement('div');p.className='particle';p.style.cssText=`left:${Math.random()*100}%;animation-duration:${8+Math.random()*12}s;animation-delay:${Math.random()*10}s;width:${1+Math.random()*2}px;height:${1+Math.random()*2}px`;pc.appendChild(p);}
+const revealObs=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');revealObs.unobserve(e.target);}});},{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>revealObs.observe(el));
+document.querySelectorAll('.faq-item').forEach(item=>{item.addEventListener('click',()=>{const wasOpen=item.classList.contains('open');document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));if(!wasOpen)item.classList.add('open');});});
+</script>
+</body>
+</html>

@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bridal Makeup — Glow Pavi's Makeover</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --gold:#C9A84C;--gold-light:#E8C97A;--gold-dark:#9A7A32;
+  --blush:#F2D0C8;--blush-deep:#E8A89A;--blush-soft:#FAF0EC;
+  --rose-gold:#C5846A;--rose-light:#EBC4B8;
+  --white:#FFFFFF;--off-white:#FDF8F5;--cream:#FAF3EE;
+  --text-dark:#2C1810;--text-mid:#6B4C3B;--text-light:#A07060;
+  --copper:#B5622A;--copper-light:#D4895A;
+}
+html{scroll-behavior:smooth;overflow-x:hidden}
+body{font-family:'Inter',sans-serif;background:var(--off-white);color:var(--text-dark);overflow-x:hidden}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:1rem 4rem;display:flex;justify-content:space-between;align-items:center;transition:all 0.4s ease;background:transparent}
+nav.scrolled{background:rgba(253,248,245,0.96);backdrop-filter:blur(20px);border-bottom:1px solid rgba(197,132,106,0.15);padding:0.7rem 4rem}
+.nav-logo{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:600;background:linear-gradient(135deg,#C9A84C,#C5846A);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-decoration:none}
+.nav-links{display:flex;gap:2.5rem;list-style:none}
+.nav-links a{text-decoration:none;color:var(--white);font-size:0.82rem;font-weight:400;letter-spacing:0.12em;text-transform:uppercase;transition:color 0.3s}
+nav.scrolled .nav-links a{color:var(--text-mid)}
+.nav-links a:hover{color:var(--gold)}
+.nav-cta{background:linear-gradient(135deg,var(--gold),var(--copper));color:var(--white);padding:0.55rem 1.5rem;border-radius:30px;text-decoration:none;font-size:0.78rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;transition:all 0.3s;box-shadow:0 4px 20px rgba(197,132,106,0.4)}
+.nav-cta:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(197,132,106,0.5)}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;background:none;border:none}
+.hamburger span{display:block;width:24px;height:2px;background:var(--white);border-radius:2px;transition:all 0.35s}
+nav.scrolled .hamburger span{background:var(--text-dark)}
+.mobile-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:1040;opacity:0;pointer-events:none;transition:opacity 0.4s}
+.mobile-overlay.show{opacity:1;pointer-events:all}
+.mobile-nav{position:fixed;top:0;right:-100%;width:min(320px,85vw);height:100vh;background:linear-gradient(160deg,#1a0e08,#0d0806);z-index:1050;transition:right 0.45s cubic-bezier(0.77,0,0.175,1);padding:5rem 2.5rem 3rem;display:flex;flex-direction:column;border-left:1px solid rgba(201,168,76,0.12);visibility:hidden;pointer-events:none}
+.mobile-nav.open{right:0;visibility:visible;pointer-events:all}
+.mobile-nav a{display:block;color:rgba(255,255,255,0.75);text-decoration:none;font-size:1.05rem;font-weight:300;letter-spacing:0.08em;padding:0.9rem 0;border-bottom:1px solid rgba(201,168,76,0.08);transition:color 0.3s}
+.mobile-nav a:hover{color:var(--gold-light)}
+.mobile-nav .mobile-cta{margin-top:2rem;background:linear-gradient(135deg,var(--gold),var(--copper));color:var(--white);text-align:center;padding:0.9rem;border-radius:30px;font-size:0.82rem;letter-spacing:0.1em;text-transform:uppercase;font-weight:500;border-bottom:none}
+
+/* HERO */
+#hero{height:90vh;min-height:580px;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#0d0806}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 35% 50%,rgba(197,132,106,0.22) 0%,transparent 55%),radial-gradient(ellipse at 75% 25%,rgba(201,168,76,0.14) 0%,transparent 45%),linear-gradient(135deg,#1a0e08 0%,#0d0806 40%,#180f08 100%);z-index:0}
+.hero-particles{position:absolute;inset:0;z-index:1;pointer-events:none}
+.particle{position:absolute;width:2px;height:2px;background:var(--gold-light);border-radius:50%;animation:float-particle linear infinite;opacity:0}
+.hero-content{position:relative;z-index:3;text-align:center;max-width:860px;padding:2rem}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:1rem;margin-bottom:1.5rem;opacity:0;animation:fadeUp 1s 0.4s forwards}
+.hero-line{width:40px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.hero-eyebrow span{font-size:0.72rem;font-weight:400;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold-light)}
+.hero-title{font-family:'Playfair Display',serif;font-size:clamp(2.6rem,6.5vw,5rem);font-weight:400;line-height:1.1;color:var(--white);margin-bottom:1.2rem;opacity:0;animation:fadeUp 1s 0.7s forwards}
+.hero-title em{font-style:italic;background:linear-gradient(135deg,var(--gold-light),var(--copper-light),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:block}
+.hero-subtitle{font-family:'Cormorant Garamond',serif;font-size:clamp(1rem,2.5vw,1.35rem);font-weight:300;color:rgba(255,255,255,0.6);line-height:1.8;max-width:580px;margin:0 auto 2.5rem;opacity:0;animation:fadeUp 1s 1s forwards;font-style:italic}
+.hero-actions{display:flex;gap:1.2rem;justify-content:center;flex-wrap:wrap;opacity:0;animation:fadeUp 1s 1.3s forwards}
+.btn-primary{background:linear-gradient(135deg,var(--gold),var(--copper));color:var(--white);padding:0.9rem 2.2rem;border-radius:50px;text-decoration:none;font-size:0.82rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;transition:all 0.4s;box-shadow:0 4px 30px rgba(201,168,76,0.4);display:inline-flex;align-items:center;gap:0.6rem}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(201,168,76,0.5)}
+.btn-secondary{background:transparent;color:var(--white);padding:0.9rem 2.2rem;border-radius:50px;text-decoration:none;font-size:0.82rem;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;transition:all 0.4s;border:1px solid rgba(201,168,76,0.5);display:inline-flex;align-items:center;gap:0.6rem}
+.btn-secondary:hover{background:rgba(201,168,76,0.1);border-color:var(--gold);transform:translateY(-2px)}
+.hero-ornament{position:absolute;width:500px;height:500px;border-radius:50%;border:1px solid rgba(201,168,76,0.07);top:50%;left:50%;transform:translate(-50%,-50%);z-index:1;animation:slow-rotate 30s linear infinite}
+.hero-ornament::before{content:'';position:absolute;inset:40px;border-radius:50%;border:1px solid rgba(201,168,76,0.05)}
+.breadcrumb{position:absolute;bottom:3rem;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:0.6rem;opacity:0;animation:fadeIn 1s 1.6s forwards}
+.breadcrumb a,.breadcrumb span{font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.35);text-decoration:none;transition:color 0.3s}
+.breadcrumb a:hover{color:var(--gold-light)}
+.breadcrumb .sep{color:rgba(201,168,76,0.3)}
+.breadcrumb .current{color:var(--gold-light)}
+
+/* SECTIONS */
+section{padding:5rem 0}
+.container{max-width:1200px;margin:0 auto;padding:0 4rem}
+.section-eyebrow{display:inline-flex;align-items:center;gap:0.8rem;margin-bottom:1rem}
+.section-eyebrow span{font-size:0.7rem;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold-dark)}
+.eyebrow-line{width:30px;height:1px;background:var(--gold)}
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,4.5vw,3.2rem);font-weight:400;line-height:1.2;color:var(--text-dark)}
+.section-title em{font-style:italic;color:var(--rose-gold)}
+
+/* WHAT IS IT */
+#about{background:var(--cream)}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+.about-visual{position:relative}
+.about-main-box{background:linear-gradient(135deg,#1a0e08,#3d1f12);border-radius:24px;padding:3.5rem 2.5rem;text-align:center;position:relative;overflow:hidden}
+.about-main-box::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 30%,rgba(197,132,106,0.25),transparent 60%)}
+.about-icon{font-size:5rem;display:block;margin-bottom:1rem;position:relative;z-index:1}
+.about-badge-text{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:400;color:var(--white);position:relative;z-index:1;line-height:1.3}
+.about-badge-text em{font-style:italic;color:var(--gold-light)}
+.about-float-1,.about-float-2{position:absolute;background:var(--cream);border:1px solid rgba(201,168,76,0.2);border-radius:16px;padding:0.9rem 1.2rem;font-size:0.78rem}
+.about-float-1{bottom:-1.5rem;left:-1.5rem;font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--text-mid);max-width:170px;line-height:1.5;box-shadow:0 8px 30px rgba(0,0,0,0.07)}
+.about-float-2{top:1.5rem;right:-1.5rem;display:flex;align-items:center;gap:0.5rem;box-shadow:0 8px 30px rgba(0,0,0,0.07)}
+.about-float-2 .dot{width:8px;height:8px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--copper))}
+.about-float-2 span{color:var(--text-mid);font-size:0.75rem;font-weight:500}
+.about-text{}
+.about-text .section-eyebrow{margin-bottom:0.8rem}
+.about-text .section-title{margin-bottom:1.2rem}
+.about-lead{font-family:'Cormorant Garamond',serif;font-size:1.15rem;color:var(--text-mid);font-style:italic;line-height:1.8;margin-bottom:1.4rem}
+.about-body{font-size:0.9rem;color:var(--text-light);line-height:1.85;margin-bottom:1.5rem;font-weight:300}
+.about-pills{display:flex;flex-wrap:wrap;gap:0.6rem;margin-top:1.2rem}
+.pill{background:linear-gradient(135deg,rgba(201,168,76,0.1),rgba(197,132,106,0.08));border:1px solid rgba(201,168,76,0.25);border-radius:30px;padding:0.35rem 0.9rem;font-size:0.72rem;letter-spacing:0.08em;color:var(--gold-dark);font-weight:500}
+
+/* PACKAGES */
+#packages{background:var(--off-white)}
+.packages-header{text-align:center;margin-bottom:3.5rem}
+.packages-subtitle{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--text-light);font-style:italic;margin-top:0.7rem;line-height:1.7}
+.packages-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.pkg-card{border-radius:22px;overflow:hidden;position:relative;transition:transform 0.4s,box-shadow 0.4s;border:1px solid rgba(197,132,106,0.12);background:var(--white)}
+.pkg-card:hover{transform:translateY(-8px);box-shadow:0 30px 60px rgba(0,0,0,0.1)}
+.pkg-card.featured{border:1.5px solid rgba(201,168,76,0.4);box-shadow:0 20px 50px rgba(201,168,76,0.1)}
+.pkg-badge{position:absolute;top:1.2rem;right:1.2rem;background:linear-gradient(135deg,var(--gold),var(--copper));color:var(--white);font-size:0.6rem;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;padding:0.3rem 0.8rem;border-radius:20px}
+.pkg-top{padding:2rem 2rem 1.5rem;background:linear-gradient(135deg,#1a0e08,#2d1710);position:relative;overflow:hidden}
+.pkg-top::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 80% 20%,rgba(201,168,76,0.15),transparent 50%)}
+.pkg-icon{font-size:2.2rem;display:block;margin-bottom:0.8rem;position:relative;z-index:1}
+.pkg-name{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:400;color:var(--white);position:relative;z-index:1;margin-bottom:0.3rem}
+.pkg-name em{font-style:italic;color:var(--gold-light)}
+.pkg-tagline{font-size:0.76rem;color:rgba(255,255,255,0.45);position:relative;z-index:1;letter-spacing:0.06em}
+.pkg-body{padding:1.5rem 2rem 2rem}
+.pkg-features{list-style:none;display:flex;flex-direction:column;gap:0.7rem;margin-bottom:1.8rem}
+.pkg-features li{display:flex;align-items:flex-start;gap:0.6rem;font-size:0.83rem;color:var(--text-mid);line-height:1.5;font-weight:300}
+.pkg-features li::before{content:'✦';color:var(--gold);font-size:0.6rem;margin-top:0.22rem;flex-shrink:0}
+.pkg-cta{width:100%;background:linear-gradient(135deg,var(--gold),var(--copper));color:var(--white);border:none;border-radius:50px;padding:0.8rem;font-size:0.78rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;transition:all 0.3s;text-decoration:none;display:block;text-align:center}
+.pkg-cta:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(201,168,76,0.35)}
+.pkg-cta.outline{background:transparent;border:1px solid rgba(201,168,76,0.4);color:var(--gold-dark)}
+.pkg-cta.outline:hover{background:rgba(201,168,76,0.08)}
+
+/* STYLES */
+#styles{background:var(--cream)}
+.styles-header{text-align:center;margin-bottom:3rem}
+.styles-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem}
+.style-card{border-radius:18px;overflow:hidden;cursor:pointer;transition:transform 0.4s,box-shadow 0.4s;position:relative}
+.style-card:hover{transform:translateY(-6px);box-shadow:0 24px 50px rgba(0,0,0,0.12)}
+.style-inner{padding:2rem 1.5rem;min-height:220px;display:flex;flex-direction:column;justify-content:flex-end;position:relative;overflow:hidden}
+.style-bg{position:absolute;inset:0}
+.style-bg.traditional{background:linear-gradient(160deg,#1a0e08,#3d2010)}
+.style-bg.modern{background:linear-gradient(160deg,#050d1a,#0a1e30)}
+.style-bg.indo-western{background:linear-gradient(160deg,#14080e,#2a1020)}
+.style-bg.airbrush{background:linear-gradient(160deg,#060a14,#0e1830)}
+.style-glow{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 30%,rgba(197,132,106,0.2),transparent 60%)}
+.style-icon{position:absolute;top:1.2rem;left:1.2rem;font-size:1.8rem;opacity:0.5}
+.style-content{position:relative;z-index:1}
+.style-label{font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold-light);margin-bottom:0.3rem;display:block}
+.style-name{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:400;color:var(--white);line-height:1.3;margin-bottom:0.3rem}
+.style-desc{font-size:0.74rem;color:rgba(255,255,255,0.45);line-height:1.5;font-weight:300}
+
+/* PROCESS */
+#process{background:var(--off-white)}
+.process-header{text-align:center;margin-bottom:3.5rem}
+.process-steps{display:grid;grid-template-columns:repeat(5,1fr);gap:0;position:relative;align-items:start}
+.process-line{position:absolute;top:38px;left:10%;right:10%;height:1px;background:linear-gradient(90deg,transparent,var(--gold),var(--gold),transparent);opacity:0.25}
+.step{text-align:center;padding:0 0.8rem}
+.step-circle{width:76px;height:76px;border-radius:50%;border:1.5px solid rgba(201,168,76,0.3);display:flex;align-items:center;justify-content:center;margin:0 auto 1.2rem;background:var(--off-white);transition:all 0.4s;position:relative}
+.step:hover .step-circle{border-color:var(--gold);box-shadow:0 0 28px rgba(201,168,76,0.15)}
+.step-circle-inner{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--copper));display:flex;align-items:center;justify-content:center;font-size:1.3rem}
+.step-num{position:absolute;top:-5px;right:-5px;width:20px;height:20px;border-radius:50%;background:var(--off-white);border:1px solid rgba(201,168,76,0.35);font-size:0.55rem;font-weight:600;color:var(--gold-dark);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif}
+.step-title{font-family:'Playfair Display',serif;font-size:0.92rem;font-weight:400;color:var(--text-dark);margin-bottom:0.5rem;line-height:1.35}
+.step-desc{font-size:0.76rem;color:var(--text-light);line-height:1.7;font-weight:300}
+
+/* FAQ */
+#faq{background:var(--cream)}
+.faq-header{text-align:center;margin-bottom:3rem}
+.faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;max-width:920px;margin:0 auto}
+.faq-item{background:var(--white);border-radius:16px;padding:1.5rem;border:1px solid rgba(197,132,106,0.1);cursor:pointer;transition:all 0.3s}
+.faq-item:hover{border-color:rgba(201,168,76,0.25);box-shadow:0 8px 30px rgba(0,0,0,0.05)}
+.faq-item.open{border-color:rgba(201,168,76,0.3)}
+.faq-q{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem}
+.faq-q-text{font-family:'Playfair Display',serif;font-size:0.95rem;font-weight:400;color:var(--text-dark);line-height:1.4}
+.faq-icon{flex-shrink:0;width:22px;height:22px;border-radius:50%;border:1px solid rgba(201,168,76,0.3);display:flex;align-items:center;justify-content:center;font-size:0.8rem;color:var(--gold-dark);transition:transform 0.3s;margin-top:2px}
+.faq-item.open .faq-icon{transform:rotate(45deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height 0.4s ease,margin-top 0.3s;font-size:0.83rem;color:var(--text-light);line-height:1.75;font-weight:300}
+.faq-item.open .faq-a{max-height:200px;margin-top:0.8rem}
+
+/* CTA BANNER */
+#cta{background:#0d0806;padding:6rem 0;text-align:center;position:relative;overflow:hidden}
+.cta-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 30%,rgba(201,168,76,0.13) 0%,transparent 60%)}
+.cta-content{position:relative;z-index:2}
+.cta-eyebrow{font-size:0.68rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem;display:block}
+.cta-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,4rem);font-weight:400;color:var(--white);line-height:1.15;margin-bottom:1rem}
+.cta-title em{font-style:italic;background:linear-gradient(135deg,var(--gold-light),var(--copper-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.cta-sub{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:rgba(255,255,255,0.45);font-style:italic;margin-bottom:2.5rem;line-height:1.7}
+.cta-btns{display:flex;gap:1.2rem;justify-content:center;flex-wrap:wrap}
+.btn-gold{background:linear-gradient(135deg,var(--gold),var(--gold-dark));color:var(--white);padding:1rem 2.5rem;border-radius:50px;text-decoration:none;font-size:0.82rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;transition:all 0.4s;box-shadow:0 4px 30px rgba(201,168,76,0.35);display:inline-flex;align-items:center;gap:0.7rem}
+.btn-gold:hover{transform:translateY(-3px);box-shadow:0 15px 45px rgba(201,168,76,0.45)}
+.btn-wa{background:linear-gradient(135deg,#25D366,#128C7E);color:var(--white);padding:1rem 2.5rem;border-radius:50px;text-decoration:none;font-size:0.82rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;transition:all 0.4s;display:inline-flex;align-items:center;gap:0.7rem}
+.btn-wa:hover{transform:translateY(-3px);box-shadow:0 12px 35px rgba(37,211,102,0.3)}
+
+/* FOOTER MINI */
+footer{background:#080503;padding:2rem 4rem;border-top:1px solid rgba(201,168,76,0.1);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+.footer-links{display:flex;gap:2rem;list-style:none}
+.footer-links a{color:rgba(255,255,255,0.28);font-size:0.75rem;text-decoration:none;transition:color 0.3s;letter-spacing:0.06em}
+.footer-links a:hover{color:rgba(255,255,255,0.6)}
+.footer-copy{color:rgba(255,255,255,0.15);font-size:0.7rem;letter-spacing:0.05em}
+.footer-logo-text{font-family:'Playfair Display',serif;font-size:0.9rem;background:linear-gradient(135deg,#C9A84C,#C5846A);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:600}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity 0.7s,transform 0.7s}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes float-particle{0%{opacity:0;transform:translateY(100vh) scale(0)}10%{opacity:0.8}90%{opacity:0.4}100%{opacity:0;transform:translateY(-100px) scale(1.5)}}
+@keyframes slow-rotate{from{transform:translate(-50%,-50%) rotate(0deg)}to{transform:translate(-50%,-50%) rotate(360deg)}}
+
+@media(max-width:900px){
+  nav{padding:0.9rem 1.2rem}
+  nav.scrolled{padding:0.7rem 1.2rem}
+  .nav-links{display:none}
+  .hamburger{display:flex}
+  .container{padding:0 1.2rem}
+  .about-grid{grid-template-columns:1fr;gap:2.5rem}
+  .about-float-1,.about-float-2{display:none}
+  .packages-grid{grid-template-columns:1fr;gap:1rem}
+  .styles-grid{grid-template-columns:1fr 1fr;gap:0.8rem}
+  .process-steps{grid-template-columns:1fr 1fr;gap:2rem 1rem}
+  .process-line{display:none}
+  .faq-grid{grid-template-columns:1fr}
+  footer{flex-direction:column;padding:1.5rem 1.2rem;gap:0.8rem}
+  .footer-links{flex-wrap:wrap;gap:1rem}
+}
+@media(max-width:600px){
+  .styles-grid{grid-template-columns:1fr}
+  .hero-title{font-size:2.3rem}
+  #packages{padding:3rem 0}
+}
+@media(min-width:901px){
+  .hamburger{display:none !important}
+  .mobile-nav{display:none !important}
+  .mobile-overlay{display:none !important}
+}
+</style>
+</head>
+<body>
+
+<div class="mobile-overlay" id="mobileOverlay"></div>
+<nav class="mobile-nav" id="mobileNav">
+  <a href="index.html">Home</a>
+  <a href="bridal-makeup.html">Bridal Makeup</a>
+  <a href="party-makeup.html">Party Makeup</a>
+  <a href="skin-care.html">Skin Care</a>
+  <a href="#cta" onclick="closeMobileNav()" class="mobile-cta">✦ Book Now</a>
+</nav>
+
+<nav id="mainNav">
+  <a href="index.html" class="nav-logo">Glow Pavi's</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="bridal-makeup.html" style="color:var(--gold-light)">Bridal</a></li>
+    <li><a href="party-makeup.html">Party</a></li>
+    <li><a href="skin-care.html">Skin Care</a></li>
+    <li><a href="index.html#trust">Reviews</a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:1rem">
+    <a href="#cta" class="nav-cta">Book Now</a>
+    <button class="hamburger" id="hamburgerBtn" aria-label="Open menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-particles" id="particlesContainer"></div>
+  <div class="hero-ornament"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">
+      <div class="hero-line"></div>
+      <span>Signature Bridal Experience</span>
+      <div class="hero-line"></div>
+    </div>
+    <h1 class="hero-title">
+      She only becomes a bride<br>
+      <em>once in her lifetime</em>
+    </h1>
+    <p class="hero-subtitle">Every detail. Every glow. Every emotion. Crafted with love and mastery — just for you.</p>
+    <div class="hero-actions">
+      <a href="#packages" class="btn-primary"><span>✦</span> View Bridal Packages</a>
+      <a href="https://wa.me/91XXXXXXXXXX" class="btn-secondary"><span>💬</span> WhatsApp Us</a>
+    </div>
+  </div>
+  <div class="breadcrumb">
+    <a href="index.html">Home</a>
+    <span class="sep">›</span>
+    <span class="current">Bridal Makeup</span>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-visual reveal">
+        <div class="about-main-box">
+          <span class="about-icon">👰</span>
+          <p class="about-badge-text">Where your<br>vision becomes<br><em>your reality</em></p>
+        </div>
+        <div class="about-float-1">"She listened to every detail and brought my dream to life."</div>
+        <div class="about-float-2"><div class="dot"></div><span>500+ Brides Transformed</span></div>
+      </div>
+      <div class="about-text reveal" style="transition-delay:0.15s">
+        <div class="section-eyebrow">
+          <div class="eyebrow-line"></div>
+          <span>About This Service</span>
+        </div>
+        <h2 class="section-title">Bridal Makeup —<br><em>an art form</em></h2>
+        <p class="about-lead">Your wedding makeup is not just colour on your face. It is the first thing your partner sees when you walk towards them. It is the look that fills a thousand photographs.</p>
+        <p class="about-body">At Glow Pavi's Makeover, bridal makeup is our most sacred offering. We take time to understand your skin tone, your outfit, your ceremony, your personality — and craft a look that is entirely and exclusively yours. Camera-ready, tear-proof, and built to last the entire day and night.</p>
+        <div class="about-pills">
+          <span class="pill">Airbrush Finish</span>
+          <span class="pill">Long-Lasting Formula</span>
+          <span class="pill">HD Ready</span>
+          <span class="pill">Skin-Safe Products</span>
+          <span class="pill">Personalised Trial</span>
+          <span class="pill">Traditional & Modern</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PACKAGES -->
+<section id="packages">
+  <div class="container">
+    <div class="packages-header reveal">
+      <div class="section-eyebrow" style="justify-content:center">
+        <div class="eyebrow-line"></div>
+        <span>Bridal Packages</span>
+        <div class="eyebrow-line"></div>
+      </div>
+      <h2 class="section-title" style="text-align:center">Choose your<br><em>perfect package</em></h2>
+      <p class="packages-subtitle">Every bride deserves a package crafted around her story.</p>
+    </div>
+    <div class="packages-grid">
+      <div class="pkg-card reveal">
+        <div class="pkg-top">
+          <span class="pkg-icon">🌸</span>
+          <p class="pkg-name">The <em>Blossom</em> Bride</p>
+          <p class="pkg-tagline">Classic elegance for the soft bride</p>
+        </div>
+        <div class="pkg-body">
+          <ul class="pkg-features">
+            <li>Full bridal makeup on wedding day</li>
+            <li>One pre-bridal skin prep session</li>
+            <li>Bridal trial included</li>
+            <li>Traditional or modern finish</li>
+            <li>HD & camera-ready products</li>
+            <li>Complimentary touch-up kit</li>
+          </ul>
+          <a href="#cta" class="pkg-cta outline">Enquire Now</a>
+        </div>
+      </div>
+      <div class="pkg-card featured reveal" style="transition-delay:0.12s">
+        <div class="pkg-badge">Most Loved ✦</div>
+        <div class="pkg-top" style="background:linear-gradient(135deg,#2d1508,#4a2010)">
+          <span class="pkg-icon">👑</span>
+          <p class="pkg-name">The <em>Royal</em> Bride</p>
+          <p class="pkg-tagline">Our signature full-day experience</p>
+        </div>
+        <div class="pkg-body">
+          <ul class="pkg-features">
+            <li>Full bridal makeup + bridal hair styling</li>
+            <li>Two pre-bridal skin sessions</li>
+            <li>Full-day artist attendance</li>
+            <li>Bridal trial + family trial</li>
+            <li>Reception night look included</li>
+            <li>Airbrush finish available</li>
+            <li>Premium luxury product brands</li>
+          </ul>
+          <a href="#cta" class="pkg-cta">Book This Package</a>
+        </div>
+      </div>
+      <div class="pkg-card reveal" style="transition-delay:0.24s">
+        <div class="pkg-top">
+          <span class="pkg-icon">✨</span>
+          <p class="pkg-name">The <em>Complete</em> Bride</p>
+          <p class="pkg-tagline">All ceremonies, one complete journey</p>
+        </div>
+        <div class="pkg-body">
+          <ul class="pkg-features">
+            <li>Mehendi, engagement & wedding day</li>
+            <li>Reception & farewell looks</li>
+            <li>Complete pre-bridal skin package</li>
+            <li>Full hair styling for all events</li>
+            <li>Priority scheduling & booking</li>
+            <li>Dedicated artist for every event</li>
+          </ul>
+          <a href="#cta" class="pkg-cta outline">Enquire Now</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STYLES -->
+<section id="styles">
+  <div class="container">
+    <div class="styles-header reveal">
+      <div class="section-eyebrow" style="justify-content:center">
+        <div class="eyebrow-line"></div>
+        <span>Bridal Styles</span>
+        <div class="eyebrow-line"></div>
+      </div>
+      <h2 class="section-title" style="text-align:center">Every bride has<br><em>her own language</em></h2>
+    </div>
+    <div class="styles-grid">
+      <div class="style-card reveal">
+        <div class="style-inner">
+          <div class="style-bg traditional"></div>
+          <div class="style-glow"></div>
+          <span class="style-icon">🌺</span>
+          <div class="style-content">
+            <span class="style-label">✦ Style 01</span>
+            <h3 class="style-name">Traditional South Indian</h3>
+            <p class="style-desc">Rich tones, bold kohl, jewel-like finish. Timeless and deeply rooted.</p>
+          </div>
+        </div>
+      </div>
+      <div class="style-card reveal" style="transition-delay:0.1s">
+        <div class="style-inner">
+          <div class="style-bg modern"></div>
+          <div class="style-glow"></div>
+          <span class="style-icon">💫</span>
+          <div class="style-content">
+            <span class="style-label">✦ Style 02</span>
+            <h3 class="style-name">Modern Dewy Bride</h3>
+            <p class="style-desc">Glass-skin glow, soft contour, barely-there yet breathtaking.</p>
+          </div>
+        </div>
+      </div>
+      <div class="style-card reveal" style="transition-delay:0.2s">
+        <div class="style-inner">
+          <div class="style-bg indo-western"></div>
+          <div class="style-glow"></div>
+          <span class="style-icon">🌙</span>
+          <div class="style-content">
+            <span class="style-label">✦ Style 03</span>
+            <h3 class="style-name">Indo-Western Fusion</h3>
+            <p class="style-desc">Where tradition meets the contemporary — the best of both worlds.</p>
+          </div>
+        </div>
+      </div>
+      <div class="style-card reveal" style="transition-delay:0.3s">
+        <div class="style-inner">
+          <div class="style-bg airbrush"></div>
+          <div class="style-glow"></div>
+          <span class="style-icon">🎨</span>
+          <div class="style-content">
+            <span class="style-label">✦ Style 04</span>
+            <h3 class="style-name">Airbrush Perfection</h3>
+            <p class="style-desc">Ultra-smooth, HD-flawless finish that photographs like a dream.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="container">
+    <div class="process-header reveal">
+      <div class="section-eyebrow" style="justify-content:center">
+        <div class="eyebrow-line"></div>
+        <span>How It Works</span>
+        <div class="eyebrow-line"></div>
+      </div>
+      <h2 class="section-title" style="text-align:center">Your bridal journey,<br><em>step by step</em></h2>
+    </div>
+    <div class="process-steps" style="position:relative">
+      <div class="process-line"></div>
+      <div class="step reveal">
+        <div class="step-circle"><div class="step-circle-inner">📞</div><div class="step-num">01</div></div>
+        <h4 class="step-title">Consultation Call</h4>
+        <p class="step-desc">We understand your vision, date, outfit and ceremony type.</p>
+      </div>
+      <div class="step reveal" style="transition-delay:0.1s">
+        <div class="step-circle"><div class="step-circle-inner">🌿</div><div class="step-num">02</div></div>
+        <h4 class="step-title">Skin Preparation</h4>
+        <p class="step-desc">Pre-bridal treatments to prime your skin for the perfect base.</p>
+      </div>
+      <div class="step reveal" style="transition-delay:0.2s">
+        <div class="step-circle"><div class="step-circle-inner">🎨</div><div class="step-num">03</div></div>
+        <h4 class="step-title">Bridal Trial</h4>
+        <p class="step-desc">We rehearse your complete look so there are zero surprises.</p>
+      </div>
+      <div class="step reveal" style="transition-delay:0.3s">
+        <div class="step-circle"><div class="step-circle-inner">👰</div><div class="step-num">04</div></div>
+        <h4 class="step-title">Wedding Day</h4>
+        <p class="step-desc">We arrive early, take our time, and craft your masterpiece.</p>
+      </div>
+      <div class="step reveal" style="transition-delay:0.4s">
+        <div class="step-circle"><div class="step-circle-inner">✨</div><div class="step-num">05</div></div>
+        <h4 class="step-title">The Reveal</h4>
+        <p class="step-desc">That quiet gasp when you see yourself. That is our purpose.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="container">
+    <div class="faq-header reveal">
+      <div class="section-eyebrow" style="justify-content:center">
+        <div class="eyebrow-line"></div>
+        <span>Common Questions</span>
+        <div class="eyebrow-line"></div>
+      </div>
+      <h2 class="section-title" style="text-align:center">Everything you<br><em>need to know</em></h2>
+    </div>
+    <div class="faq-grid">
+      <div class="faq-item reveal">
+        <div class="faq-q"><span class="faq-q-text">How far in advance should I book?</span><div class="faq-icon">+</div></div>
+        <div class="faq-a">We recommend booking at least 3–6 months before your wedding date, especially for peak season (October–February). Popular dates fill very quickly.</div>
+      </div>
+      <div class="faq-item reveal" style="transition-delay:0.1s">
+        <div class="faq-q"><span class="faq-q-text">Is a bridal trial included?</span><div class="faq-icon">+</div></div>
+        <div class="faq-a">Yes, all our bridal packages include a trial session 2–4 weeks before the wedding day. This ensures the final look is exactly as you envisioned.</div>
+      </div>
+      <div class="faq-item reveal" style="transition-delay:0.15s">
+        <div class="faq-q"><span class="faq-q-text">Do you travel to the wedding venue?</span><div class="faq-icon">+</div></div>
+        <div class="faq-a">Yes! We offer home visits and venue visits across Madurai and surrounding areas. Travel charges apply based on distance.</div>
+      </div>
+      <div class="faq-item reveal" style="transition-delay:0.2s">
+        <div class="faq-q"><span class="faq-q-text">How long does bridal makeup take?</span><div class="faq-icon">+</div></div>
+        <div class="faq-a">Typically 2.5–4 hours depending on the complexity of the look and whether hair styling is included. We always plan accordingly so you're never rushed.</div>
+      </div>
+      <div class="faq-item reveal" style="transition-delay:0.25s">
+        <div class="faq-q"><span class="faq-q-text">What products do you use?</span><div class="faq-icon">+</div></div>
+        <div class="faq-a">We use premium international and professional makeup brands known for longevity, skin safety, and HD performance. All products are dermatologically friendly.</div>
+      </div>
+      <div class="faq-item reveal" style="transition-delay:0.3s">
+        <div class="faq-q"><span class="faq-q-text">Can family members also get makeup done?</span><div class="faq-icon">+</div></div>
+        <div class="faq-a">Absolutely. We offer add-on packages for mothers, sisters, and bridesmaids. Please mention this during booking so we can plan the schedule.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="cta-bg"></div>
+  <div class="container">
+    <div class="cta-content reveal">
+      <span class="cta-eyebrow">✦ Your Big Day Awaits</span>
+      <h2 class="cta-title">Ready to book your<br><em>bridal experience?</em></h2>
+      <p class="cta-sub">Limited slots available. Your wedding day is once — let's make it unforgettable.</p>
+      <div class="cta-btns">
+        <a href="https://wa.me/91XXXXXXXXXX" class="btn-gold"><span>✦</span> Book Your Bridal Slot</a>
+        <a href="https://wa.me/91XXXXXXXXXX" class="btn-wa">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          WhatsApp Now
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-logo-text">Glow Pavi's Makeover</span>
+  <ul class="footer-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="bridal-makeup.html">Bridal</a></li>
+    <li><a href="party-makeup.html">Party Makeup</a></li>
+    <li><a href="skin-care.html">Skin Care</a></li>
+  </ul>
+  <p class="footer-copy">© 2025 Glow Pavi's Makeover · Madurai</p>
+</footer>
+
+<script>
+const nav = document.getElementById('mainNav');
+window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',window.scrollY>80),{passive:true});
+
+const hamburger = document.getElementById('hamburgerBtn');
+const mobileNav = document.getElementById('mobileNav');
+const mobileOverlay = document.getElementById('mobileOverlay');
+hamburger.addEventListener('click',()=>{
+  const isOpen = mobileNav.classList.toggle('open');
+  hamburger.classList.toggle('open',isOpen);
+  mobileOverlay.classList.toggle('show',isOpen);
+  document.body.style.overflow = isOpen?'hidden':'';
+});
+mobileOverlay.addEventListener('click',closeMobileNav);
+function closeMobileNav(){
+  mobileNav.classList.remove('open');
+  hamburger.classList.remove('open');
+  mobileOverlay.classList.remove('show');
+  document.body.style.overflow='';
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMobileNav();});
+
+const pc = document.getElementById('particlesContainer');
+for(let i=0;i<25;i++){const p=document.createElement('div');p.className='particle';p.style.cssText=`left:${Math.random()*100}%;animation-duration:${8+Math.random()*12}s;animation-delay:${Math.random()*10}s;width:${1+Math.random()*2}px;height:${1+Math.random()*2}px`;pc.appendChild(p);}
+
+const revealObs=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');revealObs.unobserve(e.target);}});},{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>revealObs.observe(el));
+
+document.querySelectorAll('.faq-item').forEach(item=>{
+  item.addEventListener('click',()=>{
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));
+    if(!wasOpen) item.classList.add('open');
+  });
+});
+</script>
+</body>
+</html>
