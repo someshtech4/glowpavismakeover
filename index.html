@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Glow Pavi's Makeover</title>
+  <link rel="icon" type="image/png" href="./assets/image/favicon.png">
   <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,600;0,6..96,700;1,6..96,400;1,6..96,600&family=DM+Serif+Display:ital@0;1&family=Jost:wght@200;300;400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
   <style>
   *{margin:0;padding:0;box-sizing:border-box}
@@ -27,10 +28,13 @@
   nav.scrolled .nav-links a{color:var(--text-mid)}
   .nav-links a:hover{color:var(--gold)}
 
-  /* SERVICES DROPDOWN — hover only */
+  /* ===================== FIX 1: SERVICES DROPDOWN — hover-safe with padding bridge ===================== */
   .nav-dropdown{position:relative}
   .nav-dropdown > a{display:flex;align-items:center;gap:0.35rem;cursor:pointer}
   .nav-dropdown > a .caret{font-size:0.55rem;transition:transform 0.3s;opacity:0.7;margin-top:1px}
+  /* Invisible bridge fills the gap between link and menu so mouse doesn't leave the trigger zone */
+  .nav-dropdown::after{content:'';position:absolute;top:100%;left:0;right:0;height:1.5rem;background:transparent;display:none}
+  .nav-dropdown:hover::after{display:block}
   .nav-dropdown:hover > a .caret{transform:rotate(180deg)}
   .dropdown-menu{
     position:absolute;top:calc(100% + 1.2rem);left:50%;transform:translateX(-50%) translateY(-8px);
@@ -39,13 +43,23 @@
     border:1px solid rgba(197,132,106,0.15);
     min-width:220px;opacity:0;pointer-events:none;
     transition:opacity 0.25s ease,transform 0.25s ease;
+    /* Add top padding so the hover zone extends to cover the gap */
+    padding-top:0.6rem;
   }
-  .nav-dropdown:hover .dropdown-menu{opacity:1;pointer-events:all;transform:translateX(-50%) translateY(0)}
+  /* The real fix: extend the dropdown-menu's hover area upward with a pseudo-element */
   .dropdown-menu::before{
+    content:'';position:absolute;
+    /* Cover the gap between nav link and dropdown */
+    top:-1.5rem;left:0;right:0;height:1.5rem;
+    background:transparent;
+  }
+  .dropdown-menu::after{
     content:'';position:absolute;top:-6px;left:50%;
     width:12px;height:12px;background:#fff;border-left:1px solid rgba(197,132,106,0.15);
     border-top:1px solid rgba(197,132,106,0.15);transform:translateX(-50%) rotate(45deg);
+    pointer-events:none;
   }
+  .nav-dropdown:hover .dropdown-menu{opacity:1;pointer-events:all;transform:translateX(-50%) translateY(0)}
   .dropdown-item{
     display:flex;align-items:center;gap:0.75rem;padding:0.7rem 0.9rem;
     border-radius:10px;text-decoration:none;transition:background 0.2s;
@@ -62,19 +76,44 @@
 
   .nav-cta{background:linear-gradient(135deg,var(--gold),var(--copper));color:var(--white);padding:0.55rem 1.5rem;border-radius:30px;text-decoration:none;font-family:'Jost',sans-serif;font-size:0.75rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;transition:all 0.3s;border:none;cursor:pointer;box-shadow:0 4px 20px rgba(197,132,106,0.4)}
   .nav-cta:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(197,132,106,0.5)}
+
+  /* ===================== FIX 5: HAMBURGER + MOBILE NAV ===================== */
   .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;z-index:1100;background:none;border:none}
   .hamburger span{display:block;width:24px;height:2px;background:var(--white);border-radius:2px;transition:all 0.35s ease}
   nav.scrolled .hamburger span{background:var(--text-dark)}
   .hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
   .hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0)}
   .hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
-  .mobile-nav{position:fixed;top:0;right:-100%;width:min(320px,85vw);height:100vh;background:linear-gradient(160deg,#1a0e08 0%,#0d0806 60%,#180f08 100%);z-index:1050;transition:right 0.45s cubic-bezier(0.77,0,0.175,1);padding:5rem 2.5rem 3rem;display:flex;flex-direction:column;gap:0;border-left:1px solid rgba(201,168,76,0.12);visibility:hidden;pointer-events:none}
+
+  /* Mobile nav — smooth slide with proper z-index layering */
+  .mobile-nav{
+    position:fixed;top:0;right:-100%;width:min(320px,85vw);height:100vh;
+    background:linear-gradient(160deg,#1a0e08 0%,#0d0806 60%,#180f08 100%);
+    z-index:1050;
+    transition:right 0.42s cubic-bezier(0.77,0,0.175,1);
+    padding:4.5rem 2.5rem 3rem;
+    display:flex;flex-direction:column;gap:0;
+    border-left:1px solid rgba(201,168,76,0.12);
+    visibility:hidden;pointer-events:none;
+    overflow-y:auto;
+    -webkit-overflow-scrolling:touch;
+  }
   .mobile-nav.open{right:0;visibility:visible;pointer-events:all}
-  .mobile-nav a{display:block;color:rgba(255,255,255,0.75);text-decoration:none;font-family:'Jost',sans-serif;font-size:1.05rem;font-weight:300;letter-spacing:0.08em;padding:0.9rem 0;border-bottom:1px solid rgba(201,168,76,0.08);transition:color 0.3s,padding-left 0.3s}
-  .mobile-nav a:hover{color:var(--gold-light);padding-left:0.5rem}
-  .mobile-nav .mobile-section-label{font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(201,168,76,0.5);margin-top:1.5rem;margin-bottom:0.4rem;display:block}
-  .mobile-nav .mobile-cta{margin-top:2rem;background:linear-gradient(135deg,var(--gold),var(--copper));color:var(--white);text-align:center;padding:0.9rem;border-radius:30px;font-size:0.82rem;letter-spacing:0.1em;text-transform:uppercase;font-weight:500;border-bottom:none}
-  .mobile-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:1040;opacity:0;pointer-events:none;transition:opacity 0.4s}
+  /* FIX: smooth scroll within mobile nav links */
+  .mobile-nav a{
+    display:block;color:rgba(255,255,255,0.75);text-decoration:none;
+    font-family:'Jost',sans-serif;font-size:1rem;font-weight:300;
+    letter-spacing:0.08em;
+    padding:0.85rem 0;
+    border-bottom:1px solid rgba(201,168,76,0.08);
+    transition:color 0.3s,padding-left 0.3s;
+    /* FIX: ensure anchor links respect scroll-behavior */
+    scroll-behavior:smooth;
+  }
+  .mobile-nav a:hover,.mobile-nav a:active{color:var(--gold-light);padding-left:0.5rem}
+  .mobile-section-label{font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(201,168,76,0.5);margin-top:1.4rem;margin-bottom:0.3rem;display:block}
+  .mobile-cta{margin-top:1.8rem;background:linear-gradient(135deg,var(--gold),var(--copper));color:var(--white) !important;text-align:center;padding:0.85rem !important;border-radius:30px;font-size:0.82rem;letter-spacing:0.1em;text-transform:uppercase;font-weight:500;border-bottom:none !important}
+  .mobile-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:1040;opacity:0;pointer-events:none;transition:opacity 0.4s;backdrop-filter:blur(2px)}
   .mobile-overlay.show{opacity:1;pointer-events:all}
 
   /* HERO */
@@ -139,38 +178,49 @@
   @keyframes pulse-glow{0%{box-shadow:0 0 0 0 rgba(201,168,76,0.5)}50%{box-shadow:0 0 0 16px rgba(201,168,76,0);border-color:var(--gold)}100%{box-shadow:0 0 0 0 rgba(201,168,76,0)}}
   @keyframes pop-in{0%{transform:scale(0.5);opacity:0}100%{transform:scale(1);opacity:1}}
 
-  /* SERVICES */
+  /* ===================== FIX 2: SERVICES — 3-column grid with image on top ===================== */
   #services{background:var(--off-white);padding:5rem 0}
   .services-intro{text-align:center;margin-bottom:3rem}
   .services-subtitle{font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--text-light);font-style:italic;margin-top:0.8rem;line-height:1.7}
-  .bento-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem}
-  .bento-card{border-radius:20px;overflow:hidden;position:relative;cursor:pointer;transition:transform 0.4s ease,box-shadow 0.4s ease}
+
+  /* 3-column grid */
+  .bento-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem}
+
+  /* Card: vertical layout — image on top, content below */
+  .bento-card{border-radius:20px;overflow:hidden;position:relative;cursor:pointer;transition:transform 0.4s ease,box-shadow 0.4s ease;display:flex;flex-direction:column;background:var(--white);border:1px solid rgba(197,132,106,0.1)}
   .bento-card:hover{transform:translateY(-8px);box-shadow:0 30px 60px rgba(0,0,0,0.12)}
-  .bento-inner{padding:2rem;height:100%;min-height:300px;display:flex;flex-direction:column;justify-content:flex-end;position:relative;overflow:hidden}
+
+  /* Image area — top portion */
+  .bento-img-wrap{position:relative;overflow:hidden;height:200px;flex-shrink:0}
   .bento-bg{position:absolute;inset:0;z-index:0;transition:transform 0.6s ease}
-  .bento-card:hover .bento-bg{transform:scale(1.05)}
+  .bento-card:hover .bento-bg{transform:scale(1.06)}
   .bento-bg.bridal{background:linear-gradient(135deg,#1a0e08 0%,#3d1f12 40%,#2a1508 100%)}
   .bento-bg.party{background:linear-gradient(135deg,#0d0518 0%,#1e0a30 50%,#120520 100%)}
   .bento-bg.skin{background:linear-gradient(135deg,#05121a 0%,#0a2030 50%,#051520 100%)}
-  .bento-bg.bridal::after,.bento-bg.party::after,.bento-bg.skin::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 30%,rgba(0,0,0,0.6) 100%)}
-  .bento-icon{position:absolute;top:1.5rem;left:1.8rem;font-size:2.2rem;z-index:1;opacity:0.7}
-  .bento-content{position:relative;z-index:1}
-  .bento-tag{font-family:'Jost',sans-serif;font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold-light);margin-bottom:0.4rem;display:block}
-  .bento-title{font-family:'Bodoni Moda',serif;font-size:1.5rem;font-weight:400;color:var(--white);margin-bottom:0.4rem;line-height:1.2}
-  .bento-desc{font-family:'Jost',sans-serif;font-size:0.82rem;color:rgba(255,255,255,0.6);line-height:1.6;font-weight:300;max-width:300px}
-  .bento-hover-reveal{position:absolute;inset:0;background:rgba(201,168,76,0.08);opacity:0;transition:opacity 0.4s;z-index:1;border:1px solid rgba(201,168,76,0.2);border-radius:20px}
-  .bento-card:hover .bento-hover-reveal{opacity:1}
-  .bento-arrow{position:absolute;bottom:1.5rem;right:1.5rem;width:36px;height:36px;border-radius:50%;border:1px solid rgba(201,168,76,0.4);display:flex;align-items:center;justify-content:center;color:var(--gold-light);font-size:1rem;z-index:2;transition:all 0.3s;opacity:0}
-  .bento-card:hover .bento-arrow{opacity:1;transform:scale(1.1)}
+  .bento-bg.bridal::after,.bento-bg.party::after,.bento-bg.skin::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 30%,rgba(0,0,0,0.45) 100%)}
+  .bento-icon{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:3rem;z-index:1;opacity:0.55;transition:all 0.4s;pointer-events:none}
+  .bento-card:hover .bento-icon{opacity:0.7;transform:translate(-50%,-56%) scale(1.08)}
+  .bento-tag-overlay{position:absolute;bottom:0.8rem;left:1rem;z-index:2}
+  .bento-tag{font-family:'Jost',sans-serif;font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.75);background:rgba(0,0,0,0.35);padding:0.2rem 0.6rem;border-radius:20px;display:inline-block}
 
-  /* ===================== BRIDAL CAROUSEL (replaces gallery) ===================== */
+  /* Content area — below image */
+  .bento-content{padding:1.4rem 1.6rem 1.8rem;flex:1;display:flex;flex-direction:column;gap:0.5rem;position:relative}
+  .bento-title{font-family:'Bodoni Moda',serif;font-size:1.35rem;font-weight:400;color:var(--text-dark);line-height:1.2}
+  .bento-desc{font-family:'Jost',sans-serif;font-size:0.83rem;color:var(--text-mid);line-height:1.65;font-weight:300;flex:1}
+  .bento-cta{display:inline-flex;align-items:center;gap:0.4rem;margin-top:0.8rem;font-family:'Jost',sans-serif;font-size:0.72rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold-dark);text-decoration:none;transition:gap 0.3s,color 0.3s}
+  .bento-card:hover .bento-cta{gap:0.7rem;color:var(--copper)}
+
+  /* Accent top bar on hover */
+  .bento-hover-reveal{position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),var(--copper));opacity:0;transition:opacity 0.4s}
+  .bento-card:hover .bento-hover-reveal{opacity:1}
+
+  /* ===================== BRIDAL CAROUSEL ===================== */
   #transformation{background:#0d0806;padding:5rem 0;overflow:hidden}
   .transform-header{text-align:center;margin-bottom:3rem}
   .transform-header .section-title{color:var(--white)}
   .transform-header .section-title em{color:var(--gold-light)}
   .transform-subtitle{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:rgba(255,255,255,0.5);font-style:italic;margin-top:0.6rem}
 
-  /* Infinite marquee carousel */
   .carousel-outer{position:relative;overflow:hidden;padding:1rem 0}
   .carousel-outer::before{content:'';position:absolute;top:0;left:0;bottom:0;width:120px;background:linear-gradient(90deg,#0d0806,transparent);z-index:4;pointer-events:none}
   .carousel-outer::after{content:'';position:absolute;top:0;right:0;bottom:0;width:120px;background:linear-gradient(270deg,#0d0806,transparent);z-index:4;pointer-events:none}
@@ -256,11 +306,14 @@
   .story-body{font-family:'Jost',sans-serif;font-size:0.82rem;line-height:1.75;color:rgba(255,255,255,0.5);font-weight:300}
   .story-quote{font-family:'Cormorant Garamond',serif;font-size:0.9rem;font-style:italic;color:rgba(201,168,76,0.7);border-left:2px solid rgba(201,168,76,0.3);padding-left:0.8rem;margin-top:0.7rem;line-height:1.5}
 
-  /* ===================== BOOKING — TWO COLUMN ===================== */
+  /* ===================== FIX 3: BOOKING — form aligned to top ===================== */
   #booking{position:relative;overflow:hidden;padding:7rem 0;background:linear-gradient(160deg,#0d0806 0%,#1a0c06 50%,#0d0806 100%)}
   #booking::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 30%,rgba(201,168,76,0.13) 0%,transparent 55%),radial-gradient(ellipse at 80% 70%,rgba(197,132,106,0.08) 0%,transparent 45%);pointer-events:none}
 
-  .booking-wrap{max-width:1160px;margin:0 auto;padding:0 4rem;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;position:relative;z-index:2}
+  .booking-wrap{max-width:1160px;margin:0 auto;padding:0 4rem;display:grid;grid-template-columns:1fr 1fr;gap:5rem;
+    /* FIX: align items to top, not center */
+    align-items:start;
+    position:relative;z-index:2}
 
   /* LEFT */
   .booking-lhs{position:relative}
@@ -385,12 +438,22 @@
   @keyframes slow-rotate{from{transform:translate(-50%,-50%) rotate(0deg)}to{transform:translate(-50%,-50%) rotate(360deg)}}
   @keyframes scroll-pulse{0%,100%{opacity:0.3}50%{opacity:1}}
 
-  /* RESPONSIVE */
+  /* ===================== FIX 4 + 5: MOBILE RESPONSIVE ===================== */
   @media(max-width:1024px){
     .booking-wrap{grid-template-columns:1fr;gap:3rem}
     .booking-lhs{max-width:600px;margin:0 auto}
   }
+
   @media(max-width:900px){
+    /* FIX 4: Reduced section padding on mobile */
+    section{padding:3rem 0}
+    #story{padding:3rem 0}
+    #services{padding:3rem 0}
+    #transformation{padding:3rem 0}
+    #trust{padding:3rem 0}
+    #timeline{padding:3.5rem 0}
+    #booking{padding:3rem 0}
+
     nav{padding:0.9rem 1.2rem}
     nav.scrolled{padding:0.7rem 1.2rem}
     .nav-links{display:none}
@@ -398,17 +461,20 @@
     .container{padding:0 1.2rem}
     .process-grid{grid-template-columns:1fr;padding:0 1.2rem;gap:1rem}
     .process-grid::before{display:none}
-    .bento-grid{grid-template-columns:1fr;gap:0.8rem}
-    .stats-bar{grid-template-columns:repeat(2,1fr);padding:1.5rem 1.2rem}
-    .story-timeline{display:none}
+    .process-header{padding:0 1.2rem}
+
+    /* FIX 2 mobile: stack service cards */
+    .bento-grid{grid-template-columns:1fr;gap:1rem}
+    .bento-img-wrap{height:180px}
+
+    .stats-bar{grid-template-columns:repeat(2,1fr);padding:1.5rem 1.2rem;gap:1.2rem}
     footer{padding:2.5rem 1.2rem 1.5rem}
     .footer-main{grid-template-columns:1fr;gap:2rem}
     .footer-bottom{flex-direction:column;align-items:flex-start}
-    #booking{padding:4rem 0}
     .booking-wrap{padding:0 1rem}
-    section{padding:4rem 0}
     .trust-header{padding:0 1.2rem}
-    #timeline{padding:5rem 0}
+    .timeline-header{padding:0 1.2rem}
+    .timeline-header{margin-bottom:2.5rem}
     .two-col{grid-template-columns:1fr}
     .step-label{display:none}
     .step-conn{max-width:28px}
@@ -417,14 +483,22 @@
     .step-bar{padding:1.4rem 1.2rem 1rem}
     .bride-card{width:260px}
     .bride-card-visual{height:160px}
+    .services-intro{padding:0 1.2rem}
   }
+
   @media(max-width:600px){
-    .hero-title{font-size:2.5rem}
+    .hero-title{font-size:2.4rem}
     .footer-bottom-links{flex-wrap:wrap;gap:0.8rem}
     .svc-grid{grid-template-columns:1fr 1fr}
     .budget-grid{grid-template-columns:1fr 1fr}
-    .bride-card{width:240px}
+    .bride-card{width:230px}
+    /* Even tighter mobile padding */
+    section{padding:2.5rem 0}
+    #timeline{padding:3rem 0}
+    .booking-wrap{gap:2rem}
+    .stats-bar{gap:1rem}
   }
+
   @media(min-width:901px){
     .hamburger{display:none !important}
     .mobile-nav{display:none !important}
@@ -442,29 +516,30 @@
 <div class="step-flash" id="stepFlash"></div>
 <div class="mobile-overlay" id="mobileOverlay"></div>
 
+<!-- ===================== FIX 5: MOBILE NAV with proper scroll handling ===================== -->
 <nav class="mobile-nav" id="mobileNav" aria-hidden="true">
   <span class="mobile-section-label">Main</span>
-  <a href="#story" onclick="closeMobileNav()">Story</a>
-  <a href="#services" onclick="closeMobileNav()">Services</a>
-  <a href="#transformation" onclick="closeMobileNav()">Brides</a>
-  <a href="#trust" onclick="closeMobileNav()">Reviews</a>
-  <a href="#timeline" onclick="closeMobileNav()">Journey</a>
+  <a href="#story" onclick="smoothScrollTo('story');closeMobileNav();return false;">Story</a>
+  <a href="#services" onclick="smoothScrollTo('services');closeMobileNav();return false;">Services</a>
+  <a href="#transformation" onclick="smoothScrollTo('transformation');closeMobileNav();return false;">Brides</a>
+  <a href="#trust" onclick="smoothScrollTo('trust');closeMobileNav();return false;">Reviews</a>
+  <a href="#timeline" onclick="smoothScrollTo('timeline');closeMobileNav();return false;">Journey</a>
   <span class="mobile-section-label">Services</span>
   <a href="./bridal-makeup.html" onclick="closeMobileNav()">👰 Bridal Makeup</a>
   <a href="./party-makeup.html" onclick="closeMobileNav()">✨ Party Makeup</a>
   <a href="./skin-care.html" onclick="closeMobileNav()">🌿 Skin Care</a>
-  <a href="#booking" class="mobile-cta" onclick="closeMobileNav()">Book Now</a>
+  <a href="#booking" class="mobile-cta" onclick="smoothScrollTo('booking');closeMobileNav();return false;">Book Now</a>
 </nav>
 
 <!-- MAIN NAV -->
 <nav id="mainNav">
   <div class="nav-logo">
-    <img src="/mnt/user-data/uploads/1776159164148_Logo3.png" alt="Glow Pavi's Makeover"
+    <img src="./assets/image/logo.png" alt="Glow Pavi's Makeover"
       onerror="this.style.display='none';this.parentElement.innerHTML='<span style=\'font-family:Bodoni Moda,serif;font-size:1.1rem;font-weight:600;background:linear-gradient(135deg,#C9A84C,#C5846A);-webkit-background-clip:text;-webkit-text-fill-color:transparent\'>Glow Pavi\'s</span>'">
   </div>
   <ul class="nav-links">
     <li><a href="#story">Story</a></li>
-    <!-- SERVICES DROPDOWN — hover only, no JS needed -->
+    <!-- FIX 1: Services dropdown — hover-safe with invisible bridge -->
     <li class="nav-dropdown">
       <a href="#services">Services <span class="caret">▼</span></a>
       <div class="dropdown-menu">
@@ -472,7 +547,6 @@
           <span class="di-icon">👰</span>
           <span class="di-info">
             <span class="di-label">Bridal Makeup</span>
-            <span class="di-sub">Full-day bridal artistry</span>
           </span>
         </a>
         <div class="dropdown-divider"></div>
@@ -480,7 +554,6 @@
           <span class="di-icon">✨</span>
           <span class="di-info">
             <span class="di-label">Party Makeup</span>
-            <span class="di-sub">Bold glow for every occasion</span>
           </span>
         </a>
         <div class="dropdown-divider"></div>
@@ -488,7 +561,6 @@
           <span class="di-icon">🌿</span>
           <span class="di-info">
             <span class="di-label">Skin Care</span>
-            <span class="di-sub">Pre-bridal glow treatments</span>
           </span>
         </a>
       </div>
@@ -596,7 +668,7 @@
   </div>
 </section>
 
-<!-- SERVICES -->
+<!-- ===================== FIX 2: SERVICES — 3-column with image top, content below ===================== -->
 <section id="services">
   <div class="container">
     <div class="services-intro reveal">
@@ -607,50 +679,71 @@
       <p class="services-subtitle" style="text-align:center">Curated experiences for every occasion, every skin tone, every story.</p>
     </div>
     <div class="bento-grid">
+
+      <!-- Card 1: Bridal -->
       <div class="bento-card reveal">
-        <div class="bento-inner">
-          <div class="bento-bg bridal"><div style="position:absolute;inset:0;background:radial-gradient(ellipse at 60% 40%,rgba(197,132,106,0.25),transparent 60%)"></div></div>
-          <div class="bento-hover-reveal"></div>
-          <span class="bento-icon">👰</span>
-          <div class="bento-content">
+        <div class="bento-hover-reveal"></div>
+        <!-- Image top -->
+        <div class="bento-img-wrap">
+          <div class="bento-bg bridal">
+            <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 60% 40%,rgba(197,132,106,0.25),transparent 60%)"></div>
+          </div>
+          <div class="bento-icon">👰</div>
+          <div class="bento-tag-overlay">
             <span class="bento-tag">✦ Signature Experience</span>
-            <h3 class="bento-title">Bridal Makeup</h3>
-            <p class="bento-desc">A full-day journey dedicated entirely to you — from trial to the aisle. Long-lasting, camera-perfect, deeply personal.</p>
           </div>
-          <div class="bento-arrow">→</div>
+        </div>
+        <!-- Content below -->
+        <div class="bento-content">
+          <h3 class="bento-title">Bridal Makeup</h3>
+          <p class="bento-desc">A full-day journey dedicated entirely to you — from trial to the aisle. Long-lasting, camera-perfect, deeply personal.</p>
+          <a href="./bridal-makeup.html" class="bento-cta">Explore Service <span>→</span></a>
         </div>
       </div>
+
+      <!-- Card 2: Party -->
       <div class="bento-card reveal" style="transition-delay:0.1s">
-        <div class="bento-inner">
-          <div class="bento-bg party"><div style="position:absolute;inset:0;background:radial-gradient(ellipse at 40% 40%,rgba(130,60,180,0.2),transparent 60%)"></div></div>
-          <div class="bento-hover-reveal"></div>
-          <span class="bento-icon">✨</span>
-          <div class="bento-content">
+        <div class="bento-hover-reveal"></div>
+        <div class="bento-img-wrap">
+          <div class="bento-bg party">
+            <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 40% 40%,rgba(130,60,180,0.2),transparent 60%)"></div>
+          </div>
+          <div class="bento-icon">✨</div>
+          <div class="bento-tag-overlay">
             <span class="bento-tag">✦ Celebration Glow</span>
-            <h3 class="bento-title">Party Makeup</h3>
-            <p class="bento-desc">Bold, radiant, effortless. Made to turn heads and last the night.</p>
           </div>
-          <div class="bento-arrow">→</div>
+        </div>
+        <div class="bento-content">
+          <h3 class="bento-title">Party Makeup</h3>
+          <p class="bento-desc">Bold, radiant, effortless. Made to turn heads and last the night — from receptions to festive celebrations.</p>
+          <a href="./party-makeup.html" class="bento-cta">Explore Service <span>→</span></a>
         </div>
       </div>
+
+      <!-- Card 3: Skin Care -->
       <div class="bento-card reveal" style="transition-delay:0.2s">
-        <div class="bento-inner">
-          <div class="bento-bg skin"><div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 30%,rgba(30,100,150,0.25),transparent 60%)"></div></div>
-          <div class="bento-hover-reveal"></div>
-          <span class="bento-icon">🌿</span>
-          <div class="bento-content">
-            <span class="bento-tag">✦ Skin Wellness</span>
-            <h3 class="bento-title">Skin Care</h3>
-            <p class="bento-desc">Pre-bridal glow treatments that prepare your canvas for the big day.</p>
+        <div class="bento-hover-reveal"></div>
+        <div class="bento-img-wrap">
+          <div class="bento-bg skin">
+            <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 30%,rgba(30,100,150,0.25),transparent 60%)"></div>
           </div>
-          <div class="bento-arrow">→</div>
+          <div class="bento-icon">🌿</div>
+          <div class="bento-tag-overlay">
+            <span class="bento-tag">✦ Skin Wellness</span>
+          </div>
+        </div>
+        <div class="bento-content">
+          <h3 class="bento-title">Skin Care</h3>
+          <p class="bento-desc">Pre-bridal glow treatments that prepare your canvas for the big day — for skin that truly radiates.</p>
+          <a href="./skin-care.html" class="bento-cta">Explore Service <span>→</span></a>
         </div>
       </div>
+
     </div>
   </div>
 </section>
 
-<!-- BRIDAL CAROUSEL (replaces gallery) -->
+<!-- BRIDAL CAROUSEL -->
 <section id="transformation">
   <div class="transform-header reveal">
     <div class="section-eyebrow" style="justify-content:center">
@@ -661,11 +754,8 @@
     <h2 class="section-title">Stories of <em>pure transformation</em></h2>
     <p class="transform-subtitle">Hover to pause — each face carries a cherished story.</p>
   </div>
-
   <div class="carousel-outer">
-    <div class="carousel-track" id="bridesTrack">
-      <!-- Cards injected by JS (doubled for seamless loop) -->
-    </div>
+    <div class="carousel-track" id="bridesTrack"></div>
   </div>
 </section>
 
@@ -731,7 +821,7 @@
   </div>
 </section>
 
-<!-- BOOKING -->
+<!-- ===================== FIX 3: BOOKING — form top-aligned ===================== -->
 <section id="booking">
   <div class="booking-wrap">
     <div class="booking-lhs reveal">
@@ -893,7 +983,7 @@
   <div class="footer-main">
     <div>
       <div class="footer-logo">
-        <img src="/mnt/user-data/uploads/1776159164148_Logo3.png" alt="Glow Pavi's Makeover" onerror="this.style.display='none'">
+        <img src="./assets/image/logo.png" alt="Glow Pavi's Makeover" onerror="this.style.display='none'">
       </div>
       <p class="footer-slogan">Every bride deserves to feel like the most beautiful version of herself.</p>
       <div class="footer-social">
@@ -932,14 +1022,38 @@
 </footer>
 
 <script>
-/* ===================== NAV — scroll ===================== */
+/* ===================== NAV SCROLL ===================== */
 const nav = document.getElementById('mainNav');
 window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 80), {passive:true});
 
-/* ===================== MOBILE NAV ===================== */
+/* ===================== FIX 5: SMOOTH SCROLL HELPER ===================== */
+function smoothScrollTo(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  // Account for fixed nav height
+  const navH = document.getElementById('mainNav').offsetHeight || 70;
+  const top = el.getBoundingClientRect().top + window.scrollY - navH;
+  window.scrollTo({top, behavior:'smooth'});
+}
+
+/* Intercept all internal anchor clicks for smooth scroll */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', function(e) {
+    const id = this.getAttribute('href').slice(1);
+    if (!id) return;
+    const target = document.getElementById(id);
+    if (target) {
+      e.preventDefault();
+      smoothScrollTo(id);
+    }
+  });
+});
+
+/* ===================== FIX 5: MOBILE NAV ===================== */
 const hamburger = document.getElementById('hamburgerBtn');
 const mobileNav = document.getElementById('mobileNav');
 const mobileOverlay = document.getElementById('mobileOverlay');
+
 hamburger.addEventListener('click', () => {
   const isOpen = mobileNav.classList.toggle('open');
   hamburger.classList.toggle('open', isOpen);
@@ -949,6 +1063,7 @@ hamburger.addEventListener('click', () => {
   document.body.style.overflow = isOpen ? 'hidden' : '';
 });
 mobileOverlay.addEventListener('click', closeMobileNav);
+
 function closeMobileNav() {
   mobileNav.classList.remove('open');
   hamburger.classList.remove('open');
@@ -957,7 +1072,9 @@ function closeMobileNav() {
   mobileNav.setAttribute('aria-hidden', 'true');
   document.body.style.overflow = '';
 }
-document.addEventListener('keydown', e => { if (e.key === 'Escape' && mobileNav.classList.contains('open')) closeMobileNav(); });
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && mobileNav.classList.contains('open')) closeMobileNav();
+});
 
 /* ===================== PARTICLES ===================== */
 const pc = document.getElementById('particlesContainer');
@@ -1065,10 +1182,8 @@ function makeBrideCard(d) {
     </div>
   </div>`;
 }
-// Double the cards for seamless infinite loop
 const track = document.getElementById('bridesTrack');
-const doubled = [...bridesData, ...bridesData];
-track.innerHTML = doubled.map(makeBrideCard).join('');
+track.innerHTML = [...bridesData, ...bridesData].map(makeBrideCard).join('');
 
 /* ===================== TESTIMONIALS ===================== */
 const testimonialsData = [
@@ -1102,7 +1217,7 @@ function animateT() {
   tTrack.style.transform = `translateX(-${tPos}px)`;
   requestAnimationFrame(animateT);
 }
-tWrap.addEventListener('mouseenter', () => { tPaused = true; });
+tWrap.addEventListener('mouseenter', () => tPaused = true);
 tWrap.addEventListener('mouseleave', () => { tPaused = false; animateT(); });
 let tTouchStart = 0;
 tWrap.addEventListener('touchstart', e => { tPaused = true; tTouchStart = e.touches[0].clientX; }, {passive:true});
@@ -1126,7 +1241,6 @@ document.getElementById('pplMinus').addEventListener('click', () => {
 document.getElementById('pplPlus').addEventListener('click', () => {
   if (peopleCount < 20) { peopleCount++; document.getElementById('pplVal').textContent = peopleCount; formData.people = peopleCount; }
 });
-
 document.getElementById('svcGrid').addEventListener('click', e => {
   const btn = e.target.closest('.svc-pill');
   if (!btn) return;
@@ -1135,7 +1249,6 @@ document.getElementById('svcGrid').addEventListener('click', e => {
   formData.service = btn.dataset.v;
   document.getElementById('e-service').classList.remove('show');
 });
-
 document.getElementById('budgetGrid').addEventListener('click', e => {
   const btn = e.target.closest('.bdg-pill');
   if (!btn) return;
@@ -1151,7 +1264,6 @@ function showErr(inputId, errId) {
   if (inp) inp.classList.add('err');
   if (err) err.classList.add('show');
 }
-
 document.getElementById('f-name').addEventListener('input', () => { document.getElementById('f-name').classList.remove('err'); document.getElementById('e-name').classList.remove('show'); });
 document.getElementById('f-phone').addEventListener('input', () => { document.getElementById('f-phone').classList.remove('err'); document.getElementById('e-phone').classList.remove('show'); });
 document.getElementById('f-date').addEventListener('change', () => { document.getElementById('f-date').classList.remove('err'); document.getElementById('e-date').classList.remove('show'); });
@@ -1194,25 +1306,19 @@ function updateStepUI(from, to, direction) {
   const enteringClass = direction === 'forward' ? 'gone-right' : 'gone-left';
   panels[from].classList.remove('active');
   panels[from].classList.add(leavingClass);
-  panels[to].classList.remove('gone-left', 'gone-right', 'active');
+  panels[to].classList.remove('gone-left','gone-right','active');
   panels[to].classList.add(enteringClass);
   void panels[to].offsetWidth;
   panels[to].classList.remove(enteringClass);
   panels[to].classList.add('active');
   updateBodyHeight(to);
-
   for (let i = 1; i <= 3; i++) {
-    const dot = document.getElementById('sd' + i);
-    const item = document.getElementById('si' + i);
-    dot.classList.remove('active', 'done');
-    item.classList.remove('active', 'done');
+    const dot = document.getElementById('sd'+i), item = document.getElementById('si'+i);
+    dot.classList.remove('active','done'); item.classList.remove('active','done');
     if (i < to) { dot.classList.add('done'); item.classList.add('done'); }
     else if (i === to) { dot.classList.add('active'); item.classList.add('active'); }
   }
-  for (let i = 1; i <= 2; i++) {
-    document.getElementById('sc' + i).classList.toggle('done', i < to);
-  }
-
+  for (let i = 1; i <= 2; i++) document.getElementById('sc'+i).classList.toggle('done', i < to);
   btnBack.style.display = to > 1 ? 'block' : 'none';
   if (to === 3) {
     btnNext.classList.add('btn-wa-f');
@@ -1226,32 +1332,28 @@ function updateStepUI(from, to, direction) {
 
 function updateBodyHeight(step) {
   const fb = document.getElementById('formBody');
-  const panel = panels[step];
-  fb.style.height = panel.offsetHeight + 'px';
+  fb.style.height = panels[step].offsetHeight + 'px';
 }
 
-window.addEventListener('load', () => { updateBodyHeight(1); });
-window.addEventListener('resize', () => { updateBodyHeight(currentStep); }, {passive:true});
+window.addEventListener('load', () => updateBodyHeight(1));
+window.addEventListener('resize', () => updateBodyHeight(currentStep), {passive:true});
 
 btnNext.addEventListener('click', () => {
   if (!validateStep(currentStep)) return;
   if (currentStep === 3) { submitForm(); return; }
   fireFlash(['✓','✨','🌸'][currentStep - 1]);
-  const from = currentStep;
-  currentStep++;
+  const from = currentStep; currentStep++;
   updateStepUI(from, currentStep, 'forward');
 });
-
 btnBack.addEventListener('click', () => {
   if (currentStep === 1) return;
-  const from = currentStep;
-  currentStep--;
+  const from = currentStep; currentStep--;
   updateStepUI(from, currentStep, 'back');
 });
 
 function formatDate(dateStr) {
   if (!dateStr) return 'Not specified';
-  return new Date(dateStr).toLocaleDateString('en-IN', {day:'numeric', month:'long', year:'numeric'});
+  return new Date(dateStr).toLocaleDateString('en-IN', {day:'numeric',month:'long',year:'numeric'});
 }
 
 function submitForm() {
@@ -1259,7 +1361,7 @@ function submitForm() {
   const cover = document.getElementById('successCover');
   const ring = document.getElementById('successRing');
   cover.classList.add('show');
-  setTimeout(() => { ring.classList.add('pop'); }, 100);
+  setTimeout(() => ring.classList.add('pop'), 100);
   const lines = [
     '✨ *Booking Enquiry — Glow Pavi\'s Makeover*','',
     `👤 *Name:* ${formData.name}`,
@@ -1273,7 +1375,7 @@ function submitForm() {
   if (formData.message) lines.push(`💬 *Message:* ${formData.message}`);
   lines.push('','_(Sent via Glow Pavi website booking form)_');
   const msg = encodeURIComponent(lines.join('\n'));
-  setTimeout(() => { window.open(`https://wa.me/919344089990?text=${msg}`, '_blank'); }, 1400);
+  setTimeout(() => window.open(`https://wa.me/919344089990?text=${msg}`, '_blank'), 1400);
 }
 
 /* ===================== SUPABASE ===================== */
@@ -1282,14 +1384,14 @@ const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsI
 
 async function supaFetch(table, query='') {
   const res = await fetch(`${SUPA_URL}/rest/v1/${table}${query}`, {
-    headers: {'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}`}
+    headers:{'apikey':SUPA_KEY,'Authorization':`Bearer ${SUPA_KEY}`}
   });
   return res.json();
 }
 
 async function loadFromSupabase() {
   try {
-    const content = await supaFetch('site_content', '');
+    const content = await supaFetch('site_content','');
     content?.forEach(r => {
       const v = r.value;
       if (r.id === 'hero') {
@@ -1303,31 +1405,25 @@ async function loadFromSupabase() {
       if (r.id === 'stats') {
         const nums = document.querySelectorAll('.stat-num[data-target]');
         const lbls = document.querySelectorAll('.stat-label');
-        const vals = [v.stat1, v.stat2, v.stat3, v.stat4];
-        nums.forEach((el, i) => {
-          if (vals[i]) { el.dataset.target = vals[i].num; el.dataset.suffix = vals[i].suffix; el.textContent = vals[i].num + vals[i].suffix; }
-        });
-        lbls.forEach((el, i) => { if (vals[i]?.label) el.textContent = vals[i].label; });
+        const vals = [v.stat1,v.stat2,v.stat3,v.stat4];
+        nums.forEach((el,i) => { if (vals[i]) { el.dataset.target=vals[i].num; el.dataset.suffix=vals[i].suffix; el.textContent=vals[i].num+vals[i].suffix; } });
+        lbls.forEach((el,i) => { if (vals[i]?.label) el.textContent=vals[i].label; });
       }
       if (r.id === 'contact') {
-        document.querySelectorAll('a[href*="wa.me"]').forEach(a => {
-          if (v.whatsapp) a.href = `https://wa.me/${v.whatsapp}`;
-        });
+        document.querySelectorAll('a[href*="wa.me"]').forEach(a => { if (v.whatsapp) a.href=`https://wa.me/${v.whatsapp}`; });
         const slogan = document.querySelector('.footer-slogan');
         if (slogan && v.slogan) slogan.textContent = v.slogan;
       }
     });
-    const reviews = await supaFetch('testimonials', '?is_active=eq.true&order=sort_order');
+    const reviews = await supaFetch('testimonials','?is_active=eq.true&order=sort_order');
     if (reviews?.length) {
       function makeCard(r) {
         return `<div class="review-card"><div class="review-quote-mark">"</div><div class="review-stars">${'<span class="star">★</span>'.repeat(r.stars||5)}</div><p class="review-text">"${r.review_text}"</p><div class="review-author"><div class="author-avatar ${r.avatar_color||'rose'}">${r.initials||'?'}</div><div><p class="author-name">${r.client_name}</p><p class="author-type">${r.occasion||''}</p></div></div></div>`;
       }
-      const all = [...reviews, ...reviews, ...reviews];
-      tTrack.innerHTML = all.map(makeCard).join('');
+      tTrack.innerHTML = [...reviews,...reviews,...reviews].map(makeCard).join('');
     }
-  } catch(e) { console.log('Supabase load error:', e); }
+  } catch(e) { console.log('Supabase load error:',e); }
 }
-
 document.addEventListener('DOMContentLoaded', loadFromSupabase);
 </script>
 </body>

@@ -18,29 +18,56 @@
 html{scroll-behavior:smooth;overflow-x:hidden}
 body{font-family:'Inter',sans-serif;background:var(--off-white);color:var(--text-dark);overflow-x:hidden}
 
-/* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:1rem 4rem;display:flex;justify-content:space-between;align-items:center;transition:all 0.4s ease;background:transparent}
-nav.scrolled{background:rgba(253,248,245,0.96);backdrop-filter:blur(20px);border-bottom:1px solid rgba(197,132,106,0.15);padding:0.7rem 4rem}
-.nav-logo{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:600;background:linear-gradient(135deg,#C9A84C,#C5846A);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-decoration:none}
-.nav-links{display:flex;gap:2.5rem;list-style:none}
-.nav-links a{text-decoration:none;color:var(--white);font-size:0.82rem;font-weight:400;letter-spacing:0.12em;text-transform:uppercase;transition:color 0.3s}
+/* ===== NAV ===== */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0.5rem 4rem;display:flex;justify-content:space-between;align-items:center;transition:all 0.4s ease;background:transparent}
+nav.scrolled{background:rgba(253,248,245,0.97);backdrop-filter:blur(20px);border-bottom:1px solid rgba(197,132,106,0.15);padding:0.4rem 4rem}
+.nav-logo img{height:62px;width:62px;object-fit:contain}
+.nav-links{display:flex;gap:2.5rem;list-style:none;align-items:center}
+.nav-links a{text-decoration:none;color:var(--white);font-family:'Inter',sans-serif;font-size:0.78rem;font-weight:400;letter-spacing:0.14em;text-transform:uppercase;transition:color 0.3s}
 nav.scrolled .nav-links a{color:var(--text-mid)}
 .nav-links a:hover{color:var(--gold)}
-.nav-cta{background:linear-gradient(135deg,var(--gold),var(--copper));color:var(--white);padding:0.55rem 1.5rem;border-radius:30px;text-decoration:none;font-size:0.78rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;transition:all 0.3s;box-shadow:0 4px 20px rgba(197,132,106,0.4)}
-.nav-cta:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(197,132,106,0.5)}
-.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;background:none;border:none}
-.hamburger span{display:block;width:24px;height:2px;background:var(--white);border-radius:2px;transition:all 0.35s}
-nav.scrolled .hamburger span{background:var(--text-dark)}
-.mobile-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:1040;opacity:0;pointer-events:none;transition:opacity 0.4s}
-.mobile-overlay.show{opacity:1;pointer-events:all}
-.mobile-nav{position:fixed;top:0;right:-100%;width:min(320px,85vw);height:100vh;background:linear-gradient(160deg,#1a0e08,#0d0806);z-index:1050;transition:right 0.45s cubic-bezier(0.77,0,0.175,1);padding:5rem 2.5rem 3rem;display:flex;flex-direction:column;border-left:1px solid rgba(201,168,76,0.12);visibility:hidden;pointer-events:none}
-.mobile-nav.open{right:0;visibility:visible;pointer-events:all}
-.mobile-nav a{display:block;color:rgba(255,255,255,0.75);text-decoration:none;font-size:1.05rem;font-weight:300;letter-spacing:0.08em;padding:0.9rem 0;border-bottom:1px solid rgba(201,168,76,0.08);transition:color 0.3s}
-.mobile-nav a:hover{color:var(--gold-light)}
-.mobile-nav .mobile-cta{margin-top:2rem;background:linear-gradient(135deg,var(--gold),var(--copper));color:var(--white);text-align:center;padding:0.9rem;border-radius:30px;font-size:0.82rem;letter-spacing:0.1em;text-transform:uppercase;font-weight:500;border-bottom:none}
 
-/* HERO */
-#hero{height:90vh;min-height:580px;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#0d0806}
+/* Services dropdown */
+.nav-dropdown{position:relative}
+.nav-dropdown>a{display:flex;align-items:center;gap:0.35rem;cursor:pointer}
+.nav-dropdown>a .caret{font-size:0.55rem;transition:transform 0.3s;opacity:0.7;margin-top:1px}
+.nav-dropdown::after{content:'';position:absolute;top:100%;left:0;right:0;height:1.5rem;background:transparent;display:none}
+.nav-dropdown:hover::after{display:block}
+.nav-dropdown:hover>a .caret{transform:rotate(180deg)}
+.dropdown-menu{position:absolute;top:calc(100% + 1.2rem);left:50%;transform:translateX(-50%) translateY(-8px);background:#fff;border-radius:16px;padding:0.6rem;box-shadow:0 20px 60px rgba(44,24,16,0.18),0 2px 12px rgba(44,24,16,0.08);border:1px solid rgba(197,132,106,0.15);min-width:220px;opacity:0;pointer-events:none;transition:opacity 0.25s ease,transform 0.25s ease}
+.dropdown-menu::before{content:'';position:absolute;top:-1.5rem;left:0;right:0;height:1.5rem;background:transparent}
+.dropdown-menu::after{content:'';position:absolute;top:-6px;left:50%;width:12px;height:12px;background:#fff;border-left:1px solid rgba(197,132,106,0.15);border-top:1px solid rgba(197,132,106,0.15);transform:translateX(-50%) rotate(45deg);pointer-events:none}
+.nav-dropdown:hover .dropdown-menu{opacity:1;pointer-events:all;transform:translateX(-50%) translateY(0)}
+.dropdown-item{display:flex;align-items:center;gap:0.75rem;padding:0.7rem 0.9rem;border-radius:10px;text-decoration:none;transition:background 0.2s;font-family:'Inter',sans-serif;font-size:0.78rem;color:var(--text-mid);font-weight:400;letter-spacing:0.06em;text-transform:none}
+.dropdown-item:hover{background:rgba(201,168,76,0.09);color:var(--text-dark)}
+.dropdown-item .di-icon{width:34px;height:34px;border-radius:8px;background:linear-gradient(135deg,rgba(201,168,76,0.15),rgba(197,132,106,0.12));display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
+.dropdown-item .di-info{display:flex;flex-direction:column;gap:0.1rem}
+.dropdown-item .di-label{font-size:0.8rem;font-weight:500;color:var(--text-dark)}
+.dropdown-item .di-sub{font-size:0.68rem;color:var(--text-light);font-style:italic}
+.dropdown-divider{height:1px;background:rgba(197,132,106,0.1);margin:0.3rem 0}
+.nav-cta{background:linear-gradient(135deg,var(--gold),var(--copper));color:var(--white);padding:0.55rem 1.5rem;border-radius:30px;text-decoration:none;font-size:0.75rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;transition:all 0.3s;border:none;cursor:pointer;box-shadow:0 4px 20px rgba(197,132,106,0.4)}
+.nav-cta:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(197,132,106,0.5)}
+
+/* ===== HAMBURGER ===== */
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;z-index:1100;background:none;border:none}
+.hamburger span{display:block;width:24px;height:2px;background:var(--white);border-radius:2px;transition:all 0.35s ease}
+nav.scrolled .hamburger span{background:var(--text-dark)}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+/* ===== MOBILE NAV ===== */
+.mobile-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:1040;opacity:0;pointer-events:none;transition:opacity 0.4s;backdrop-filter:blur(2px)}
+.mobile-overlay.show{opacity:1;pointer-events:all}
+.mobile-nav{position:fixed;top:0;right:-100%;width:min(320px,85vw);height:100vh;background:linear-gradient(160deg,#1a0e08 0%,#0d0806 60%,#180f08 100%);z-index:1050;transition:right 0.42s cubic-bezier(0.77,0,0.175,1);padding:4.5rem 2.5rem 3rem;display:flex;flex-direction:column;gap:0;border-left:1px solid rgba(201,168,76,0.12);visibility:hidden;pointer-events:none;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.mobile-nav.open{right:0;visibility:visible;pointer-events:all}
+.mobile-nav a{display:block;color:rgba(255,255,255,0.75);text-decoration:none;font-family:'Inter',sans-serif;font-size:1rem;font-weight:300;letter-spacing:0.08em;padding:0.85rem 0;border-bottom:1px solid rgba(201,168,76,0.08);transition:color 0.3s,padding-left 0.3s}
+.mobile-nav a:hover,.mobile-nav a:active{color:var(--gold-light);padding-left:0.5rem}
+.mobile-section-label{font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(201,168,76,0.5);margin-top:1.4rem;margin-bottom:0.3rem;display:block}
+.mobile-cta{margin-top:1.8rem;background:linear-gradient(135deg,var(--gold),var(--copper));color:var(--white) !important;text-align:center;padding:0.85rem !important;border-radius:30px;font-size:0.82rem;letter-spacing:0.1em;text-transform:uppercase;font-weight:500;border-bottom:none !important}
+
+/* ===== HERO — Full viewport height ===== */
+#hero{height:100vh;min-height:600px;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#0d0806}
 .hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 35% 50%,rgba(197,132,106,0.22) 0%,transparent 55%),radial-gradient(ellipse at 75% 25%,rgba(201,168,76,0.14) 0%,transparent 45%),linear-gradient(135deg,#1a0e08 0%,#0d0806 40%,#180f08 100%);z-index:0}
 .hero-particles{position:absolute;inset:0;z-index:1;pointer-events:none}
 .particle{position:absolute;width:2px;height:2px;background:var(--gold-light);border-radius:50%;animation:float-particle linear infinite;opacity:0}
@@ -64,7 +91,7 @@ nav.scrolled .hamburger span{background:var(--text-dark)}
 .breadcrumb .sep{color:rgba(201,168,76,0.3)}
 .breadcrumb .current{color:var(--gold-light)}
 
-/* SECTIONS */
+/* ===== SECTIONS ===== */
 section{padding:5rem 0}
 .container{max-width:1200px;margin:0 auto;padding:0 4rem}
 .section-eyebrow{display:inline-flex;align-items:center;gap:0.8rem;margin-bottom:1rem}
@@ -73,7 +100,7 @@ section{padding:5rem 0}
 .section-title{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,4.5vw,3.2rem);font-weight:400;line-height:1.2;color:var(--text-dark)}
 .section-title em{font-style:italic;color:var(--rose-gold)}
 
-/* WHAT IS IT */
+/* ===== ABOUT ===== */
 #about{background:var(--cream)}
 .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
 .about-visual{position:relative}
@@ -87,7 +114,6 @@ section{padding:5rem 0}
 .about-float-2{top:1.5rem;right:-1.5rem;display:flex;align-items:center;gap:0.5rem;box-shadow:0 8px 30px rgba(0,0,0,0.07)}
 .about-float-2 .dot{width:8px;height:8px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--copper))}
 .about-float-2 span{color:var(--text-mid);font-size:0.75rem;font-weight:500}
-.about-text{}
 .about-text .section-eyebrow{margin-bottom:0.8rem}
 .about-text .section-title{margin-bottom:1.2rem}
 .about-lead{font-family:'Cormorant Garamond',serif;font-size:1.15rem;color:var(--text-mid);font-style:italic;line-height:1.8;margin-bottom:1.4rem}
@@ -95,7 +121,7 @@ section{padding:5rem 0}
 .about-pills{display:flex;flex-wrap:wrap;gap:0.6rem;margin-top:1.2rem}
 .pill{background:linear-gradient(135deg,rgba(201,168,76,0.1),rgba(197,132,106,0.08));border:1px solid rgba(201,168,76,0.25);border-radius:30px;padding:0.35rem 0.9rem;font-size:0.72rem;letter-spacing:0.08em;color:var(--gold-dark);font-weight:500}
 
-/* PACKAGES */
+/* ===== PACKAGES ===== */
 #packages{background:var(--off-white)}
 .packages-header{text-align:center;margin-bottom:3.5rem}
 .packages-subtitle{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--text-light);font-style:italic;margin-top:0.7rem;line-height:1.7}
@@ -119,9 +145,10 @@ section{padding:5rem 0}
 .pkg-cta.outline{background:transparent;border:1px solid rgba(201,168,76,0.4);color:var(--gold-dark)}
 .pkg-cta.outline:hover{background:rgba(201,168,76,0.08)}
 
-/* ===== BRIDAL GALLERY ===== */
+/* ===== GALLERY ===== */
 #gallery{background:var(--cream);padding:5rem 0}
-.gallery-track-wrap{overflow:hidden;margin-top:2.5rem;padding-bottom:0.5rem}
+.gallery-track-wrap{overflow:hidden;margin-top:2.5rem;padding-bottom:0.5rem;cursor:grab}
+.gallery-track-wrap:active{cursor:grabbing}
 .gallery-track{display:flex;gap:1.2rem;transition:transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94);will-change:transform;padding:0.5rem 0}
 .gallery-slide{flex:0 0 300px;height:400px;border-radius:20px;overflow:hidden;position:relative;cursor:pointer;box-shadow:0 8px 28px rgba(44,24,16,0.13);transition:transform 0.4s ease,box-shadow 0.4s ease}
 .gallery-slide:hover{transform:translateY(-6px) scale(1.02);box-shadow:0 22px 48px rgba(44,24,16,0.2)}
@@ -130,7 +157,6 @@ section{padding:5rem 0}
 .slide-overlay{position:absolute;inset:0;background:linear-gradient(0deg,rgba(26,14,8,0.72) 0%,rgba(26,14,8,0.08) 55%,transparent 100%);display:flex;align-items:flex-end;padding:1.4rem}
 .slide-label{font-family:'Playfair Display',serif;font-size:0.95rem;font-style:italic;color:rgba(255,255,255,0.92);line-height:1.4;transform:translateY(6px);opacity:0;transition:all 0.35s ease}
 .gallery-slide:hover .slide-label{opacity:1;transform:translateY(0)}
-/* Placeholder card bg for demo (replace with real <img> src) */
 .slide-bg-1{background:linear-gradient(150deg,#2d1408 0%,#6b3520 50%,#c5846a 100%)}
 .slide-bg-2{background:linear-gradient(150deg,#0d1520 0%,#1e3050 50%,#4a7090 100%)}
 .slide-bg-3{background:linear-gradient(150deg,#1a0812 0%,#3d1530 50%,#8c4a6a 100%)}
@@ -140,7 +166,6 @@ section{padding:5rem 0}
 .slide-bg-7{background:linear-gradient(150deg,#08100a 0%,#1a2e1e 50%,#4a7a5a 100%)}
 .slide-bg-8{background:linear-gradient(150deg,#18100a 0%,#402810 50%,#b5622a 100%)}
 .slide-emoji{position:absolute;top:50%;left:50%;transform:translate(-50%,-60%);font-size:4rem;opacity:0.45;pointer-events:none}
-/* Nav controls */
 .gallery-controls{display:flex;align-items:center;justify-content:center;gap:1.2rem;margin-top:2rem}
 .gal-btn{width:46px;height:46px;border-radius:50%;border:1.5px solid rgba(201,168,76,0.45);background:var(--white);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1rem;color:var(--gold-dark);transition:all 0.3s;box-shadow:0 4px 14px rgba(0,0,0,0.07)}
 .gal-btn:hover{background:linear-gradient(135deg,var(--gold),var(--copper));color:var(--white);border-color:transparent;box-shadow:0 8px 24px rgba(201,168,76,0.35);transform:scale(1.08)}
@@ -149,7 +174,7 @@ section{padding:5rem 0}
 .gdot{width:8px;height:8px;border-radius:50%;background:rgba(201,168,76,0.25);border:none;cursor:pointer;padding:0;transition:all 0.3s}
 .gdot.active{background:var(--gold);width:24px;border-radius:4px}
 
-/* STYLES */
+/* ===== STYLES ===== */
 #styles{background:var(--cream)}
 .styles-header{text-align:center;margin-bottom:3rem}
 .styles-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem}
@@ -168,7 +193,7 @@ section{padding:5rem 0}
 .style-name{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:400;color:var(--white);line-height:1.3;margin-bottom:0.3rem}
 .style-desc{font-size:0.74rem;color:rgba(255,255,255,0.45);line-height:1.5;font-weight:300}
 
-/* PROCESS */
+/* ===== PROCESS ===== */
 #process{background:var(--off-white)}
 .process-header{text-align:center;margin-bottom:3.5rem}
 .process-steps{display:grid;grid-template-columns:repeat(5,1fr);gap:0;position:relative;align-items:start}
@@ -181,21 +206,21 @@ section{padding:5rem 0}
 .step-title{font-family:'Playfair Display',serif;font-size:0.92rem;font-weight:400;color:var(--text-dark);margin-bottom:0.5rem;line-height:1.35}
 .step-desc{font-size:0.76rem;color:var(--text-light);line-height:1.7;font-weight:300}
 
-/* FAQ */
+/* ===== FAQ — Accordion ===== */
 #faq{background:var(--cream)}
 .faq-header{text-align:center;margin-bottom:3rem}
 .faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;max-width:920px;margin:0 auto}
-.faq-item{background:var(--white);border-radius:16px;padding:1.5rem;border:1px solid rgba(197,132,106,0.1);cursor:pointer;transition:all 0.3s}
+.faq-item{background:var(--white);border-radius:16px;padding:1.5rem;border:1px solid rgba(197,132,106,0.1);cursor:pointer;transition:border-color 0.3s,box-shadow 0.3s;user-select:none}
 .faq-item:hover{border-color:rgba(201,168,76,0.25);box-shadow:0 8px 30px rgba(0,0,0,0.05)}
 .faq-item.open{border-color:rgba(201,168,76,0.3)}
 .faq-q{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem}
 .faq-q-text{font-family:'Playfair Display',serif;font-size:0.95rem;font-weight:400;color:var(--text-dark);line-height:1.4}
-.faq-icon{flex-shrink:0;width:22px;height:22px;border-radius:50%;border:1px solid rgba(201,168,76,0.3);display:flex;align-items:center;justify-content:center;font-size:0.8rem;color:var(--gold-dark);transition:transform 0.3s;margin-top:2px}
-.faq-item.open .faq-icon{transform:rotate(45deg)}
+.faq-icon{flex-shrink:0;width:22px;height:22px;border-radius:50%;border:1px solid rgba(201,168,76,0.3);display:flex;align-items:center;justify-content:center;font-size:0.8rem;color:var(--gold-dark);transition:transform 0.3s,background 0.3s;margin-top:2px}
+.faq-item.open .faq-icon{transform:rotate(45deg);background:rgba(201,168,76,0.1)}
 .faq-a{max-height:0;overflow:hidden;transition:max-height 0.4s ease,margin-top 0.3s;font-size:0.83rem;color:var(--text-light);line-height:1.75;font-weight:300}
 .faq-item.open .faq-a{max-height:200px;margin-top:0.8rem}
 
-/* CTA BANNER */
+/* ===== CTA ===== */
 #cta{background:#0d0806;padding:6rem 0;text-align:center;position:relative;overflow:hidden}
 .cta-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 30%,rgba(201,168,76,0.13) 0%,transparent 60%)}
 .cta-content{position:relative;z-index:2}
@@ -209,46 +234,79 @@ section{padding:5rem 0}
 .btn-wa{background:linear-gradient(135deg,#25D366,#128C7E);color:var(--white);padding:1rem 2.5rem;border-radius:50px;text-decoration:none;font-size:0.82rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;transition:all 0.4s;display:inline-flex;align-items:center;gap:0.7rem}
 .btn-wa:hover{transform:translateY(-3px);box-shadow:0 12px 35px rgba(37,211,102,0.3)}
 
-/* FOOTER MINI */
-footer{background:#080503;padding:2rem 4rem;border-top:1px solid rgba(201,168,76,0.1);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
-.footer-links{display:flex;gap:2rem;list-style:none}
-.footer-links a{color:rgba(255,255,255,0.28);font-size:0.75rem;text-decoration:none;transition:color 0.3s;letter-spacing:0.06em}
-.footer-links a:hover{color:rgba(255,255,255,0.6)}
-.footer-copy{color:rgba(255,255,255,0.15);font-size:0.7rem;letter-spacing:0.05em}
-.footer-logo-text{font-family:'Playfair Display',serif;font-size:0.9rem;background:linear-gradient(135deg,#C9A84C,#C5846A);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:600}
+/* FOOTER */
+  footer{background:#080503;padding:3.5rem 4rem 2rem;border-top:1px solid rgba(201,168,76,0.1)}
+  .footer-main{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:4rem;margin-bottom:2.5rem}
+  .footer-logo img{height:68px;width:68px;object-fit:contain;opacity:0.9;margin-bottom:0.8rem;display:block}
+  .footer-slogan{font-family:'Cormorant Garamond',serif;font-style:italic;color:rgba(255,255,255,0.4);font-size:0.95rem;line-height:1.6;max-width:220px}
+  .footer-social{display:flex;gap:0.7rem;margin-top:1.2rem}
+  .social-btn{width:34px;height:34px;border-radius:50%;border:1px solid rgba(201,168,76,0.2);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.35);font-size:0.8rem;transition:all 0.3s;text-decoration:none}
+  .social-btn:hover{border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,0.08)}
+  .footer-col-title{font-family:'Jost',sans-serif;font-size:0.65rem;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:1.2rem;display:block}
+  .footer-col-links{display:flex;flex-direction:column;gap:0.5rem}
+  .footer-col-links a{font-family:'Jost',sans-serif;color:rgba(255,255,255,0.38);text-decoration:none;font-size:0.82rem;letter-spacing:0.04em;transition:all 0.3s;line-height:1.5}
+  .footer-col-links a:hover{color:rgba(255,255,255,0.75);padding-left:4px}
+  .footer-bottom{border-top:1px solid rgba(201,168,76,0.08);padding-top:1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.8rem}
+  .footer-copy{font-family:'Jost',sans-serif;color:rgba(255,255,255,0.18);font-size:0.72rem;letter-spacing:0.05em}
+  .footer-bottom-links{display:flex;gap:1.5rem}
+  .footer-bottom-links a{font-family:'Jost',sans-serif;color:rgba(255,255,255,0.2);font-size:0.7rem;text-decoration:none;transition:color 0.3s}
 
-/* REVEAL */
+/* ===== REVEAL ===== */
 .reveal{opacity:0;transform:translateY(28px);transition:opacity 0.7s,transform 0.7s}
 .reveal.visible{opacity:1;transform:translateY(0)}
 
+/* ===== ANIMATIONS ===== */
 @keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 @keyframes float-particle{0%{opacity:0;transform:translateY(100vh) scale(0)}10%{opacity:0.8}90%{opacity:0.4}100%{opacity:0;transform:translateY(-100px) scale(1.5)}}
 @keyframes slow-rotate{from{transform:translate(-50%,-50%) rotate(0deg)}to{transform:translate(-50%,-50%) rotate(360deg)}}
 
+/* ===== RESPONSIVE ===== */
 @media(max-width:900px){
   nav{padding:0.9rem 1.2rem}
   nav.scrolled{padding:0.7rem 1.2rem}
-  .nav-links{display:none}
+  .nav-links,.nav-dropdown .dropdown-menu{display:none}
   .hamburger{display:flex}
   .container{padding:0 1.2rem}
-  .about-grid{grid-template-columns:1fr;gap:2.5rem}
+
+  /* Tighter section spacing on mobile */
+  section{padding:3rem 0}
+  #hero{height:100vh;min-height:600px}
+
+  .about-grid{grid-template-columns:1fr;gap:2rem}
   .about-float-1,.about-float-2{display:none}
   .packages-grid{grid-template-columns:1fr;gap:1rem}
   .styles-grid{grid-template-columns:1fr 1fr;gap:0.8rem}
-  .process-steps{grid-template-columns:1fr 1fr;gap:2rem 1rem}
+  .process-steps{grid-template-columns:1fr 1fr;gap:1.5rem 1rem}
   .process-line{display:none}
   .faq-grid{grid-template-columns:1fr}
-  footer{flex-direction:column;padding:1.5rem 1.2rem;gap:0.8rem}
-  .footer-links{flex-wrap:wrap;gap:1rem}
+   footer{padding:2.5rem 1.2rem 1.5rem}
+    .footer-main{grid-template-columns:1fr;gap:2rem}
+    .footer-bottom{flex-direction:column;align-items:flex-start}
   .gallery-slide{flex:0 0 240px;height:320px}
+
+  /* CTA tighter on mobile */
+  #cta{padding:3.5rem 0}
+
+  /* Process steps tighter */
+  .process-header{margin-bottom:2rem}
+  .packages-header{margin-bottom:2rem}
+  .faq-header{margin-bottom:2rem}
+  .styles-header{margin-bottom:2rem}
 }
+
 @media(max-width:600px){
+  section{padding:2.5rem 0}
   .styles-grid{grid-template-columns:1fr}
   .hero-title{font-size:2.3rem}
-  #packages{padding:3rem 0}
   .gallery-slide{flex:0 0 200px;height:280px}
+  .process-steps{grid-template-columns:1fr 1fr;gap:1.2rem 0.6rem}
+  .step{padding:0 0.3rem}
+  .hero-actions{flex-direction:column;align-items:center}
+  .cta-btns{flex-direction:column;align-items:center}
+  #cta{padding:3rem 0}
 }
+
 @media(min-width:901px){
   .hamburger{display:none !important}
   .mobile-nav{display:none !important}
@@ -258,27 +316,66 @@ footer{background:#080503;padding:2rem 4rem;border-top:1px solid rgba(201,168,76
 </head>
 <body>
 
+<!-- Overlay -->
 <div class="mobile-overlay" id="mobileOverlay"></div>
-<nav class="mobile-nav" id="mobileNav">
-  <a href="index.html">Home</a>
-  <a href="bridal-makeup.html">Bridal Makeup</a>
-  <a href="party-makeup.html">Party Makeup</a>
-  <a href="skin-care.html">Skin Care</a>
-  <a href="#cta" onclick="closeMobileNav()" class="mobile-cta">✦ Book Now</a>
+
+<!-- Mobile Nav -->
+<nav class="mobile-nav" id="mobileNav" aria-hidden="true">
+  <span class="mobile-section-label">Main</span>
+  <a href="index.html#story">Story</a>
+  <a href="index.html#services">Services</a>
+  <a href="index.html#transformation">Brides</a>
+  <a href="index.html#trust">Reviews</a>
+  <a href="index.html#timeline">Journey</a>
+  <span class="mobile-section-label">Services</span>
+  <a href="bridal-makeup.html">👰 Bridal Makeup</a>
+  <a href="party-makeup.html">✨ Party Makeup</a>
+  <a href="skin-care.html">🌿 Skin Care</a>
+  <a href="index.html#booking" class="mobile-cta">Book Now</a>
 </nav>
 
+<!-- Main Nav -->
 <nav id="mainNav">
-  <a href="index.html" class="nav-logo">Glow Pavi's</a>
+  <div class="nav-logo">
+    <img src="./assets/image/logo1.png" alt="Glow Pavi's Makeover"
+      onerror="this.style.display='none';this.parentElement.innerHTML='<span style=\'font-family:Playfair Display,serif;font-size:1.1rem;font-weight:600;background:linear-gradient(135deg,#C9A84C,#C5846A);-webkit-background-clip:text;-webkit-text-fill-color:transparent\'>Glow Pavi\'s</span>'">
+  </div>
   <ul class="nav-links">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="bridal-makeup.html" style="color:var(--gold-light)">Bridal</a></li>
-    <li><a href="party-makeup.html">Party</a></li>
-    <li><a href="skin-care.html">Skin Care</a></li>
+    <li><a href="index.html#story">Story</a></li>
+    <li class="nav-dropdown">
+      <a href="index.html#services">Services <span class="caret">▼</span></a>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="bridal-makeup.html">
+          <span class="di-icon">👰</span>
+          <span class="di-info">
+             <span class="di-label">Bridal Makeup</span>
+          </span>
+        </a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="party-makeup.html">
+          <span class="di-icon">✨</span>
+          <span class="di-info">
+           <span class="di-label">Party Makeup</span>
+          </span>
+        </a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="skin-care.html">
+          <span class="di-icon">🌿</span>
+          <span class="di-info">
+     <span class="di-label">Skin Care</span>
+          </span>
+        </a>
+      </div>
+    </li>
+    <li><a href="index.html#transformation">Brides</a></li>
     <li><a href="index.html#trust">Reviews</a></li>
+    <li><a href="index.html#timeline">Journey</a></li>
   </ul>
   <div style="display:flex;align-items:center;gap:1rem">
-    <a href="#cta" class="nav-cta">Book Now</a>
-    <button class="hamburger" id="hamburgerBtn" aria-label="Open menu"><span></span><span></span><span></span></button>
+    <a href="index.html#booking" class="nav-cta">Book Now</a>
+    <button class="hamburger" id="hamburgerBtn" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </nav>
 
@@ -297,7 +394,7 @@ footer{background:#080503;padding:2rem 4rem;border-top:1px solid rgba(201,168,76
       She only becomes a bride<br>
       <em>once in her lifetime</em>
     </h1>
-    <p class="hero-subtitle">Every detail. Every glow. Every emotion. Crafted with love and mastery — just for you.</p>
+    <p class="hero-subtitle">Every detail. Every glow. Every emotion. Crafted with love and mastery, just for you.</p>
     <div class="hero-actions">
       <a href="#packages" class="btn-primary"><span>✦</span> View Bridal Packages</a>
       <a href="https://wa.me/91XXXXXXXXXX" class="btn-secondary"><span>💬</span> WhatsApp Us</a>
@@ -327,16 +424,16 @@ footer{background:#080503;padding:2rem 4rem;border-top:1px solid rgba(201,168,76
           <div class="eyebrow-line"></div>
           <span>About This Service</span>
         </div>
-        <h2 class="section-title">Bridal Makeup —<br><em>an art form</em></h2>
+        <h2 class="section-title">Bridal Makeup<br><em>as an art form</em></h2>
         <p class="about-lead">Your wedding makeup is not just colour on your face. It is the first thing your partner sees when you walk towards them. It is the look that fills a thousand photographs.</p>
-        <p class="about-body">At Glow Pavi's Makeover, bridal makeup is our most sacred offering. We take time to understand your skin tone, your outfit, your ceremony, your personality — and craft a look that is entirely and exclusively yours. Camera-ready, tear-proof, and built to last the entire day and night.</p>
+        <p class="about-body">At Glow Pavi's Makeover, bridal makeup is our most cherished offering. We take time to understand your skin tone, your outfit, your ceremony, and your personality so we can create a look that belongs entirely to you. Every look we deliver is camera-ready, tear-proof, and designed to last through every moment of your day and night.</p>
         <div class="about-pills">
           <span class="pill">Airbrush Finish</span>
           <span class="pill">Long-Lasting Formula</span>
           <span class="pill">HD Ready</span>
           <span class="pill">Skin-Safe Products</span>
           <span class="pill">Personalised Trial</span>
-          <span class="pill">Traditional & Modern</span>
+          <span class="pill">Traditional &amp; Modern</span>
         </div>
       </div>
     </div>
@@ -353,7 +450,7 @@ footer{background:#080503;padding:2rem 4rem;border-top:1px solid rgba(201,168,76
         <div class="eyebrow-line"></div>
       </div>
       <h2 class="section-title" style="text-align:center">Choose your<br><em>perfect package</em></h2>
-      <p class="packages-subtitle">Every bride deserves a package crafted around her story.</p>
+      <p class="packages-subtitle">Every bride deserves a package built around her story.</p>
     </div>
     <div class="packages-grid">
       <div class="pkg-card reveal">
@@ -364,14 +461,14 @@ footer{background:#080503;padding:2rem 4rem;border-top:1px solid rgba(201,168,76
         </div>
         <div class="pkg-body">
           <ul class="pkg-features">
-            <li>Full bridal makeup on wedding day</li>
-            <li>One pre-bridal skin prep session</li>
-            <li>Bridal trial included</li>
-            <li>Traditional or modern finish</li>
-            <li>HD & camera-ready products</li>
-            <li>Complimentary touch-up kit</li>
+            <li>Full bridal makeup on your wedding day</li>
+            <li>One pre-bridal skin preparation session</li>
+            <li>Bridal trial included before the big day</li>
+            <li>Traditional or modern finish, your choice</li>
+            <li>HD and camera-ready products throughout</li>
+            <li>Complimentary touch-up kit to take home</li>
           </ul>
-          <a href="#cta" class="pkg-cta outline">Enquire Now</a>
+          <a href="index.html#booking" class="pkg-cta outline">Enquire Now</a>
         </div>
       </div>
       <div class="pkg-card featured reveal" style="transition-delay:0.12s">
@@ -383,40 +480,40 @@ footer{background:#080503;padding:2rem 4rem;border-top:1px solid rgba(201,168,76
         </div>
         <div class="pkg-body">
           <ul class="pkg-features">
-            <li>Full bridal makeup + bridal hair styling</li>
-            <li>Two pre-bridal skin sessions</li>
-            <li>Full-day artist attendance</li>
-            <li>Bridal trial + family trial</li>
-            <li>Reception night look included</li>
-            <li>Airbrush finish available</li>
-            <li>Premium luxury product brands</li>
+            <li>Full bridal makeup with bridal hair styling</li>
+            <li>Two pre-bridal skin sessions before the wedding</li>
+            <li>Your artist stays with you through the entire day</li>
+            <li>Bridal trial plus a family trial session</li>
+            <li>Reception night look included in the package</li>
+            <li>Airbrush finish available on request</li>
+            <li>Premium luxury brands used exclusively</li>
           </ul>
-          <a href="#cta" class="pkg-cta">Book This Package</a>
+          <a href="index.html#booking" class="pkg-cta">Book This Package</a>
         </div>
       </div>
       <div class="pkg-card reveal" style="transition-delay:0.24s">
         <div class="pkg-top">
           <span class="pkg-icon">✨</span>
           <p class="pkg-name">The <em>Complete</em> Bride</p>
-          <p class="pkg-tagline">All ceremonies, one complete journey</p>
+          <p class="pkg-tagline">All ceremonies, one seamless journey</p>
         </div>
         <div class="pkg-body">
           <ul class="pkg-features">
-            <li>Mehendi, engagement & wedding day</li>
-            <li>Reception & farewell looks</li>
-            <li>Complete pre-bridal skin package</li>
-            <li>Full hair styling for all events</li>
-            <li>Priority scheduling & booking</li>
-            <li>Dedicated artist for every event</li>
+            <li>Mehendi, engagement and wedding day covered</li>
+            <li>Reception and farewell looks included</li>
+            <li>Complete pre-bridal skin care package</li>
+            <li>Full hair styling for every event</li>
+            <li>Priority scheduling and early booking</li>
+            <li>A dedicated artist assigned for each event</li>
           </ul>
-          <a href="#cta" class="pkg-cta outline">Enquire Now</a>
+          <a href="index.html#booking" class="pkg-cta outline">Enquire Now</a>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ===== BRIDAL GALLERY ===== -->
+<!-- GALLERY -->
 <section id="gallery">
   <div class="container">
     <div class="reveal" style="text-align:center;margin-bottom:0.5rem">
@@ -430,95 +527,66 @@ footer{background:#080503;padding:2rem 4rem;border-top:1px solid rgba(201,168,76
     </div>
   </div>
 
-  <!-- Carousel -->
-  <div style="max-width:1200px;margin:0 auto;padding:0 4rem" class="reveal" style="transition-delay:0.15s">
+  <div style="max-width:1200px;margin:0 auto;padding:0 4rem" class="reveal">
     <div class="gallery-track-wrap" id="galleryWrap">
       <div class="gallery-track" id="galleryTrack">
-
-        <!-- SLIDE 1 — replace src with your real image -->
         <div class="gallery-slide">
           <div class="slide-bg-1" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center">
-            <!-- <img src="your-image-1.jpg" alt="Traditional Bridal Look"> -->
             <span class="slide-emoji">👰</span>
           </div>
           <div class="slide-overlay"><span class="slide-label">Traditional South Indian Bride</span></div>
         </div>
-
-        <!-- SLIDE 2 -->
         <div class="gallery-slide">
           <div class="slide-bg-2" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center">
-            <!-- <img src="your-image-2.jpg" alt="Modern Dewy Look"> -->
             <span class="slide-emoji">💫</span>
           </div>
           <div class="slide-overlay"><span class="slide-label">Modern Dewy Bridal Glow</span></div>
         </div>
-
-        <!-- SLIDE 3 -->
         <div class="gallery-slide">
           <div class="slide-bg-3" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center">
-            <!-- <img src="your-image-3.jpg" alt="Indo-Western Look"> -->
             <span class="slide-emoji">🌙</span>
           </div>
           <div class="slide-overlay"><span class="slide-label">Indo-Western Fusion Look</span></div>
         </div>
-
-        <!-- SLIDE 4 -->
         <div class="gallery-slide">
           <div class="slide-bg-4" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center">
-            <!-- <img src="your-image-4.jpg" alt="Airbrush Finish"> -->
             <span class="slide-emoji">🌺</span>
           </div>
           <div class="slide-overlay"><span class="slide-label">Airbrush HD Finish</span></div>
         </div>
-
-        <!-- SLIDE 5 -->
         <div class="gallery-slide">
           <div class="slide-bg-5" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center">
-            <!-- <img src="your-image-5.jpg" alt="Royal Bride"> -->
             <span class="slide-emoji">👑</span>
           </div>
           <div class="slide-overlay"><span class="slide-label">The Royal Bride</span></div>
         </div>
-
-        <!-- SLIDE 6 -->
         <div class="gallery-slide">
           <div class="slide-bg-6" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center">
-            <!-- <img src="your-image-6.jpg" alt="Reception Look"> -->
             <span class="slide-emoji">🌸</span>
           </div>
           <div class="slide-overlay"><span class="slide-label">Reception Night Glam</span></div>
         </div>
-
-        <!-- SLIDE 7 -->
         <div class="gallery-slide">
           <div class="slide-bg-7" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center">
-            <!-- <img src="your-image-7.jpg" alt="Engagement Look"> -->
             <span class="slide-emoji">💍</span>
           </div>
           <div class="slide-overlay"><span class="slide-label">Engagement Day Elegance</span></div>
         </div>
-
-        <!-- SLIDE 8 -->
         <div class="gallery-slide">
           <div class="slide-bg-8" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center">
-            <!-- <img src="your-image-8.jpg" alt="Mehendi Look"> -->
             <span class="slide-emoji">✨</span>
           </div>
           <div class="slide-overlay"><span class="slide-label">Mehendi Ceremony Look</span></div>
         </div>
-
-      </div><!-- end track -->
-    </div><!-- end wrap -->
-
-    <!-- Controls -->
+      </div>
+    </div>
     <div class="gallery-controls">
-      <button class="gal-btn" id="galPrev" onclick="galMove(-1)" aria-label="Previous">&#8592;</button>
+      <button class="gal-btn" id="galPrev" aria-label="Previous">&#8592;</button>
       <div class="gallery-dots" id="galDots"></div>
-      <button class="gal-btn" id="galNext" onclick="galMove(1)" aria-label="Next">&#8594;</button>
+      <button class="gal-btn" id="galNext" aria-label="Next">&#8594;</button>
     </div>
   </div>
 </section>
-<!-- ===== END BRIDAL GALLERY ===== -->
 
 <!-- STYLES -->
 <section id="styles">
@@ -564,7 +632,7 @@ footer{background:#080503;padding:2rem 4rem;border-top:1px solid rgba(201,168,76
           <div class="style-content">
             <span class="style-label">✦ Style 03</span>
             <h3 class="style-name">Indo-Western Fusion</h3>
-            <p class="style-desc">Where tradition meets the contemporary — the best of both worlds.</p>
+            <p class="style-desc">Where tradition meets the contemporary. The best of both worlds.</p>
           </div>
         </div>
       </div>
@@ -600,27 +668,27 @@ footer{background:#080503;padding:2rem 4rem;border-top:1px solid rgba(201,168,76
       <div class="step reveal">
         <div class="step-circle"><div class="step-circle-inner">📞</div><div class="step-num">01</div></div>
         <h4 class="step-title">Consultation Call</h4>
-        <p class="step-desc">We understand your vision, date, outfit and ceremony type.</p>
+        <p class="step-desc">We understand your vision, date, outfit and the kind of ceremony you are planning.</p>
       </div>
       <div class="step reveal" style="transition-delay:0.1s">
         <div class="step-circle"><div class="step-circle-inner">🌿</div><div class="step-num">02</div></div>
         <h4 class="step-title">Skin Preparation</h4>
-        <p class="step-desc">Pre-bridal treatments to prime your skin for the perfect base.</p>
+        <p class="step-desc">Pre-bridal treatments that get your skin glowing and ready for the perfect base.</p>
       </div>
       <div class="step reveal" style="transition-delay:0.2s">
         <div class="step-circle"><div class="step-circle-inner">🎨</div><div class="step-num">03</div></div>
         <h4 class="step-title">Bridal Trial</h4>
-        <p class="step-desc">We rehearse your complete look so there are zero surprises.</p>
+        <p class="step-desc">We rehearse your full look a few weeks out so the wedding day has no surprises.</p>
       </div>
       <div class="step reveal" style="transition-delay:0.3s">
         <div class="step-circle"><div class="step-circle-inner">👰</div><div class="step-num">04</div></div>
         <h4 class="step-title">Wedding Day</h4>
-        <p class="step-desc">We arrive early, take our time, and craft your masterpiece.</p>
+        <p class="step-desc">We arrive early, take our time, and create your look with care and calm.</p>
       </div>
       <div class="step reveal" style="transition-delay:0.4s">
         <div class="step-circle"><div class="step-circle-inner">✨</div><div class="step-num">05</div></div>
         <h4 class="step-title">The Reveal</h4>
-        <p class="step-desc">That quiet gasp when you see yourself. That is our purpose.</p>
+        <p class="step-desc">That quiet gasp when you see yourself for the first time. That is what we live for.</p>
       </div>
     </div>
   </div>
@@ -637,30 +705,30 @@ footer{background:#080503;padding:2rem 4rem;border-top:1px solid rgba(201,168,76
       </div>
       <h2 class="section-title" style="text-align:center">Everything you<br><em>need to know</em></h2>
     </div>
-    <div class="faq-grid">
+    <div class="faq-grid" id="faqGrid">
       <div class="faq-item reveal">
         <div class="faq-q"><span class="faq-q-text">How far in advance should I book?</span><div class="faq-icon">+</div></div>
-        <div class="faq-a">We recommend booking at least 3–6 months before your wedding date, especially for peak season (October–February). Popular dates fill very quickly.</div>
+        <div class="faq-a">We suggest booking at least 3 to 6 months before your wedding date, especially during peak season from October to February. Popular dates tend to fill up very quickly, so early booking gives you the best pick.</div>
       </div>
       <div class="faq-item reveal" style="transition-delay:0.1s">
         <div class="faq-q"><span class="faq-q-text">Is a bridal trial included?</span><div class="faq-icon">+</div></div>
-        <div class="faq-a">Yes, all our bridal packages include a trial session 2–4 weeks before the wedding day. This ensures the final look is exactly as you envisioned.</div>
+        <div class="faq-a">Yes, every bridal package includes a trial session held 2 to 4 weeks before your wedding day. This gives us the chance to refine the look together so that on your wedding morning, everything runs smoothly.</div>
       </div>
       <div class="faq-item reveal" style="transition-delay:0.15s">
         <div class="faq-q"><span class="faq-q-text">Do you travel to the wedding venue?</span><div class="faq-icon">+</div></div>
-        <div class="faq-a">Yes! We offer home visits and venue visits across Madurai and surrounding areas. Travel charges apply based on distance.</div>
+        <div class="faq-a">Absolutely. We travel to homes and venues across Madurai and the surrounding areas. Travel charges are applied based on the distance and will be discussed clearly during your consultation.</div>
       </div>
       <div class="faq-item reveal" style="transition-delay:0.2s">
         <div class="faq-q"><span class="faq-q-text">How long does bridal makeup take?</span><div class="faq-icon">+</div></div>
-        <div class="faq-a">Typically 2.5–4 hours depending on the complexity of the look and whether hair styling is included. We always plan accordingly so you're never rushed.</div>
+        <div class="faq-a">It typically takes between 2.5 to 4 hours depending on the look and whether hair styling is part of the plan. We always schedule enough time so there is never any rushing on your big day.</div>
       </div>
       <div class="faq-item reveal" style="transition-delay:0.25s">
         <div class="faq-q"><span class="faq-q-text">What products do you use?</span><div class="faq-icon">+</div></div>
-        <div class="faq-a">We use premium international and professional makeup brands known for longevity, skin safety, and HD performance. All products are dermatologically friendly.</div>
+        <div class="faq-a">We use premium professional makeup brands known for their longevity, HD performance, and skin safety. All products we use are dermatologically friendly and tested for long wear throughout the day.</div>
       </div>
       <div class="faq-item reveal" style="transition-delay:0.3s">
-        <div class="faq-q"><span class="faq-q-text">Can family members also get makeup done?</span><div class="faq-icon">+</div></div>
-        <div class="faq-a">Absolutely. We offer add-on packages for mothers, sisters, and bridesmaids. Please mention this during booking so we can plan the schedule.</div>
+        <div class="faq-q"><span class="faq-q-text">Can family members get makeup done too?</span><div class="faq-icon">+</div></div>
+        <div class="faq-a">Of course. We offer add-on packages for mothers, sisters, and bridesmaids. Just let us know when you book so we can build the right schedule and make sure everyone looks their best.</div>
       </div>
     </div>
   </div>
@@ -673,9 +741,9 @@ footer{background:#080503;padding:2rem 4rem;border-top:1px solid rgba(201,168,76
     <div class="cta-content reveal">
       <span class="cta-eyebrow">✦ Your Big Day Awaits</span>
       <h2 class="cta-title">Ready to book your<br><em>bridal experience?</em></h2>
-      <p class="cta-sub">Limited slots available. Your wedding day is once — let's make it unforgettable.</p>
+      <p class="cta-sub">Limited slots available. Your wedding day happens once. Let us make it truly unforgettable.</p>
       <div class="cta-btns">
-        <a href="https://wa.me/91XXXXXXXXXX" class="btn-gold"><span>✦</span> Book Your Bridal Slot</a>
+        <a href="index.html#booking" class="btn-gold"><span>✦</span> Book Your Bridal Slot</a>
         <a href="https://wa.me/91XXXXXXXXXX" class="btn-wa">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
           WhatsApp Now
@@ -685,142 +753,220 @@ footer{background:#080503;padding:2rem 4rem;border-top:1px solid rgba(201,168,76
   </div>
 </section>
 
+<!-- FOOTER -->
 <footer>
-  <span class="footer-logo-text">Glow Pavi's Makeover</span>
-  <ul class="footer-links">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="bridal-makeup.html">Bridal</a></li>
-    <li><a href="party-makeup.html">Party Makeup</a></li>
-    <li><a href="skin-care.html">Skin Care</a></li>
-  </ul>
-  <p class="footer-copy">© 2025 Glow Pavi's Makeover · Madurai</p>
+  <div class="footer-main">
+    <div>
+      <div class="footer-logo">
+        <img src="./assets/image/logo.png" alt="Glow Pavi's Makeover" onerror="this.style.display='none'">
+      </div>
+      <p class="footer-slogan">Every bride deserves to feel like the most beautiful version of herself.</p>
+      <div class="footer-social">
+        <a class="social-btn" href="#" title="Instagram"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
+        <a class="social-btn" href="#" title="Facebook"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+        <a class="social-btn" href="#" title="YouTube"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205a31.247 31.247 0 0 0-.522 5.805 31.247 31.247 0 0 0 .522 5.783 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088 31.247 31.247 0 0 0 .5-5.783 31.247 31.247 0 0 0-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg></a>
+        <a class="social-btn" href="https://wa.me/919344089990" target="_blank" rel="noopener" title="WhatsApp"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+      </div>
+    </div>
+    <div>
+      <span class="footer-col-title">Services</span>
+      <div class="footer-col-links">
+        <a href="./bridal-makeup.html">Bridal Makeup</a>
+        <a href="./party-makeup.html">Party Makeup</a>
+        <a href="./skin-care.html">Skin Care</a>
+      </div>
+    </div>
+    <div>
+      <span class="footer-col-title">Policies</span>
+      <div class="footer-col-links">
+        <a href="./privacy-policy.html">Privacy Policy</a>
+        <a href="./terms.html">Terms &amp; Conditions</a>
+        <a href="./booking-cancellation.html">Booking &amp; Cancellation</a>
+        <a href="./faq.html">FAQ</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2025 Glow Pavi's Makeover. All rights reserved.</p>
+    <div class="footer-bottom-links"><a href="#">Privacy</a><a href="#">Terms</a></div>
+    <div class="footer-location">
+      <svg width="10" height="12" viewBox="0 0 12 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 1C3.79 1 2 2.79 2 5c0 3.25 4 9 4 9s4-5.75 4-9c0-2.21-1.79-4-4-4z"/><circle cx="6" cy="5" r="1.5"/></svg>
+      Madurai, Tamil Nadu
+    </div>
+  </div>
 </footer>
 
-<script>
-/* ── NAV ── */
-const nav = document.getElementById('mainNav');
-window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',window.scrollY>80),{passive:true});
 
+<script>
+/* ===== NAV SCROLL ===== */
+const nav = document.getElementById('mainNav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 80);
+}, { passive: true });
+
+/* ===== MOBILE NAV ===== */
 const hamburger = document.getElementById('hamburgerBtn');
 const mobileNav = document.getElementById('mobileNav');
 const mobileOverlay = document.getElementById('mobileOverlay');
-hamburger.addEventListener('click',()=>{
-  const isOpen = mobileNav.classList.toggle('open');
-  hamburger.classList.toggle('open',isOpen);
-  mobileOverlay.classList.toggle('show',isOpen);
-  document.body.style.overflow = isOpen?'hidden':'';
-});
-mobileOverlay.addEventListener('click',closeMobileNav);
-function closeMobileNav(){
-  mobileNav.classList.remove('open');
-  hamburger.classList.remove('open');
-  mobileOverlay.classList.remove('show');
-  document.body.style.overflow='';
+
+function openMobileNav() {
+  mobileNav.classList.add('open');
+  mobileNav.setAttribute('aria-hidden', 'false');
+  hamburger.classList.add('open');
+  hamburger.setAttribute('aria-expanded', 'true');
+  mobileOverlay.classList.add('show');
+  document.body.style.overflow = 'hidden';
 }
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMobileNav();});
 
-/* ── PARTICLES ── */
+function closeMobileNav() {
+  mobileNav.classList.remove('open');
+  mobileNav.setAttribute('aria-hidden', 'true');
+  hamburger.classList.remove('open');
+  hamburger.setAttribute('aria-expanded', 'false');
+  mobileOverlay.classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+hamburger.addEventListener('click', () => {
+  mobileNav.classList.contains('open') ? closeMobileNav() : openMobileNav();
+});
+
+mobileOverlay.addEventListener('click', closeMobileNav);
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeMobileNav();
+});
+
+/* All mobile nav links close the nav on click */
+mobileNav.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', closeMobileNav);
+});
+
+/* ===== PARTICLES ===== */
 const pc = document.getElementById('particlesContainer');
-for(let i=0;i<25;i++){const p=document.createElement('div');p.className='particle';p.style.cssText=`left:${Math.random()*100}%;animation-duration:${8+Math.random()*12}s;animation-delay:${Math.random()*10}s;width:${1+Math.random()*2}px;height:${1+Math.random()*2}px`;pc.appendChild(p);}
+for (let i = 0; i < 25; i++) {
+  const p = document.createElement('div');
+  p.className = 'particle';
+  p.style.cssText = `left:${Math.random() * 100}%;animation-duration:${8 + Math.random() * 12}s;animation-delay:${Math.random() * 10}s;width:${1 + Math.random() * 2}px;height:${1 + Math.random() * 2}px`;
+  pc.appendChild(p);
+}
 
-/* ── REVEAL ── */
-const revealObs=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');revealObs.unobserve(e.target);}});},{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
-document.querySelectorAll('.reveal').forEach(el=>revealObs.observe(el));
+/* ===== REVEAL ON SCROLL ===== */
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      revealObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
 
-/* ── FAQ ── */
-document.querySelectorAll('.faq-item').forEach(item=>{
-  item.addEventListener('click',()=>{
-    const wasOpen = item.classList.contains('open');
-    document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));
-    if(!wasOpen) item.classList.add('open');
+/* ===== FAQ ACCORDION — one open at a time ===== */
+const faqItems = document.querySelectorAll('.faq-item');
+faqItems.forEach(item => {
+  item.addEventListener('click', () => {
+    const isOpen = item.classList.contains('open');
+    // Close all items first
+    faqItems.forEach(i => i.classList.remove('open'));
+    // If it wasn't already open, open it
+    if (!isOpen) {
+      item.classList.add('open');
+    }
   });
 });
 
-/* ── GALLERY CAROUSEL ── */
-(function(){
+/* ===== GALLERY CAROUSEL ===== */
+(function () {
   const track    = document.getElementById('galleryTrack');
   const wrap     = document.getElementById('galleryWrap');
   const dotsWrap = document.getElementById('galDots');
   const prevBtn  = document.getElementById('galPrev');
   const nextBtn  = document.getElementById('galNext');
 
-  const slides      = Array.from(track.children);
-  const total       = slides.length;
-  let   current     = 0;
-  let   slideW      = 0;
-  let   visibleCount= 0;
-  let   maxIndex    = 0;
+  const slides = Array.from(track.children);
+  const total  = slides.length;
+  let current  = 0;
+  let slideW   = 0;
+  let maxIndex = 0;
 
-  /* build dots */
-  function buildDots(){
-    dotsWrap.innerHTML='';
-    const dotCount = maxIndex + 1;
-    for(let i=0;i<dotCount;i++){
-      const d=document.createElement('button');
-      d.className='gdot'+(i===0?' active':'');
-      d.setAttribute('aria-label','Go to slide '+(i+1));
-      d.addEventListener('click',()=>goTo(i));
+  function buildDots() {
+    dotsWrap.innerHTML = '';
+    const count = maxIndex + 1;
+    for (let i = 0; i < count; i++) {
+      const d = document.createElement('button');
+      d.className = 'gdot' + (i === 0 ? ' active' : '');
+      d.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+      d.addEventListener('click', () => goTo(i));
       dotsWrap.appendChild(d);
     }
   }
 
-  function updateDots(){
-    document.querySelectorAll('.gdot').forEach((d,i)=>{
-      d.classList.toggle('active', i===current);
+  function updateDots() {
+    document.querySelectorAll('.gdot').forEach((d, i) => {
+      d.classList.toggle('active', i === current);
     });
   }
 
-  function updateButtons(){
-    prevBtn.disabled = current===0;
-    nextBtn.disabled = current>=maxIndex;
+  function updateButtons() {
+    prevBtn.disabled = current === 0;
+    nextBtn.disabled = current >= maxIndex;
   }
 
-  function measure(){
-    const gap   = 19.2; /* 1.2rem at 16px base */
-    slideW      = slides[0].offsetWidth + gap;
-    visibleCount= Math.round(wrap.offsetWidth / slideW) || 1;
-    maxIndex    = Math.max(0, total - visibleCount);
-    if(current > maxIndex) current = maxIndex;
+  function measure() {
+    const gap = parseFloat(getComputedStyle(track).gap) || 19.2;
+    slideW    = slides[0].offsetWidth + gap;
+    const visible = Math.floor(wrap.offsetWidth / slideW) || 1;
+    maxIndex  = Math.max(0, total - visible);
+    if (current > maxIndex) current = maxIndex;
     buildDots();
     applyTranslate(false);
     updateButtons();
   }
 
-  function applyTranslate(animate){
+  function applyTranslate(animate) {
     track.style.transition = animate ? 'transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94)' : 'none';
     track.style.transform  = `translateX(-${current * slideW}px)`;
   }
 
-  function goTo(idx){
+  function goTo(idx) {
     current = Math.max(0, Math.min(idx, maxIndex));
     applyTranslate(true);
     updateDots();
     updateButtons();
   }
 
-  window.galMove = function(dir){ goTo(current + dir); };
+  prevBtn.addEventListener('click', () => goTo(current - 1));
+  nextBtn.addEventListener('click', () => goTo(current + 1));
 
-  /* drag / swipe */
-  let startX=0, isDragging=false, dragDelta=0;
+  /* Drag / swipe */
+  let startX = 0, isDragging = false, dragDelta = 0;
 
-  wrap.addEventListener('mousedown', e=>{startX=e.clientX; isDragging=true; wrap.style.cursor='grabbing';});
-  window.addEventListener('mousemove', e=>{if(!isDragging)return; dragDelta=e.clientX-startX;});
-  window.addEventListener('mouseup', ()=>{
-    if(!isDragging)return;
-    isDragging=false; wrap.style.cursor='grab';
-    if(dragDelta < -50) goTo(current+1);
-    else if(dragDelta > 50) goTo(current-1);
-    dragDelta=0;
+  wrap.addEventListener('mousedown', e => {
+    startX = e.clientX;
+    isDragging = true;
+  });
+  window.addEventListener('mousemove', e => {
+    if (!isDragging) return;
+    dragDelta = e.clientX - startX;
+  });
+  window.addEventListener('mouseup', () => {
+    if (!isDragging) return;
+    isDragging = false;
+    if (dragDelta < -50) goTo(current + 1);
+    else if (dragDelta > 50) goTo(current - 1);
+    dragDelta = 0;
   });
 
-  wrap.addEventListener('touchstart', e=>{startX=e.touches[0].clientX;},{passive:true});
-  wrap.addEventListener('touchend',   e=>{
+  wrap.addEventListener('touchstart', e => {
+    startX = e.touches[0].clientX;
+  }, { passive: true });
+  wrap.addEventListener('touchend', e => {
     const diff = e.changedTouches[0].clientX - startX;
-    if(diff < -50) goTo(current+1);
-    else if(diff > 50) goTo(current-1);
+    if (diff < -50) goTo(current + 1);
+    else if (diff > 50) goTo(current - 1);
   });
 
-  /* init + resize */
   measure();
   window.addEventListener('resize', measure);
 })();
