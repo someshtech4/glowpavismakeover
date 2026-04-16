@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us — Glow Pavi's Makeover</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,600;0,6..96,700;1,6..96,400;1,6..96,600&family=DM+Serif+Display:ital@0;1&family=Jost:wght@200;300;400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+  <style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --gold:#C9A84C;--gold-light:#E8C97A;--gold-dark:#9A7A32;
+    --blush:#F2D0C8;--blush-deep:#E8A89A;--blush-soft:#FAF0EC;
+    --rose-gold:#C5846A;--rose-light:#EBC4B8;
+    --white:#FFFFFF;--off-white:#FDF8F5;--cream:#FAF3EE;
+    --text-dark:#2C1810;--text-mid:#6B4C3B;--text-light:#A07060;
+    --copper:#B5622A;--copper-light:#D4895A;
+    --dark:#0d0806;--dark2:#1a0e08;--dark3:#261408;
+  }
+  html{scroll-behavior:smooth;overflow-x:hidden}
+  body{font-family:'Jost',sans-serif;background:var(--off-white);color:var(--text-dark);overflow-x:hidden}
+
+  /* ── NAV (same as index) ── */
+  nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0.5rem 4rem;display:flex;justify-content:space-between;align-items:center;transition:all 0.4s ease;background:transparent}
+  nav.scrolled{background:rgba(253,248,245,0.96);backdrop-filter:blur(20px);border-bottom:1px solid rgba(197,132,106,0.15);padding:0.4rem 4rem}
+  .nav-logo img{height:62px;width:62px;object-fit:contain}
+  .nav-logo-text{font-family:'Bodoni Moda',serif;font-size:1.1rem;font-weight:600;background:linear-gradient(135deg,#C9A84C,#C5846A);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+  .nav-links{display:flex;gap:2.5rem;list-style:none}
+  .nav-links a{text-decoration:none;color:var(--white);font-family:'Jost',sans-serif;font-size:0.78rem;font-weight:400;letter-spacing:0.14em;text-transform:uppercase;transition:color 0.3s}
+  nav.scrolled .nav-links a{color:var(--text-mid)}
+  .nav-links a:hover,.nav-links a.active{color:var(--gold)}
+  .nav-cta{background:linear-gradient(135deg,var(--gold),var(--copper));color:var(--white);padding:0.55rem 1.5rem;border-radius:30px;text-decoration:none;font-family:'Jost',sans-serif;font-size:0.75rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;transition:all 0.3s;border:none;cursor:pointer;box-shadow:0 4px 20px rgba(197,132,106,0.4)}
+  .nav-cta:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(197,132,106,0.5)}
+  .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;z-index:1100;background:none;border:none}
+  .hamburger span{display:block;width:24px;height:2px;background:var(--white);border-radius:2px;transition:all 0.35s ease}
+  nav.scrolled .hamburger span{background:var(--text-dark)}
+  .hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+  .hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+  .mobile-nav{position:fixed;top:0;right:-100%;width:min(320px,85vw);height:100vh;background:linear-gradient(160deg,#1a0e08 0%,#0d0806 60%,#180f08 100%);z-index:1050;transition:right 0.45s cubic-bezier(0.77,0,0.175,1);padding:5rem 2.5rem 3rem;display:flex;flex-direction:column;gap:0;border-left:1px solid rgba(201,168,76,0.12);visibility:hidden;pointer-events:none}
+  .mobile-nav.open{right:0;visibility:visible;pointer-events:all}
+  .mobile-nav a{display:block;color:rgba(255,255,255,0.75);text-decoration:none;font-family:'Jost',sans-serif;font-size:1.05rem;font-weight:300;letter-spacing:0.08em;padding:0.9rem 0;border-bottom:1px solid rgba(201,168,76,0.08);transition:color 0.3s,padding-left 0.3s}
+  .mobile-nav a:hover{color:var(--gold-light);padding-left:0.5rem}
+  .mobile-nav .mobile-section-label{font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(201,168,76,0.5);margin-top:1.5rem;margin-bottom:0.4rem;display:block}
+  .mobile-nav .mobile-cta{margin-top:2rem;background:linear-gradient(135deg,var(--gold),var(--copper));color:var(--white);text-align:center;padding:0.9rem;border-radius:30px;font-size:0.82rem;letter-spacing:0.1em;text-transform:uppercase;font-weight:500;border-bottom:none}
+  .mobile-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:1040;opacity:0;pointer-events:none;transition:opacity 0.4s}
+  .mobile-overlay.show{opacity:1;pointer-events:all}
+
+  /* ── PAGE HERO ── */
+  .page-hero{height:65vh;min-height:520px;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--dark)}
+  .page-hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,rgba(197,132,106,0.2) 0%,transparent 55%),radial-gradient(ellipse at 75% 25%,rgba(201,168,76,0.14) 0%,transparent 50%),linear-gradient(135deg,#1a0e08 0%,#0d0806 45%,#180f08 100%)}
+  .hero-particles{position:absolute;inset:0;z-index:1;pointer-events:none}
+  .particle{position:absolute;width:2px;height:2px;background:var(--gold-light);border-radius:50%;animation:float-particle linear infinite;opacity:0}
+  .page-hero-ornament{position:absolute;width:500px;height:500px;border-radius:50%;border:1px solid rgba(201,168,76,0.07);top:50%;left:50%;transform:translate(-50%,-50%);z-index:1;animation:slow-rotate 30s linear infinite}
+  .page-hero-ornament::before{content:'';position:absolute;inset:40px;border-radius:50%;border:1px solid rgba(201,168,76,0.05)}
+  .page-hero-content{position:relative;z-index:3;text-align:center;max-width:780px;padding:2rem}
+  .page-hero-eyebrow{display:inline-flex;align-items:center;gap:1rem;margin-bottom:1.2rem;opacity:0;animation:fadeUp 1s 0.4s forwards}
+  .hero-line{width:36px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+  .page-hero-eyebrow span{font-family:'Jost',sans-serif;font-size:0.7rem;font-weight:400;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold-light)}
+  .page-hero-title{font-family:'Bodoni Moda',serif;font-size:clamp(2.6rem,6vw,4.8rem);font-weight:400;line-height:1.1;color:var(--white);margin-bottom:1.1rem;opacity:0;animation:fadeUp 1s 0.7s forwards}
+  .page-hero-title em{font-style:italic;background:linear-gradient(135deg,var(--gold-light),var(--copper-light),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:block}
+  .page-hero-sub{font-family:'Cormorant Garamond',serif;font-size:clamp(1rem,2.2vw,1.3rem);font-weight:300;color:rgba(255,255,255,0.6);line-height:1.9;max-width:560px;margin:0 auto;opacity:0;animation:fadeUp 1s 1s forwards;font-style:italic}
+  .page-hero-scroll{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:0.5rem;opacity:0;animation:fadeIn 1s 1.8s forwards}
+  .scroll-text{font-family:'Jost',sans-serif;font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.35)}
+  .scroll-dot{width:1px;height:36px;background:linear-gradient(180deg,var(--gold),transparent);animation:scroll-pulse 2s ease-in-out infinite}
+
+  /* ── STATS STRIP ── */
+  .stats-strip{background:linear-gradient(135deg,#1a0e08,#2d1710);padding:1.8rem 4rem;display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;border-top:1px solid rgba(201,168,76,0.1);border-bottom:1px solid rgba(201,168,76,0.1)}
+  .strip-stat{text-align:center}
+  .strip-num{font-family:'Bodoni Moda',serif;font-size:2rem;font-weight:400;background:linear-gradient(135deg,var(--gold-light),var(--copper-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1}
+  .strip-label{font-family:'Jost',sans-serif;font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-top:0.3rem}
+
+  /* ── COMMON ── */
+  .container{max-width:1200px;margin:0 auto;padding:0 4rem}
+  .section-eyebrow{display:inline-flex;align-items:center;gap:0.8rem;margin-bottom:1rem}
+  .section-eyebrow span{font-family:'Jost',sans-serif;font-size:0.7rem;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold-dark)}
+  .eyebrow-line{width:30px;height:1px;background:var(--gold)}
+  .section-title{font-family:'Bodoni Moda',serif;font-size:clamp(2rem,4.5vw,3.2rem);font-weight:400;line-height:1.15;color:var(--text-dark)}
+  .section-title em{font-style:italic;color:var(--rose-gold)}
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity 0.7s ease,transform 0.7s ease}
+  .reveal.visible{opacity:1;transform:translateY(0)}
+
+  /* ── FOUNDER SECTION ── */
+  #founder{padding:6rem 0;background:var(--off-white)}
+  .founder-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+  .founder-img-wrap{position:relative}
+  .founder-img-frame{position:relative;border-radius:24px;overflow:hidden;aspect-ratio:4/5;background:linear-gradient(145deg,#2a1508,#1a0e08)}
+  .founder-img-frame img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.6s ease}
+  .founder-img-frame:hover img{transform:scale(1.04)}
+  .founder-img-placeholder{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;background:linear-gradient(145deg,rgba(197,132,106,0.15),rgba(201,168,76,0.08))}
+  .founder-img-placeholder span:first-child{font-size:5rem;opacity:0.3}
+  .founder-img-placeholder span:last-child{font-family:'Cormorant Garamond',serif;font-size:0.9rem;font-style:italic;color:rgba(255,255,255,0.3);letter-spacing:0.1em}
+  /* decorative elements */
+  .founder-deco-line{position:absolute;top:-20px;left:-20px;width:120px;height:120px;border-top:2px solid var(--gold);border-left:2px solid var(--gold);border-radius:4px 0 0 0;opacity:0.4;pointer-events:none}
+  .founder-deco-line2{position:absolute;bottom:-20px;right:-20px;width:120px;height:120px;border-bottom:2px solid var(--gold);border-right:2px solid var(--gold);border-radius:0 0 4px 0;opacity:0.4;pointer-events:none}
+  .founder-badge{position:absolute;bottom:1.5rem;left:-1.5rem;background:linear-gradient(135deg,var(--gold),var(--copper));color:var(--white);padding:0.7rem 1.2rem;border-radius:12px;box-shadow:0 8px 30px rgba(201,168,76,0.35)}
+  .founder-badge-num{font-family:'Bodoni Moda',serif;font-size:1.6rem;font-weight:400;line-height:1;display:block}
+  .founder-badge-lbl{font-family:'Jost',sans-serif;font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;opacity:0.9;display:block;margin-top:0.15rem}
+  /* content */
+  .founder-eyebrow{display:inline-flex;align-items:center;gap:0.8rem;margin-bottom:0.9rem}
+  .founder-eyebrow span{font-family:'Jost',sans-serif;font-size:0.68rem;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold-dark)}
+  .founder-name{font-family:'Bodoni Moda',serif;font-size:clamp(2rem,4vw,3rem);font-weight:400;color:var(--text-dark);line-height:1.1;margin-bottom:0.3rem}
+  .founder-name em{font-style:italic;color:var(--rose-gold)}
+  .founder-title{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-style:italic;color:var(--text-light);margin-bottom:1.6rem;display:flex;align-items:center;gap:0.7rem}
+  .founder-title::after{content:'';flex:1;max-width:60px;height:1px;background:linear-gradient(90deg,var(--gold),transparent)}
+  .founder-quote{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-style:italic;color:var(--text-mid);line-height:1.85;margin-bottom:1.6rem;padding-left:1.2rem;border-left:3px solid var(--gold);position:relative}
+  .founder-para{font-family:'Jost',sans-serif;font-size:0.9rem;line-height:1.85;color:var(--text-mid);font-weight:300;margin-bottom:1rem}
+  .founder-chips{display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:1.5rem}
+  .chip{font-family:'Jost',sans-serif;font-size:0.7rem;letter-spacing:0.08em;padding:0.35rem 0.9rem;border-radius:20px;border:1px solid rgba(201,168,76,0.3);color:var(--gold-dark);background:rgba(201,168,76,0.06);transition:all 0.25s}
+  .chip:hover{background:rgba(201,168,76,0.12);border-color:var(--gold)}
+
+  /* ── STORY SECTION ── */
+  #story{background:var(--cream);padding:6rem 0}
+  .story-header{text-align:center;margin-bottom:4rem}
+  .story-intro{font-family:'Cormorant Garamond',serif;font-size:1.15rem;color:var(--text-light);font-style:italic;margin-top:0.8rem;line-height:1.7;max-width:580px;margin-left:auto;margin-right:auto}
+  /* big quote */
+  .story-manifesto{background:linear-gradient(135deg,var(--dark2),var(--dark));border-radius:24px;padding:4rem;text-align:center;position:relative;overflow:hidden;margin-bottom:4rem}
+  .story-manifesto::before{content:'"';position:absolute;top:-1.5rem;left:2rem;font-family:'Bodoni Moda',serif;font-size:12rem;color:rgba(201,168,76,0.06);line-height:1;pointer-events:none}
+  .story-manifesto-text{font-family:'Bodoni Moda',serif;font-size:clamp(1.4rem,3vw,2.2rem);font-weight:400;font-style:italic;color:var(--white);line-height:1.6;position:relative;z-index:1}
+  .story-manifesto-text em{background:linear-gradient(135deg,var(--gold-light),var(--copper-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+  .story-manifesto-sig{font-family:'Jost',sans-serif;font-size:0.72rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(201,168,76,0.6);margin-top:1.5rem;position:relative;z-index:1}
+  /* two col story */
+  .story-cols{display:grid;grid-template-columns:1fr 1fr;gap:3.5rem;align-items:start}
+  .story-col-title{font-family:'Bodoni Moda',serif;font-size:1.6rem;font-weight:400;color:var(--text-dark);margin-bottom:1rem;line-height:1.25}
+  .story-col-title em{font-style:italic;color:var(--rose-gold)}
+  .story-col-body{font-family:'Jost',sans-serif;font-size:0.88rem;line-height:1.9;color:var(--text-mid);font-weight:300}
+  .story-col-body p{margin-bottom:1rem}
+
+  /* ── VALUES ── */
+  #values{background:var(--off-white);padding:6rem 0}
+  .values-header{text-align:center;margin-bottom:3.5rem}
+  .values-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+  .value-card{background:var(--white);border:1px solid rgba(197,132,106,0.12);border-radius:20px;padding:2.2rem;position:relative;overflow:hidden;transition:all 0.35s ease}
+  .value-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),var(--copper));transform:scaleX(0);transform-origin:left;transition:transform 0.4s ease}
+  .value-card:hover{transform:translateY(-6px);box-shadow:0 20px 50px rgba(197,132,106,0.1);border-color:rgba(201,168,76,0.25)}
+  .value-card:hover::before{transform:scaleX(1)}
+  .value-icon{font-size:2rem;margin-bottom:1.1rem;display:block}
+  .value-title{font-family:'Bodoni Moda',serif;font-size:1.2rem;font-weight:400;color:var(--text-dark);margin-bottom:0.6rem}
+  .value-title em{font-style:italic;color:var(--rose-gold)}
+  .value-body{font-family:'Jost',sans-serif;font-size:0.83rem;line-height:1.8;color:var(--text-mid);font-weight:300}
+
+  /* ── JOURNEY TIMELINE ── */
+  #journey{background:linear-gradient(170deg,var(--dark) 0%,var(--dark2) 50%,var(--dark) 100%);padding:7rem 0;position:relative;overflow:hidden}
+  #journey::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,rgba(201,168,76,0.07) 0%,transparent 65%);pointer-events:none}
+  .journey-header{text-align:center;margin-bottom:5rem}
+  .journey-header .section-title{color:var(--white)}
+  .journey-header .section-title em{color:var(--gold-light)}
+  .journey-intro{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:rgba(255,255,255,0.45);font-style:italic;margin-top:0.8rem;line-height:1.7}
+  /* vertical timeline */
+  .tl-wrap{max-width:800px;margin:0 auto;padding:0 4rem;position:relative}
+  .tl-wrap::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:1px;background:linear-gradient(180deg,transparent,rgba(201,168,76,0.3) 8%,rgba(201,168,76,0.3) 92%,transparent);transform:translateX(-50%)}
+  .tl-node{display:grid;grid-template-columns:1fr 60px 1fr;align-items:center;margin-bottom:3.5rem;opacity:0;transform:translateY(24px);transition:opacity 0.7s ease,transform 0.7s ease}
+  .tl-node.in-view{opacity:1;transform:translateY(0)}
+  .tl-node:nth-child(odd) .tl-left{visibility:visible}
+  .tl-node:nth-child(odd) .tl-right{visibility:hidden}
+  .tl-node:nth-child(even) .tl-left{visibility:hidden}
+  .tl-node:nth-child(even) .tl-right{visibility:visible}
+  .tl-left{text-align:right;padding-right:2rem}
+  .tl-right{text-align:left;padding-left:2rem}
+  .tl-center{display:flex;flex-direction:column;align-items:center;gap:0.4rem;z-index:2}
+  .tl-dot{width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--copper));display:flex;align-items:center;justify-content:center;font-size:1.2rem;box-shadow:0 0 0 6px rgba(201,168,76,0.1),0 6px 20px rgba(197,132,106,0.4);transition:transform 0.4s,box-shadow 0.4s;flex-shrink:0}
+  .tl-node:hover .tl-dot{transform:scale(1.1);box-shadow:0 0 0 10px rgba(201,168,76,0.14),0 10px 32px rgba(197,132,106,0.5)}
+  .tl-year{font-family:'Jost',sans-serif;font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);font-weight:600;background:rgba(201,168,76,0.1);padding:0.2rem 0.55rem;border-radius:10px;border:1px solid rgba(201,168,76,0.2);white-space:nowrap}
+  .tl-card{background:rgba(255,255,255,0.03);border:1px solid rgba(201,168,76,0.12);border-radius:14px;padding:1.3rem 1.5rem;transition:background 0.4s,border-color 0.4s,transform 0.35s;display:inline-block;width:100%}
+  .tl-node:hover .tl-card{background:rgba(255,255,255,0.06);border-color:rgba(201,168,76,0.28);transform:translateY(-3px)}
+  .tl-tag{font-family:'Jost',sans-serif;font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold-light);margin-bottom:0.3rem;display:block;opacity:0.8}
+  .tl-heading{font-family:'Bodoni Moda',serif;font-size:1.05rem;font-weight:400;color:var(--white);margin-bottom:0.45rem;line-height:1.3}
+  .tl-heading em{font-style:italic;color:var(--gold-light)}
+  .tl-body{font-family:'Jost',sans-serif;font-size:0.8rem;line-height:1.75;color:rgba(255,255,255,0.48);font-weight:300}
+
+  /* ── NUMBERS SECTION ── */
+  #numbers{background:var(--cream);padding:5rem 0}
+  .numbers-header{text-align:center;margin-bottom:3.5rem}
+  .numbers-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem}
+  .num-card{background:var(--white);border:1px solid rgba(197,132,106,0.12);border-radius:18px;padding:2rem 1.5rem;text-align:center;transition:all 0.3s;position:relative;overflow:hidden}
+  .num-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),var(--copper));transform:scaleX(0);transform-origin:center;transition:transform 0.4s}
+  .num-card:hover{transform:translateY(-5px);box-shadow:0 16px 40px rgba(197,132,106,0.1)}
+  .num-card:hover::after{transform:scaleX(1)}
+  .num-icon{font-size:1.8rem;margin-bottom:0.8rem;display:block}
+  .num-val{font-family:'Bodoni Moda',serif;font-size:2.4rem;font-weight:400;background:linear-gradient(135deg,var(--gold),var(--copper));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;margin-bottom:0.35rem}
+  .num-lbl{font-family:'Jost',sans-serif;font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-light)}
+
+  /* ── CTA ── */
+  #cta{position:relative;overflow:hidden;padding:7rem 0;background:var(--dark);text-align:center}
+  .cta-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 30%,rgba(201,168,76,0.15) 0%,transparent 60%),radial-gradient(ellipse at 20% 80%,rgba(197,132,106,0.1) 0%,transparent 50%)}
+  .cta-ornament{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:600px;border:1px solid rgba(201,168,76,0.06);border-radius:50%;pointer-events:none}
+  .cta-ornament::before{content:'';position:absolute;inset:60px;border:1px solid rgba(201,168,76,0.04);border-radius:50%}
+  .cta-content{position:relative;z-index:2}
+  .cta-eyebrow{font-family:'Jost',sans-serif;font-size:0.68rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem;display:block}
+  .cta-title{font-family:'Bodoni Moda',serif;font-size:clamp(2.2rem,5vw,4rem);font-weight:400;color:var(--white);line-height:1.15;margin-bottom:1.2rem}
+  .cta-title em{font-style:italic;background:linear-gradient(135deg,var(--gold-light),var(--copper-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+  .cta-sub{font-family:'Cormorant Garamond',serif;font-size:1.15rem;color:rgba(255,255,255,0.5);font-style:italic;margin-bottom:2.5rem;line-height:1.7}
+  .cta-actions{display:flex;gap:1.2rem;justify-content:center;flex-wrap:wrap}
+  .btn-gold{background:linear-gradient(135deg,var(--gold),var(--gold-dark));color:var(--white);padding:1rem 2.5rem;border-radius:50px;text-decoration:none;font-family:'Jost',sans-serif;font-size:0.78rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;transition:all 0.4s;box-shadow:0 4px 30px rgba(201,168,76,0.35);display:inline-flex;align-items:center;gap:0.7rem}
+  .btn-gold:hover{transform:translateY(-3px);box-shadow:0 15px 45px rgba(201,168,76,0.45)}
+  .btn-whatsapp{background:linear-gradient(135deg,#25D366,#128C7E);color:var(--white);padding:1rem 2.5rem;border-radius:50px;text-decoration:none;font-family:'Jost',sans-serif;font-size:0.78rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;transition:all 0.4s;box-shadow:0 4px 30px rgba(37,211,102,0.25);display:inline-flex;align-items:center;gap:0.7rem}
+  .btn-whatsapp:hover{transform:translateY(-3px);box-shadow:0 15px 40px rgba(37,211,102,0.35)}
+
+  /* ── FOOTER (same as index) ── */
+  footer{background:#080503;padding:3.5rem 4rem 2rem;border-top:1px solid rgba(201,168,76,0.1)}
+  .footer-main{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:4rem;margin-bottom:2.5rem}
+  .footer-logo img{height:68px;width:68px;object-fit:contain;opacity:0.9;margin-bottom:0.8rem;display:block}
+  .footer-slogan{font-family:'Cormorant Garamond',serif;font-style:italic;color:rgba(255,255,255,0.4);font-size:0.95rem;line-height:1.6;max-width:220px}
+  .footer-social{display:flex;gap:0.7rem;margin-top:1.2rem}
+  .social-btn{width:34px;height:34px;border-radius:50%;border:1px solid rgba(201,168,76,0.2);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.35);font-size:0.8rem;transition:all 0.3s;text-decoration:none}
+  .social-btn:hover{border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,0.08)}
+  .footer-col-title{font-family:'Jost',sans-serif;font-size:0.65rem;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:1.2rem;display:block}
+  .footer-col-links{display:flex;flex-direction:column;gap:0.5rem}
+  .footer-col-links a{font-family:'Jost',sans-serif;color:rgba(255,255,255,0.38);text-decoration:none;font-size:0.82rem;letter-spacing:0.04em;transition:all 0.3s;line-height:1.5}
+  .footer-col-links a:hover{color:rgba(255,255,255,0.75);padding-left:4px}
+  .footer-bottom{border-top:1px solid rgba(201,168,76,0.08);padding-top:1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.8rem}
+  .footer-copy{font-family:'Jost',sans-serif;color:rgba(255,255,255,0.18);font-size:0.72rem;letter-spacing:0.05em}
+  .footer-bottom-links{display:flex;gap:1.5rem}
+  .footer-bottom-links a{font-family:'Jost',sans-serif;color:rgba(255,255,255,0.2);font-size:0.7rem;text-decoration:none;transition:color 0.3s}
+  .footer-bottom-links a:hover{color:rgba(255,255,255,0.5)}
+  .footer-location{font-family:'Jost',sans-serif;color:rgba(255,255,255,0.2);font-size:0.7rem;display:flex;align-items:center;gap:0.4rem}
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+  @keyframes float-particle{0%{opacity:0;transform:translateY(100vh) scale(0)}10%{opacity:0.8}90%{opacity:0.4}100%{opacity:0;transform:translateY(-100px) scale(1.5)}}
+  @keyframes slow-rotate{from{transform:translate(-50%,-50%) rotate(0deg)}to{transform:translate(-50%,-50%) rotate(360deg)}}
+  @keyframes scroll-pulse{0%,100%{opacity:0.3}50%{opacity:1}}
+  @keyframes count-up{from{opacity:0}to{opacity:1}}
+
+  /* ── RESPONSIVE ── */
+  @media(max-width:900px){
+    nav{padding:0.9rem 1.2rem}
+    nav.scrolled{padding:0.7rem 1.2rem}
+    .nav-links{display:none}
+    .hamburger{display:flex}
+    .container{padding:0 1.2rem}
+    .founder-grid{grid-template-columns:1fr;gap:2.5rem}
+    .founder-badge{left:auto;right:1rem;bottom:-1rem}
+    .story-cols{grid-template-columns:1fr;gap:2rem}
+    .values-grid{grid-template-columns:1fr;gap:1rem}
+    .numbers-grid{grid-template-columns:repeat(2,1fr)}
+    .stats-strip{grid-template-columns:repeat(2,1fr);padding:1.5rem 1.2rem}
+    .tl-wrap{padding:0 1.2rem}
+    footer{padding:2.5rem 1.2rem 1.5rem}
+    .footer-main{grid-template-columns:1fr;gap:2rem}
+    .footer-bottom{flex-direction:column;align-items:flex-start}
+    .story-manifesto{padding:2.5rem 1.5rem}
+  }
+  @media(max-width:600px){
+    .numbers-grid{grid-template-columns:1fr 1fr}
+    .page-hero-title{font-size:2.4rem}
+    .founder-deco-line,.founder-deco-line2{display:none}
+  }
+  @media(min-width:901px){
+    .hamburger{display:none !important}
+    .mobile-nav{display:none !important}
+    .mobile-overlay{display:none !important}
+  }
+  </style>
+</head>
+<body>
+
+<div class="mobile-overlay" id="mobileOverlay"></div>
+<nav class="mobile-nav" id="mobileNav" aria-hidden="true">
+  <span class="mobile-section-label">Main</span>
+  <a href="index.html" onclick="closeMobileNav()">Home</a>
+  <a href="about.html" onclick="closeMobileNav()">About</a>
+  <a href="#" onclick="closeMobileNav()">Services</a>
+  <a href="#" onclick="closeMobileNav()">Gallery</a>
+  <a href="#" onclick="closeMobileNav()">Reviews</a>
+  <a href="#cta" class="mobile-cta" onclick="closeMobileNav()">Book Now</a>
+</nav>
+
+<!-- ══ NAV ══ -->
+<nav id="mainNav">
+  <div class="nav-logo">
+    <img src="Logo3.png" alt="Glow Pavi's Makeover"
+      onerror="this.style.display='none';this.parentElement.innerHTML='<span class=\'nav-logo-text\'>Glow Pavi\'s</span>'">
+  </div>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html" class="active">About</a></li>
+    <li><a href="index.html#services">Services</a></li>
+    <li><a href="index.html#transformation">Gallery</a></li>
+    <li><a href="index.html#trust">Reviews</a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:1rem">
+    <a href="#cta" class="nav-cta">Book Now</a>
+    <button class="hamburger" id="hamburgerBtn" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ══ PAGE HERO ══ -->
+<section class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="hero-particles" id="particlesContainer"></div>
+  <div class="page-hero-ornament"></div>
+  <div class="page-hero-content">
+    <div class="page-hero-eyebrow">
+      <div class="hero-line"></div>
+      <span>Our Story</span>
+      <div class="hero-line"></div>
+    </div>
+    <h1 class="page-hero-title">
+      Behind every glow,
+      <em>a heartfelt story</em>
+    </h1>
+    <p class="page-hero-sub">Since 2019, Glow Pavi's Makeover has been a sanctuary where brides discover the most radiant version of themselves — 150+ transformations and counting.</p>
+  </div>
+  <div class="page-hero-scroll">
+    <span class="scroll-text">Discover</span>
+    <div class="scroll-dot"></div>
+  </div>
+</section>
+
+<!-- ══ STATS STRIP ══ -->
+<div class="stats-strip">
+  <div class="strip-stat reveal">
+    <div class="strip-num" data-target="150" data-suffix="+">150+</div>
+    <div class="strip-label">Makeovers Done</div>
+  </div>
+  <div class="strip-stat reveal" style="transition-delay:0.1s">
+    <div class="strip-num" data-target="6" data-suffix="+ Yrs">6+ Yrs</div>
+    <div class="strip-label">Of Pure Artistry</div>
+  </div>
+  <div class="strip-stat reveal" style="transition-delay:0.2s">
+    <div class="strip-num" data-target="100" data-suffix="%">100%</div>
+    <div class="strip-label">Bride Satisfaction</div>
+  </div>
+  <div class="strip-stat reveal" style="transition-delay:0.3s">
+    <div class="strip-num" data-target="5" data-suffix="★">5★</div>
+    <div class="strip-label">Rated Studio</div>
+  </div>
+</div>
+
+<!-- ══ FOUNDER SECTION ══ -->
+<section id="founder">
+  <div class="container">
+    <div class="founder-grid">
+
+      <!-- LEFT: Image -->
+      <div class="reveal">
+        <div class="founder-img-wrap">
+          <div class="founder-deco-line"></div>
+          <div class="founder-deco-line2"></div>
+          <div class="founder-img-frame">
+            <img src="pavi-founder.jpg" alt="Pavi — Founder, Glow Pavi's Makeover"
+              onerror="this.style.display='none';this.parentElement.innerHTML='<div class=\'founder-img-placeholder\'><span>✨</span><span>Pavi\'s Photo</span></div>'">
+          </div>
+          <div class="founder-badge">
+            <span class="founder-badge-num">150+</span>
+            <span class="founder-badge-lbl">Brides Transformed</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Content -->
+      <div class="reveal" style="transition-delay:0.18s">
+        <div class="founder-eyebrow">
+          <div class="eyebrow-line"></div>
+          <span>The Founder</span>
+        </div>
+        <h2 class="founder-name">Pavi —<br><em>The Artist Behind the Glow</em></h2>
+        <p class="founder-title">Makeup Artist · Skin Specialist · Dream Keeper</p>
+
+        <blockquote class="founder-quote">
+          "I didn't just want to do makeup. I wanted to make every woman feel seen, celebrated, and completely herself — only more luminous."
+        </blockquote>
+
+        <p class="founder-para">
+          Pavi's journey began not in a studio, but with a deep-seated belief — that beauty is not about changing who you are, but about revealing who you already are. What started as a personal passion in 2019 quietly grew into Madurai's most trusted bridal studio, built entirely on the whispered recommendations of happy brides.
+        </p>
+        <p class="founder-para">
+          With over 150 makeovers across bridal ceremonies, receptions, engagements, and skin care transformations, Pavi has developed a rare understanding of South Indian skin tones, traditional aesthetics, and the emotional weight of a wedding day. Every bride who sits in her chair leaves not just beautiful — but unforgettable.
+        </p>
+        <p class="founder-para">
+          Trained in advanced bridal artistry and airbrush techniques, certified in skin wellness, and driven by an obsessive love for her craft — Pavi is not just a makeup artist. She is the woman who will hold your hand through your most nervous morning, and hand you back to the world radiant.
+        </p>
+
+        <div class="founder-chips">
+          <span class="chip">✦ Bridal Specialist</span>
+          <span class="chip">✦ Airbrush Certified</span>
+          <span class="chip">✦ Skin Wellness</span>
+          <span class="chip">✦ South Indian Bridal</span>
+          <span class="chip">✦ HD Makeup</span>
+          <span class="chip">✦ Pre-Bridal Care</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══ STORY SECTION ══ -->
+<section id="story">
+  <div class="container">
+    <div class="story-header reveal">
+      <div class="section-eyebrow" style="justify-content:center">
+        <div class="eyebrow-line"></div>
+        <span>The Story</span>
+        <div class="eyebrow-line"></div>
+      </div>
+      <h2 class="section-title" style="text-align:center">Built on trust,<br><em>one bride at a time</em></h2>
+      <p class="story-intro">No grand launch. No advertising budget. Just word of mouth — from one glowing bride to the next.</p>
+    </div>
+
+    <div class="story-manifesto reveal">
+      <p class="story-manifesto-text">
+        "Every morning I wake up knowing that somewhere, a bride is nervous, hopeful, and dreaming of how she'll look. My only job is to make sure that when she looks in the mirror — <em>she cries tears of joy.</em>"
+      </p>
+      <p class="story-manifesto-sig">— Pavi, Founder · Glow Pavi's Makeover</p>
+    </div>
+
+    <div class="story-cols">
+      <div class="reveal">
+        <h3 class="story-col-title">Where it all<br><em>began</em></h3>
+        <div class="story-col-body">
+          <p>In 2019, Pavi set up her first chair with nothing more than a professional kit, a deep love for artistry, and an unshakeable commitment to making every client feel extraordinary. There was no studio — just skill, heart, and word of mouth.</p>
+          <p>Her first bridal client told two friends. Those two friends told four more. Within a year, Glow Pavi's Makeover had become a name whispered in bridal circles across Madurai — not from advertising, but from the kind of genuine love that only real results create.</p>
+        </div>
+      </div>
+      <div class="reveal" style="transition-delay:0.2s">
+        <h3 class="story-col-title">Where we<br><em>stand today</em></h3>
+        <div class="story-col-body">
+          <p>Today, Glow Pavi's Makeover is a full-service studio offering bridal packages, party makeup, and pre-bridal skin care — all under one roof, with the same personal attention that defined us from day one. Over 150 makeovers. Hundreds of memories. Thousands of photos that brides still share years later.</p>
+          <p>Every client still gets Pavi's full focus. Every bride still gets treated like she is the most important person in the room — because on her day, she absolutely is. That philosophy has never changed, and it never will.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ VALUES ══ -->
+<section id="values">
+  <div class="container">
+    <div class="values-header reveal">
+      <div class="section-eyebrow" style="justify-content:center">
+        <div class="eyebrow-line"></div>
+        <span>What We Stand For</span>
+        <div class="eyebrow-line"></div>
+      </div>
+      <h2 class="section-title" style="text-align:center">The beliefs that guide<br><em>every brushstroke</em></h2>
+    </div>
+    <div class="values-grid">
+      <div class="value-card reveal">
+        <span class="value-icon">🎯</span>
+        <h3 class="value-title">Precision <em>in every detail</em></h3>
+        <p class="value-body">From the exact shade of foundation matched to your undertone, to the final setting spray — nothing is left to chance. Every step is intentional, every product chosen for you specifically.</p>
+      </div>
+      <div class="value-card reveal" style="transition-delay:0.12s">
+        <span class="value-icon">💛</span>
+        <h3 class="value-title">Warmth <em>in every moment</em></h3>
+        <p class="value-body">Your wedding morning is sacred. We create a calm, joyful space where you feel supported, unhurried, and completely at ease — because the best makeup begins from within.</p>
+      </div>
+      <div class="value-card reveal" style="transition-delay:0.24s">
+        <span class="value-icon">✨</span>
+        <h3 class="value-title">Authenticity <em>above all</em></h3>
+        <p class="value-body">We don't follow trends blindly. We understand your features, your culture, your story — and create a look that is unmistakably, timelessly you. Beautiful in every photo, for every year to come.</p>
+      </div>
+      <div class="value-card reveal" style="transition-delay:0.12s">
+        <span class="value-icon">🌿</span>
+        <h3 class="value-title">Skin-first <em>philosophy</em></h3>
+        <p class="value-body">Great makeup begins with great skin. We invest in pre-bridal care and use only skin-loving products that nourish while they beautify — no compromises on your skin's health.</p>
+      </div>
+      <div class="value-card reveal" style="transition-delay:0.24s">
+        <span class="value-icon">🤝</span>
+        <h3 class="value-title">Trust <em>you can feel</em></h3>
+        <p class="value-body">Our entire business was built on referrals — bride to bride, mother to daughter. That trust is our most precious asset. We guard it with every appointment, every product, every promise kept.</p>
+      </div>
+      <div class="value-card reveal" style="transition-delay:0.36s">
+        <span class="value-icon">📸</span>
+        <h3 class="value-title">Camera-ready <em>guaranteed</em></h3>
+        <p class="value-body">Your photos will last a lifetime. We formulate every look for longevity, photography, and movement — so you look as stunning at 11 PM as you did at 9 AM.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ JOURNEY TIMELINE ══ -->
+<section id="journey">
+  <div class="container">
+    <div class="journey-header reveal">
+      <div class="section-eyebrow" style="justify-content:center">
+        <div class="eyebrow-line" style="background:rgba(201,168,76,0.5)"></div>
+        <span style="color:var(--gold-light)">The Journey</span>
+        <div class="eyebrow-line" style="background:rgba(201,168,76,0.5)"></div>
+      </div>
+      <h2 class="section-title">Six years of<br><em>dedicated craft</em></h2>
+      <p class="journey-intro">From a single chair in 2019 to a full studio — every milestone earned through the smiles of our brides.</p>
+    </div>
+
+    <div class="tl-wrap">
+
+      <div class="tl-node">
+        <div class="tl-left">
+          <div class="tl-card">
+            <span class="tl-tag">✦ Where it all began</span>
+            <h4 class="tl-heading">The First <em>Brushstroke</em></h4>
+            <p class="tl-body">Pavi picked up her brush with a simple dream — to make women feel extraordinary. Her first bridal client left in tears of joy, and the word began to spread quietly through Madurai.</p>
+          </div>
+        </div>
+        <div class="tl-center">
+          <div class="tl-dot">🌱</div>
+          <span class="tl-year">2019</span>
+        </div>
+        <div class="tl-right"></div>
+      </div>
+
+      <div class="tl-node">
+        <div class="tl-left"></div>
+        <div class="tl-center">
+          <div class="tl-dot">💍</div>
+          <span class="tl-year">2020</span>
+        </div>
+        <div class="tl-right">
+          <div class="tl-card">
+            <span class="tl-tag">✦ Growing through love</span>
+            <h4 class="tl-heading">50 Brides <em>Transformed</em></h4>
+            <p class="tl-body">Even through a challenging year for the world, brides found their way to Pavi. 50 makeovers — each one deeply personal, each one a memory frozen in gold.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-node">
+        <div class="tl-left">
+          <div class="tl-card">
+            <span class="tl-tag">✦ Elevating the craft</span>
+            <h4 class="tl-heading">Advanced <em>Mastery</em></h4>
+            <p class="tl-body">Certified in airbrush artistry and HD bridal techniques. Pavi invested in her skills — because every bride deserves a look that is cinematic, flawless, and built to last.</p>
+          </div>
+        </div>
+        <div class="tl-center">
+          <div class="tl-dot">🎓</div>
+          <span class="tl-year">2021</span>
+        </div>
+        <div class="tl-right"></div>
+      </div>
+
+      <div class="tl-node">
+        <div class="tl-left"></div>
+        <div class="tl-center">
+          <div class="tl-dot">🏛️</div>
+          <span class="tl-year">2022</span>
+        </div>
+        <div class="tl-right">
+          <div class="tl-card">
+            <span class="tl-tag">✦ A home for dreams</span>
+            <h4 class="tl-heading">Studio <em>Launch</em></h4>
+            <p class="tl-body">Glow Pavi's Makeover studio opened its doors — a calm, luxurious sanctuary designed entirely around the comfort of brides on their most precious morning.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-node">
+        <div class="tl-left">
+          <div class="tl-card">
+            <span class="tl-tag">✦ Skin wellness added</span>
+            <h4 class="tl-heading">Pre-Bridal <em>Care Launches</em></h4>
+            <p class="tl-body">Recognising that great makeup starts with great skin, Pavi introduced a full range of pre-bridal skin treatments — facials, de-tan, glow packages, and personalised skin journeys.</p>
+          </div>
+        </div>
+        <div class="tl-center">
+          <div class="tl-dot">🌿</div>
+          <span class="tl-year">2023</span>
+        </div>
+        <div class="tl-right"></div>
+      </div>
+
+      <div class="tl-node">
+        <div class="tl-left"></div>
+        <div class="tl-center">
+          <div class="tl-dot">✨</div>
+          <span class="tl-year">Today</span>
+        </div>
+        <div class="tl-right">
+          <div class="tl-card">
+            <span class="tl-tag">✦ The legacy continues</span>
+            <h4 class="tl-heading">150+ Stories <em>of Glow</em></h4>
+            <p class="tl-body">Over 150 makeovers. Hundreds of families who trusted us with their most precious moments. And every morning, a new bride sits down — ready to be transformed. The journey never ends.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══ NUMBERS ══ -->
+<section id="numbers">
+  <div class="container">
+    <div class="numbers-header reveal">
+      <div class="section-eyebrow" style="justify-content:center">
+        <div class="eyebrow-line"></div>
+        <span>By the Numbers</span>
+        <div class="eyebrow-line"></div>
+      </div>
+      <h2 class="section-title" style="text-align:center">Six years of work,<br><em>in four numbers</em></h2>
+    </div>
+    <div class="numbers-grid">
+      <div class="num-card reveal">
+        <span class="num-icon">👰</span>
+        <div class="num-val" data-target="150" data-suffix="+">150+</div>
+        <div class="num-lbl">Total Makeovers</div>
+      </div>
+      <div class="num-card reveal" style="transition-delay:0.1s">
+        <span class="num-icon">📅</span>
+        <div class="num-val" data-target="6" data-suffix=" Yrs">6 Yrs</div>
+        <div class="num-lbl">In the Industry</div>
+      </div>
+      <div class="num-card reveal" style="transition-delay:0.2s">
+        <span class="num-icon">⭐</span>
+        <div class="num-val" data-target="5" data-suffix="★">5★</div>
+        <div class="num-lbl">Average Rating</div>
+      </div>
+      <div class="num-card reveal" style="transition-delay:0.3s">
+        <span class="num-icon">💛</span>
+        <div class="num-val" data-target="100" data-suffix="%">100%</div>
+        <div class="num-lbl">Repeat Referrals</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CTA ══ -->
+<section id="cta">
+  <div class="cta-bg"></div>
+  <div class="cta-ornament"></div>
+  <div class="container">
+    <div class="cta-content reveal">
+      <span class="cta-eyebrow">✦ Your Story Awaits</span>
+      <h2 class="cta-title">Ready to write your<br><em>glow story?</em></h2>
+      <p class="cta-sub">150 brides trusted us with their most precious moment. You deserve the same care, artistry, and love.</p>
+      <div class="cta-actions">
+        <a href="#" class="btn-gold"><span>✦</span> Book Your Session</a>
+        <a href="https://wa.me/919XXXXXXXXX" target="_blank" rel="noopener" class="btn-whatsapp">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          WhatsApp Now
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="footer-main">
+    <div>
+      <div class="footer-logo">
+        <img src="Logo3.png" alt="Glow Pavi's Makeover" onerror="this.style.display='none'">
+      </div>
+      <p class="footer-slogan">Every bride deserves to feel like the most beautiful version of herself.</p>
+      <div class="footer-social">
+        <a class="social-btn" href="#" title="Instagram"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
+        <a class="social-btn" href="#" title="Facebook"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+        <a class="social-btn" href="https://wa.me/919XXXXXXXXX" target="_blank" rel="noopener" title="WhatsApp"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+      </div>
+    </div>
+    <div>
+      <span class="footer-col-title">Services</span>
+      <div class="footer-col-links">
+        <a href="index.html#services">Bridal Makeup</a>
+        <a href="index.html#services">Party Makeup</a>
+        <a href="index.html#services">Skin Care</a>
+      </div>
+    </div>
+    <div>
+      <span class="footer-col-title">Company</span>
+      <div class="footer-col-links">
+        <a href="about.html">About Us</a>
+        <a href="#">FAQ</a>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Booking & Cancellation</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2025 Glow Pavi's Makeover. All rights reserved.</p>
+    <div class="footer-bottom-links"><a href="#">Privacy</a><a href="#">Terms</a></div>
+    <div class="footer-location">
+      <svg width="10" height="12" viewBox="0 0 12 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 1C3.79 1 2 2.79 2 5c0 3.25 4 9 4 9s4-5.75 4-9c0-2.21-1.79-4-4-4z"/><circle cx="6" cy="5" r="1.5"/></svg>
+      Madurai, Tamil Nadu
+    </div>
+  </div>
+</footer>
+
+<script>
+// NAV SCROLL
+const nav=document.getElementById('mainNav');
+window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',window.scrollY>80),{passive:true});
+
+// HAMBURGER
+const hamburger=document.getElementById('hamburgerBtn');
+const mobileNav=document.getElementById('mobileNav');
+const mobileOverlay=document.getElementById('mobileOverlay');
+hamburger.addEventListener('click',()=>{
+  const isOpen=mobileNav.classList.toggle('open');
+  hamburger.classList.toggle('open',isOpen);
+  mobileOverlay.classList.toggle('show',isOpen);
+  hamburger.setAttribute('aria-expanded',isOpen);
+  mobileNav.setAttribute('aria-hidden',!isOpen);
+  document.body.style.overflow=isOpen?'hidden':'';
+});
+mobileOverlay.addEventListener('click',closeMobileNav);
+function closeMobileNav(){
+  mobileNav.classList.remove('open');hamburger.classList.remove('open');
+  mobileOverlay.classList.remove('show');hamburger.setAttribute('aria-expanded','false');
+  mobileNav.setAttribute('aria-hidden','true');document.body.style.overflow='';
+}
+
+// PARTICLES
+const pc=document.getElementById('particlesContainer');
+for(let i=0;i<28;i++){
+  const p=document.createElement('div');p.className='particle';
+  p.style.cssText=`left:${Math.random()*100}%;animation-duration:${8+Math.random()*12}s;animation-delay:${Math.random()*10}s;width:${1+Math.random()*2}px;height:${1+Math.random()*2}px`;
+  pc.appendChild(p);
+}
+
+// SCROLL REVEAL
+const revealEls=document.querySelectorAll('.reveal');
+const revealObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');revealObs.unobserve(e.target);}});
+},{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
+revealEls.forEach(el=>revealObs.observe(el));
+
+// TIMELINE NODES
+const tlNodes=document.querySelectorAll('.tl-node');
+const tlObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in-view');tlObs.unobserve(e.target);}});
+},{threshold:0.2});
+tlNodes.forEach((n,i)=>{n.style.transitionDelay=(i*0.13)+'s';tlObs.observe(n);});
+
+// COUNT UP
+function animateCount(el,target,suffix,duration){
+  const start=performance.now();
+  function step(now){
+    const p=Math.min((now-start)/duration,1);
+    const ease=1-Math.pow(1-p,3);
+    el.textContent=Math.round(target*ease)+suffix;
+    if(p<1)requestAnimationFrame(step);
+    else el.textContent=target+suffix;
+  }
+  requestAnimationFrame(step);
+}
+const countEls=document.querySelectorAll('[data-target]');
+const countObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      animateCount(e.target,parseFloat(e.target.dataset.target),e.target.dataset.suffix||'',1800);
+      countObs.unobserve(e.target);
+    }
+  });
+},{threshold:0.5});
+countEls.forEach(el=>countObs.observe(el));
+</script>
+</body>
+</html>

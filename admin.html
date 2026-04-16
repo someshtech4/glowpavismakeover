@@ -9,1457 +9,1463 @@
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
   --gold:#C9A84C;--gold-light:#E8C97A;--gold-dark:#9A7A32;
-  --rose-gold:#C5846A;--copper:#B5622A;--copper-light:#D4895A;
+  --copper:#B5622A;--rose-gold:#C5846A;
   --bg:#0d0806;--bg2:#160c08;--bg3:#1e1008;
   --card:#1e1008;--card2:#261408;
-  --border:rgba(201,168,76,0.18);--border2:rgba(201,168,76,0.3);
+  --border:rgba(201,168,76,0.18);--border2:rgba(201,168,76,0.32);
   --text:#f5ede8;--text-mid:rgba(245,237,232,0.65);--text-dim:rgba(245,237,232,0.38);
-  --green:#4ade80;--green-bg:rgba(74,222,128,0.1);
-  --red:#f87171;--red-bg:rgba(248,113,113,0.1);
-  --blue:#60a5fa;--blue-bg:rgba(96,165,250,0.1);
-  --sidebar-w:240px;
+  --green:#4ade80;--red:#f87171;--blue:#60a5fa;--yellow:#fbbf24;
+  --sidebar-w:250px;
 }
-html{height:100%;scroll-behavior:smooth}
-body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;overflow-x:hidden}
+html,body{height:100%}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);display:flex;overflow-x:hidden}
 
-/* SIDEBAR */
-.sidebar{width:var(--sidebar-w);min-height:100vh;background:var(--bg2);border-right:1px solid var(--border);position:fixed;top:0;left:0;bottom:0;display:flex;flex-direction:column;z-index:100;transition:transform 0.35s cubic-bezier(0.77,0,0.175,1)}
-.sidebar-logo{padding:1.6rem 1.4rem 1.2rem;border-bottom:1px solid var(--border)}
-.sidebar-logo-title{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:600;background:linear-gradient(135deg,var(--gold),var(--copper));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.2}
-.sidebar-logo-sub{font-size:0.65rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-dim);margin-top:0.25rem}
-.sidebar-nav{flex:1;padding:1rem 0;overflow-y:auto}
-.sidebar-section-label{font-size:0.58rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold-dark);padding:0.9rem 1.4rem 0.4rem;display:block;opacity:0.8}
-.nav-item{display:flex;align-items:center;gap:0.7rem;padding:0.65rem 1.4rem;font-size:0.82rem;color:var(--text-mid);text-decoration:none;cursor:pointer;border:none;background:none;width:100%;text-align:left;transition:all 0.2s;position:relative;border-radius:0}
-.nav-item:hover{color:var(--text);background:rgba(201,168,76,0.06)}
-.nav-item.active{color:var(--gold-light);background:linear-gradient(135deg,rgba(201,168,76,0.12),rgba(197,132,106,0.06));border-right:2px solid var(--gold)}
-.nav-item .nav-icon{font-size:1rem;flex-shrink:0;width:18px;text-align:center}
-.sidebar-footer{padding:1.2rem 1.4rem;border-top:1px solid var(--border)}
-.sidebar-footer-info{font-size:0.7rem;color:var(--text-dim);line-height:1.6}
-.sidebar-footer-info strong{color:var(--gold-dark);display:block;margin-bottom:0.2rem}
+/* ─── SIDEBAR ─── */
+.sidebar{width:var(--sidebar-w);min-height:100vh;background:var(--bg2);border-right:1px solid var(--border);position:fixed;top:0;left:0;bottom:0;display:flex;flex-direction:column;z-index:100;transition:transform .35s cubic-bezier(.77,0,.175,1);overflow-y:auto}
+.sidebar-logo{padding:1.5rem 1.4rem 1.1rem;border-bottom:1px solid var(--border)}
+.logo-title{font-family:'Playfair Display',serif;font-size:1.05rem;background:linear-gradient(135deg,var(--gold),var(--copper));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.logo-sub{font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--text-dim);margin-top:.2rem}
+.sidebar-nav{flex:1;padding:.8rem 0}
+.nav-label{font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-dark);padding:.8rem 1.4rem .35rem;display:block}
+.nav-item{display:flex;align-items:center;gap:.65rem;padding:.6rem 1.4rem;font-size:.82rem;color:var(--text-mid);background:none;border:none;width:100%;text-align:left;cursor:pointer;transition:all .2s;font-family:'Inter',sans-serif}
+.nav-item:hover{color:var(--text);background:rgba(201,168,76,.06)}
+.nav-item.active{color:var(--gold-light);background:linear-gradient(135deg,rgba(201,168,76,.12),rgba(197,132,106,.05));border-right:2px solid var(--gold)}
+.sidebar-footer{padding:1rem 1.4rem;border-top:1px solid var(--border)}
+.conn-dot{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:.4rem;flex-shrink:0}
+.conn-dot.connected{background:var(--green);box-shadow:0 0 6px rgba(74,222,128,.5)}
+.conn-dot.disconnected{background:var(--red)}
+.conn-dot.connecting{background:var(--yellow);animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.conn-label{font-size:.72rem;color:var(--text-dim);display:flex;align-items:center}
 
-/* TOPBAR */
-.topbar{position:fixed;top:0;left:var(--sidebar-w);right:0;height:56px;background:rgba(13,8,6,0.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 2rem;z-index:90}
-.topbar-left{display:flex;align-items:center;gap:1rem}
-.hamburger-btn{display:none;background:none;border:none;cursor:pointer;padding:4px;color:var(--text-mid)}
-.hamburger-btn svg{width:20px;height:20px}
-.page-title{font-size:0.88rem;font-weight:500;color:var(--text)}
-.topbar-right{display:flex;align-items:center;gap:0.8rem}
-.topbar-badge{font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;background:linear-gradient(135deg,var(--gold),var(--copper));color:#fff;padding:0.25rem 0.7rem;border-radius:20px}
-.save-status{font-size:0.73rem;color:var(--green);display:flex;align-items:center;gap:0.4rem;opacity:0;transition:opacity 0.4s}
+/* ─── TOPBAR ─── */
+.topbar{position:fixed;top:0;left:var(--sidebar-w);right:0;height:54px;background:rgba(13,8,6,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 1.8rem;z-index:90;transition:left .35s}
+.topbar-left{display:flex;align-items:center;gap:.8rem}
+.ham-btn{display:none;background:none;border:none;cursor:pointer;color:var(--text-mid);padding:4px}
+.page-title{font-size:.88rem;font-weight:500}
+.topbar-right{display:flex;align-items:center;gap:.7rem}
+.badge{font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;background:linear-gradient(135deg,var(--gold),var(--copper));color:#fff;padding:.22rem .65rem;border-radius:20px}
+.save-status{font-size:.72rem;color:var(--green);display:flex;align-items:center;gap:.35rem;opacity:0;transition:opacity .4s}
 .save-status.show{opacity:1}
-.save-status::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--green);display:inline-block}
 
-/* MAIN */
-.main{margin-left:var(--sidebar-w);margin-top:56px;flex:1;padding:2rem;min-height:calc(100vh - 56px)}
-.page{display:none}
-.page.active{display:block}
+/* ─── MAIN ─── */
+.main{margin-left:var(--sidebar-w);margin-top:54px;padding:1.8rem;flex:1;min-height:calc(100vh - 54px)}
+.page{display:none}.page.active{display:block}
+.sec-header{margin-bottom:1.4rem}
+.sec-title{font-family:'Playfair Display',serif;font-size:1.35rem;font-weight:400;color:var(--text);margin-bottom:.25rem}
+.sec-title em{font-style:italic;color:var(--gold-light)}
+.sec-sub{font-size:.78rem;color:var(--text-dim)}
 
-/* CARDS */
-.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.5rem;margin-bottom:1.2rem}
-.card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.2rem}
-.card-title{font-family:'Playfair Display',serif;font-size:1rem;font-weight:400;color:var(--text);display:flex;align-items:center;gap:0.5rem}
-.card-title .icon{font-size:1.1rem}
-.card-subtitle{font-size:0.75rem;color:var(--text-dim);margin-top:0.2rem}
+/* ─── CARDS ─── */
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.4rem;margin-bottom:1rem}
+.card-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.1rem}
+.card-title{font-size:.9rem;font-weight:500;color:var(--text);display:flex;align-items:center;gap:.45rem}
 
-/* GRID */
-.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem}
-.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem}
-.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+/* ─── GRID ─── */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:.9rem}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:.9rem}
 
-/* STATS */
-.stat-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.2rem 1.4rem;position:relative;overflow:hidden;transition:border-color 0.3s}
-.stat-card:hover{border-color:var(--border2)}
-.stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold),var(--copper))}
-.stat-label{font-size:0.68rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-dim);margin-bottom:0.4rem}
-.stat-value{font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--gold-light);line-height:1}
-.stat-desc{font-size:0.72rem;color:var(--text-dim);margin-top:0.3rem}
-.stat-icon{position:absolute;right:1.2rem;top:1.2rem;font-size:1.8rem;opacity:0.15}
+/* ─── STAT CARDS ─── */
+.stat{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.1rem 1.3rem;position:relative;overflow:hidden;transition:border-color .3s}
+.stat:hover{border-color:var(--border2)}
+.stat::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold),var(--copper))}
+.stat-lbl{font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:var(--text-dim);margin-bottom:.35rem}
+.stat-val{font-family:'Playfair Display',serif;font-size:1.7rem;color:var(--gold-light);line-height:1}
+.stat-icon{position:absolute;right:1rem;top:1rem;font-size:1.6rem;opacity:.12}
 
-/* FORM CONTROLS */
-.form-group{margin-bottom:1rem}
-.form-label{display:block;font-size:0.73rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--gold-dark);margin-bottom:0.5rem}
-.form-input,.form-textarea,.form-select{width:100%;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'Inter',sans-serif;font-size:0.86rem;transition:all 0.2s;outline:none}
-.form-input,.form-select{padding:0.65rem 0.9rem;height:40px}
-.form-textarea{padding:0.65rem 0.9rem;resize:vertical;min-height:90px;line-height:1.6}
-.form-input:focus,.form-textarea:focus,.form-select:focus{border-color:rgba(201,168,76,0.5);background:rgba(201,168,76,0.04);box-shadow:0 0 0 3px rgba(201,168,76,0.07)}
-.form-select{cursor:pointer;-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23C9A84C' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 0.9rem center}
-.form-input::placeholder,.form-textarea::placeholder{color:var(--text-dim)}
+/* ─── FORMS ─── */
+.fg{margin-bottom:.9rem}
+.lbl{display:block;font-size:.7rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--gold-dark);margin-bottom:.42rem}
+.inp,.ta,.sel{width:100%;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'Inter',sans-serif;font-size:.85rem;transition:all .2s;outline:none}
+.inp,.sel{padding:.6rem .85rem;height:38px}
+.ta{padding:.6rem .85rem;resize:vertical;min-height:80px;line-height:1.6}
+.inp:focus,.ta:focus,.sel:focus{border-color:rgba(201,168,76,.5);background:rgba(201,168,76,.04);box-shadow:0 0 0 3px rgba(201,168,76,.07)}
+.sel{cursor:pointer;-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23C9A84C' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .85rem center}
+.inp::placeholder,.ta::placeholder{color:var(--text-dim)}
 
-/* BUTTONS */
-.btn{display:inline-flex;align-items:center;gap:0.5rem;padding:0.6rem 1.3rem;border-radius:50px;font-size:0.78rem;font-weight:500;letter-spacing:0.07em;text-transform:uppercase;cursor:pointer;border:none;transition:all 0.25s;font-family:'Inter',sans-serif}
-.btn-gold{background:linear-gradient(135deg,var(--gold),var(--copper));color:#fff;box-shadow:0 4px 16px rgba(201,168,76,0.25)}
-.btn-gold:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(201,168,76,0.35)}
+/* ─── BUTTONS ─── */
+.btn{display:inline-flex;align-items:center;gap:.45rem;padding:.55rem 1.2rem;border-radius:50px;font-size:.76rem;font-weight:500;letter-spacing:.07em;text-transform:uppercase;cursor:pointer;border:none;transition:all .25s;font-family:'Inter',sans-serif}
+.btn-gold{background:linear-gradient(135deg,var(--gold),var(--copper));color:#fff;box-shadow:0 4px 14px rgba(201,168,76,.25)}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(201,168,76,.35)}
+.btn-gold:disabled{opacity:.5;pointer-events:none}
 .btn-outline{background:transparent;border:1px solid var(--border2);color:var(--gold-light)}
-.btn-outline:hover{background:rgba(201,168,76,0.08)}
-.btn-danger{background:var(--red-bg);color:var(--red);border:1px solid rgba(248,113,113,0.25)}
-.btn-danger:hover{background:rgba(248,113,113,0.18)}
-.btn-sm{padding:0.4rem 0.9rem;font-size:0.71rem}
-.btn-icon{width:32px;height:32px;padding:0;border-radius:8px;justify-content:center}
+.btn-outline:hover{background:rgba(201,168,76,.08)}
+.btn-danger{background:rgba(248,113,113,.1);color:var(--red);border:1px solid rgba(248,113,113,.25)}
+.btn-danger:hover{background:rgba(248,113,113,.18)}
+.btn-sm{padding:.35rem .85rem;font-size:.69rem}
+.btn-icon{width:30px;height:30px;padding:0;border-radius:7px;justify-content:center}
+.btn-row{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.8rem}
 
-/* TAGS / PILLS */
-.tag{display:inline-flex;align-items:center;gap:0.3rem;font-size:0.68rem;letter-spacing:0.06em;border-radius:20px;padding:0.2rem 0.6rem;font-weight:500}
-.tag-gold{background:rgba(201,168,76,0.12);color:var(--gold-dark);border:1px solid rgba(201,168,76,0.2)}
-.tag-green{background:var(--green-bg);color:#166534;border:1px solid rgba(74,222,128,0.2)}
-.tag-red{background:var(--red-bg);color:#7f1d1d;border:1px solid rgba(248,113,113,0.2)}
+/* ─── ALERTS ─── */
+.alert{border-radius:10px;padding:.85rem 1rem;font-size:.81rem;line-height:1.6;margin-bottom:.9rem;display:flex;align-items:flex-start;gap:.55rem}
+.alert-info{background:rgba(96,165,250,.08);border:1px solid rgba(96,165,250,.22);color:var(--blue)}
+.alert-warn{background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.2);color:var(--yellow)}
+.alert-success{background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.22);color:var(--green)}
+.alert-danger{background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.22);color:var(--red)}
 
-/* GALLERY GRID */
-.gallery-upload-zone{border:2px dashed var(--border2);border-radius:12px;padding:2.5rem;text-align:center;cursor:pointer;transition:all 0.3s;background:rgba(201,168,76,0.02)}
-.gallery-upload-zone:hover,.gallery-upload-zone.drag-over{border-color:var(--gold);background:rgba(201,168,76,0.06)}
-.upload-icon{font-size:2.5rem;opacity:0.4;display:block;margin-bottom:0.7rem}
-.upload-text{font-size:0.88rem;color:var(--text-mid);line-height:1.6}
-.upload-text strong{color:var(--gold-light);display:block;margin-bottom:0.3rem}
-.upload-note{font-size:0.72rem;color:var(--text-dim);margin-top:0.4rem}
-#galleryFileInput{display:none}
+/* ─── SETUP STEPS ─── */
+.step-box{border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:.8rem}
+.step-header{display:flex;align-items:center;gap:.8rem;padding:1rem 1.2rem;cursor:pointer;background:var(--card2);transition:background .2s;user-select:none}
+.step-header:hover{background:rgba(201,168,76,.05)}
+.step-num{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--copper));display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;color:#fff;flex-shrink:0}
+.step-title{font-size:.88rem;font-weight:500;color:var(--text);flex:1}
+.step-status{font-size:.72rem;padding:.18rem .6rem;border-radius:20px}
+.step-status.done{background:rgba(74,222,128,.12);color:var(--green);border:1px solid rgba(74,222,128,.25)}
+.step-status.pending{background:rgba(251,191,36,.1);color:var(--yellow);border:1px solid rgba(251,191,36,.2)}
+.step-chevron{color:var(--text-dim);transition:transform .3s;font-size:.8rem}
+.step-body{padding:1.1rem 1.2rem;display:none;border-top:1px solid var(--border)}
+.step-body.open{display:block}
+.step-box.done .step-header{border-left:3px solid var(--green)}
 
-.gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:0.8rem;margin-top:1rem}
-.gallery-thumb{position:relative;border-radius:10px;overflow:hidden;aspect-ratio:1;background:linear-gradient(135deg,var(--bg3),var(--card2));border:1px solid var(--border);cursor:pointer;group:hover}
-.gallery-thumb img{width:100%;height:100%;object-fit:cover;display:block}
-.gallery-thumb-placeholder{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:2rem;color:var(--text-dim);gap:0.4rem}
-.gallery-thumb-placeholder span{font-size:0.7rem;color:var(--text-dim);font-family:'Inter',sans-serif}
-.gallery-thumb-overlay{position:absolute;inset:0;background:rgba(13,8,6,0.75);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.5rem;opacity:0;transition:opacity 0.25s}
-.gallery-thumb:hover .gallery-thumb-overlay{opacity:1}
-.gallery-thumb-name{position:absolute;bottom:0;left:0;right:0;padding:0.4rem 0.6rem;background:linear-gradient(180deg,transparent,rgba(0,0,0,0.8));font-size:0.65rem;color:rgba(255,255,255,0.7);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.gallery-caption-area{padding:0.5rem 0 0}
+/* ─── CODE BLOCK ─── */
+.code-block{background:#0a0604;border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-family:'Courier New',monospace;font-size:.78rem;color:#e8d5a3;line-height:1.7;overflow-x:auto;position:relative;margin:.6rem 0}
+.code-block .copy-btn{position:absolute;top:.5rem;right:.5rem;background:rgba(201,168,76,.15);border:1px solid var(--border2);color:var(--gold-light);border-radius:6px;padding:.2rem .55rem;font-size:.65rem;cursor:pointer;font-family:'Inter',sans-serif;transition:all .2s}
+.code-block .copy-btn:hover{background:rgba(201,168,76,.25)}
+.code-kw{color:#c9a84c}.code-fn{color:#e8c97a}.code-str{color:#d4895a}.code-cm{color:rgba(245,237,232,.35);font-style:italic}
 
-/* TABS */
-.tabs{display:flex;gap:0.3rem;margin-bottom:1.5rem;background:rgba(255,255,255,0.03);border-radius:10px;padding:0.25rem;border:1px solid var(--border)}
-.tab-btn{flex:1;padding:0.55rem;font-size:0.76rem;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-dim);background:none;border:none;cursor:pointer;border-radius:7px;transition:all 0.2s;font-family:'Inter',sans-serif;text-align:center}
-.tab-btn.active{background:linear-gradient(135deg,var(--gold),var(--copper));color:#fff;box-shadow:0 2px 8px rgba(201,168,76,0.3)}
-.tab-panel{display:none}
-.tab-panel.active{display:block}
+/* ─── TABS ─── */
+.tabs{display:flex;gap:.25rem;margin-bottom:1.3rem;background:rgba(255,255,255,.03);border-radius:9px;padding:.22rem;border:1px solid var(--border)}
+.tab-btn{flex:1;padding:.5rem;font-size:.73rem;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:var(--text-dim);background:none;border:none;cursor:pointer;border-radius:6px;transition:all .2s;font-family:'Inter',sans-serif}
+.tab-btn.active{background:linear-gradient(135deg,var(--gold),var(--copper));color:#fff;box-shadow:0 2px 8px rgba(201,168,76,.3)}
+.tab-panel{display:none}.tab-panel.active{display:block}
 
-/* ACCORDION EDITOR */
-.accordion-item{background:var(--card2);border:1px solid var(--border);border-radius:12px;margin-bottom:0.6rem;overflow:hidden}
-.accordion-header{display:flex;align-items:center;justify-content:space-between;padding:0.9rem 1.2rem;cursor:pointer;transition:background 0.2s}
-.accordion-header:hover{background:rgba(201,168,76,0.04)}
-.accordion-header-left{display:flex;align-items:center;gap:0.6rem}
-.accordion-icon{font-size:1rem}
-.accordion-title{font-size:0.86rem;font-weight:500;color:var(--text)}
-.accordion-body{padding:1rem 1.2rem 1.2rem;border-top:1px solid var(--border);display:none}
-.accordion-body.open{display:block}
-.accordion-toggle{width:24px;height:24px;border-radius:50%;background:rgba(201,168,76,0.1);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:0.8rem;color:var(--gold-dark);transition:transform 0.3s;flex-shrink:0}
-.accordion-item.open .accordion-toggle{transform:rotate(45deg)}
+/* ─── GALLERY ─── */
+.upload-zone{border:2px dashed var(--border2);border-radius:12px;padding:2.2rem;text-align:center;cursor:pointer;transition:all .3s;background:rgba(201,168,76,.02)}
+.upload-zone:hover,.upload-zone.drag{border-color:var(--gold);background:rgba(201,168,76,.06)}
+.upload-icon{font-size:2.2rem;opacity:.4;display:block;margin-bottom:.6rem}
+.upload-text strong{display:block;color:var(--gold-light);font-size:.88rem;margin-bottom:.25rem}
+.upload-text{font-size:.8rem;color:var(--text-mid)}
+.upload-note{font-size:.7rem;color:var(--text-dim);margin-top:.35rem}
+.gal-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:.7rem;margin-top:.9rem}
+.gal-thumb{border-radius:10px;overflow:hidden;aspect-ratio:1;background:var(--card2);border:1px solid var(--border);position:relative;cursor:pointer}
+.gal-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.gal-placeholder{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:1.8rem;color:var(--text-dim);gap:.3rem}
+.gal-placeholder span{font-size:.65rem;color:var(--text-dim);font-family:'Inter',sans-serif}
+.gal-overlay{position:absolute;inset:0;background:rgba(13,8,6,.78);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.45rem;opacity:0;transition:opacity .25s}
+.gal-thumb:hover .gal-overlay{opacity:1}
+.gal-label{position:absolute;bottom:0;left:0;right:0;padding:.35rem .55rem;background:linear-gradient(180deg,transparent,rgba(0,0,0,.8));font-size:.62rem;color:rgba(255,255,255,.7);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
-/* TESTIMONIAL CARDS */
-.testimonial-card{background:var(--card2);border:1px solid var(--border);border-radius:12px;padding:1rem 1.2rem;margin-bottom:0.8rem;display:flex;align-items:flex-start;gap:0.8rem}
-.testimonial-avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--copper));display:flex;align-items:center;justify-content:center;font-weight:600;font-size:0.78rem;flex-shrink:0}
-.testimonial-content{flex:1}
-.testimonial-name{font-size:0.84rem;font-weight:500;color:var(--text);margin-bottom:0.2rem}
-.testimonial-occasion{font-size:0.7rem;color:var(--text-dim);margin-bottom:0.5rem}
-.testimonial-text{font-size:0.8rem;color:var(--text-mid);line-height:1.6;font-style:italic}
-.testimonial-stars{color:var(--gold);font-size:0.75rem;margin-bottom:0.3rem}
-.testimonial-actions{display:flex;gap:0.4rem;margin-top:0.7rem}
+/* ─── TESTIMONIAL ─── */
+.tcard{background:var(--card2);border:1px solid var(--border);border-radius:12px;padding:.9rem 1.1rem;margin-bottom:.7rem;display:flex;gap:.75rem;align-items:flex-start}
+.tav{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.75rem;flex-shrink:0}
+.tc{flex:1}
+.tc-name{font-size:.83rem;font-weight:500;margin-bottom:.12rem}
+.tc-occ{font-size:.68rem;color:var(--text-dim);margin-bottom:.4rem}
+.tc-txt{font-size:.78rem;color:var(--text-mid);line-height:1.6;font-style:italic}
+.tc-acts{display:flex;gap:.35rem;margin-top:.6rem}
+.stars{color:var(--gold);font-size:.72rem;margin-bottom:.25rem}
 
-/* DIVIDER */
-.divider{height:1px;background:linear-gradient(90deg,transparent,var(--border2),transparent);margin:1.4rem 0}
+/* ─── ACCORDION ─── */
+.acc{background:var(--card2);border:1px solid var(--border);border-radius:11px;margin-bottom:.55rem;overflow:hidden}
+.acc-h{display:flex;align-items:center;justify-content:space-between;padding:.85rem 1.1rem;cursor:pointer;transition:background .2s;user-select:none}
+.acc-h:hover{background:rgba(201,168,76,.04)}
+.acc-hl{display:flex;align-items:center;gap:.55rem}
+.acc-t{font-size:.84rem;font-weight:500;color:var(--text)}
+.acc-b{padding:.9rem 1.1rem 1.1rem;border-top:1px solid var(--border);display:none}
+.acc-b.open{display:block}
+.acc-tog{width:22px;height:22px;border-radius:50%;background:rgba(201,168,76,.1);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:.78rem;color:var(--gold-dark);transition:transform .3s;flex-shrink:0}
+.acc.open .acc-tog{transform:rotate(45deg)}
 
-/* ALERT */
-.alert{border-radius:10px;padding:0.9rem 1.1rem;font-size:0.83rem;line-height:1.6;margin-bottom:1rem;display:flex;align-items:flex-start;gap:0.6rem}
-.alert-info{background:var(--blue-bg);border:1px solid rgba(96,165,250,0.25);color:var(--blue)}
-.alert-success{background:var(--green-bg);border:1px solid rgba(74,222,128,0.25);color:var(--green)}
-.alert-warn{background:rgba(251,191,36,0.08);border:1px solid rgba(251,191,36,0.2);color:#fbbf24}
+/* ─── TAG ─── */
+.tag{display:inline-flex;align-items:center;font-size:.67rem;letter-spacing:.05em;border-radius:20px;padding:.18rem .58rem;font-weight:500}
+.tag-gold{background:rgba(201,168,76,.12);color:var(--gold-dark);border:1px solid rgba(201,168,76,.2)}
+.tag-green{background:rgba(74,222,128,.1);color:#166534;border:1px solid rgba(74,222,128,.2)}
+.tag-red{background:rgba(248,113,113,.1);color:#7f1d1d;border:1px solid rgba(248,113,113,.2)}
+.tag-blue{background:rgba(96,165,250,.1);color:#1e40af;border:1px solid rgba(96,165,250,.2)}
 
-/* OVERLAY */
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:200;opacity:0;pointer-events:none;transition:opacity 0.3s}
+/* ─── DIVIDER ─── */
+.div{height:1px;background:linear-gradient(90deg,transparent,var(--border2),transparent);margin:1.2rem 0}
+
+/* ─── MODAL ─── */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:200;opacity:0;pointer-events:none;transition:opacity .3s}
 .overlay.show{opacity:1;pointer-events:all}
-.modal{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0.95);background:var(--bg2);border:1px solid var(--border2);border-radius:20px;padding:2rem;width:min(520px,90vw);max-height:85vh;overflow-y:auto;z-index:201;opacity:0;pointer-events:none;transition:all 0.3s}
+.modal{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(.95);background:var(--bg2);border:1px solid var(--border2);border-radius:18px;padding:1.8rem;width:min(500px,90vw);max-height:85vh;overflow-y:auto;z-index:201;opacity:0;pointer-events:none;transition:all .3s}
 .modal.show{opacity:1;pointer-events:all;transform:translate(-50%,-50%) scale(1)}
-.modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.4rem}
-.modal-title{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--text)}
-.modal-close{background:none;border:none;cursor:pointer;color:var(--text-dim);font-size:1.2rem;transition:color 0.2s;padding:2px}
+.modal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.3rem}
+.modal-title{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--text)}
+.modal-close{background:none;border:none;cursor:pointer;color:var(--text-dim);font-size:1.1rem;transition:color .2s}
 .modal-close:hover{color:var(--text)}
 
-/* MOBILE SIDEBAR OVERLAY */
-.sidebar-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:99;opacity:0;pointer-events:none;transition:opacity 0.3s}
-.sidebar-overlay.show{opacity:1;pointer-events:all}
+/* ─── SIDEBAR MOBILE OVERLAY ─── */
+.sidebar-ov{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:99;opacity:0;pointer-events:none;transition:opacity .3s}
+.sidebar-ov.show{opacity:1;pointer-events:all}
 
-/* SECTION HEADER */
-.section-header{margin-bottom:1.5rem}
-.section-title{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:400;color:var(--text);margin-bottom:0.3rem}
-.section-title em{font-style:italic;color:var(--gold-light)}
-.section-subtitle{font-size:0.8rem;color:var(--text-dim)}
+/* ─── TOAST ─── */
+.toast-wrap{position:fixed;bottom:1.5rem;right:1.5rem;z-index:300;display:flex;flex-direction:column;gap:.5rem}
+.toast{background:var(--bg2);border:1px solid var(--border2);border-radius:11px;padding:.7rem 1.1rem;font-size:.8rem;color:var(--text);display:flex;align-items:center;gap:.55rem;box-shadow:0 8px 28px rgba(0,0,0,.4);transform:translateX(120%);transition:transform .35s cubic-bezier(.25,.46,.45,.94);max-width:300px}
+.toast.show{transform:translateX(0)}
 
-/* COLOR PICKER */
-.color-input-wrap{display:flex;align-items:center;gap:0.6rem}
-.color-swatch{width:32px;height:32px;border-radius:8px;border:1px solid var(--border2);cursor:pointer;overflow:hidden;flex-shrink:0}
-.color-swatch input[type=color]{width:48px;height:48px;border:none;outline:none;cursor:pointer;margin-left:-8px;margin-top:-8px;background:none}
+/* ─── PROGRESS BAR ─── */
+.prog-wrap{background:rgba(255,255,255,.06);border-radius:20px;height:6px;overflow:hidden;margin:.5rem 0}
+.prog-bar{height:100%;border-radius:20px;background:linear-gradient(90deg,var(--gold),var(--copper));transition:width .5s ease}
 
-/* DRAG HANDLE */
-.drag-handle{cursor:grab;color:var(--text-dim);padding:0 0.3rem;font-size:1rem}
-.drag-handle:active{cursor:grabbing}
-
-/* PREVIEW LINK */
-.preview-btn{display:inline-flex;align-items:center;gap:0.4rem;font-size:0.72rem;color:var(--gold-dark);text-decoration:none;padding:0.3rem 0.8rem;border:1px solid var(--border);border-radius:20px;transition:all 0.2s}
-.preview-btn:hover{border-color:var(--border2);color:var(--gold-light)}
-
-/* RESPONSIVE */
+/* ─── MOBILE ─── */
 @media(max-width:768px){
   .sidebar{transform:translateX(-100%)}
   .sidebar.open{transform:translateX(0)}
   .topbar{left:0}
   .main{margin-left:0}
-  .hamburger-btn{display:flex}
-  .grid-2,.grid-3,.grid-4{grid-template-columns:1fr}
+  .ham-btn{display:flex}
+  .g2,.g3,.g4{grid-template-columns:1fr}
   .tabs{flex-wrap:wrap}
 }
-
-/* TOAST */
-.toast-container{position:fixed;bottom:2rem;right:2rem;z-index:300;display:flex;flex-direction:column;gap:0.6rem}
-.toast{background:var(--bg2);border:1px solid var(--border2);border-radius:12px;padding:0.8rem 1.2rem;font-size:0.82rem;color:var(--text);display:flex;align-items:center;gap:0.6rem;box-shadow:0 8px 30px rgba(0,0,0,0.4);transform:translateX(120%);transition:transform 0.35s cubic-bezier(0.25,0.46,0.45,0.94);max-width:320px}
-.toast.show{transform:translateX(0)}
-.toast .toast-icon{font-size:1.1rem;flex-shrink:0}
-
-/* CUSTOM SCROLLBAR */
-::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar{width:5px}
 ::-webkit-scrollbar-track{background:transparent}
-::-webkit-scrollbar-thumb{background:rgba(201,168,76,0.2);border-radius:3px}
-::-webkit-scrollbar-thumb:hover{background:rgba(201,168,76,0.35)}
+::-webkit-scrollbar-thumb{background:rgba(201,168,76,.2);border-radius:3px}
 </style>
 </head>
 <body>
 
-<!-- SIDEBAR OVERLAY (mobile) -->
-<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+<div class="sidebar-ov" id="sidebarOv" onclick="closeSidebar()"></div>
 
-<!-- SIDEBAR -->
+<!-- ═══ SIDEBAR ═══ -->
 <aside class="sidebar" id="sidebar">
   <div class="sidebar-logo">
-    <div class="sidebar-logo-title">Glow Pavi's</div>
-    <div class="sidebar-logo-sub">Admin Panel</div>
+    <div class="logo-title">Glow Pavi's</div>
+    <div class="logo-sub">Admin Panel</div>
   </div>
   <nav class="sidebar-nav">
-    <span class="sidebar-section-label">Overview</span>
-    <button class="nav-item active" onclick="showPage('dashboard',this)">
-      <span class="nav-icon">◈</span> Dashboard
-    </button>
+    <span class="nav-label">Overview</span>
+    <button class="nav-item active" onclick="goto('dashboard',this)">◈ &nbsp;Dashboard</button>
 
-    <span class="sidebar-section-label">Website Content</span>
-    <button class="nav-item" onclick="showPage('hero',this)">
-      <span class="nav-icon">🏠</span> Hero Section
-    </button>
-    <button class="nav-item" onclick="showPage('services',this)">
-      <span class="nav-icon">✨</span> Services
-    </button>
-    <button class="nav-item" onclick="showPage('stats',this)">
-      <span class="nav-icon">📊</span> Stats & Numbers
-    </button>
-    <button class="nav-item" onclick="showPage('gallery',this)">
-      <span class="nav-icon">🖼</span> Gallery
-    </button>
-    <button class="nav-item" onclick="showPage('testimonials',this)">
-      <span class="nav-icon">💬</span> Testimonials
-    </button>
-    <button class="nav-item" onclick="showPage('timeline',this)">
-      <span class="nav-icon">📅</span> Journey Timeline
-    </button>
+    <span class="nav-label">Setup</span>
+    <button class="nav-item" onclick="goto('setup',this)">🔧 &nbsp;Supabase Setup</button>
+    <button class="nav-item" onclick="goto('config',this)">⚙️ &nbsp;Connect Settings</button>
 
-    <span class="sidebar-section-label">Service Pages</span>
-    <button class="nav-item" onclick="showPage('bridal',this)">
-      <span class="nav-icon">👰</span> Bridal Makeup
-    </button>
-    <button class="nav-item" onclick="showPage('party',this)">
-      <span class="nav-icon">💃</span> Party Makeup
-    </button>
-    <button class="nav-item" onclick="showPage('skincare',this)">
-      <span class="nav-icon">🌿</span> Skin Care
-    </button>
+    <span class="nav-label">Content</span>
+    <button class="nav-item" onclick="goto('hero',this)">🏠 &nbsp;Hero Section</button>
+    <button class="nav-item" onclick="goto('stats',this)">📊 &nbsp;Stats & Numbers</button>
+    <button class="nav-item" onclick="goto('gallery',this)">🖼 &nbsp;Gallery</button>
+    <button class="nav-item" onclick="goto('testimonials',this)">⭐ &nbsp;Testimonials</button>
+    <button class="nav-item" onclick="goto('timeline',this)">📅 &nbsp;Journey Timeline</button>
 
-    <span class="sidebar-section-label">FAQ & Policies</span>
-    <button class="nav-item" onclick="showPage('faq',this)">
-      <span class="nav-icon">❓</span> FAQ
-    </button>
+    <span class="nav-label">Service Pages</span>
+    <button class="nav-item" onclick="goto('bridal',this)">👰 &nbsp;Bridal Packages</button>
+    <button class="nav-item" onclick="goto('party',this)">💃 &nbsp;Party Makeup</button>
+    <button class="nav-item" onclick="goto('skincare',this)">🌿 &nbsp;Skin Care</button>
+    <button class="nav-item" onclick="goto('faq',this)">❓ &nbsp;FAQ</button>
 
-    <span class="sidebar-section-label">Settings</span>
-    <button class="nav-item" onclick="showPage('contact',this)">
-      <span class="nav-icon">📱</span> Contact Info
-    </button>
-    <button class="nav-item" onclick="showPage('seo',this)">
-      <span class="nav-icon">🔍</span> SEO & Meta
-    </button>
+    <span class="nav-label">Settings</span>
+    <button class="nav-item" onclick="goto('contact',this)">📱 &nbsp;Contact Info</button>
   </nav>
   <div class="sidebar-footer">
-    <div class="sidebar-footer-info">
-      <strong>Glow Pavi's Makeover</strong>
-      Madurai, Tamil Nadu<br>
-      All changes auto-saved locally
-    </div>
+    <div class="conn-label"><span class="conn-dot" id="connDot"></span><span id="connLabel">Not connected</span></div>
+    <div style="font-size:.67rem;color:var(--text-dim);margin-top:.4rem" id="connProject">Configure Supabase above</div>
   </div>
 </aside>
 
-<!-- TOPBAR -->
-<header class="topbar">
+<!-- ═══ TOPBAR ═══ -->
+<header class="topbar" id="topbar">
   <div class="topbar-left">
-    <button class="hamburger-btn" onclick="toggleSidebar()">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+    <button class="ham-btn" onclick="toggleSidebar()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
     </button>
-    <div class="page-title" id="pageTitle">Dashboard</div>
+    <span class="page-title" id="pageTitle">Dashboard</span>
   </div>
   <div class="topbar-right">
-    <div class="save-status" id="saveStatus">✦ Saved</div>
-    <span class="topbar-badge">Admin ✦</span>
+    <span class="save-status" id="saveStatus">✦ Saved</span>
+    <span class="badge">Admin ✦</span>
   </div>
 </header>
 
-<!-- MAIN CONTENT -->
+<!-- ═══ MAIN ═══ -->
 <main class="main">
 
-  <!-- ===== DASHBOARD ===== -->
-  <div class="page active" id="page-dashboard">
-    <div class="section-header">
-      <h1 class="section-title">Welcome back, <em>Pavi</em></h1>
-      <p class="section-subtitle">Manage your website content from one place — no code needed.</p>
-    </div>
-
-    <div class="grid-4" style="margin-bottom:1.5rem">
-      <div class="stat-card">
-        <div class="stat-label">Gallery Images</div>
-        <div class="stat-value" id="dash-gallery-count">6</div>
-        <div class="stat-desc">Active in portfolio</div>
-        <div class="stat-icon">🖼</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label">Testimonials</div>
-        <div class="stat-value" id="dash-testimonial-count">6</div>
-        <div class="stat-desc">On homepage slider</div>
-        <div class="stat-icon">⭐</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label">FAQ Items</div>
-        <div class="stat-value" id="dash-faq-count">17</div>
-        <div class="stat-desc">Across all categories</div>
-        <div class="stat-icon">❓</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label">Service Pages</div>
-        <div class="stat-value">3</div>
-        <div class="stat-desc">Bridal · Party · Skin</div>
-        <div class="stat-icon">✨</div>
-      </div>
-    </div>
-
-    <div class="grid-2">
-      <div class="card">
-        <div class="card-header">
-          <div>
-            <div class="card-title"><span class="icon">⚡</span> Quick Actions</div>
-            <div class="card-subtitle">Jump to frequently edited sections</div>
-          </div>
-        </div>
-        <div style="display:flex;flex-direction:column;gap:0.5rem">
-          <button class="btn btn-outline" style="justify-content:flex-start;border-radius:8px;padding:0.7rem 1rem" onclick="showPage('gallery',document.querySelector('[onclick*=gallery]'))">
-            🖼 &nbsp; Upload Gallery Photos
-          </button>
-          <button class="btn btn-outline" style="justify-content:flex-start;border-radius:8px;padding:0.7rem 1rem" onclick="showPage('testimonials',document.querySelector('[onclick*=testimonials]'))">
-            💬 &nbsp; Edit Testimonials
-          </button>
-          <button class="btn btn-outline" style="justify-content:flex-start;border-radius:8px;padding:0.7rem 1rem" onclick="showPage('hero',document.querySelector('[onclick*=hero]'))">
-            🏠 &nbsp; Update Hero Text
-          </button>
-          <button class="btn btn-outline" style="justify-content:flex-start;border-radius:8px;padding:0.7rem 1rem" onclick="showPage('contact',document.querySelector('[onclick*=contact]'))">
-            📱 &nbsp; Edit WhatsApp Number
-          </button>
-          <button class="btn btn-outline" style="justify-content:flex-start;border-radius:8px;padding:0.7rem 1rem" onclick="showPage('faq',document.querySelector('[onclick*=faq]'))">
-            ❓ &nbsp; Manage FAQ
-          </button>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-header">
-          <div>
-            <div class="card-title"><span class="icon">📋</span> How This Works</div>
-            <div class="card-subtitle">Admin guide</div>
-          </div>
-        </div>
-        <div class="alert alert-info" style="margin-bottom:0.8rem">
-          <span>ℹ️</span>
-          <span>Changes you make here are saved in your browser storage. To apply them to your live website, use the <strong>Export & Copy</strong> buttons on each section.</span>
-        </div>
-        <div style="display:flex;flex-direction:column;gap:0.6rem">
-          <div style="display:flex;gap:0.6rem;align-items:flex-start;font-size:0.8rem;color:var(--text-mid)">
-            <span style="color:var(--gold);flex-shrink:0">✦</span>
-            <span>Use the <strong>left sidebar</strong> to navigate between sections</span>
-          </div>
-          <div style="display:flex;gap:0.6rem;align-items:flex-start;font-size:0.8rem;color:var(--text-mid)">
-            <span style="color:var(--gold);flex-shrink:0">✦</span>
-            <span>Edit text, upload images, and manage content with simple forms</span>
-          </div>
-          <div style="display:flex;gap:0.6rem;align-items:flex-start;font-size:0.8rem;color:var(--text-mid)">
-            <span style="color:var(--gold);flex-shrink:0">✦</span>
-            <span>Click <strong>Save Changes</strong> on any section to store your edits</span>
-          </div>
-          <div style="display:flex;gap:0.6rem;align-items:flex-start;font-size:0.8rem;color:var(--text-mid)">
-            <span style="color:var(--gold);flex-shrink:0">✦</span>
-            <span>Gallery images are managed from the <strong>Gallery</strong> section</span>
-          </div>
-          <div style="display:flex;gap:0.6rem;align-items:flex-start;font-size:0.8rem;color:var(--text-mid)">
-            <span style="color:var(--gold);flex-shrink:0">✦</span>
-            <span>Your WhatsApp number is updated globally from <strong>Contact Info</strong></span>
-          </div>
-        </div>
-      </div>
-    </div>
+<!-- ───────────────────────────────── DASHBOARD ── -->
+<div class="page active" id="page-dashboard">
+  <div class="sec-header">
+    <h1 class="sec-title">Welcome, <em>Pavi</em> ✦</h1>
+    <p class="sec-sub">Manage your entire website from here. Connect Supabase first to enable live updates.</p>
   </div>
 
-  <!-- ===== HERO SECTION ===== -->
-  <div class="page" id="page-hero">
-    <div class="section-header">
-      <h1 class="section-title">Hero <em>Section</em></h1>
-      <p class="section-subtitle">Edit the main homepage hero text, eyebrow label, and call-to-action buttons.</p>
+  <div id="dashConnBanner"></div>
+
+  <div class="g4" style="margin-bottom:1.2rem">
+    <div class="stat"><div class="stat-lbl">Gallery Images</div><div class="stat-val" id="d-gal">—</div><div class="stat-icon">🖼</div></div>
+    <div class="stat"><div class="stat-lbl">Testimonials</div><div class="stat-val" id="d-tes">—</div><div class="stat-icon">⭐</div></div>
+    <div class="stat"><div class="stat-lbl">FAQ Items</div><div class="stat-val" id="d-faq">—</div><div class="stat-icon">❓</div></div>
+    <div class="stat"><div class="stat-lbl">Bridal Packages</div><div class="stat-val" id="d-pkg">—</div><div class="stat-icon">👰</div></div>
+  </div>
+
+  <div class="g2">
+    <div class="card">
+      <div class="card-title" style="margin-bottom:.9rem">⚡ Quick Actions</div>
+      <div style="display:flex;flex-direction:column;gap:.45rem">
+        <button class="btn btn-outline" style="justify-content:flex-start;border-radius:8px;padding:.65rem .9rem" onclick="goto('gallery',navBtn('gallery'))">🖼 &nbsp;Upload Gallery Photos</button>
+        <button class="btn btn-outline" style="justify-content:flex-start;border-radius:8px;padding:.65rem .9rem" onclick="goto('testimonials',navBtn('testimonials'))">⭐ &nbsp;Add/Edit Testimonials</button>
+        <button class="btn btn-outline" style="justify-content:flex-start;border-radius:8px;padding:.65rem .9rem" onclick="goto('hero',navBtn('hero'))">🏠 &nbsp;Update Hero Text</button>
+        <button class="btn btn-outline" style="justify-content:flex-start;border-radius:8px;padding:.65rem .9rem" onclick="goto('contact',navBtn('contact'))">📱 &nbsp;Update WhatsApp Number</button>
+        <button class="btn btn-outline" style="justify-content:flex-start;border-radius:8px;padding:.65rem .9rem" onclick="goto('faq',navBtn('faq'))">❓ &nbsp;Manage FAQ</button>
+      </div>
     </div>
     <div class="card">
-      <div class="card-header">
-        <div class="card-title"><span class="icon">🏠</span> Homepage Hero</div>
-        <a href="index.html" target="_blank" class="preview-btn">👁 Preview →</a>
+      <div class="card-title" style="margin-bottom:.9rem">📋 How This Works</div>
+      <div style="display:flex;flex-direction:column;gap:.55rem;font-size:.8rem;color:var(--text-mid)">
+        <div><span style="color:var(--gold)">1.</span> Go to <strong>Supabase Setup</strong> and create your database tables</div>
+        <div><span style="color:var(--gold)">2.</span> Go to <strong>Connect Settings</strong> and paste your Supabase URL + Key</div>
+        <div><span style="color:var(--gold)">3.</span> Edit content from any section — changes save to Supabase instantly</div>
+        <div><span style="color:var(--gold)">4.</span> Add the <strong>loader script</strong> to your website pages — they will read from Supabase and display live content</div>
+        <div><span style="color:var(--gold)">5.</span> Gallery images are stored in <strong>Supabase Storage</strong> (free up to 1GB)</div>
       </div>
-      <div class="grid-2">
-        <div>
-          <div class="form-group">
-            <label class="form-label">Eyebrow Label</label>
-            <input class="form-input" id="hero-eyebrow" value="Bridal Artistry by Pavi" placeholder="e.g. Bridal Artistry by Pavi">
-          </div>
-          <div class="form-group">
-            <label class="form-label">Hero Title (Line 1)</label>
-            <input class="form-input" id="hero-title1" value="Every bride has" placeholder="First line of hero title">
-          </div>
-          <div class="form-group">
-            <label class="form-label">Hero Title (Line 2 — italic/gradient)</label>
-            <input class="form-input" id="hero-title2" value="a silent dream" placeholder="Second line (displayed in gold italic)">
-          </div>
-          <div class="form-group">
-            <label class="form-label">Hero Subtitle</label>
-            <textarea class="form-textarea" id="hero-subtitle" style="min-height:70px">We bring it to life — one brushstroke, one glow, one unforgettable moment at a time.</textarea>
-          </div>
-        </div>
-        <div>
-          <div class="form-group">
-            <label class="form-label">Primary Button Text</label>
-            <input class="form-input" id="hero-btn1" value="Book Your Glow">
-          </div>
-          <div class="form-group">
-            <label class="form-label">Secondary Button Text</label>
-            <input class="form-input" id="hero-btn2" value="WhatsApp Now">
-          </div>
-          <div class="form-group">
-            <label class="form-label">Scroll Prompt Text</label>
-            <input class="form-input" id="hero-scroll" value="Scroll">
-          </div>
-          <div class="divider"></div>
-          <div class="alert alert-info">
-            <span>✦</span>
-            <span>The hero background uses animated particles and gradient overlays. These are controlled by CSS and don't need editing here.</span>
-          </div>
-        </div>
+    </div>
+  </div>
+</div>
+
+<!-- ───────────────────────────────── SETUP ── -->
+<div class="page" id="page-setup">
+  <div class="sec-header">
+    <h1 class="sec-title">Supabase <em>Setup Guide</em></h1>
+    <p class="sec-sub">Follow these 4 steps to connect your website. Free forever for small projects.</p>
+  </div>
+
+  <div class="step-box" id="step1">
+    <div class="step-header" onclick="toggleStep('step1')">
+      <div class="step-num">1</div>
+      <div class="step-title">Create a Supabase Account & Project</div>
+      <span class="step-status pending">Pending</span>
+      <span class="step-chevron">▼</span>
+    </div>
+    <div class="step-body">
+      <div class="alert alert-info"><span>ℹ️</span><span>Supabase is free for small websites. No credit card needed.</span></div>
+      <div style="display:flex;flex-direction:column;gap:.6rem;font-size:.83rem;color:var(--text-mid)">
+        <div>1. Go to <strong style="color:var(--gold-light)">supabase.com</strong> and click "Start your project"</div>
+        <div>2. Sign up with GitHub or Google</div>
+        <div>3. Click <strong>"New Project"</strong></div>
+        <div>4. Enter project name: <code style="color:var(--gold)">glow-pavis-makeover</code></div>
+        <div>5. Set a strong database password (save it!)</div>
+        <div>6. Choose region: <strong>Southeast Asia (Singapore)</strong> — closest to India</div>
+        <div>7. Click <strong>"Create new project"</strong> — wait ~2 minutes</div>
       </div>
-      <div style="display:flex;gap:0.8rem;margin-top:0.5rem">
-        <button class="btn btn-gold" onclick="saveSection('hero')">✦ Save Hero</button>
-        <button class="btn btn-outline" onclick="exportSection('hero')">Export Code</button>
+      <div class="btn-row">
+        <a href="https://supabase.com" target="_blank" class="btn btn-gold">Open Supabase.com →</a>
+        <button class="btn btn-outline" onclick="markStepDone('step1')">✓ Done, next step</button>
       </div>
     </div>
   </div>
 
-  <!-- ===== SERVICES ===== -->
-  <div class="page" id="page-services">
-    <div class="section-header">
-      <h1 class="section-title">Services <em>Section</em></h1>
-      <p class="section-subtitle">Edit the 3 service cards on the homepage (Bridal, Party, Skin Care).</p>
+  <div class="step-box" id="step2">
+    <div class="step-header" onclick="toggleStep('step2')">
+      <div class="step-num">2</div>
+      <div class="step-title">Create Database Tables (Copy-Paste SQL)</div>
+      <span class="step-status pending">Pending</span>
+      <span class="step-chevron">▼</span>
     </div>
-    <div class="card">
-      <div class="card-header">
-        <div class="card-title"><span class="icon">✨</span> Homepage Services</div>
-        <a href="index.html#services" target="_blank" class="preview-btn">👁 Preview →</a>
+    <div class="step-body">
+      <div class="alert alert-info"><span>ℹ️</span><span>In your Supabase project, go to <strong>SQL Editor</strong> (left sidebar) → click <strong>New query</strong> → paste the SQL below → click <strong>Run</strong></span></div>
+      <div class="code-block">
+        <button class="copy-btn" onclick="copyCode('sqlCode')">Copy</button>
+        <pre id="sqlCode">-- ═══════════════════════════════════════════
+-- GLOW PAVI'S MAKEOVER — Supabase Schema
+-- Run this in Supabase SQL Editor
+-- ═══════════════════════════════════════════
+
+-- 1. Site content (hero, stats, contact info)
+CREATE TABLE site_content (
+  id TEXT PRIMARY KEY,
+  value JSONB NOT NULL,
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- 2. Gallery images
+CREATE TABLE gallery (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  image_url TEXT NOT NULL,
+  category TEXT,
+  bride_name TEXT,
+  quote TEXT,
+  badge TEXT DEFAULT 'Our Work',
+  sort_order INT DEFAULT 0,
+  is_active BOOLEAN DEFAULT TRUE,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- 3. Testimonials / Reviews
+CREATE TABLE testimonials (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  client_name TEXT NOT NULL,
+  initials TEXT,
+  occasion TEXT,
+  review_text TEXT NOT NULL,
+  stars INT DEFAULT 5,
+  avatar_color TEXT DEFAULT 'rose',
+  sort_order INT DEFAULT 0,
+  is_active BOOLEAN DEFAULT TRUE,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- 4. FAQ items
+CREATE TABLE faq (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  category TEXT NOT NULL,
+  question TEXT NOT NULL,
+  answer TEXT NOT NULL,
+  sort_order INT DEFAULT 0,
+  is_active BOOLEAN DEFAULT TRUE,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- 5. Bridal packages
+CREATE TABLE bridal_packages (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  name TEXT NOT NULL,
+  tagline TEXT,
+  icon TEXT,
+  features JSONB DEFAULT '[]',
+  is_featured BOOLEAN DEFAULT FALSE,
+  sort_order INT DEFAULT 0
+);
+
+-- 6. Journey timeline
+CREATE TABLE timeline (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  icon TEXT,
+  year_label TEXT,
+  tag TEXT,
+  heading TEXT NOT NULL,
+  body TEXT,
+  sort_order INT DEFAULT 0
+);
+
+-- 7. Skin care treatments
+CREATE TABLE treatments (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  name TEXT NOT NULL,
+  tagline TEXT,
+  icon TEXT,
+  description TEXT,
+  includes JSONB DEFAULT '[]',
+  sort_order INT DEFAULT 0
+);
+
+-- Enable Row Level Security (RLS)
+ALTER TABLE site_content ENABLE ROW LEVEL SECURITY;
+ALTER TABLE gallery ENABLE ROW LEVEL SECURITY;
+ALTER TABLE testimonials ENABLE ROW LEVEL SECURITY;
+ALTER TABLE faq ENABLE ROW LEVEL SECURITY;
+ALTER TABLE bridal_packages ENABLE ROW LEVEL SECURITY;
+ALTER TABLE timeline ENABLE ROW LEVEL SECURITY;
+ALTER TABLE treatments ENABLE ROW LEVEL SECURITY;
+
+-- Allow public READ (your website visitors)
+CREATE POLICY "Public read" ON site_content FOR SELECT USING (TRUE);
+CREATE POLICY "Public read" ON gallery FOR SELECT USING (TRUE);
+CREATE POLICY "Public read" ON testimonials FOR SELECT USING (TRUE);
+CREATE POLICY "Public read" ON faq FOR SELECT USING (TRUE);
+CREATE POLICY "Public read" ON bridal_packages FOR SELECT USING (TRUE);
+CREATE POLICY "Public read" ON timeline FOR SELECT USING (TRUE);
+CREATE POLICY "Public read" ON treatments FOR SELECT USING (TRUE);
+
+-- Allow anon key to WRITE (admin panel uses anon key)
+-- NOTE: For production, use service_role key only in admin
+CREATE POLICY "Anon write" ON site_content FOR ALL USING (TRUE);
+CREATE POLICY "Anon write" ON gallery FOR ALL USING (TRUE);
+CREATE POLICY "Anon write" ON testimonials FOR ALL USING (TRUE);
+CREATE POLICY "Anon write" ON faq FOR ALL USING (TRUE);
+CREATE POLICY "Anon write" ON bridal_packages FOR ALL USING (TRUE);
+CREATE POLICY "Anon write" ON timeline FOR ALL USING (TRUE);
+CREATE POLICY "Anon write" ON treatments FOR ALL USING (TRUE);
+
+-- Create Storage bucket for images
+INSERT INTO storage.buckets (id, name, public) 
+VALUES ('gallery', 'gallery', TRUE);
+
+CREATE POLICY "Public gallery read" ON storage.objects 
+FOR SELECT USING (bucket_id = 'gallery');
+
+CREATE POLICY "Anon gallery upload" ON storage.objects 
+FOR INSERT WITH CHECK (bucket_id = 'gallery');
+
+CREATE POLICY "Anon gallery delete" ON storage.objects 
+FOR DELETE USING (bucket_id = 'gallery');</pre>
       </div>
-      <div class="form-group">
-        <label class="form-label">Section Eyebrow Label</label>
-        <input class="form-input" id="svc-eyebrow" value="Our Craft">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Section Title (Line 1)</label>
-        <input class="form-input" id="svc-title1" value="Beauty is not one size —">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Section Title (Line 2 — italic)</label>
-        <input class="form-input" id="svc-title2" value="it is uniquely yours">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Section Subtitle</label>
-        <input class="form-input" id="svc-subtitle" value="Curated experiences for every occasion, every skin tone, every story.">
-      </div>
-      <div class="divider"></div>
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem">
-        <div>
-          <div style="font-size:0.7rem;color:var(--gold-dark);margin-bottom:0.8rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase">👰 Bridal Card</div>
-          <div class="form-group"><label class="form-label">Tag</label><input class="form-input" value="Signature Experience"></div>
-          <div class="form-group"><label class="form-label">Title</label><input class="form-input" value="Bridal Makeup"></div>
-          <div class="form-group"><label class="form-label">Description</label><textarea class="form-textarea" style="min-height:80px">A full-day journey dedicated entirely to you — from trial to the aisle. Long-lasting, camera-perfect, deeply personal.</textarea></div>
-        </div>
-        <div>
-          <div style="font-size:0.7rem;color:var(--gold-dark);margin-bottom:0.8rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase">✨ Party Card</div>
-          <div class="form-group"><label class="form-label">Tag</label><input class="form-input" value="Celebration Glow"></div>
-          <div class="form-group"><label class="form-label">Title</label><input class="form-input" value="Party Makeup"></div>
-          <div class="form-group"><label class="form-label">Description</label><textarea class="form-textarea" style="min-height:80px">Bold, radiant, effortless. Made to turn heads and last the night.</textarea></div>
-        </div>
-        <div>
-          <div style="font-size:0.7rem;color:var(--gold-dark);margin-bottom:0.8rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase">🌿 Skin Care Card</div>
-          <div class="form-group"><label class="form-label">Tag</label><input class="form-input" value="Skin Wellness"></div>
-          <div class="form-group"><label class="form-label">Title</label><input class="form-input" value="Skin Care"></div>
-          <div class="form-group"><label class="form-label">Description</label><textarea class="form-textarea" style="min-height:80px">Pre-bridal glow treatments that prepare your canvas for the big day.</textarea></div>
-        </div>
-      </div>
-      <button class="btn btn-gold" style="margin-top:1rem" onclick="saveSection('services')">✦ Save Services</button>
+      <button class="btn btn-outline" onclick="markStepDone('step2')">✓ SQL Run பண்ணிட்டேன்</button>
     </div>
   </div>
 
-  <!-- ===== STATS ===== -->
-  <div class="page" id="page-stats">
-    <div class="section-header">
-      <h1 class="section-title">Stats <em>& Numbers</em></h1>
-      <p class="section-subtitle">Update the 4 numbers displayed in the stats bar on the homepage.</p>
+  <div class="step-box" id="step3">
+    <div class="step-header" onclick="toggleStep('step3')">
+      <div class="step-num">3</div>
+      <div class="step-title">Get Your API Keys</div>
+      <span class="step-status pending">Pending</span>
+      <span class="step-chevron">▼</span>
     </div>
-    <div class="card">
-      <div class="card-header">
-        <div class="card-title"><span class="icon">📊</span> Homepage Stats Bar</div>
-        <a href="index.html#story" target="_blank" class="preview-btn">👁 Preview →</a>
+    <div class="step-body">
+      <div style="display:flex;flex-direction:column;gap:.6rem;font-size:.83rem;color:var(--text-mid)">
+        <div>1. In your Supabase project, click <strong>Settings</strong> (gear icon, left sidebar)</div>
+        <div>2. Click <strong>"API"</strong></div>
+        <div>3. Copy <strong>"Project URL"</strong> — looks like: <code style="color:var(--gold)">https://abcdefgh.supabase.co</code></div>
+        <div>4. Copy <strong>"anon public"</strong> key — a long string starting with <code style="color:var(--gold)">eyJ...</code></div>
+        <div>5. Paste both into <strong>Connect Settings</strong> (next step)</div>
       </div>
-      <div class="grid-2">
-        <div>
-          <div class="form-group">
-            <label class="form-label">Stat 1 — Number</label>
-            <div style="display:grid;grid-template-columns:1fr 80px;gap:0.5rem">
-              <input class="form-input" id="stat1-num" value="500" type="number" min="0">
-              <input class="form-input" id="stat1-suffix" value="+" placeholder="Suffix" style="text-align:center">
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Stat 1 — Label</label>
-            <input class="form-input" id="stat1-label" value="Brides Transformed">
-          </div>
-        </div>
-        <div>
-          <div class="form-group">
-            <label class="form-label">Stat 2 — Number</label>
-            <div style="display:grid;grid-template-columns:1fr 80px;gap:0.5rem">
-              <input class="form-input" id="stat2-num" value="8" type="number" min="0">
-              <input class="form-input" id="stat2-suffix" value="+" placeholder="Suffix" style="text-align:center">
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Stat 2 — Label</label>
-            <input class="form-input" id="stat2-label" value="Years of Artistry">
-          </div>
-        </div>
-        <div>
-          <div class="form-group">
-            <label class="form-label">Stat 3 — Number</label>
-            <div style="display:grid;grid-template-columns:1fr 80px;gap:0.5rem">
-              <input class="form-input" id="stat3-num" value="100" type="number" min="0">
-              <input class="form-input" id="stat3-suffix" value="%" placeholder="Suffix" style="text-align:center">
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Stat 3 — Label</label>
-            <input class="form-input" id="stat3-label" value="Pure Satisfaction">
-          </div>
-        </div>
-        <div>
-          <div class="form-group">
-            <label class="form-label">Stat 4 — Number</label>
-            <div style="display:grid;grid-template-columns:1fr 80px;gap:0.5rem">
-              <input class="form-input" id="stat4-num" value="5" type="number" min="0">
-              <input class="form-input" id="stat4-suffix" value="★" placeholder="Suffix" style="text-align:center">
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Stat 4 — Label</label>
-            <input class="form-input" id="stat4-label" value="Rated by Brides">
-          </div>
-        </div>
-      </div>
-      <button class="btn btn-gold" onclick="saveSection('stats')">✦ Save Stats</button>
+      <div class="alert alert-warn" style="margin-top:.8rem"><span>⚠️</span><span>The <strong>anon</strong> key is safe to use in your admin panel. Never share your <strong>service_role</strong> key.</span></div>
+      <button class="btn btn-outline" onclick="markStepDone('step3');goto('config',navBtn('config'))">✓ Got my keys → Configure</button>
     </div>
   </div>
 
-  <!-- ===== GALLERY ===== -->
-  <div class="page" id="page-gallery">
-    <div class="section-header">
-      <h1 class="section-title">Gallery <em>Manager</em></h1>
-      <p class="section-subtitle">Upload and manage photos for the homepage transformation gallery.</p>
+  <div class="step-box" id="step4">
+    <div class="step-header" onclick="toggleStep('step4')">
+      <div class="step-num">4</div>
+      <div class="step-title">Add Loader Script to Your Website Pages</div>
+      <span class="step-status pending">Pending</span>
+      <span class="step-chevron">▼</span>
     </div>
+    <div class="step-body">
+      <div class="alert alert-info"><span>ℹ️</span><span>Add this one script tag to the <code>&lt;head&gt;</code> of each HTML page. It will automatically load content from Supabase and update the page.</span></div>
+      <p style="font-size:.82rem;color:var(--text-mid);margin-bottom:.7rem">Copy your URL and key from Connect Settings first, then copy this script:</p>
+      <div class="code-block">
+        <button class="copy-btn" onclick="copyCode('loaderScript')">Copy</button>
+        <pre id="loaderScript">&lt;!-- Supabase Dynamic Loader — Glow Pavi's Makeover --&gt;
+&lt;script&gt;
+const SUPA_URL = 'YOUR_SUPABASE_URL';   // Replace with your URL
+const SUPA_KEY = 'YOUR_ANON_KEY';       // Replace with your anon key
 
-    <div class="card">
-      <div class="card-header">
-        <div class="card-title"><span class="icon">📤</span> Upload New Images</div>
-        <span class="tag tag-gold">Max 10MB per image</span>
+async function supaFetch(table, query='') {
+  const res = await fetch(`${SUPA_URL}/rest/v1/${table}${query}`, {
+    headers: {
+      'apikey': SUPA_KEY,
+      'Authorization': `Bearer ${SUPA_KEY}`,
+      'Content-Type': 'application/json'
+    }
+  });
+  return res.json();
+}
+
+async function loadSiteContent(key) {
+  const data = await supaFetch('site_content', `?id=eq.${key}`);
+  return data[0]?.value;
+}
+
+async function initPage() {
+  // Load hero content
+  const hero = await loadSiteContent('hero');
+  if (hero) {
+    const eyebrow = document.querySelector('.hero-eyebrow span');
+    if (eyebrow) eyebrow.textContent = hero.eyebrow || eyebrow.textContent;
+    const t1 = document.querySelector('.hero-title');
+    if (t1 && hero.title1) t1.innerHTML = `${hero.title1}&lt;br&gt;&lt;em&gt;${hero.title2}&lt;/em&gt;`;
+    const sub = document.querySelector('.hero-subtitle');
+    if (sub && hero.subtitle) sub.textContent = hero.subtitle;
+  }
+
+  // Load stats
+  const stats = await loadSiteContent('stats');
+  if (stats) {
+    const nums = document.querySelectorAll('.stat-num[data-target]');
+    const vals = [stats.stat1, stats.stat2, stats.stat3, stats.stat4];
+    nums.forEach((el, i) => {
+      if (vals[i]) {
+        el.dataset.target = vals[i].num;
+        el.dataset.suffix = vals[i].suffix;
+      }
+    });
+    const lbls = document.querySelectorAll('.stat-label');
+    const labels = [stats.stat1?.label, stats.stat2?.label, stats.stat3?.label, stats.stat4?.label];
+    lbls.forEach((el, i) => { if (labels[i]) el.textContent = labels[i]; });
+  }
+
+  // Load contact / WhatsApp links
+  const contact = await loadSiteContent('contact');
+  if (contact?.whatsapp) {
+    document.querySelectorAll('a[href*="wa.me"]').forEach(a => {
+      a.href = `https://wa.me/${contact.whatsapp}`;
+    });
+  }
+
+  // Load gallery (on index.html)
+  const galleryGrid = document.getElementById('galleryGrid') || document.querySelector('.gallery-grid');
+  if (galleryGrid) {
+    const images = await supaFetch('gallery', '?is_active=eq.true&order=sort_order');
+    if (images?.length) renderGallery(galleryGrid, images);
+  }
+
+  // Load testimonials
+  const tTrack = document.getElementById('testimonialsTrack');
+  if (tTrack) {
+    const reviews = await supaFetch('testimonials', '?is_active=eq.true&order=sort_order');
+    if (reviews?.length) renderTestimonials(tTrack, reviews);
+  }
+}
+
+function renderGallery(grid, images) {
+  grid.innerHTML = images.map((img, i) => `
+    &lt;div class="gallery-item ${i===0?'tall':i===3?'wide':''} reveal" style="transition-delay:${i*0.07}s"&gt;
+      &lt;div class="gallery-fill" style="background:url('${img.image_url}') center/cover"&gt;&lt;/div&gt;
+      &lt;div class="gallery-shine"&gt;&lt;/div&gt;
+      &lt;div class="gallery-overlay"&gt;&lt;/div&gt;
+      &lt;div class="gallery-static"&gt;&lt;div class="gallery-dot"&gt;&lt;/div&gt;&lt;span class="gallery-static-name"&gt;${img.category||''}&lt;/span&gt;&lt;/div&gt;
+      &lt;div class="gallery-caption"&gt;
+        &lt;span class="gallery-badge"&gt;✦ ${img.badge||'Our Work'}&lt;/span&gt;
+        &lt;p class="gallery-name"&gt;${img.bride_name||''}&lt;/p&gt;
+        &lt;p class="gallery-quote"&gt;"${img.quote||''}"&lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;`).join('');
+}
+
+function renderTestimonials(track, reviews) {
+  const makeCard = r => `
+    &lt;div class="review-card"&gt;
+      &lt;div class="review-quote-mark"&gt;"&lt;/div&gt;
+      &lt;div class="review-stars"&gt;${'&lt;span class="star"&gt;★&lt;/span&gt;'.repeat(r.stars||5)}&lt;/div&gt;
+      &lt;p class="review-text"&gt;"${r.review_text}"&lt;/p&gt;
+      &lt;div class="review-author"&gt;
+        &lt;div class="author-avatar ${r.avatar_color||'rose'}"&gt;${r.initials||'?'}&lt;/div&gt;
+        &lt;div&gt;&lt;p class="author-name"&gt;${r.client_name}&lt;/p&gt;&lt;p class="author-type"&gt;${r.occasion||''}&lt;/p&gt;&lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;`;
+  const all = [...reviews,...reviews,...reviews];
+  track.innerHTML = all.map(makeCard).join('');
+}
+
+document.addEventListener('DOMContentLoaded', initPage);
+&lt;/script&gt;</pre>
       </div>
-      <div class="gallery-upload-zone" id="uploadZone" onclick="document.getElementById('galleryFileInput').click()" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event)">
-        <span class="upload-icon">📸</span>
-        <div class="upload-text">
-          <strong>Click to upload or drag & drop photos here</strong>
-          Supports: JPG, PNG, WEBP
+      <button class="btn btn-outline" onclick="markStepDone('step4')">✓ Script add பண்ணிட்டேன்</button>
+    </div>
+  </div>
+</div>
+
+<!-- ───────────────────────────────── CONNECT SETTINGS ── -->
+<div class="page" id="page-config">
+  <div class="sec-header">
+    <h1 class="sec-title">Connect <em>Settings</em></h1>
+    <p class="sec-sub">Paste your Supabase credentials here. Saved locally in your browser.</p>
+  </div>
+  <div class="card">
+    <div class="card-title" style="margin-bottom:1.1rem">🔑 Supabase Credentials</div>
+    <div class="fg">
+      <label class="lbl">Supabase Project URL</label>
+      <input class="inp" id="cfgUrl" placeholder="https://abcdefghijkl.supabase.co">
+    </div>
+    <div class="fg">
+      <label class="lbl">Supabase Anon (Public) Key</label>
+      <textarea class="ta" id="cfgKey" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." style="min-height:80px;font-family:monospace;font-size:.78rem"></textarea>
+    </div>
+    <div class="alert alert-warn">
+      <span>⚠️</span>
+      <span>Use the <strong>anon (public)</strong> key, not the service_role key. The anon key is safe for client-side use.</span>
+    </div>
+    <div id="testResult"></div>
+    <div class="btn-row">
+      <button class="btn btn-gold" onclick="saveConfig()">✦ Save & Test Connection</button>
+      <button class="btn btn-outline" onclick="clearConfig()">Clear</button>
+    </div>
+  </div>
+  <div class="card" style="margin-top:0">
+    <div class="card-title" style="margin-bottom:.8rem">🌐 Seed Initial Data</div>
+    <p style="font-size:.81rem;color:var(--text-mid);margin-bottom:.9rem">After connecting, click below to push default content to your database. This adds starter data to all tables.</p>
+    <button class="btn btn-gold" id="seedBtn" onclick="seedAllData()" disabled>🌱 Seed Default Data</button>
+    <div id="seedProgress" style="margin-top:.8rem"></div>
+  </div>
+</div>
+
+<!-- ───────────────────────────────── HERO ── -->
+<div class="page" id="page-hero">
+  <div class="sec-header">
+    <h1 class="sec-title">Hero <em>Section</em></h1>
+    <p class="sec-sub">Main homepage hero text. Saved to Supabase and loads live on your site.</p>
+  </div>
+  <div class="card">
+    <div class="card-title" style="margin-bottom:1rem">🏠 Homepage Hero</div>
+    <div class="g2">
+      <div>
+        <div class="fg"><label class="lbl">Eyebrow Label</label><input class="inp" id="h-eyebrow" value="Bridal Artistry by Pavi"></div>
+        <div class="fg"><label class="lbl">Title Line 1</label><input class="inp" id="h-t1" value="Every bride has"></div>
+        <div class="fg"><label class="lbl">Title Line 2 (italic / gold)</label><input class="inp" id="h-t2" value="a silent dream"></div>
+        <div class="fg"><label class="lbl">Subtitle</label><textarea class="ta" id="h-sub">We bring it to life — one brushstroke, one glow, one unforgettable moment at a time.</textarea></div>
+      </div>
+      <div>
+        <div class="fg"><label class="lbl">CTA Button 1 Text</label><input class="inp" id="h-b1" value="Book Your Glow"></div>
+        <div class="fg"><label class="lbl">CTA Button 2 Text</label><input class="inp" id="h-b2" value="WhatsApp Now"></div>
+        <div class="fg"><label class="lbl">CTA Section Title (bottom)</label><input class="inp" id="h-cta-t" value="Ready to unveil your glow?"></div>
+        <div class="fg"><label class="lbl">CTA Subtitle</label><textarea class="ta" id="h-cta-s" style="min-height:60px">Your wedding day is once. Your look should be forever remembered.</textarea></div>
+      </div>
+    </div>
+    <button class="btn btn-gold" onclick="saveHero()">✦ Save to Supabase</button>
+  </div>
+</div>
+
+<!-- ───────────────────────────────── STATS ── -->
+<div class="page" id="page-stats">
+  <div class="sec-header">
+    <h1 class="sec-title">Stats <em>& Numbers</em></h1>
+    <p class="sec-sub">Update the 4 animated counters on the homepage stats bar.</p>
+  </div>
+  <div class="card">
+    <div class="card-title" style="margin-bottom:1rem">📊 Homepage Stats</div>
+    <div class="g2">
+      <div>
+        <div style="font-size:.7rem;color:var(--gold-dark);font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.6rem">Stat 1</div>
+        <div style="display:grid;grid-template-columns:1fr 70px;gap:.5rem;margin-bottom:.5rem">
+          <input class="inp" id="s1n" value="500" type="number" placeholder="Number">
+          <input class="inp" id="s1s" value="+" placeholder="Suffix">
         </div>
-        <div class="upload-note">Recommended: 1200×900px or larger for best quality</div>
+        <input class="inp" id="s1l" value="Brides Transformed" placeholder="Label">
       </div>
-      <input type="file" id="galleryFileInput" multiple accept="image/*" onchange="handleFileUpload(event)">
-    </div>
-
-    <div class="card">
-      <div class="card-header">
-        <div class="card-title"><span class="icon">🗂</span> Gallery Images</div>
-        <div style="display:flex;gap:0.5rem;align-items:center">
-          <span class="tag tag-gold" id="gallery-count-badge">6 images</span>
-          <button class="btn btn-outline btn-sm" onclick="clearAllGallery()">Clear All</button>
+      <div>
+        <div style="font-size:.7rem;color:var(--gold-dark);font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.6rem">Stat 2</div>
+        <div style="display:grid;grid-template-columns:1fr 70px;gap:.5rem;margin-bottom:.5rem">
+          <input class="inp" id="s2n" value="8" type="number"><input class="inp" id="s2s" value="+">
         </div>
+        <input class="inp" id="s2l" value="Years of Artistry">
       </div>
-
-      <div class="alert alert-info" style="margin-bottom:1rem">
-        <span>ℹ️</span>
-        <span>Click any image to edit its caption, bride name, and quote. These appear on hover in the gallery section.</span>
-      </div>
-
-      <div class="gallery-grid" id="galleryGrid"></div>
-    </div>
-  </div>
-
-  <!-- ===== TESTIMONIALS ===== -->
-  <div class="page" id="page-testimonials">
-    <div class="section-header">
-      <h1 class="section-title">Testimonials <em>Manager</em></h1>
-      <p class="section-subtitle">Edit the client reviews that scroll on the homepage. Drag to reorder.</p>
-    </div>
-    <div class="card">
-      <div class="card-header">
-        <div class="card-title"><span class="icon">⭐</span> Client Reviews</div>
-        <button class="btn btn-gold btn-sm" onclick="openAddTestimonialModal()">+ Add Review</button>
-      </div>
-      <div id="testimonialsList"></div>
-      <button class="btn btn-gold" style="margin-top:0.5rem" onclick="saveSection('testimonials')">✦ Save All Reviews</button>
-    </div>
-  </div>
-
-  <!-- ===== JOURNEY TIMELINE ===== -->
-  <div class="page" id="page-timeline">
-    <div class="section-header">
-      <h1 class="section-title">Journey <em>Timeline</em></h1>
-      <p class="section-subtitle">Edit the studio journey story shown in the homepage timeline section.</p>
-    </div>
-    <div class="card">
-      <div class="card-header">
-        <div class="card-title"><span class="icon">📅</span> Timeline Milestones</div>
-        <button class="btn btn-outline btn-sm" onclick="addTimelineItem()">+ Add Milestone</button>
-      </div>
-      <div id="timelineItems"></div>
-      <button class="btn btn-gold" style="margin-top:1rem" onclick="saveSection('timeline')">✦ Save Timeline</button>
-    </div>
-  </div>
-
-  <!-- ===== BRIDAL PAGE ===== -->
-  <div class="page" id="page-bridal">
-    <div class="section-header">
-      <h1 class="section-title">Bridal Makeup <em>Page</em></h1>
-      <p class="section-subtitle">Edit content for bridal-makeup.html — hero, packages, styles, and FAQ.</p>
-    </div>
-    <div class="tabs">
-      <button class="tab-btn active" onclick="switchTab('bridal-tab','bridal-hero',this)">Hero</button>
-      <button class="tab-btn" onclick="switchTab('bridal-tab','bridal-packages',this)">Packages</button>
-      <button class="tab-btn" onclick="switchTab('bridal-tab','bridal-styles',this)">Styles</button>
-      <button class="tab-btn" onclick="switchTab('bridal-tab','bridal-process',this)">Process</button>
-    </div>
-    <div id="bridal-tab">
-      <div class="tab-panel active" id="tab-bridal-hero">
-        <div class="card">
-          <div class="card-title" style="margin-bottom:1rem"><span class="icon">🏷</span> Bridal Hero</div>
-          <div class="form-group"><label class="form-label">Eyebrow</label><input class="form-input" value="Signature Bridal Experience"></div>
-          <div class="form-group"><label class="form-label">Title Line 1</label><input class="form-input" value="She only becomes a bride"></div>
-          <div class="form-group"><label class="form-label">Title Line 2 (italic)</label><input class="form-input" value="once in her lifetime"></div>
-          <div class="form-group"><label class="form-label">Subtitle</label><textarea class="form-textarea">Every detail. Every glow. Every emotion. Crafted with love and mastery — just for you.</textarea></div>
-          <div class="form-group"><label class="form-label">CTA Button 1</label><input class="form-input" value="View Bridal Packages"></div>
-          <div class="form-group"><label class="form-label">CTA Button 2</label><input class="form-input" value="WhatsApp Us"></div>
-          <button class="btn btn-gold" onclick="saveSection('bridal-hero')">✦ Save</button>
+      <div>
+        <div style="font-size:.7rem;color:var(--gold-dark);font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.6rem">Stat 3</div>
+        <div style="display:grid;grid-template-columns:1fr 70px;gap:.5rem;margin-bottom:.5rem">
+          <input class="inp" id="s3n" value="100" type="number"><input class="inp" id="s3s" value="%">
         </div>
+        <input class="inp" id="s3l" value="Pure Satisfaction">
       </div>
-      <div class="tab-panel" id="tab-bridal-packages">
-        <div class="card">
-          <div class="card-title" style="margin-bottom:1rem"><span class="icon">📦</span> Bridal Packages</div>
-          <div id="bridalPackages"></div>
-          <button class="btn btn-gold" onclick="saveSection('bridal-packages')">✦ Save Packages</button>
+      <div>
+        <div style="font-size:.7rem;color:var(--gold-dark);font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.6rem">Stat 4</div>
+        <div style="display:grid;grid-template-columns:1fr 70px;gap:.5rem;margin-bottom:.5rem">
+          <input class="inp" id="s4n" value="5" type="number"><input class="inp" id="s4s" value="★">
         </div>
-      </div>
-      <div class="tab-panel" id="tab-bridal-styles">
-        <div class="card">
-          <div class="card-title" style="margin-bottom:1rem"><span class="icon">🎨</span> Bridal Styles</div>
-          <div id="bridalStyles"></div>
-          <button class="btn btn-gold" onclick="saveSection('bridal-styles')">✦ Save Styles</button>
-        </div>
-      </div>
-      <div class="tab-panel" id="tab-bridal-process">
-        <div class="card">
-          <div class="card-title" style="margin-bottom:1rem"><span class="icon">🔢</span> Bridal Journey Steps</div>
-          <div id="bridalProcess"></div>
-          <button class="btn btn-gold" onclick="saveSection('bridal-process')">✦ Save Steps</button>
-        </div>
+        <input class="inp" id="s4l" value="Rated by Brides">
       </div>
     </div>
+    <button class="btn btn-gold" style="margin-top:.8rem" onclick="saveStats()">✦ Save to Supabase</button>
   </div>
+</div>
 
-  <!-- ===== PARTY PAGE ===== -->
-  <div class="page" id="page-party">
-    <div class="section-header">
-      <h1 class="section-title">Party Makeup <em>Page</em></h1>
-      <p class="section-subtitle">Edit content for party-makeup.html.</p>
-    </div>
-    <div class="card">
-      <div class="card-title" style="margin-bottom:1rem"><span class="icon">💃</span> Hero Section</div>
-      <div class="form-group"><label class="form-label">Eyebrow</label><input class="form-input" value="Celebration Glow by Pavi"></div>
-      <div class="form-group"><label class="form-label">Title Line 1</label><input class="form-input" value="Turn heads. Own the room."></div>
-      <div class="form-group"><label class="form-label">Title Line 2 (italic)</label><input class="form-input" value="Be unforgettable."></div>
-      <div class="form-group"><label class="form-label">Subtitle</label><textarea class="form-textarea">Bold, radiant, effortless. Party makeup that lasts all night and looks stunning in every photo.</textarea></div>
-    </div>
-    <div class="card" style="margin-top:1rem">
-      <div class="card-title" style="margin-bottom:1rem"><span class="icon">🌟</span> About Section</div>
-      <div class="form-group"><label class="form-label">Lead Text</label><textarea class="form-textarea">Whether it's a glittering reception, a Sangeet night, a birthday bash or a corporate gala — your look should be as memorable as the occasion.</textarea></div>
-      <div class="form-group"><label class="form-label">Body Text</label><textarea class="form-textarea" style="min-height:100px">Party makeup at Glow Pavi's Makeover is crafted to be bold without being heavy, radiant without looking overdone. We match your makeup to your outfit, your personality, and the vibe of the event — then add that extra something that makes the entire room turn to look at you.</textarea></div>
-      <button class="btn btn-gold" onclick="saveSection('party')">✦ Save Party Page</button>
-    </div>
+<!-- ───────────────────────────────── GALLERY ── -->
+<div class="page" id="page-gallery">
+  <div class="sec-header">
+    <h1 class="sec-title">Gallery <em>Manager</em></h1>
+    <p class="sec-sub">Upload photos to Supabase Storage. They appear live on your website instantly.</p>
   </div>
-
-  <!-- ===== SKIN CARE PAGE ===== -->
-  <div class="page" id="page-skincare">
-    <div class="section-header">
-      <h1 class="section-title">Skin Care <em>Page</em></h1>
-      <p class="section-subtitle">Edit content for skin-care.html.</p>
+  <div class="card">
+    <div class="card-title" style="margin-bottom:.9rem">📤 Upload Images</div>
+    <div id="noSupaWarn"></div>
+    <div class="upload-zone" id="uploadZone" onclick="document.getElementById('galFile').click()" ondragover="e=>{e.preventDefault();document.getElementById('uploadZone').classList.add('drag')}" ondragleave="document.getElementById('uploadZone').classList.remove('drag')" ondrop="handleDrop(event)">
+      <span class="upload-icon">📸</span>
+      <div class="upload-text"><strong>Click to upload or drag & drop</strong>JPG, PNG, WEBP supported</div>
+      <div class="upload-note">Images go to Supabase Storage → appear live on website</div>
     </div>
-    <div class="card">
-      <div class="card-title" style="margin-bottom:1rem"><span class="icon">🌿</span> Hero Section</div>
-      <div class="form-group"><label class="form-label">Eyebrow</label><input class="form-input" value="Skin Wellness by Pavi"></div>
-      <div class="form-group"><label class="form-label">Title Line 1</label><input class="form-input" value="Great makeup begins with"></div>
-      <div class="form-group"><label class="form-label">Title Line 2 (italic)</label><input class="form-input" value="great skin."></div>
-      <div class="form-group"><label class="form-label">Subtitle</label><textarea class="form-textarea">Pre-bridal treatments, deep-cleansing facials, and glow therapies — tailored to your skin, your timeline, your story.</textarea></div>
-    </div>
-    <div class="card" style="margin-top:1rem">
-      <div class="card-title" style="margin-bottom:1rem"><span class="icon">💎</span> Treatments</div>
-      <div id="treatmentsList"></div>
-      <button class="btn btn-gold" onclick="saveSection('skincare')">✦ Save Skin Care Page</button>
-    </div>
+    <input type="file" id="galFile" multiple accept="image/*" style="display:none" onchange="uploadImages(event)">
+    <div id="uploadProgress"></div>
   </div>
-
-  <!-- ===== FAQ ===== -->
-  <div class="page" id="page-faq">
-    <div class="section-header">
-      <h1 class="section-title">FAQ <em>Manager</em></h1>
-      <p class="section-subtitle">Add, edit, and reorder FAQ items for faq.html.</p>
+  <div class="card">
+    <div class="card-head">
+      <div class="card-title">🗂 Gallery Images</div>
+      <span class="tag tag-gold" id="galCount">Loading...</span>
     </div>
-    <div class="card">
-      <div class="card-header">
-        <div class="card-title"><span class="icon">❓</span> FAQ Items</div>
-        <button class="btn btn-gold btn-sm" onclick="openAddFaqModal()">+ Add FAQ</button>
-      </div>
-      <div id="faqList"></div>
-      <button class="btn btn-gold" style="margin-top:0.8rem" onclick="saveSection('faq')">✦ Save FAQ</button>
-    </div>
+    <div class="alert alert-info"><span>ℹ️</span><span>Click any image to edit its caption, bride name, and quote. These show on hover in your website gallery.</span></div>
+    <div class="gal-grid" id="galGrid"><div style="text-align:center;padding:2rem;color:var(--text-dim);font-size:.82rem">Connect Supabase to manage gallery images</div></div>
   </div>
+</div>
 
-  <!-- ===== CONTACT INFO ===== -->
-  <div class="page" id="page-contact">
-    <div class="section-header">
-      <h1 class="section-title">Contact <em>Info</em></h1>
-      <p class="section-subtitle">Update your WhatsApp number, social links, and studio address across all pages.</p>
-    </div>
-    <div class="card">
-      <div class="card-title" style="margin-bottom:1.2rem"><span class="icon">📱</span> Primary Contact</div>
-      <div class="alert alert-warn" style="margin-bottom:1rem">
-        <span>⚠️</span>
-        <span>Your WhatsApp number appears on every "Book Now" and "WhatsApp Us" button across all pages. Make sure it's correct with country code.</span>
-      </div>
-      <div class="grid-2">
-        <div class="form-group">
-          <label class="form-label">WhatsApp Number (with country code)</label>
-          <input class="form-input" id="wa-number" value="919XXXXXXXXX" placeholder="919876543210">
-          <div style="font-size:0.7rem;color:var(--text-dim);margin-top:0.4rem">Format: 91XXXXXXXXXX (no + or spaces)</div>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Studio Location</label>
-          <input class="form-input" id="studio-location" value="Madurai, Tamil Nadu">
-        </div>
-      </div>
-    </div>
-    <div class="card" style="margin-top:1rem">
-      <div class="card-title" style="margin-bottom:1.2rem"><span class="icon">🔗</span> Social Media Links</div>
-      <div class="grid-2">
-        <div class="form-group"><label class="form-label">Instagram URL</label><input class="form-input" id="social-instagram" value="#" placeholder="https://instagram.com/yourpage"></div>
-        <div class="form-group"><label class="form-label">Facebook URL</label><input class="form-input" id="social-facebook" value="#" placeholder="https://facebook.com/yourpage"></div>
-        <div class="form-group"><label class="form-label">YouTube URL</label><input class="form-input" id="social-youtube" value="#" placeholder="https://youtube.com/@yourpage"></div>
-        <div class="form-group"><label class="form-label">WhatsApp URL (auto-filled from above)</label><input class="form-input" id="social-whatsapp" value="#" placeholder="Auto-generated" readonly style="opacity:0.6"></div>
-      </div>
-    </div>
-    <div class="card" style="margin-top:1rem">
-      <div class="card-title" style="margin-bottom:1.2rem"><span class="icon">🏢</span> Footer Branding</div>
-      <div class="form-group"><label class="form-label">Footer Tagline / Slogan</label><input class="form-input" id="footer-slogan" value="Every bride deserves to feel like the most beautiful version of herself."></div>
-      <div class="form-group"><label class="form-label">Footer Copyright Year</label><input class="form-input" id="footer-year" value="2025" type="number" min="2020" style="max-width:120px"></div>
-    </div>
-    <button class="btn btn-gold" onclick="saveSection('contact')">✦ Save Contact Info</button>
+<!-- ───────────────────────────────── TESTIMONIALS ── -->
+<div class="page" id="page-testimonials">
+  <div class="sec-header">
+    <h1 class="sec-title">Testimonials <em>Manager</em></h1>
+    <p class="sec-sub">Add, edit, and reorder client reviews. Show/hide individual reviews.</p>
   </div>
-
-  <!-- ===== SEO ===== -->
-  <div class="page" id="page-seo">
-    <div class="section-header">
-      <h1 class="section-title">SEO & <em>Meta</em></h1>
-      <p class="section-subtitle">Edit page titles and descriptions for search engine visibility.</p>
+  <div class="card">
+    <div class="card-head">
+      <div class="card-title">⭐ Client Reviews</div>
+      <button class="btn btn-gold btn-sm" onclick="openModal('tModal')">+ Add Review</button>
     </div>
-    <div class="card">
-      <div class="card-title" style="margin-bottom:1.2rem"><span class="icon">🔍</span> Page Meta Tags</div>
-      <div id="seoPages"></div>
-      <button class="btn btn-gold" style="margin-top:1rem" onclick="saveSection('seo')">✦ Save SEO</button>
+    <div id="tList"><div style="text-align:center;padding:2rem;color:var(--text-dim);font-size:.82rem">Connect Supabase to manage testimonials</div></div>
+  </div>
+</div>
+
+<!-- ───────────────────────────────── TIMELINE ── -->
+<div class="page" id="page-timeline">
+  <div class="sec-header">
+    <h1 class="sec-title">Journey <em>Timeline</em></h1>
+    <p class="sec-sub">Edit the studio story milestones shown on the homepage.</p>
+  </div>
+  <div class="card">
+    <div class="card-head">
+      <div class="card-title">📅 Milestones</div>
+      <button class="btn btn-outline btn-sm" onclick="addTimeline()">+ Add</button>
     </div>
+    <div id="tlList"><div style="text-align:center;padding:2rem;color:var(--text-dim);font-size:.82rem">Connect Supabase to manage timeline</div></div>
   </div>
+</div>
 
-</main><!-- /main -->
-
-<!-- MODAL OVERLAY -->
-<div class="overlay" id="modalOverlay" onclick="closeModal()"></div>
-
-<!-- ADD TESTIMONIAL MODAL -->
-<div class="modal" id="testimonialModal">
-  <div class="modal-header">
-    <div class="modal-title">Add Client Review</div>
-    <button class="modal-close" onclick="closeModal()">✕</button>
+<!-- ───────────────────────────────── BRIDAL ── -->
+<div class="page" id="page-bridal">
+  <div class="sec-header">
+    <h1 class="sec-title">Bridal <em>Packages</em></h1>
+    <p class="sec-sub">Edit the 3 bridal packages shown on bridal-makeup.html.</p>
   </div>
-  <div class="form-group"><label class="form-label">Client Name</label><input class="form-input" id="new-t-name" placeholder="e.g. Priya K."></div>
-  <div class="form-group"><label class="form-label">Service / Occasion</label><input class="form-input" id="new-t-occasion" placeholder="e.g. Bridal Client — Temple Ceremony"></div>
-  <div class="form-group"><label class="form-label">Review Text</label><textarea class="form-textarea" id="new-t-text" placeholder="Enter the client's review..."></textarea></div>
-  <div class="form-group"><label class="form-label">Star Rating</label>
-    <select class="form-select" id="new-t-stars">
-      <option value="5">★★★★★ (5 Stars)</option>
-      <option value="4">★★★★☆ (4 Stars)</option>
+  <div class="card">
+    <div class="card-head">
+      <div class="card-title">👰 Packages</div>
+      <button class="btn btn-outline btn-sm" onclick="addPackage()">+ Add Package</button>
+    </div>
+    <div id="pkgList"><div style="text-align:center;padding:2rem;color:var(--text-dim);font-size:.82rem">Connect Supabase to manage packages</div></div>
+  </div>
+</div>
+
+<!-- ───────────────────────────────── PARTY ── -->
+<div class="page" id="page-party">
+  <div class="sec-header">
+    <h1 class="sec-title">Party Makeup <em>Page</em></h1>
+    <p class="sec-sub">Edit hero and about content for party-makeup.html.</p>
+  </div>
+  <div class="card">
+    <div class="card-title" style="margin-bottom:1rem">💃 Hero & About</div>
+    <div class="fg"><label class="lbl">Eyebrow</label><input class="inp" id="pm-eyebrow" value="Celebration Glow by Pavi"></div>
+    <div class="fg"><label class="lbl">Title Line 1</label><input class="inp" id="pm-t1" value="Turn heads. Own the room."></div>
+    <div class="fg"><label class="lbl">Title Line 2 (italic)</label><input class="inp" id="pm-t2" value="Be unforgettable."></div>
+    <div class="fg"><label class="lbl">Subtitle</label><textarea class="ta" id="pm-sub">Bold, radiant, effortless. Party makeup that lasts all night and looks stunning in every photo.</textarea></div>
+    <div class="div"></div>
+    <div class="fg"><label class="lbl">About Lead Text</label><textarea class="ta" id="pm-lead">Whether it's a glittering reception, a Sangeet night, a birthday bash or a corporate gala — your look should be as memorable as the occasion.</textarea></div>
+    <button class="btn btn-gold" onclick="saveContent('party',{eyebrow:v('pm-eyebrow'),t1:v('pm-t1'),t2:v('pm-t2'),sub:v('pm-sub'),lead:v('pm-lead')})">✦ Save to Supabase</button>
+  </div>
+</div>
+
+<!-- ───────────────────────────────── SKIN CARE ── -->
+<div class="page" id="page-skincare">
+  <div class="sec-header">
+    <h1 class="sec-title">Skin Care <em>Page</em></h1>
+    <p class="sec-sub">Edit hero content and treatments for skin-care.html.</p>
+  </div>
+  <div class="card">
+    <div class="card-title" style="margin-bottom:1rem">🌿 Hero</div>
+    <div class="fg"><label class="lbl">Eyebrow</label><input class="inp" id="sc-eyebrow" value="Skin Wellness by Pavi"></div>
+    <div class="fg"><label class="lbl">Title Line 1</label><input class="inp" id="sc-t1" value="Great makeup begins with"></div>
+    <div class="fg"><label class="lbl">Title Line 2 (italic)</label><input class="inp" id="sc-t2" value="great skin."></div>
+    <div class="fg"><label class="lbl">Subtitle</label><textarea class="ta" id="sc-sub">Pre-bridal treatments, deep-cleansing facials, and glow therapies — tailored to your skin, your timeline, your story.</textarea></div>
+    <button class="btn btn-gold" onclick="saveContent('skincare',{eyebrow:v('sc-eyebrow'),t1:v('sc-t1'),t2:v('sc-t2'),sub:v('sc-sub')})">✦ Save to Supabase</button>
+  </div>
+  <div class="card" style="margin-top:0">
+    <div class="card-head">
+      <div class="card-title">💎 Treatments</div>
+      <button class="btn btn-outline btn-sm" onclick="addTreatment()">+ Add</button>
+    </div>
+    <div id="treatList"><div style="text-align:center;padding:2rem;color:var(--text-dim);font-size:.82rem">Connect Supabase to manage treatments</div></div>
+  </div>
+</div>
+
+<!-- ───────────────────────────────── FAQ ── -->
+<div class="page" id="page-faq">
+  <div class="sec-header">
+    <h1 class="sec-title">FAQ <em>Manager</em></h1>
+    <p class="sec-sub">Add, edit, and manage all FAQ items. They load live from Supabase on faq.html.</p>
+  </div>
+  <div class="card">
+    <div class="card-head">
+      <div class="card-title">❓ FAQ Items</div>
+      <button class="btn btn-gold btn-sm" onclick="openModal('faqModal')">+ Add FAQ</button>
+    </div>
+    <div id="faqList"><div style="text-align:center;padding:2rem;color:var(--text-dim);font-size:.82rem">Connect Supabase to manage FAQ</div></div>
+  </div>
+</div>
+
+<!-- ───────────────────────────────── CONTACT ── -->
+<div class="page" id="page-contact">
+  <div class="sec-header">
+    <h1 class="sec-title">Contact <em>Info</em></h1>
+    <p class="sec-sub">Update WhatsApp, social links, and footer text across all pages.</p>
+  </div>
+  <div class="card">
+    <div class="card-title" style="margin-bottom:1rem">📱 Contact Details</div>
+    <div class="alert alert-warn"><span>⚠️</span><span>WhatsApp number updates all "Book Now" buttons across every page automatically.</span></div>
+    <div class="g2">
+      <div class="fg"><label class="lbl">WhatsApp Number (with country code)</label><input class="inp" id="ct-wa" value="919XXXXXXXXX" placeholder="919876543210"><div style="font-size:.68rem;color:var(--text-dim);margin-top:.35rem">Format: 91XXXXXXXXXX (no + or spaces)</div></div>
+      <div class="fg"><label class="lbl">Studio Location</label><input class="inp" id="ct-loc" value="Madurai, Tamil Nadu"></div>
+      <div class="fg"><label class="lbl">Instagram URL</label><input class="inp" id="ct-ig" placeholder="https://instagram.com/yourpage"></div>
+      <div class="fg"><label class="lbl">Facebook URL</label><input class="inp" id="ct-fb" placeholder="https://facebook.com/yourpage"></div>
+    </div>
+    <div class="div"></div>
+    <div class="fg"><label class="lbl">Footer Tagline</label><input class="inp" id="ct-slogan" value="Every bride deserves to feel like the most beautiful version of herself."></div>
+    <button class="btn btn-gold" onclick="saveContact()">✦ Save to Supabase</button>
+  </div>
+</div>
+
+</main>
+
+<!-- ═══ MODALS ═══ -->
+<div class="overlay" id="modalOv" onclick="closeModal()"></div>
+
+<!-- Add Testimonial -->
+<div class="modal" id="tModal">
+  <div class="modal-head"><div class="modal-title">Add Client Review</div><button class="modal-close" onclick="closeModal()">✕</button></div>
+  <div class="fg"><label class="lbl">Client Name</label><input class="inp" id="nt-name" placeholder="e.g. Priya K."></div>
+  <div class="fg"><label class="lbl">Service / Occasion</label><input class="inp" id="nt-occ" placeholder="e.g. Bridal Client — Temple Ceremony"></div>
+  <div class="fg"><label class="lbl">Review Text</label><textarea class="ta" id="nt-txt" placeholder="Enter the review..." style="min-height:100px"></textarea></div>
+  <div class="g2">
+    <div class="fg"><label class="lbl">Stars</label><select class="sel" id="nt-stars"><option value="5">★★★★★ (5)</option><option value="4">★★★★☆ (4)</option></select></div>
+    <div class="fg"><label class="lbl">Avatar Color</label><select class="sel" id="nt-col"><option value="rose">Rose Gold</option><option value="gold">Gold</option><option value="blush">Blush</option></select></div>
+  </div>
+  <div class="btn-row"><button class="btn btn-gold" onclick="saveTestimonial()">Add Review</button><button class="btn btn-outline" onclick="closeModal()">Cancel</button></div>
+</div>
+
+<!-- Add FAQ -->
+<div class="modal" id="faqModal">
+  <div class="modal-head"><div class="modal-title">Add FAQ Item</div><button class="modal-close" onclick="closeModal()">✕</button></div>
+  <div class="fg"><label class="lbl">Category</label>
+    <select class="sel" id="nf-cat">
+      <option value="bridal">👰 Bridal Makeup</option>
+      <option value="booking">📅 Booking</option>
+      <option value="makeup">💄 Makeup & Products</option>
+      <option value="skin">🌿 Skin Care</option>
+      <option value="pricing">💰 Pricing</option>
     </select>
   </div>
-  <div class="form-group"><label class="form-label">Avatar Color</label>
-    <select class="form-select" id="new-t-color">
-      <option value="rose">Rose Gold</option>
-      <option value="gold">Gold</option>
-      <option value="blush">Blush</option>
-    </select>
-  </div>
-  <div style="display:flex;gap:0.8rem;margin-top:0.5rem">
-    <button class="btn btn-gold" onclick="addTestimonial()">Add Review</button>
+  <div class="fg"><label class="lbl">Question</label><input class="inp" id="nf-q" placeholder="Enter the question..."></div>
+  <div class="fg"><label class="lbl">Answer</label><textarea class="ta" id="nf-a" placeholder="Enter the answer..." style="min-height:110px"></textarea></div>
+  <div class="btn-row"><button class="btn btn-gold" onclick="saveFaq()">Add FAQ</button><button class="btn btn-outline" onclick="closeModal()">Cancel</button></div>
+</div>
+
+<!-- Edit Gallery Image -->
+<div class="modal" id="imgModal">
+  <div class="modal-head"><div class="modal-title">Edit Gallery Image</div><button class="modal-close" onclick="closeModal()">✕</button></div>
+  <div id="imgPreview" style="border-radius:10px;overflow:hidden;margin-bottom:1rem;max-height:180px;background:var(--card2);display:flex;align-items:center;justify-content:center"></div>
+  <input type="hidden" id="editImgId">
+  <div class="fg"><label class="lbl">Category / Event Type</label><input class="inp" id="ei-cat" placeholder="e.g. South Indian Bridal"></div>
+  <div class="fg"><label class="lbl">Bride Name</label><input class="inp" id="ei-name" placeholder="e.g. Meenakshi R."></div>
+  <div class="fg"><label class="lbl">Quote</label><textarea class="ta" id="ei-quote" placeholder="Her quote..." style="min-height:70px"></textarea></div>
+  <div class="fg"><label class="lbl">Badge</label><input class="inp" id="ei-badge" value="Featured Bride"></div>
+  <div class="fg"><label class="lbl">Sort Order</label><input class="inp" id="ei-sort" type="number" value="0" style="max-width:100px"></div>
+  <div class="btn-row">
+    <button class="btn btn-gold" onclick="updateImage()">Save</button>
+    <button class="btn btn-danger" onclick="deleteImage()">Delete</button>
     <button class="btn btn-outline" onclick="closeModal()">Cancel</button>
   </div>
 </div>
 
-<!-- ADD FAQ MODAL -->
-<div class="modal" id="faqModal">
-  <div class="modal-header">
-    <div class="modal-title">Add FAQ Item</div>
-    <button class="modal-close" onclick="closeFaqModal()">✕</button>
-  </div>
-  <div class="form-group"><label class="form-label">Category</label>
-    <select class="form-select" id="new-faq-cat">
-      <option value="bridal">👰 Bridal Makeup</option>
-      <option value="booking">📅 Booking & Appointments</option>
-      <option value="makeup">💄 Makeup & Products</option>
-      <option value="skin">🌿 Skin Care</option>
-      <option value="pricing">💰 Pricing & Payments</option>
-    </select>
-  </div>
-  <div class="form-group"><label class="form-label">Question</label><input class="form-input" id="new-faq-q" placeholder="e.g. What products do you use?"></div>
-  <div class="form-group"><label class="form-label">Answer</label><textarea class="form-textarea" id="new-faq-a" placeholder="Enter the answer..." style="min-height:120px"></textarea></div>
-  <div style="display:flex;gap:0.8rem;margin-top:0.5rem">
-    <button class="btn btn-gold" onclick="addFaqItem()">Add FAQ</button>
-    <button class="btn btn-outline" onclick="closeFaqModal()">Cancel</button>
-  </div>
-</div>
-
-<!-- IMAGE EDIT MODAL -->
-<div class="modal" id="imageModal">
-  <div class="modal-header">
-    <div class="modal-title">Edit Gallery Image</div>
-    <button class="modal-close" onclick="closeImageModal()">✕</button>
-  </div>
-  <div id="imageModalPreview" style="border-radius:10px;overflow:hidden;margin-bottom:1rem;max-height:200px;background:var(--card2);display:flex;align-items:center;justify-content:center;font-size:3rem"></div>
-  <input type="hidden" id="editing-image-id">
-  <div class="form-group"><label class="form-label">Category / Event Type</label><input class="form-input" id="img-category" placeholder="e.g. South Indian Bridal"></div>
-  <div class="form-group"><label class="form-label">Bride Name (optional)</label><input class="form-input" id="img-bride-name" placeholder="e.g. Meenakshi R."></div>
-  <div class="form-group"><label class="form-label">Bride Quote (optional)</label><textarea class="form-textarea" id="img-quote" placeholder="e.g. I looked in the mirror and didn't recognise myself..." style="min-height:80px"></textarea></div>
-  <div class="form-group"><label class="form-label">Badge Label</label><input class="form-input" id="img-badge" value="Featured Bride"></div>
-  <div style="display:flex;gap:0.8rem;margin-top:0.5rem">
-    <button class="btn btn-gold" onclick="saveImageMeta()">Save Details</button>
-    <button class="btn btn-danger" onclick="deleteImage()">Delete Image</button>
-    <button class="btn btn-outline" onclick="closeImageModal()">Cancel</button>
-  </div>
-</div>
-
-<!-- TOAST CONTAINER -->
-<div class="toast-container" id="toastContainer"></div>
+<div class="toast-wrap" id="toastWrap"></div>
 
 <script>
-// ============================================================
-// CORE STATE
-// ============================================================
-const state = {
-  gallery: [],
-  testimonials: [
-    {id:1,init:'SR',color:'rose',name:'Sowmya R.',occasion:'Bridal Client — Chennai Wedding',text:'"I had tears in my eyes when I saw myself in the mirror. Pavi has this incredible gift of understanding exactly what you want, even when you can\'t put it into words."',stars:5},
-    {id:2,init:'PK',color:'gold',name:'Preethi K.',occasion:'Bridal Client — Temple Ceremony',text:'"The makeup lasted 14 hours — through all the ceremonies, the dancing, the crying. It was flawless from morning to night. Worth every rupee and more."',stars:5},
-    {id:3,init:'DV',color:'blush',name:'Dharini V.',occasion:'Party Makeup Client',text:'"Not just a makeup artist — she\'s a dream keeper. She remembered everything I mentioned during our trial and made it even better."',stars:5},
-    {id:4,init:'AM',color:'rose',name:'Archana M.',occasion:'Skin + Bridal Prep Client',text:'"My skin is sensitive and I was terrified. Pavi was so careful, so gentle. She used the perfect products and I had zero reactions. I actually glowed."',stars:5},
-    {id:5,init:'NK',color:'gold',name:'Nithya K.',occasion:'Reception Look Client',text:'"Pavi made me feel like royalty. The whole experience was so peaceful and personal. She has such a warm energy — you feel beautiful before she even finishes."',stars:5},
-    {id:6,init:'JS',color:'blush',name:'Janani S.',occasion:'Full Bridal Package Client',text:'"Every photo from my wedding is magazine-worthy. Even my photographer said my makeup was the best she\'s seen. That\'s Pavi\'s standard."',stars:5},
-  ],
-  faq: [
-    {id:1,cat:'bridal',q:'How far in advance should I book bridal makeup?',a:'We recommend booking at least 2–4 months in advance, especially for peak season (October–January). Popular dates fill up very quickly.'},
-    {id:2,cat:'bridal',q:'Is a bridal trial included?',a:'Yes, all bridal packages include a trial session 2–4 weeks before the wedding day.'},
-    {id:3,cat:'booking',q:'How do I book an appointment?',a:'The easiest way is via WhatsApp. Send us a message with your service need, preferred date, and event details. We\'ll confirm once the advance is received.'},
-    {id:4,cat:'booking',q:'Can I reschedule my appointment?',a:'Yes — rescheduling requests made at least 72 hours before your appointment can be accommodated at no charge, subject to availability.'},
-    {id:5,cat:'makeup',q:'What products and brands do you use?',a:'We use a curated mix of professional-grade international and Indian brands well-tested for Indian skin tones, humid weather, and long wedding days.'},
-    {id:6,cat:'makeup',q:'How long will the makeup last?',a:'With our professional setting techniques and long-wear products, makeup typically lasts 10–14 hours.'},
-    {id:7,cat:'skin',q:'When should I start pre-bridal skin care?',a:'Ideally 3–6 months before your wedding for the best results. Even a 4–6 week programme closer to the date can make a meaningful difference.'},
-    {id:8,cat:'pricing',q:'What payment methods do you accept?',a:'We accept UPI (GPay, PhonePe, Paytm), bank transfer, and cash.'},
-  ],
-  timeline: [
-    {id:1,icon:'🌱',year:'2016',tag:'Where it all began',heading:'The First Brush Stroke',body:'Pavi began with a passion for beauty and a belief that every woman deserves to feel extraordinary. A small chair, a big dream, and a brush full of purpose.'},
-    {id:2,icon:'💍',year:'2018',tag:'A milestone of trust',heading:'100 Brides Transformed',body:'Word spread through the hearts of happy brides. When you pour your soul into your work, no advertising is needed — only the smiles of those you\'ve touched.'},
-    {id:3,icon:'🎓',year:'2020',tag:'Elevating the craft',heading:'Advanced Mastery',body:'Certified in airbrush artistry and advanced bridal techniques. Pavi invested in her craft — because brides deserve nothing less than cinematic perfection.'},
-    {id:4,icon:'🏛️',year:'2022',tag:'A home for dreams',heading:'Studio Launch',body:'Glow Pavi\'s Makeover studio opened — a sanctuary designed entirely for the comfort, calm, and transformation of our brides on their most cherished day.'},
-    {id:5,icon:'✨',year:'Today',tag:'The legacy continues',heading:'500+ Stories of Glow',body:'Every morning a bride sits in Pavi\'s chair carrying a dream. Every morning, she leaves having lived it. 500 transformations. 500 memories. Forever.'},
-  ],
-};
+// ══════════════════════════════════════════════════════════
+//  SUPABASE CLIENT (no NPM needed — raw fetch)
+// ══════════════════════════════════════════════════════════
+let SUPA_URL = '', SUPA_KEY = '', isConnected = false;
+let localGallery=[], localTests=[], localFaq=[], localTl=[], localPkg=[], localTreat=[];
 
-const galleryPlaceholders = [
-  {icon:'👰',category:'South Indian Bridal',brideName:'Meenakshi R.',quote:'I looked in the mirror and didn\'t recognise myself — in the most magical way.',badge:'Featured Bride'},
-  {icon:'🌸',category:'Reception Night',brideName:'Priya K.',quote:'Every guest asked who did my makeup. Pavi is pure magic.',badge:'Transformation'},
-  {icon:'💎',category:'Engagement Ceremony',brideName:'Deepa M.',quote:'She gave me something more beautiful than I imagined.',badge:'Our Bride'},
-  {icon:'🌺',category:'Hindu Wedding Bridal',brideName:'Lakshmi S.',quote:'My mother cried when she saw me. That alone says everything about Pavi\'s work.',badge:'Glow Story'},
-  {icon:'✨',category:'Christian Wedding',brideName:'Anitha V.',quote:'Natural yet stunning. She made me glow from within.',badge:'Real Bride'},
-  {icon:'💐',category:'Sangeet Ceremony',brideName:'Kavitha N.',quote:'I felt like a queen. Every single detail was perfect.',badge:'Glow Bride'},
-];
+function loadConfig(){
+  const cfg = JSON.parse(localStorage.getItem('gpCfg')||'{}');
+  SUPA_URL = cfg.url||''; SUPA_KEY = cfg.key||'';
+  if(document.getElementById('cfgUrl')) document.getElementById('cfgUrl').value = SUPA_URL;
+  if(document.getElementById('cfgKey')) document.getElementById('cfgKey').value = SUPA_KEY;
+  if(SUPA_URL && SUPA_KEY) testConnection(false);
+  loadStepStates();
+}
 
-// Load from localStorage
-function loadState(){
-  const saved = localStorage.getItem('gpAdmin');
-  if(saved) Object.assign(state, JSON.parse(saved));
-  if(!state.gallery.length) {
-    state.gallery = galleryPlaceholders.map((p,i)=>({...p,id:Date.now()+i,src:null}));
+async function api(method, table, body=null, query='', id=null){
+  if(!SUPA_URL||!SUPA_KEY) throw new Error('Not configured');
+  const url = id
+    ? `${SUPA_URL}/rest/v1/${table}?id=eq.${id}`
+    : `${SUPA_URL}/rest/v1/${table}${query}`;
+  const headers = {
+    'apikey': SUPA_KEY,
+    'Authorization': `Bearer ${SUPA_KEY}`,
+    'Content-Type': 'application/json',
+    'Prefer': method==='POST'?'return=representation':'return=representation'
+  };
+  const res = await fetch(url, {method, headers, body: body?JSON.stringify(body):null});
+  if(!res.ok) { const err=await res.text(); throw new Error(err); }
+  const text = await res.text();
+  return text ? JSON.parse(text) : null;
+}
+
+async function testConnection(showResult=true){
+  setConnStatus('connecting','Connecting...');
+  try {
+    const r = await fetch(`${SUPA_URL}/rest/v1/`, {headers:{'apikey':SUPA_KEY,'Authorization':`Bearer ${SUPA_KEY}`}});
+    if(r.status<500){ isConnected=true; setConnStatus('connected','Connected ✓'); document.getElementById('seedBtn').disabled=false; if(showResult){document.getElementById('testResult').innerHTML='<div class="alert alert-success" style="margin-top:.7rem">✅ Connection successful!</div>';} loadAllData(); updateDashBanner(); return; }
+    throw new Error('Status '+r.status);
+  } catch(e){ isConnected=false; setConnStatus('disconnected','Connection failed'); if(showResult){document.getElementById('testResult').innerHTML='<div class="alert alert-danger" style="margin-top:.7rem">❌ Failed: '+e.message+'. Check URL and key.</div>';} }
+}
+
+function setConnStatus(state,label){
+  const dot=document.getElementById('connDot'); const lbl=document.getElementById('connLabel');
+  dot.className='conn-dot '+state; lbl.textContent=label;
+}
+
+async function saveConfig(){
+  SUPA_URL=document.getElementById('cfgUrl').value.trim().replace(/\/$/,'');
+  SUPA_KEY=document.getElementById('cfgKey').value.trim();
+  localStorage.setItem('gpCfg',JSON.stringify({url:SUPA_URL,key:SUPA_KEY}));
+  document.getElementById('testResult').innerHTML='<div class="alert alert-info">Testing connection...</div>';
+  await testConnection(true);
+}
+
+function clearConfig(){
+  localStorage.removeItem('gpCfg'); SUPA_URL=''; SUPA_KEY=''; isConnected=false;
+  document.getElementById('cfgUrl').value=''; document.getElementById('cfgKey').value='';
+  document.getElementById('testResult').innerHTML='';
+  setConnStatus('disconnected','Not connected');
+}
+
+// ══════════════════════════════════════════════════════════
+//  SEED DEFAULT DATA
+// ══════════════════════════════════════════════════════════
+async function seedAllData(){
+  const btn=document.getElementById('seedBtn'); btn.disabled=true; btn.textContent='Seeding...';
+  const prog=document.getElementById('seedProgress');
+  const steps=[
+    ['site_content', seedSiteContent],
+    ['gallery', seedGallery],
+    ['testimonials', seedTestimonials],
+    ['faq', seedFaq],
+    ['bridal_packages', seedPackages],
+    ['timeline', seedTimeline],
+    ['treatments', seedTreatments],
+  ];
+  let done=0;
+  for(const [name,fn] of steps){
+    prog.innerHTML=`<div class="alert alert-info"><span>⏳</span> Seeding <strong>${name}</strong>...</div>`;
+    try{ await fn(); done++; }catch(e){ prog.innerHTML=`<div class="alert alert-danger">❌ Error in ${name}: ${e.message}</div>`; break; }
+  }
+  if(done===steps.length){
+    prog.innerHTML='<div class="alert alert-success">✅ All data seeded successfully! Your database is ready.</div>';
+    toast('🌱 Database seeded!','success'); loadAllData();
+  }
+  btn.disabled=false; btn.textContent='🌱 Seed Default Data';
+}
+
+async function seedSiteContent(){
+  const items=[
+    {id:'hero',value:{eyebrow:'Bridal Artistry by Pavi',title1:'Every bride has',title2:'a silent dream',subtitle:'We bring it to life — one brushstroke, one glow, one unforgettable moment at a time.',btn1:'Book Your Glow',btn2:'WhatsApp Now'}},
+    {id:'stats',value:{stat1:{num:500,suffix:'+',label:'Brides Transformed'},stat2:{num:8,suffix:'+',label:'Years of Artistry'},stat3:{num:100,suffix:'%',label:'Pure Satisfaction'},stat4:{num:5,suffix:'★',label:'Rated by Brides'}}},
+    {id:'contact',value:{whatsapp:'919XXXXXXXXX',location:'Madurai, Tamil Nadu',instagram:'#',facebook:'#',slogan:"Every bride deserves to feel like the most beautiful version of herself."}},
+    {id:'party',value:{eyebrow:'Celebration Glow by Pavi',t1:'Turn heads. Own the room.',t2:'Be unforgettable.',sub:'Bold, radiant, effortless.',lead:"Whether it's a glittering reception..."}},
+    {id:'skincare',value:{eyebrow:'Skin Wellness by Pavi',t1:'Great makeup begins with',t2:'great skin.',sub:'Pre-bridal treatments...'}},
+  ];
+  for(const item of items){
+    try{ await api('POST','site_content',item); }
+    catch(e){
+      // Already exists — update instead
+      await api('PATCH','site_content',{value:item.value,updated_at:new Date().toISOString()},`?id=eq.${item.id}`);
+    }
   }
 }
 
-function saveState(){
-  // Don't save image src (too large), save meta only
-  const toSave = {...state, gallery: state.gallery.map(({src,...rest})=>({...rest,hasSrc:!!src}))};
-  localStorage.setItem('gpAdmin',JSON.stringify(toSave));
-  showSaveStatus();
-}
-
-loadState();
-
-// ============================================================
-// NAVIGATION
-// ============================================================
-function showPage(id, btn){
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
-  const page = document.getElementById('page-'+id);
-  if(page) page.classList.add('active');
-  if(btn) btn.classList.add('active');
-  const titles = {
-    dashboard:'Dashboard', hero:'Hero Section', services:'Services Section',
-    stats:'Stats & Numbers', gallery:'Gallery Manager', testimonials:'Testimonials',
-    timeline:'Journey Timeline', bridal:'Bridal Makeup Page', party:'Party Makeup Page',
-    skincare:'Skin Care Page', faq:'FAQ Manager', contact:'Contact Info', seo:'SEO & Meta'
-  };
-  document.getElementById('pageTitle').textContent = titles[id]||id;
-  if(window.innerWidth<768) closeSidebar();
-  renderDynamic(id);
-}
-
-// ============================================================
-// SIDEBAR (mobile)
-// ============================================================
-function toggleSidebar(){
-  const s=document.getElementById('sidebar');
-  const o=document.getElementById('sidebarOverlay');
-  s.classList.toggle('open');
-  o.classList.toggle('show');
-}
-function closeSidebar(){
-  document.getElementById('sidebar').classList.remove('open');
-  document.getElementById('sidebarOverlay').classList.remove('show');
-}
-
-// ============================================================
-// TABS
-// ============================================================
-function switchTab(containerId, tabId, btn){
-  const container = document.getElementById(containerId);
-  container.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
-  container.parentElement.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
-  const panel = document.getElementById('tab-'+tabId);
-  if(panel) panel.classList.add('active');
-  if(btn) btn.classList.add('active');
-}
-
-// ============================================================
-// DYNAMIC RENDERS
-// ============================================================
-function renderDynamic(id){
-  if(id==='gallery') renderGallery();
-  if(id==='testimonials') renderTestimonials();
-  if(id==='faq') renderFaq();
-  if(id==='timeline') renderTimeline();
-  if(id==='bridal') renderBridalPackages();
-  if(id==='skincare') renderTreatments();
-  if(id==='seo') renderSeo();
-  updateDashStats();
-}
-
-// GALLERY
-function renderGallery(){
-  const grid = document.getElementById('galleryGrid');
-  grid.innerHTML = '';
-  state.gallery.forEach(img=>{
-    const div = document.createElement('div');
-    div.className = 'gallery-thumb';
-    div.innerHTML = img.src
-      ? `<img src="${img.src}" alt="${img.category||''}">
-         <div class="gallery-thumb-name">${img.category||'Image'}</div>`
-      : `<div class="gallery-thumb-placeholder"><span>${img.icon||'🖼'}</span><span>${img.category||'Click to Edit'}</span></div>`;
-    div.innerHTML += `<div class="gallery-thumb-overlay">
-      <button class="btn btn-outline btn-sm" onclick="editImage('${img.id}')">✏️ Edit</button>
-      <button class="btn btn-danger btn-sm" onclick="deleteImageById('${img.id}')">🗑 Remove</button>
-    </div>`;
-    grid.appendChild(div);
-  });
-  document.getElementById('gallery-count-badge').textContent = state.gallery.length+' images';
-}
-
-// TESTIMONIALS
-function renderTestimonials(){
-  const list = document.getElementById('testimonialsList');
-  list.innerHTML = '';
-  state.testimonials.forEach((t,i)=>{
-    const d=document.createElement('div');
-    d.className='testimonial-card';
-    d.innerHTML=`
-      <div class="testimonial-avatar" style="${avatarStyle(t.color)}">${t.init}</div>
-      <div class="testimonial-content">
-        <div class="testimonial-name">${t.name}</div>
-        <div class="testimonial-occasion">${t.occasion}</div>
-        <div class="testimonial-stars">${'★'.repeat(t.stars||5)}</div>
-        <div class="testimonial-text">${t.text}</div>
-        <div class="testimonial-actions">
-          <button class="btn btn-outline btn-sm" onclick="editTestimonial(${t.id})">✏️ Edit</button>
-          <button class="btn btn-danger btn-sm" onclick="deleteTestimonial(${t.id})">🗑 Remove</button>
-          ${i>0?`<button class="btn btn-outline btn-sm btn-icon" onclick="moveTestimonial(${t.id},-1)">↑</button>`:''}
-          ${i<state.testimonials.length-1?`<button class="btn btn-outline btn-sm btn-icon" onclick="moveTestimonial(${t.id},1)">↓</button>`:''}
-        </div>
-      </div>`;
-    list.appendChild(d);
-  });
-}
-
-function avatarStyle(color){
-  if(color==='gold') return 'background:linear-gradient(135deg,#9A7A32,#C9A84C)';
-  if(color==='blush') return 'background:linear-gradient(135deg,#E8A89A,#C5846A)';
-  return 'background:linear-gradient(135deg,#C5846A,#B5622A)';
-}
-
-// FAQ
-function renderFaq(){
-  const list = document.getElementById('faqList');
-  list.innerHTML='';
-  const cats={bridal:'👰 Bridal',booking:'📅 Booking',makeup:'💄 Makeup',skin:'🌿 Skin Care',pricing:'💰 Pricing'};
-  state.faq.forEach(f=>{
-    const d=document.createElement('div');
-    d.className='accordion-item';
-    d.innerHTML=`
-      <div class="accordion-header" onclick="toggleAccordion(this)">
-        <div class="accordion-header-left">
-          <span class="tag tag-gold" style="margin-right:0.3rem">${cats[f.cat]||f.cat}</span>
-          <span class="accordion-title">${f.q}</span>
-        </div>
-        <div style="display:flex;align-items:center;gap:0.5rem">
-          <button class="btn btn-outline btn-sm btn-icon" onclick="event.stopPropagation();deleteFaq(${f.id})">🗑</button>
-          <div class="accordion-toggle">+</div>
-        </div>
-      </div>
-      <div class="accordion-body">
-        <div class="form-group" style="margin-bottom:0.6rem">
-          <label class="form-label">Question</label>
-          <input class="form-input" value="${escHtml(f.q)}" onchange="updateFaq(${f.id},'q',this.value)">
-        </div>
-        <div class="form-group" style="margin-bottom:0">
-          <label class="form-label">Answer</label>
-          <textarea class="form-textarea" onchange="updateFaq(${f.id},'a',this.value)">${escHtml(f.a)}</textarea>
-        </div>
-      </div>`;
-    list.appendChild(d);
-  });
-}
-
-// TIMELINE
-function renderTimeline(){
-  const el=document.getElementById('timelineItems');
-  el.innerHTML='';
-  state.timeline.forEach(t=>{
-    const d=document.createElement('div');
-    d.className='accordion-item';
-    d.style.marginBottom='0.6rem';
-    d.innerHTML=`
-      <div class="accordion-header" onclick="toggleAccordion(this)">
-        <div class="accordion-header-left">
-          <span style="font-size:1.2rem">${t.icon}</span>
-          <span class="accordion-title">${t.year} — ${t.heading}</span>
-        </div>
-        <div style="display:flex;gap:0.5rem;align-items:center">
-          <button class="btn btn-danger btn-sm btn-icon" onclick="event.stopPropagation();deleteTimeline(${t.id})">🗑</button>
-          <div class="accordion-toggle">+</div>
-        </div>
-      </div>
-      <div class="accordion-body">
-        <div class="grid-2">
-          <div class="form-group"><label class="form-label">Icon (emoji)</label><input class="form-input" value="${t.icon}" onchange="updateTimeline(${t.id},'icon',this.value)" style="font-size:1.3rem"></div>
-          <div class="form-group"><label class="form-label">Year / Label</label><input class="form-input" value="${t.year}" onchange="updateTimeline(${t.id},'year',this.value)"></div>
-        </div>
-        <div class="form-group"><label class="form-label">Tag Line</label><input class="form-input" value="${escHtml(t.tag)}" onchange="updateTimeline(${t.id},'tag',this.value)"></div>
-        <div class="form-group"><label class="form-label">Heading</label><input class="form-input" value="${escHtml(t.heading)}" onchange="updateTimeline(${t.id},'heading',this.value)"></div>
-        <div class="form-group"><label class="form-label">Body Text</label><textarea class="form-textarea" onchange="updateTimeline(${t.id},'body',this.value)">${escHtml(t.body)}</textarea></div>
-      </div>`;
-    el.appendChild(d);
-  });
-}
-
-// BRIDAL PACKAGES
-function renderBridalPackages(){
-  const data=[
-    {name:'The Blossom Bride',tag:'Classic elegance for the soft bride',icon:'🌸',features:['Full bridal makeup on wedding day','One pre-bridal skin prep session','Bridal trial included','Traditional or modern finish','HD & camera-ready products','Complimentary touch-up kit']},
-    {name:'The Royal Bride',tag:'Our signature full-day experience',icon:'👑',features:['Full bridal makeup + bridal hair styling','Two pre-bridal skin sessions','Full-day artist attendance','Bridal trial + family trial','Reception night look included','Airbrush finish available','Premium luxury product brands']},
-    {name:'The Complete Bride',tag:'All ceremonies, one complete journey',icon:'✨',features:['Mehendi, engagement & wedding day','Reception & farewell looks','Complete pre-bridal skin package','Full hair styling for all events','Priority scheduling & booking','Dedicated artist for every event']},
+async function seedGallery(){
+  const items=[
+    {category:'South Indian Bridal',bride_name:'Meenakshi R.',quote:"I looked in the mirror and didn't recognise myself — in the most magical way.",badge:'Featured Bride',sort_order:0,image_url:''},
+    {category:'Reception Night',bride_name:'Priya K.',quote:'Every guest asked who did my makeup. Pavi is pure magic.',badge:'Transformation',sort_order:1,image_url:''},
+    {category:'Engagement Ceremony',bride_name:'Deepa M.',quote:'She gave me something more beautiful than I imagined.',badge:'Our Bride',sort_order:2,image_url:''},
+    {category:'Hindu Wedding Bridal',bride_name:'Lakshmi S.',quote:"My mother cried when she saw me. That alone says everything about Pavi's work.",badge:'Glow Story',sort_order:3,image_url:''},
+    {category:'Christian Wedding',bride_name:'Anitha V.',quote:'Natural yet stunning. She made me glow from within.',badge:'Real Bride',sort_order:4,image_url:''},
   ];
-  const el=document.getElementById('bridalPackages');
-  el.innerHTML=data.map(p=>`
-    <div class="accordion-item" style="margin-bottom:0.6rem">
-      <div class="accordion-header" onclick="toggleAccordion(this)">
-        <div class="accordion-header-left"><span>${p.icon}</span><span class="accordion-title">${p.name}</span></div>
-        <div class="accordion-toggle">+</div>
-      </div>
-      <div class="accordion-body">
-        <div class="form-group"><label class="form-label">Package Name</label><input class="form-input" value="${escHtml(p.name)}"></div>
-        <div class="form-group"><label class="form-label">Tagline</label><input class="form-input" value="${escHtml(p.tag)}"></div>
-        <div class="form-group"><label class="form-label">Icon (emoji)</label><input class="form-input" value="${p.icon}" style="font-size:1.3rem;max-width:80px"></div>
-        <div class="form-group"><label class="form-label">Features (one per line)</label><textarea class="form-textarea" style="min-height:140px">${p.features.join('\n')}</textarea></div>
-      </div>
-    </div>`).join('');
+  for(const i of items) await api('POST','gallery',i);
 }
 
-// TREATMENTS
-function renderTreatments(){
-  const data=[
-    {icon:'💎',name:'Luxury Facial',tag:'Deep nourishment for radiant, plump skin'},
-    {icon:'✨',name:'Bridal Glow Package',tag:'Multi-session pre-wedding skin transformation'},
-    {icon:'🌿',name:'De-Tan & Brightening',tag:'Restore your natural even-toned radiance'},
-    {icon:'🪷',name:'Express Cleanup',tag:'Quick refresh for busy schedules'},
+async function seedTestimonials(){
+  const items=[
+    {client_name:'Sowmya R.',initials:'SR',occasion:'Bridal Client — Chennai Wedding',review_text:"I had tears in my eyes when I saw myself in the mirror. Pavi has this incredible gift of understanding exactly what you want.",stars:5,avatar_color:'rose',sort_order:0},
+    {client_name:'Preethi K.',initials:'PK',occasion:'Bridal Client — Temple Ceremony',review_text:"The makeup lasted 14 hours — through all the ceremonies, the dancing, the crying. It was flawless from morning to night.",stars:5,avatar_color:'gold',sort_order:1},
+    {client_name:'Dharini V.',initials:'DV',occasion:'Party Makeup Client',review_text:"Not just a makeup artist — she's a dream keeper. She remembered everything I mentioned during our trial and made it even better.",stars:5,avatar_color:'blush',sort_order:2},
+    {client_name:'Archana M.',initials:'AM',occasion:'Skin + Bridal Prep Client',review_text:"My skin is sensitive and I was terrified. Pavi was so careful, so gentle. I actually glowed.",stars:5,avatar_color:'rose',sort_order:3},
+    {client_name:'Nithya K.',initials:'NK',occasion:'Reception Look Client',review_text:"Pavi made me feel like royalty. She has such a warm energy — you feel beautiful before she even finishes.",stars:5,avatar_color:'gold',sort_order:4},
+    {client_name:'Janani S.',initials:'JS',occasion:'Full Bridal Package Client',review_text:"Every photo from my wedding is magazine-worthy. Even my photographer said my makeup was the best she's seen.",stars:5,avatar_color:'blush',sort_order:5},
   ];
-  document.getElementById('treatmentsList').innerHTML=data.map(t=>`
-    <div class="accordion-item" style="margin-bottom:0.6rem">
-      <div class="accordion-header" onclick="toggleAccordion(this)">
-        <div class="accordion-header-left"><span>${t.icon}</span><span class="accordion-title">${t.name}</span></div>
-        <div class="accordion-toggle">+</div>
-      </div>
-      <div class="accordion-body">
-        <div class="form-group"><label class="form-label">Treatment Name</label><input class="form-input" value="${escHtml(t.name)}"></div>
-        <div class="form-group"><label class="form-label">Tagline</label><input class="form-input" value="${escHtml(t.tag)}"></div>
-        <div class="form-group"><label class="form-label">Icon</label><input class="form-input" value="${t.icon}" style="max-width:80px;font-size:1.3rem"></div>
-        <div class="form-group"><label class="form-label">Description</label><textarea class="form-textarea"></textarea></div>
-        <div class="form-group"><label class="form-label">Includes (one per line)</label><textarea class="form-textarea" style="min-height:100px"></textarea></div>
-      </div>
-    </div>`).join('');
+  for(const i of items) await api('POST','testimonials',i);
 }
 
-// SEO
-function renderSeo(){
-  const pages=[
-    {file:'index.html',title:'Glow Pavi\'s Makeover',desc:'Professional bridal makeup studio in Madurai, Tamil Nadu. Expert in bridal, party and skin care services.'},
-    {file:'bridal-makeup.html',title:'Bridal Makeup — Glow Pavi\'s Makeover',desc:'Professional bridal makeup in Madurai. Traditional, modern, and fusion bridal looks. Book your trial today.'},
-    {file:'party-makeup.html',title:'Party Makeup — Glow Pavi\'s Makeover',desc:'Bold and radiant party makeup for receptions, engagements, birthdays and corporate events in Madurai.'},
-    {file:'skin-care.html',title:'Skin Care — Glow Pavi\'s Makeover',desc:'Pre-bridal skin care, facials, de-tan and glow treatments in Madurai. Customised for every skin type.'},
-    {file:'faq.html',title:'FAQ — Glow Pavi\'s Makeover',desc:'Answers to common questions about bridal makeup, booking, products, and skin care at Glow Pavi\'s.'},
+async function seedFaq(){
+  const items=[
+    {category:'bridal',question:'How far in advance should I book bridal makeup?',answer:'We recommend booking at least 2–4 months in advance, especially for peak season (October–January).',sort_order:0},
+    {category:'bridal',question:'Is a bridal trial included?',answer:'Yes, all bridal packages include a trial session 2–4 weeks before the wedding day.',sort_order:1},
+    {category:'booking',question:'How do I book an appointment?',answer:"The easiest way is via WhatsApp. Send us a message with your service need, preferred date, and event details.",sort_order:2},
+    {category:'booking',question:'Can I reschedule my appointment?',answer:'Yes — rescheduling requests made at least 72 hours before your appointment are usually accommodated at no charge.',sort_order:3},
+    {category:'makeup',question:'What products and brands do you use?',answer:'We use professional-grade international and Indian brands well-tested for Indian skin tones, humidity, and long wedding days.',sort_order:4},
+    {category:'makeup',question:'How long will the makeup last?',answer:'With our professional setting techniques, makeup typically lasts 10–14 hours.',sort_order:5},
+    {category:'skin',question:'When should I start pre-bridal skin care?',answer:'Ideally 3–6 months before your wedding for the best transformation results.',sort_order:6},
+    {category:'pricing',question:'What payment methods do you accept?',answer:'We accept UPI (GPay, PhonePe, Paytm), bank transfer, and cash.',sort_order:7},
   ];
-  document.getElementById('seoPages').innerHTML=pages.map(p=>`
-    <div style="margin-bottom:1.2rem;padding-bottom:1.2rem;border-bottom:1px solid var(--border)">
-      <div style="font-size:0.75rem;font-weight:600;color:var(--gold-dark);margin-bottom:0.7rem;text-transform:uppercase;letter-spacing:0.1em">📄 ${p.file}</div>
-      <div class="form-group"><label class="form-label">Page Title</label><input class="form-input" value="${escHtml(p.title)}"></div>
-      <div class="form-group" style="margin-bottom:0"><label class="form-label">Meta Description</label><textarea class="form-textarea" style="min-height:60px">${escHtml(p.desc)}</textarea></div>
-    </div>`).join('');
+  for(const i of items) await api('POST','faq',i);
 }
 
-// DASHBOARD STATS
+async function seedPackages(){
+  const items=[
+    {name:'The Blossom Bride',tagline:'Classic elegance for the soft bride',icon:'🌸',features:['Full bridal makeup on wedding day','One pre-bridal skin prep session','Bridal trial included','Traditional or modern finish','HD & camera-ready products','Complimentary touch-up kit'],is_featured:false,sort_order:0},
+    {name:'The Royal Bride',tagline:'Our signature full-day experience',icon:'👑',features:['Full bridal makeup + hair styling','Two pre-bridal skin sessions','Full-day artist attendance','Bridal trial + family trial','Reception night look included','Airbrush finish available','Premium luxury brands'],is_featured:true,sort_order:1},
+    {name:'The Complete Bride',tagline:'All ceremonies, one complete journey',icon:'✨',features:['Mehendi, engagement & wedding day','Reception & farewell looks','Complete pre-bridal skin package','Full hair styling for all events','Priority scheduling','Dedicated artist for every event'],is_featured:false,sort_order:2},
+  ];
+  for(const i of items) await api('POST','bridal_packages',i);
+}
+
+async function seedTimeline(){
+  const items=[
+    {icon:'🌱',year_label:'2016',tag:'Where it all began',heading:'The First Brush Stroke',body:"Pavi began with a passion for beauty and a belief that every woman deserves to feel extraordinary. A small chair, a big dream, and a brush full of purpose.",sort_order:0},
+    {icon:'💍',year_label:'2018',tag:'A milestone of trust',heading:'100 Brides Transformed',body:"Word spread through the hearts of happy brides. When you pour your soul into your work, no advertising is needed — only the smiles of those you've touched.",sort_order:1},
+    {icon:'🎓',year_label:'2020',tag:'Elevating the craft',heading:'Advanced Mastery',body:"Certified in airbrush artistry and advanced bridal techniques. Pavi invested in her craft — because brides deserve nothing less than cinematic perfection.",sort_order:2},
+    {icon:'🏛️',year_label:'2022',tag:'A home for dreams',heading:'Studio Launch',body:"Glow Pavi's Makeover studio opened — a sanctuary designed entirely for the comfort, calm, and transformation of our brides on their most cherished day.",sort_order:3},
+    {icon:'✨',year_label:'Today',tag:'The legacy continues',heading:'500+ Stories of Glow',body:"Every morning a bride sits in Pavi's chair carrying a dream. Every morning, she leaves having lived it. 500 transformations. 500 memories. Forever.",sort_order:4},
+  ];
+  for(const i of items) await api('POST','timeline',i);
+}
+
+async function seedTreatments(){
+  const items=[
+    {name:'Luxury Facial',tagline:'Deep nourishment for radiant, plump skin',icon:'💎',description:'A head-to-toe face treatment that cleanses, exfoliates, and intensely hydrates your skin.',includes:['Deep pore cleansing and steam','Gentle exfoliation and brightening scrub','Customised face mask','Serum and moisturiser','Face massage for lymphatic drainage'],sort_order:0},
+    {name:'Bridal Glow Package',tagline:'Multi-session pre-wedding skin transformation',icon:'✨',description:'Our signature pre-bridal programme designed to be started 2–3 months before your wedding.',includes:['4–6 session programme','Skin analysis and custom plan','Tan removal and brightening','Pigmentation treatment','Hydration and glow-boost finishing'],sort_order:1},
+    {name:'De-Tan & Brightening',tagline:'Restore your natural even-toned radiance',icon:'🌿',description:'Gently but effectively removes built-up tan and uneven pigmentation.',includes:['Face and neck de-tan treatment','Natural brightening mask','Vitamin C serum infusion','SPF protection finishing'],sort_order:2},
+    {name:'Express Cleanup',tagline:'Quick refresh for busy schedules',icon:'🪷',description:'A deep cleanse, quick exfoliation, and fresh-faced finish.',includes:['Deep cleansing and steam','Blackhead and whitehead removal','Quick brightening mask','Moisturiser and sunscreen'],sort_order:3},
+  ];
+  for(const i of items) await api('POST','treatments',i);
+}
+
+// ══════════════════════════════════════════════════════════
+//  LOAD ALL DATA
+// ══════════════════════════════════════════════════════════
+async function loadAllData(){
+  if(!isConnected) return;
+  try{
+    [localGallery,localTests,localFaq,localTl,localPkg,localTreat] = await Promise.all([
+      api('GET','gallery','','?order=sort_order'),
+      api('GET','testimonials','','?order=sort_order'),
+      api('GET','faq','','?order=sort_order'),
+      api('GET','timeline','','?order=sort_order'),
+      api('GET','bridal_packages','','?order=sort_order'),
+      api('GET','treatments','','?order=sort_order'),
+    ]);
+    updateDashStats();
+    renderGallery(); renderTestimonials(); renderFaq(); renderTimeline(); renderPackages(); renderTreatments();
+    loadSavedContent();
+  } catch(e){ console.error('Load error',e); }
+}
+
+async function loadSavedContent(){
+  try {
+    const rows = await api('GET','site_content','','');
+    rows?.forEach(r=>{
+      const v=r.value;
+      if(r.id==='hero'){ setV('h-eyebrow',v.eyebrow);setV('h-t1',v.title1);setV('h-t2',v.title2);setV('h-sub',v.subtitle);setV('h-b1',v.btn1);setV('h-b2',v.btn2); }
+      if(r.id==='stats'){ setV('s1n',v.stat1?.num);setV('s1s',v.stat1?.suffix);setV('s1l',v.stat1?.label);setV('s2n',v.stat2?.num);setV('s2s',v.stat2?.suffix);setV('s2l',v.stat2?.label);setV('s3n',v.stat3?.num);setV('s3s',v.stat3?.suffix);setV('s3l',v.stat3?.label);setV('s4n',v.stat4?.num);setV('s4s',v.stat4?.suffix);setV('s4l',v.stat4?.label); }
+      if(r.id==='contact'){ setV('ct-wa',v.whatsapp);setV('ct-loc',v.location);setV('ct-ig',v.instagram);setV('ct-fb',v.facebook);setV('ct-slogan',v.slogan); }
+      if(r.id==='party'){ setV('pm-eyebrow',v.eyebrow);setV('pm-t1',v.t1);setV('pm-t2',v.t2);setV('pm-sub',v.sub);setV('pm-lead',v.lead); }
+      if(r.id==='skincare'){ setV('sc-eyebrow',v.eyebrow);setV('sc-t1',v.t1);setV('sc-t2',v.t2);setV('sc-sub',v.sub); }
+    });
+  } catch(e){}
+}
+
 function updateDashStats(){
-  document.getElementById('dash-gallery-count').textContent=state.gallery.length;
-  document.getElementById('dash-testimonial-count').textContent=state.testimonials.length;
-  document.getElementById('dash-faq-count').textContent=state.faq.length;
+  setEl('d-gal',localGallery?.length??'—');
+  setEl('d-tes',localTests?.length??'—');
+  setEl('d-faq',localFaq?.length??'—');
+  setEl('d-pkg',localPkg?.length??'—');
 }
 
-// ============================================================
-// GALLERY ACTIONS
-// ============================================================
-function handleFileUpload(e){
+function updateDashBanner(){
+  const b=document.getElementById('dashConnBanner');
+  b.innerHTML=isConnected
+    ?'<div class="alert alert-success" style="margin-bottom:1rem"><span>✅</span><span>Supabase connected! All changes will save live to your database.</span></div>'
+    :'<div class="alert alert-warn" style="margin-bottom:1rem"><span>⚠️</span><span>Supabase not connected. Go to <strong>Supabase Setup</strong> to get started.</span></div>';
+}
+
+// ══════════════════════════════════════════════════════════
+//  SAVE FUNCTIONS
+// ══════════════════════════════════════════════════════════
+async function saveContent(key, value){
+  if(!isConnected){toast('Connect Supabase first','warn');return;}
+  try{
+    const existing = await api('GET','site_content','',`?id=eq.${key}`);
+    if(existing?.length) await api('PATCH','site_content',{value,updated_at:new Date().toISOString()},`?id=eq.${key}`);
+    else await api('POST','site_content',{id:key,value});
+    toast('✦ Saved!','success'); showSaveIndicator();
+  } catch(e){ toast('Error: '+e.message,'error'); }
+}
+
+async function saveHero(){ await saveContent('hero',{eyebrow:v('h-eyebrow'),title1:v('h-t1'),title2:v('h-t2'),subtitle:v('h-sub'),btn1:v('h-b1'),btn2:v('h-b2'),ctaTitle:v('h-cta-t'),ctaSub:v('h-cta-s')}); }
+async function saveStats(){ await saveContent('stats',{stat1:{num:+v('s1n'),suffix:v('s1s'),label:v('s1l')},stat2:{num:+v('s2n'),suffix:v('s2s'),label:v('s2l')},stat3:{num:+v('s3n'),suffix:v('s3s'),label:v('s3l')},stat4:{num:+v('s4n'),suffix:v('s4s'),label:v('s4l')}}); }
+async function saveContact(){
+  const wa=v('ct-wa');
+  await saveContent('contact',{whatsapp:wa,location:v('ct-loc'),instagram:v('ct-ig'),facebook:v('ct-fb'),slogan:v('ct-slogan')});
+}
+
+// ══════════════════════════════════════════════════════════
+//  GALLERY
+// ══════════════════════════════════════════════════════════
+async function uploadImages(e){
+  if(!isConnected){toast('Connect Supabase first','warn');return;}
   const files=Array.from(e.target.files);
-  files.forEach(file=>{
-    if(!file.type.startsWith('image/')) return;
-    const reader=new FileReader();
-    reader.onload=ev=>{
-      state.gallery.push({
-        id:Date.now()+Math.random(),
-        src:ev.target.result,
-        icon:'🖼',
-        category:'New Image',
-        brideName:'',
-        quote:'',
-        badge:'Our Work'
-      });
-      renderGallery();
-      saveState();
-      showToast('📸 Image uploaded!','success');
-    };
-    reader.readAsDataURL(file);
-  });
+  const prog=document.getElementById('uploadProgress');
+  for(let i=0;i<files.length;i++){
+    const f=files[i];
+    prog.innerHTML=`<div class="alert alert-info" style="margin-top:.7rem"><span>⏳</span> Uploading ${f.name} (${i+1}/${files.length})...</div>`;
+    try{
+      const fname=`${Date.now()}_${f.name.replace(/\s/g,'_')}`;
+      const uploadRes=await fetch(`${SUPA_URL}/storage/v1/object/gallery/${fname}`,{method:'POST',headers:{'apikey':SUPA_KEY,'Authorization':`Bearer ${SUPA_KEY}`,'Content-Type':f.type},body:f});
+      if(!uploadRes.ok) throw new Error('Upload failed');
+      const imgUrl=`${SUPA_URL}/storage/v1/object/public/gallery/${fname}`;
+      await api('POST','gallery',{image_url:imgUrl,category:'New Image',badge:'Our Work',sort_order:localGallery.length,is_active:true});
+      toast('📸 Uploaded!','success');
+    } catch(err){ toast('Upload error: '+err.message,'error'); }
+  }
+  prog.innerHTML='';
+  localGallery=await api('GET','gallery','','?order=sort_order');
+  renderGallery(); updateDashStats();
   e.target.value='';
 }
 
-function handleDragOver(e){e.preventDefault();document.getElementById('uploadZone').classList.add('drag-over')}
-function handleDragLeave(){document.getElementById('uploadZone').classList.remove('drag-over')}
 function handleDrop(e){
   e.preventDefault();
-  document.getElementById('uploadZone').classList.remove('drag-over');
-  const dt=e.dataTransfer;
-  if(dt.files) handleFileUpload({target:{files:dt.files},preventDefault:()=>{}});
+  document.getElementById('uploadZone').classList.remove('drag');
+  const files=e.dataTransfer.files;
+  if(files.length) uploadImages({target:{files},value:''});
 }
 
-function editImage(id){
-  const img=state.gallery.find(g=>g.id==id);
-  if(!img) return;
-  document.getElementById('editing-image-id').value=id;
-  document.getElementById('img-category').value=img.category||'';
-  document.getElementById('img-bride-name').value=img.brideName||'';
-  document.getElementById('img-quote').value=img.quote||'';
-  document.getElementById('img-badge').value=img.badge||'';
-  const prev=document.getElementById('imageModalPreview');
-  prev.innerHTML=img.src?`<img src="${img.src}" style="width:100%;height:200px;object-fit:cover">`:`<span>${img.icon||'🖼'}</span>`;
-  openModal('imageModal');
+function renderGallery(){
+  const g=document.getElementById('galGrid');
+  if(!localGallery?.length){g.innerHTML='<div style="text-align:center;padding:2rem;color:var(--text-dim);font-size:.82rem">No images yet. Upload above.</div>';setEl('galCount','0 images');return;}
+  setEl('galCount',localGallery.length+' images');
+  g.innerHTML=localGallery.map(img=>`
+    <div class="gal-thumb">
+      ${img.image_url?`<img src="${img.image_url}" alt="${img.category||''}">`:`<div class="gal-placeholder"><span>🖼</span><span>${img.category||'No image'}</span></div>`}
+      <div class="gal-label">${img.category||'Untitled'}</div>
+      <div class="gal-overlay">
+        <button class="btn btn-outline btn-sm" onclick="editImg('${img.id}')">✏️ Edit</button>
+        <button class="btn btn-danger btn-sm" onclick="delImg('${img.id}')">🗑 Delete</button>
+      </div>
+    </div>`).join('');
 }
 
-function saveImageMeta(){
-  const id=document.getElementById('editing-image-id').value;
-  const img=state.gallery.find(g=>g.id==id);
-  if(!img) return;
-  img.category=document.getElementById('img-category').value;
-  img.brideName=document.getElementById('img-bride-name').value;
-  img.quote=document.getElementById('img-quote').value;
-  img.badge=document.getElementById('img-badge').value;
-  saveState();
-  renderGallery();
-  closeImageModal();
-  showToast('✦ Image details saved!','success');
+function editImg(id){
+  const img=localGallery.find(g=>g.id===id); if(!img) return;
+  document.getElementById('editImgId').value=id;
+  setV('ei-cat',img.category);setV('ei-name',img.bride_name);setV('ei-quote',img.quote);setV('ei-badge',img.badge);setV('ei-sort',img.sort_order);
+  document.getElementById('imgPreview').innerHTML=img.image_url?`<img src="${img.image_url}" style="width:100%;height:180px;object-fit:cover">`:'<span style="font-size:2.5rem;opacity:.3">🖼</span>';
+  openModal('imgModal');
 }
 
-function deleteImageById(id){
-  if(!confirm('Remove this image from the gallery?')) return;
-  state.gallery=state.gallery.filter(g=>g.id!=id);
-  saveState();
-  renderGallery();
-  showToast('🗑 Image removed','info');
+async function updateImage(){
+  const id=document.getElementById('editImgId').value;
+  const data={category:v('ei-cat'),bride_name:v('ei-name'),quote:v('ei-quote'),badge:v('ei-badge'),sort_order:+v('ei-sort')};
+  try{ await api('PATCH','gallery',data,`?id=eq.${id}`); toast('✦ Saved!','success'); closeModal(); localGallery=await api('GET','gallery','','?order=sort_order'); renderGallery(); }
+  catch(e){ toast('Error: '+e.message,'error'); }
 }
 
-function deleteImage(){
-  const id=document.getElementById('editing-image-id').value;
-  deleteImageById(id);
-  closeImageModal();
+async function delImg(id){
+  if(!confirm('Delete this image?')) return;
+  const img=localGallery.find(g=>g.id===id);
+  try{
+    await api('DELETE','gallery',null,`?id=eq.${id}`);
+    if(img?.image_url){ const path=img.image_url.split('/gallery/')[1]; await fetch(`${SUPA_URL}/storage/v1/object/gallery/${path}`,{method:'DELETE',headers:{'apikey':SUPA_KEY,'Authorization':`Bearer ${SUPA_KEY}`}}); }
+    localGallery=localGallery.filter(g=>g.id!==id); renderGallery(); updateDashStats(); toast('Deleted','info');
+  } catch(e){ toast('Error: '+e.message,'error'); }
 }
 
-function clearAllGallery(){
-  if(!confirm('Clear all gallery images? This cannot be undone.')) return;
-  state.gallery=[];
-  saveState();
-  renderGallery();
-  showToast('Gallery cleared','info');
+async function deleteImage(){ await delImg(document.getElementById('editImgId').value); closeModal(); }
+
+// ══════════════════════════════════════════════════════════
+//  TESTIMONIALS
+// ══════════════════════════════════════════════════════════
+function renderTestimonials(){
+  const l=document.getElementById('tList');
+  if(!localTests?.length){l.innerHTML='<div style="text-align:center;padding:2rem;color:var(--text-dim);font-size:.82rem">No reviews yet. Add above.</div>';return;}
+  l.innerHTML=localTests.map((t,i)=>`
+    <div class="tcard">
+      <div class="tav" style="${avStyle(t.avatar_color)}">${t.initials||'?'}</div>
+      <div class="tc">
+        <div class="tc-name">${t.client_name}</div>
+        <div class="tc-occ">${t.occasion||''}</div>
+        <div class="stars">${'★'.repeat(t.stars||5)}</div>
+        <div class="tc-txt">"${t.review_text}"</div>
+        <div class="tc-acts">
+          <button class="btn btn-danger btn-sm" onclick="delTest('${t.id}')">🗑 Delete</button>
+          ${i>0?`<button class="btn btn-outline btn-sm btn-icon" onclick="moveTest('${t.id}',-1)">↑</button>`:''}
+          ${i<localTests.length-1?`<button class="btn btn-outline btn-sm btn-icon" onclick="moveTest('${t.id}',1)">↓</button>`:''}
+        </div>
+      </div>
+    </div>`).join('');
 }
 
-// ============================================================
-// TESTIMONIALS ACTIONS
-// ============================================================
-function openAddTestimonialModal(){openModal('testimonialModal')}
+function avStyle(c){ return c==='gold'?'background:linear-gradient(135deg,#9A7A32,#C9A84C)':c==='blush'?'background:linear-gradient(135deg,#E8A89A,#C5846A)':'background:linear-gradient(135deg,#C5846A,#B5622A)'; }
 
-function addTestimonial(){
-  const name=document.getElementById('new-t-name').value.trim();
-  const occasion=document.getElementById('new-t-occasion').value.trim();
-  const text=document.getElementById('new-t-text').value.trim();
-  if(!name||!text){showToast('Please fill in name and review text','warn');return;}
-  const initials=name.split(' ').map(w=>w[0]||'').join('').toUpperCase().slice(0,2);
-  state.testimonials.push({
-    id:Date.now(),
-    init:initials,
-    color:document.getElementById('new-t-color').value,
-    name,occasion,text:`"${text}"`,
-    stars:parseInt(document.getElementById('new-t-stars').value)||5
-  });
-  saveState();
+async function saveTestimonial(){
+  const name=document.getElementById('nt-name').value.trim();
+  const txt=document.getElementById('nt-txt').value.trim();
+  if(!name||!txt){toast('Fill in name and review','warn');return;}
+  const init=name.split(' ').map(w=>w[0]||'').join('').toUpperCase().slice(0,2);
+  try{
+    await api('POST','testimonials',{client_name:name,initials:init,occasion:document.getElementById('nt-occ').value.trim(),review_text:txt,stars:+document.getElementById('nt-stars').value,avatar_color:document.getElementById('nt-col').value,sort_order:localTests.length,is_active:true});
+    closeModal(); localTests=await api('GET','testimonials','','?order=sort_order'); renderTestimonials(); updateDashStats(); toast('⭐ Review added!','success');
+    ['nt-name','nt-occ','nt-txt'].forEach(id=>setV(id,''));
+  }catch(e){toast('Error: '+e.message,'error');}
+}
+
+async function delTest(id){
+  if(!confirm('Delete this review?')) return;
+  try{ await api('DELETE','testimonials',null,`?id=eq.${id}`); localTests=localTests.filter(t=>t.id!==id); renderTestimonials(); updateDashStats(); toast('Deleted','info'); }
+  catch(e){toast('Error: '+e.message,'error');}
+}
+
+async function moveTest(id,dir){
+  const i=localTests.findIndex(t=>t.id===id); const ni=i+dir;
+  if(ni<0||ni>=localTests.length) return;
+  [localTests[i],localTests[ni]]=[localTests[ni],localTests[i]];
+  await Promise.all([api('PATCH','testimonials',{sort_order:i},'',localTests[i].id),api('PATCH','testimonials',{sort_order:ni},'',localTests[ni].id)]);
   renderTestimonials();
-  closeModal();
-  showToast('⭐ Review added!','success');
-  document.getElementById('new-t-name').value='';
-  document.getElementById('new-t-occasion').value='';
-  document.getElementById('new-t-text').value='';
 }
 
-function deleteTestimonial(id){
-  if(!confirm('Remove this review?')) return;
-  state.testimonials=state.testimonials.filter(t=>t.id!==id);
-  saveState();
-  renderTestimonials();
-  showToast('Review removed','info');
+// ══════════════════════════════════════════════════════════
+//  FAQ
+// ══════════════════════════════════════════════════════════
+function renderFaq(){
+  const l=document.getElementById('faqList');
+  if(!localFaq?.length){l.innerHTML='<div style="text-align:center;padding:2rem;color:var(--text-dim);font-size:.82rem">No FAQ items yet.</div>';return;}
+  const cats={bridal:'👰',booking:'📅',makeup:'💄',skin:'🌿',pricing:'💰'};
+  l.innerHTML=localFaq.map(f=>`
+    <div class="acc">
+      <div class="acc-h" onclick="toggleAcc(this)">
+        <div class="acc-hl"><span class="tag tag-gold">${cats[f.category]||'❓'} ${f.category}</span><span class="acc-t">${f.question}</span></div>
+        <div style="display:flex;gap:.4rem;align-items:center">
+          <button class="btn btn-danger btn-sm btn-icon" onclick="event.stopPropagation();delFaq('${f.id}')">🗑</button>
+          <div class="acc-tog">+</div>
+        </div>
+      </div>
+      <div class="acc-b">
+        <div class="fg"><label class="lbl">Question</label><input class="inp" value="${esc(f.question)}" onchange="updateFaqItem('${f.id}','question',this.value)"></div>
+        <div class="fg" style="margin-bottom:0"><label class="lbl">Answer</label><textarea class="ta" onchange="updateFaqItem('${f.id}','answer',this.value)">${esc(f.answer)}</textarea></div>
+      </div>
+    </div>`).join('');
 }
 
-function editTestimonial(id){
-  const t=state.testimonials.find(x=>x.id===id);
-  if(!t) return;
-  document.getElementById('new-t-name').value=t.name;
-  document.getElementById('new-t-occasion').value=t.occasion;
-  document.getElementById('new-t-text').value=t.text.replace(/^"|"$/g,'');
-  document.getElementById('new-t-stars').value=t.stars;
-  document.getElementById('new-t-color').value=t.color;
-  state.testimonials=state.testimonials.filter(x=>x.id!==id);
-  openModal('testimonialModal');
+async function saveFaq(){
+  const q=document.getElementById('nf-q').value.trim(); const a=document.getElementById('nf-a').value.trim();
+  if(!q||!a){toast('Fill in question and answer','warn');return;}
+  try{ await api('POST','faq',{category:document.getElementById('nf-cat').value,question:q,answer:a,sort_order:localFaq.length,is_active:true}); closeModal(); localFaq=await api('GET','faq','','?order=sort_order'); renderFaq(); updateDashStats(); toast('❓ FAQ added!','success'); setV('nf-q','');setV('nf-a',''); }
+  catch(e){toast('Error: '+e.message,'error');}
 }
 
-function moveTestimonial(id,dir){
-  const i=state.testimonials.findIndex(t=>t.id===id);
-  const ni=i+dir;
-  if(ni<0||ni>=state.testimonials.length) return;
-  [state.testimonials[i],state.testimonials[ni]]=[state.testimonials[ni],state.testimonials[i]];
-  renderTestimonials();
-  saveState();
+async function delFaq(id){ if(!confirm('Delete?')) return; try{ await api('DELETE','faq',null,`?id=eq.${id}`); localFaq=localFaq.filter(f=>f.id!==id); renderFaq(); updateDashStats(); toast('Deleted','info'); }catch(e){toast('Error','error');} }
+async function updateFaqItem(id,field,val){ try{ await api('PATCH','faq',{[field]:val},'',id); toast('✦ Updated','success'); showSaveIndicator(); }catch(e){toast('Error','error');} }
+
+// ══════════════════════════════════════════════════════════
+//  TIMELINE
+// ══════════════════════════════════════════════════════════
+function renderTimeline(){
+  const l=document.getElementById('tlList');
+  if(!localTl?.length){l.innerHTML='<div style="text-align:center;padding:2rem;color:var(--text-dim);font-size:.82rem">No milestones yet.</div>';return;}
+  l.innerHTML=localTl.map(t=>`
+    <div class="acc">
+      <div class="acc-h" onclick="toggleAcc(this)">
+        <div class="acc-hl"><span style="font-size:1.2rem">${t.icon||'⭐'}</span><span class="acc-t">${t.year_label} — ${t.heading}</span></div>
+        <div style="display:flex;gap:.4rem;align-items:center"><button class="btn btn-danger btn-sm btn-icon" onclick="event.stopPropagation();delTl('${t.id}')">🗑</button><div class="acc-tog">+</div></div>
+      </div>
+      <div class="acc-b">
+        <div class="g2"><div class="fg"><label class="lbl">Icon</label><input class="inp" value="${t.icon||'⭐'}" onchange="updateTl('${t.id}','icon',this.value)" style="max-width:70px;font-size:1.3rem"></div><div class="fg"><label class="lbl">Year</label><input class="inp" value="${esc(t.year_label||'')}" onchange="updateTl('${t.id}','year_label',this.value)"></div></div>
+        <div class="fg"><label class="lbl">Tag</label><input class="inp" value="${esc(t.tag||'')}" onchange="updateTl('${t.id}','tag',this.value)"></div>
+        <div class="fg"><label class="lbl">Heading</label><input class="inp" value="${esc(t.heading)}" onchange="updateTl('${t.id}','heading',this.value)"></div>
+        <div class="fg"><label class="lbl">Body</label><textarea class="ta" onchange="updateTl('${t.id}','body',this.value)">${esc(t.body||'')}</textarea></div>
+      </div>
+    </div>`).join('');
 }
 
-// ============================================================
-// FAQ ACTIONS
-// ============================================================
-function openAddFaqModal(){openModal('faqModal')}
-function closeFaqModal(){closeModal('faqModal')}
+async function addTimeline(){ try{ await api('POST','timeline',{icon:'⭐',year_label:'2025',tag:'New milestone',heading:'New Chapter',body:'Describe this milestone here.',sort_order:localTl.length}); localTl=await api('GET','timeline','','?order=sort_order'); renderTimeline(); toast('Added!','success'); }catch(e){toast('Error','error');} }
+async function delTl(id){ if(!confirm('Delete milestone?')) return; try{ await api('DELETE','timeline',null,`?id=eq.${id}`); localTl=localTl.filter(t=>t.id!==id); renderTimeline(); toast('Deleted','info'); }catch(e){toast('Error','error');} }
+async function updateTl(id,field,val){ try{ await api('PATCH','timeline',{[field]:val},'',id); showSaveIndicator(); }catch(e){} }
 
-function addFaqItem(){
-  const q=document.getElementById('new-faq-q').value.trim();
-  const a=document.getElementById('new-faq-a').value.trim();
-  if(!q||!a){showToast('Please fill in both question and answer','warn');return;}
-  state.faq.push({id:Date.now(),cat:document.getElementById('new-faq-cat').value,q,a});
-  saveState();
-  renderFaq();
-  closeModal();
-  showToast('❓ FAQ added!','success');
-  document.getElementById('new-faq-q').value='';
-  document.getElementById('new-faq-a').value='';
+// ══════════════════════════════════════════════════════════
+//  PACKAGES
+// ══════════════════════════════════════════════════════════
+function renderPackages(){
+  const l=document.getElementById('pkgList');
+  if(!localPkg?.length){l.innerHTML='<div style="text-align:center;padding:2rem;color:var(--text-dim);font-size:.82rem">No packages yet. Seed data first.</div>';return;}
+  l.innerHTML=localPkg.map(p=>`
+    <div class="acc">
+      <div class="acc-h" onclick="toggleAcc(this)">
+        <div class="acc-hl"><span>${p.icon||'📦'}</span><span class="acc-t">${p.name}${p.is_featured?' <span class="tag tag-gold">Most Loved</span>':''}</span></div>
+        <div class="acc-tog">+</div>
+      </div>
+      <div class="acc-b">
+        <div class="g2">
+          <div class="fg"><label class="lbl">Name</label><input class="inp" value="${esc(p.name)}" onchange="updatePkg('${p.id}','name',this.value)"></div>
+          <div class="fg"><label class="lbl">Icon</label><input class="inp" value="${p.icon||''}" style="max-width:70px;font-size:1.3rem" onchange="updatePkg('${p.id}','icon',this.value)"></div>
+        </div>
+        <div class="fg"><label class="lbl">Tagline</label><input class="inp" value="${esc(p.tagline||'')}" onchange="updatePkg('${p.id}','tagline',this.value)"></div>
+        <div class="fg"><label class="lbl">Features (one per line)</label><textarea class="ta" style="min-height:140px" onchange="updatePkgFeatures('${p.id}',this.value)">${(p.features||[]).join('\n')}</textarea></div>
+        <label style="display:flex;align-items:center;gap:.5rem;font-size:.8rem;color:var(--text-mid);cursor:pointer"><input type="checkbox" ${p.is_featured?'checked':''} onchange="updatePkg('${p.id}','is_featured',this.checked)"> Mark as Featured / Most Loved</label>
+      </div>
+    </div>`).join('');
 }
 
-function updateFaq(id,field,val){
-  const f=state.faq.find(x=>x.id===id);
-  if(f) f[field]=val;
+async function addPackage(){ try{ await api('POST','bridal_packages',{name:'New Package',tagline:'',icon:'✨',features:[],is_featured:false,sort_order:localPkg.length}); localPkg=await api('GET','bridal_packages','','?order=sort_order'); renderPackages(); toast('Package added!','success'); }catch(e){toast('Error','error');} }
+async function updatePkg(id,field,val){ try{ await api('PATCH','bridal_packages',{[field]:val},'',id); showSaveIndicator(); toast('✦ Updated','success'); }catch(e){toast('Error','error');} }
+async function updatePkgFeatures(id,val){ const features=val.split('\n').map(l=>l.trim()).filter(Boolean); await updatePkg(id,'features',JSON.stringify(features)); }
+
+// ══════════════════════════════════════════════════════════
+//  TREATMENTS
+// ══════════════════════════════════════════════════════════
+function renderTreatments(){
+  const l=document.getElementById('treatList');
+  if(!localTreat?.length){l.innerHTML='<div style="text-align:center;padding:2rem;color:var(--text-dim);font-size:.82rem">No treatments yet.</div>';return;}
+  l.innerHTML=localTreat.map(t=>`
+    <div class="acc">
+      <div class="acc-h" onclick="toggleAcc(this)">
+        <div class="acc-hl"><span>${t.icon||'💎'}</span><span class="acc-t">${t.name}</span></div>
+        <div class="acc-tog">+</div>
+      </div>
+      <div class="acc-b">
+        <div class="g2">
+          <div class="fg"><label class="lbl">Name</label><input class="inp" value="${esc(t.name)}" onchange="updateTreat('${t.id}','name',this.value)"></div>
+          <div class="fg"><label class="lbl">Icon</label><input class="inp" value="${t.icon||''}" style="max-width:70px;font-size:1.3rem" onchange="updateTreat('${t.id}','icon',this.value)"></div>
+        </div>
+        <div class="fg"><label class="lbl">Tagline</label><input class="inp" value="${esc(t.tagline||'')}" onchange="updateTreat('${t.id}','tagline',this.value)"></div>
+        <div class="fg"><label class="lbl">Description</label><textarea class="ta" onchange="updateTreat('${t.id}','description',this.value)">${esc(t.description||'')}</textarea></div>
+        <div class="fg"><label class="lbl">Includes (one per line)</label><textarea class="ta" style="min-height:100px" onchange="updateTreatIncludes('${t.id}',this.value)">${(t.includes||[]).join('\n')}</textarea></div>
+      </div>
+    </div>`).join('');
 }
 
-function deleteFaq(id){
-  if(!confirm('Delete this FAQ?')) return;
-  state.faq=state.faq.filter(f=>f.id!==id);
-  saveState();
-  renderFaq();
-  showToast('FAQ deleted','info');
+async function addTreatment(){ try{ await api('POST','treatments',{name:'New Treatment',tagline:'',icon:'💎',description:'',includes:[],sort_order:localTreat.length}); localTreat=await api('GET','treatments','','?order=sort_order'); renderTreatments(); toast('Added!','success'); }catch(e){toast('Error','error');} }
+async function updateTreat(id,field,val){ try{ await api('PATCH','treatments',{[field]:val},'',id); showSaveIndicator(); }catch(e){} }
+async function updateTreatIncludes(id,val){ const includes=val.split('\n').map(l=>l.trim()).filter(Boolean); await updateTreat(id,'includes',JSON.stringify(includes)); }
+
+// ══════════════════════════════════════════════════════════
+//  UI HELPERS
+// ══════════════════════════════════════════════════════════
+function goto(id,btn){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  const p=document.getElementById('page-'+id); if(p) p.classList.add('active');
+  if(btn) btn.classList.add('active');
+  const titles={dashboard:'Dashboard',setup:'Supabase Setup',config:'Connect Settings',hero:'Hero Section',stats:'Stats & Numbers',gallery:'Gallery Manager',testimonials:'Testimonials',timeline:'Journey Timeline',bridal:'Bridal Packages',party:'Party Makeup Page',skincare:'Skin Care Page',faq:'FAQ Manager',contact:'Contact Info'};
+  setEl('pageTitle',titles[id]||id);
+  if(window.innerWidth<768) closeSidebar();
 }
 
-// ============================================================
-// TIMELINE ACTIONS
-// ============================================================
-function addTimelineItem(){
-  state.timeline.push({id:Date.now(),icon:'⭐',year:'2025',tag:'New milestone',heading:'New Chapter',body:'Describe this milestone here.'});
-  renderTimeline();
-  saveState();
-  showToast('Milestone added!','success');
-}
+function navBtn(id){ return document.querySelector(`[onclick*="'${id}'"]`); }
+function toggleSidebar(){ document.getElementById('sidebar').classList.toggle('open'); document.getElementById('sidebarOv').classList.toggle('show'); }
+function closeSidebar(){ document.getElementById('sidebar').classList.remove('open'); document.getElementById('sidebarOv').classList.remove('show'); }
 
-function updateTimeline(id,field,val){
-  const t=state.timeline.find(x=>x.id===id);
-  if(t) t[field]=val;
-}
+function toggleAcc(h){ const item=h.parentElement; const body=item.querySelector('.acc-b'); const tog=item.querySelector('.acc-tog'); const open=item.classList.contains('open'); item.classList.toggle('open',!open); body.style.display=open?'none':'block'; }
 
-function deleteTimeline(id){
-  if(!confirm('Delete this milestone?')) return;
-  state.timeline=state.timeline.filter(t=>t.id!==id);
-  renderTimeline();
-  saveState();
-  showToast('Milestone deleted','info');
-}
+function toggleStep(id){ const box=document.getElementById(id); const body=box.querySelector('.step-body'); const chev=box.querySelector('.step-chevron'); const open=body.style.display==='block'; body.style.display=open?'none':'block'; chev.style.transform=open?'':'rotate(180deg)'; }
 
-// ============================================================
-// ACCORDION
-// ============================================================
-function toggleAccordion(header){
-  const item=header.parentElement;
-  const body=item.querySelector('.accordion-body');
-  const toggle=item.querySelector('.accordion-toggle');
-  const isOpen=item.classList.contains('open');
-  item.classList.toggle('open',!isOpen);
-  body.style.display=isOpen?'none':'block';
-}
+function markStepDone(id){ const box=document.getElementById(id); box.classList.add('done'); box.querySelector('.step-status').className='step-status done'; box.querySelector('.step-status').textContent='Done ✓'; const steps=JSON.parse(localStorage.getItem('gpSteps')||'{}'); steps[id]=true; localStorage.setItem('gpSteps',JSON.stringify(steps)); }
 
-// ============================================================
-// SAVE SECTION
-// ============================================================
-function saveSection(id){
-  saveState();
-  showToast('✦ Saved successfully!','success');
-}
+function loadStepStates(){ const steps=JSON.parse(localStorage.getItem('gpSteps')||'{}'); Object.keys(steps).forEach(id=>{ if(steps[id]) markStepDone(id); }); }
 
-function exportSection(id){
-  showToast('Code export — copy from the textarea below (feature coming soon)','info');
-}
+function openModal(id){ document.getElementById('modalOv').classList.add('show'); document.getElementById(id).classList.add('show'); }
+function closeModal(){ document.getElementById('modalOv').classList.remove('show'); document.querySelectorAll('.modal').forEach(m=>m.classList.remove('show')); }
 
-function showSaveStatus(){
-  const el=document.getElementById('saveStatus');
-  el.classList.add('show');
-  setTimeout(()=>el.classList.remove('show'),2500);
-}
+function showSaveIndicator(){ const el=document.getElementById('saveStatus'); el.classList.add('show'); setTimeout(()=>el.classList.remove('show'),2000); }
 
-// ============================================================
-// MODAL
-// ============================================================
-function openModal(id){
-  document.getElementById('modalOverlay').classList.add('show');
-  document.getElementById(id).classList.add('show');
-}
-function closeModal(){
-  document.getElementById('modalOverlay').classList.remove('show');
-  document.querySelectorAll('.modal').forEach(m=>m.classList.remove('show'));
-}
-function closeImageModal(){closeModal()}
-
-// ============================================================
-// TOAST
-// ============================================================
-function showToast(message, type='info'){
+function toast(msg,type='info'){
   const icons={success:'✅',info:'ℹ️',warn:'⚠️',error:'❌'};
-  const container=document.getElementById('toastContainer');
-  const toast=document.createElement('div');
-  toast.className='toast';
-  toast.innerHTML=`<span class="toast-icon">${icons[type]||'ℹ️'}</span><span>${message}</span>`;
-  container.appendChild(toast);
-  requestAnimationFrame(()=>requestAnimationFrame(()=>toast.classList.add('show')));
-  setTimeout(()=>{toast.classList.remove('show');setTimeout(()=>toast.remove(),400)},3000);
+  const w=document.getElementById('toastWrap');
+  const t=document.createElement('div'); t.className='toast';
+  t.innerHTML=`<span>${icons[type]||'ℹ️'}</span><span>${msg}</span>`;
+  w.appendChild(t);
+  requestAnimationFrame(()=>requestAnimationFrame(()=>t.classList.add('show')));
+  setTimeout(()=>{t.classList.remove('show');setTimeout(()=>t.remove(),400);},3000);
 }
 
-// ============================================================
-// UTILS
-// ============================================================
-function escHtml(str){
-  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
+function copyCode(id){ navigator.clipboard.writeText(document.getElementById(id).textContent).then(()=>toast('Copied!','success')); }
 
-// ============================================================
-// INIT
-// ============================================================
-updateDashStats();
+function v(id){ const el=document.getElementById(id); return el?el.value:''; }
+function setV(id,val){ const el=document.getElementById(id); if(el&&val!==undefined&&val!==null) el.value=val; }
+function setEl(id,val){ const el=document.getElementById(id); if(el) el.textContent=val; }
+function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+// ══════════════════════════════════════════════════════════
+//  INIT
+// ══════════════════════════════════════════════════════════
+loadConfig();
+updateDashBanner();
+// Open first step by default
+document.querySelector('#step1 .step-body').style.display='block';
+document.querySelector('#step1 .step-chevron').style.transform='rotate(180deg)';
 </script>
 </body>
 </html>

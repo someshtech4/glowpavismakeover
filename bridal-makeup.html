@@ -119,6 +119,36 @@ section{padding:5rem 0}
 .pkg-cta.outline{background:transparent;border:1px solid rgba(201,168,76,0.4);color:var(--gold-dark)}
 .pkg-cta.outline:hover{background:rgba(201,168,76,0.08)}
 
+/* ===== BRIDAL GALLERY ===== */
+#gallery{background:var(--cream);padding:5rem 0}
+.gallery-track-wrap{overflow:hidden;margin-top:2.5rem;padding-bottom:0.5rem}
+.gallery-track{display:flex;gap:1.2rem;transition:transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94);will-change:transform;padding:0.5rem 0}
+.gallery-slide{flex:0 0 300px;height:400px;border-radius:20px;overflow:hidden;position:relative;cursor:pointer;box-shadow:0 8px 28px rgba(44,24,16,0.13);transition:transform 0.4s ease,box-shadow 0.4s ease}
+.gallery-slide:hover{transform:translateY(-6px) scale(1.02);box-shadow:0 22px 48px rgba(44,24,16,0.2)}
+.gallery-slide img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.5s ease}
+.gallery-slide:hover img{transform:scale(1.07)}
+.slide-overlay{position:absolute;inset:0;background:linear-gradient(0deg,rgba(26,14,8,0.72) 0%,rgba(26,14,8,0.08) 55%,transparent 100%);display:flex;align-items:flex-end;padding:1.4rem}
+.slide-label{font-family:'Playfair Display',serif;font-size:0.95rem;font-style:italic;color:rgba(255,255,255,0.92);line-height:1.4;transform:translateY(6px);opacity:0;transition:all 0.35s ease}
+.gallery-slide:hover .slide-label{opacity:1;transform:translateY(0)}
+/* Placeholder card bg for demo (replace with real <img> src) */
+.slide-bg-1{background:linear-gradient(150deg,#2d1408 0%,#6b3520 50%,#c5846a 100%)}
+.slide-bg-2{background:linear-gradient(150deg,#0d1520 0%,#1e3050 50%,#4a7090 100%)}
+.slide-bg-3{background:linear-gradient(150deg,#1a0812 0%,#3d1530 50%,#8c4a6a 100%)}
+.slide-bg-4{background:linear-gradient(150deg,#1a1008 0%,#4a3010 50%,#c9a84c 100%)}
+.slide-bg-5{background:linear-gradient(150deg,#0a0d18 0%,#182540 50%,#2e4a70 100%)}
+.slide-bg-6{background:linear-gradient(150deg,#12080a 0%,#301520 50%,#7a3545 100%)}
+.slide-bg-7{background:linear-gradient(150deg,#08100a 0%,#1a2e1e 50%,#4a7a5a 100%)}
+.slide-bg-8{background:linear-gradient(150deg,#18100a 0%,#402810 50%,#b5622a 100%)}
+.slide-emoji{position:absolute;top:50%;left:50%;transform:translate(-50%,-60%);font-size:4rem;opacity:0.45;pointer-events:none}
+/* Nav controls */
+.gallery-controls{display:flex;align-items:center;justify-content:center;gap:1.2rem;margin-top:2rem}
+.gal-btn{width:46px;height:46px;border-radius:50%;border:1.5px solid rgba(201,168,76,0.45);background:var(--white);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1rem;color:var(--gold-dark);transition:all 0.3s;box-shadow:0 4px 14px rgba(0,0,0,0.07)}
+.gal-btn:hover{background:linear-gradient(135deg,var(--gold),var(--copper));color:var(--white);border-color:transparent;box-shadow:0 8px 24px rgba(201,168,76,0.35);transform:scale(1.08)}
+.gal-btn:disabled{opacity:0.3;cursor:default;transform:none}
+.gallery-dots{display:flex;gap:0.45rem;align-items:center}
+.gdot{width:8px;height:8px;border-radius:50%;background:rgba(201,168,76,0.25);border:none;cursor:pointer;padding:0;transition:all 0.3s}
+.gdot.active{background:var(--gold);width:24px;border-radius:4px}
+
 /* STYLES */
 #styles{background:var(--cream)}
 .styles-header{text-align:center;margin-bottom:3rem}
@@ -211,11 +241,13 @@ footer{background:#080503;padding:2rem 4rem;border-top:1px solid rgba(201,168,76
   .faq-grid{grid-template-columns:1fr}
   footer{flex-direction:column;padding:1.5rem 1.2rem;gap:0.8rem}
   .footer-links{flex-wrap:wrap;gap:1rem}
+  .gallery-slide{flex:0 0 240px;height:320px}
 }
 @media(max-width:600px){
   .styles-grid{grid-template-columns:1fr}
   .hero-title{font-size:2.3rem}
   #packages{padding:3rem 0}
+  .gallery-slide{flex:0 0 200px;height:280px}
 }
 @media(min-width:901px){
   .hamburger{display:none !important}
@@ -383,6 +415,110 @@ footer{background:#080503;padding:2rem 4rem;border-top:1px solid rgba(201,168,76
     </div>
   </div>
 </section>
+
+<!-- ===== BRIDAL GALLERY ===== -->
+<section id="gallery">
+  <div class="container">
+    <div class="reveal" style="text-align:center;margin-bottom:0.5rem">
+      <div class="section-eyebrow" style="justify-content:center">
+        <div class="eyebrow-line"></div>
+        <span>Bridal Gallery</span>
+        <div class="eyebrow-line"></div>
+      </div>
+      <h2 class="section-title" style="text-align:center">Real moments,<br><em>real transformations</em></h2>
+      <p style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--text-light);font-style:italic;margin-top:0.6rem">Every bride. Every story. Every glow.</p>
+    </div>
+  </div>
+
+  <!-- Carousel -->
+  <div style="max-width:1200px;margin:0 auto;padding:0 4rem" class="reveal" style="transition-delay:0.15s">
+    <div class="gallery-track-wrap" id="galleryWrap">
+      <div class="gallery-track" id="galleryTrack">
+
+        <!-- SLIDE 1 — replace src with your real image -->
+        <div class="gallery-slide">
+          <div class="slide-bg-1" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center">
+            <!-- <img src="your-image-1.jpg" alt="Traditional Bridal Look"> -->
+            <span class="slide-emoji">👰</span>
+          </div>
+          <div class="slide-overlay"><span class="slide-label">Traditional South Indian Bride</span></div>
+        </div>
+
+        <!-- SLIDE 2 -->
+        <div class="gallery-slide">
+          <div class="slide-bg-2" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center">
+            <!-- <img src="your-image-2.jpg" alt="Modern Dewy Look"> -->
+            <span class="slide-emoji">💫</span>
+          </div>
+          <div class="slide-overlay"><span class="slide-label">Modern Dewy Bridal Glow</span></div>
+        </div>
+
+        <!-- SLIDE 3 -->
+        <div class="gallery-slide">
+          <div class="slide-bg-3" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center">
+            <!-- <img src="your-image-3.jpg" alt="Indo-Western Look"> -->
+            <span class="slide-emoji">🌙</span>
+          </div>
+          <div class="slide-overlay"><span class="slide-label">Indo-Western Fusion Look</span></div>
+        </div>
+
+        <!-- SLIDE 4 -->
+        <div class="gallery-slide">
+          <div class="slide-bg-4" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center">
+            <!-- <img src="your-image-4.jpg" alt="Airbrush Finish"> -->
+            <span class="slide-emoji">🌺</span>
+          </div>
+          <div class="slide-overlay"><span class="slide-label">Airbrush HD Finish</span></div>
+        </div>
+
+        <!-- SLIDE 5 -->
+        <div class="gallery-slide">
+          <div class="slide-bg-5" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center">
+            <!-- <img src="your-image-5.jpg" alt="Royal Bride"> -->
+            <span class="slide-emoji">👑</span>
+          </div>
+          <div class="slide-overlay"><span class="slide-label">The Royal Bride</span></div>
+        </div>
+
+        <!-- SLIDE 6 -->
+        <div class="gallery-slide">
+          <div class="slide-bg-6" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center">
+            <!-- <img src="your-image-6.jpg" alt="Reception Look"> -->
+            <span class="slide-emoji">🌸</span>
+          </div>
+          <div class="slide-overlay"><span class="slide-label">Reception Night Glam</span></div>
+        </div>
+
+        <!-- SLIDE 7 -->
+        <div class="gallery-slide">
+          <div class="slide-bg-7" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center">
+            <!-- <img src="your-image-7.jpg" alt="Engagement Look"> -->
+            <span class="slide-emoji">💍</span>
+          </div>
+          <div class="slide-overlay"><span class="slide-label">Engagement Day Elegance</span></div>
+        </div>
+
+        <!-- SLIDE 8 -->
+        <div class="gallery-slide">
+          <div class="slide-bg-8" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center">
+            <!-- <img src="your-image-8.jpg" alt="Mehendi Look"> -->
+            <span class="slide-emoji">✨</span>
+          </div>
+          <div class="slide-overlay"><span class="slide-label">Mehendi Ceremony Look</span></div>
+        </div>
+
+      </div><!-- end track -->
+    </div><!-- end wrap -->
+
+    <!-- Controls -->
+    <div class="gallery-controls">
+      <button class="gal-btn" id="galPrev" onclick="galMove(-1)" aria-label="Previous">&#8592;</button>
+      <div class="gallery-dots" id="galDots"></div>
+      <button class="gal-btn" id="galNext" onclick="galMove(1)" aria-label="Next">&#8594;</button>
+    </div>
+  </div>
+</section>
+<!-- ===== END BRIDAL GALLERY ===== -->
 
 <!-- STYLES -->
 <section id="styles">
@@ -561,6 +697,7 @@ footer{background:#080503;padding:2rem 4rem;border-top:1px solid rgba(201,168,76
 </footer>
 
 <script>
+/* ── NAV ── */
 const nav = document.getElementById('mainNav');
 window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',window.scrollY>80),{passive:true});
 
@@ -582,12 +719,15 @@ function closeMobileNav(){
 }
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMobileNav();});
 
+/* ── PARTICLES ── */
 const pc = document.getElementById('particlesContainer');
 for(let i=0;i<25;i++){const p=document.createElement('div');p.className='particle';p.style.cssText=`left:${Math.random()*100}%;animation-duration:${8+Math.random()*12}s;animation-delay:${Math.random()*10}s;width:${1+Math.random()*2}px;height:${1+Math.random()*2}px`;pc.appendChild(p);}
 
+/* ── REVEAL ── */
 const revealObs=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');revealObs.unobserve(e.target);}});},{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
 document.querySelectorAll('.reveal').forEach(el=>revealObs.observe(el));
 
+/* ── FAQ ── */
 document.querySelectorAll('.faq-item').forEach(item=>{
   item.addEventListener('click',()=>{
     const wasOpen = item.classList.contains('open');
@@ -595,6 +735,95 @@ document.querySelectorAll('.faq-item').forEach(item=>{
     if(!wasOpen) item.classList.add('open');
   });
 });
+
+/* ── GALLERY CAROUSEL ── */
+(function(){
+  const track    = document.getElementById('galleryTrack');
+  const wrap     = document.getElementById('galleryWrap');
+  const dotsWrap = document.getElementById('galDots');
+  const prevBtn  = document.getElementById('galPrev');
+  const nextBtn  = document.getElementById('galNext');
+
+  const slides      = Array.from(track.children);
+  const total       = slides.length;
+  let   current     = 0;
+  let   slideW      = 0;
+  let   visibleCount= 0;
+  let   maxIndex    = 0;
+
+  /* build dots */
+  function buildDots(){
+    dotsWrap.innerHTML='';
+    const dotCount = maxIndex + 1;
+    for(let i=0;i<dotCount;i++){
+      const d=document.createElement('button');
+      d.className='gdot'+(i===0?' active':'');
+      d.setAttribute('aria-label','Go to slide '+(i+1));
+      d.addEventListener('click',()=>goTo(i));
+      dotsWrap.appendChild(d);
+    }
+  }
+
+  function updateDots(){
+    document.querySelectorAll('.gdot').forEach((d,i)=>{
+      d.classList.toggle('active', i===current);
+    });
+  }
+
+  function updateButtons(){
+    prevBtn.disabled = current===0;
+    nextBtn.disabled = current>=maxIndex;
+  }
+
+  function measure(){
+    const gap   = 19.2; /* 1.2rem at 16px base */
+    slideW      = slides[0].offsetWidth + gap;
+    visibleCount= Math.round(wrap.offsetWidth / slideW) || 1;
+    maxIndex    = Math.max(0, total - visibleCount);
+    if(current > maxIndex) current = maxIndex;
+    buildDots();
+    applyTranslate(false);
+    updateButtons();
+  }
+
+  function applyTranslate(animate){
+    track.style.transition = animate ? 'transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94)' : 'none';
+    track.style.transform  = `translateX(-${current * slideW}px)`;
+  }
+
+  function goTo(idx){
+    current = Math.max(0, Math.min(idx, maxIndex));
+    applyTranslate(true);
+    updateDots();
+    updateButtons();
+  }
+
+  window.galMove = function(dir){ goTo(current + dir); };
+
+  /* drag / swipe */
+  let startX=0, isDragging=false, dragDelta=0;
+
+  wrap.addEventListener('mousedown', e=>{startX=e.clientX; isDragging=true; wrap.style.cursor='grabbing';});
+  window.addEventListener('mousemove', e=>{if(!isDragging)return; dragDelta=e.clientX-startX;});
+  window.addEventListener('mouseup', ()=>{
+    if(!isDragging)return;
+    isDragging=false; wrap.style.cursor='grab';
+    if(dragDelta < -50) goTo(current+1);
+    else if(dragDelta > 50) goTo(current-1);
+    dragDelta=0;
+  });
+
+  wrap.addEventListener('touchstart', e=>{startX=e.touches[0].clientX;},{passive:true});
+  wrap.addEventListener('touchend',   e=>{
+    const diff = e.changedTouches[0].clientX - startX;
+    if(diff < -50) goTo(current+1);
+    else if(diff > 50) goTo(current-1);
+  });
+
+  /* init + resize */
+  measure();
+  window.addEventListener('resize', measure);
+})();
 </script>
 </body>
 </html>

@@ -18,14 +18,48 @@
   html{scroll-behavior:smooth;overflow-x:hidden}
   body{font-family:'Jost',sans-serif;background:var(--off-white);color:var(--text-dark);overflow-x:hidden}
 
-  /* NAV */
+  /* ===================== NAV ===================== */
   nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0.5rem 4rem;display:flex;justify-content:space-between;align-items:center;transition:all 0.4s ease;background:transparent}
   nav.scrolled{background:rgba(253,248,245,0.96);backdrop-filter:blur(20px);border-bottom:1px solid rgba(197,132,106,0.15);padding:0.4rem 4rem}
   .nav-logo img{height:62px;width:62px;object-fit:contain}
-  .nav-links{display:flex;gap:2.5rem;list-style:none}
+  .nav-links{display:flex;gap:2.5rem;list-style:none;align-items:center}
   .nav-links a{text-decoration:none;color:var(--white);font-family:'Jost',sans-serif;font-size:0.78rem;font-weight:400;letter-spacing:0.14em;text-transform:uppercase;transition:color 0.3s}
   nav.scrolled .nav-links a{color:var(--text-mid)}
   .nav-links a:hover{color:var(--gold)}
+
+  /* SERVICES DROPDOWN — hover only */
+  .nav-dropdown{position:relative}
+  .nav-dropdown > a{display:flex;align-items:center;gap:0.35rem;cursor:pointer}
+  .nav-dropdown > a .caret{font-size:0.55rem;transition:transform 0.3s;opacity:0.7;margin-top:1px}
+  .nav-dropdown:hover > a .caret{transform:rotate(180deg)}
+  .dropdown-menu{
+    position:absolute;top:calc(100% + 1.2rem);left:50%;transform:translateX(-50%) translateY(-8px);
+    background:#fff;border-radius:16px;padding:0.6rem;
+    box-shadow:0 20px 60px rgba(44,24,16,0.18),0 2px 12px rgba(44,24,16,0.08);
+    border:1px solid rgba(197,132,106,0.15);
+    min-width:220px;opacity:0;pointer-events:none;
+    transition:opacity 0.25s ease,transform 0.25s ease;
+  }
+  .nav-dropdown:hover .dropdown-menu{opacity:1;pointer-events:all;transform:translateX(-50%) translateY(0)}
+  .dropdown-menu::before{
+    content:'';position:absolute;top:-6px;left:50%;
+    width:12px;height:12px;background:#fff;border-left:1px solid rgba(197,132,106,0.15);
+    border-top:1px solid rgba(197,132,106,0.15);transform:translateX(-50%) rotate(45deg);
+  }
+  .dropdown-item{
+    display:flex;align-items:center;gap:0.75rem;padding:0.7rem 0.9rem;
+    border-radius:10px;text-decoration:none;transition:background 0.2s;
+    font-family:'Jost',sans-serif;font-size:0.78rem;color:var(--text-mid);
+    font-weight:400;letter-spacing:0.06em;text-transform:none;
+    cursor:pointer;
+  }
+  .dropdown-item:hover{background:rgba(201,168,76,0.09);color:var(--text-dark)}
+  .dropdown-item .di-icon{width:34px;height:34px;border-radius:8px;background:linear-gradient(135deg,rgba(201,168,76,0.15),rgba(197,132,106,0.12));display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
+  .dropdown-item .di-info{display:flex;flex-direction:column;gap:0.1rem}
+  .dropdown-item .di-label{font-size:0.8rem;font-weight:500;color:var(--text-dark)}
+  .dropdown-item .di-sub{font-size:0.68rem;color:var(--text-light);font-style:italic}
+  .dropdown-divider{height:1px;background:rgba(197,132,106,0.1);margin:0.3rem 0}
+
   .nav-cta{background:linear-gradient(135deg,var(--gold),var(--copper));color:var(--white);padding:0.55rem 1.5rem;border-radius:30px;text-decoration:none;font-family:'Jost',sans-serif;font-size:0.75rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;transition:all 0.3s;border:none;cursor:pointer;box-shadow:0 4px 20px rgba(197,132,106,0.4)}
   .nav-cta:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(197,132,106,0.5)}
   .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;z-index:1100;background:none;border:none}
@@ -129,46 +163,45 @@
   .bento-arrow{position:absolute;bottom:1.5rem;right:1.5rem;width:36px;height:36px;border-radius:50%;border:1px solid rgba(201,168,76,0.4);display:flex;align-items:center;justify-content:center;color:var(--gold-light);font-size:1rem;z-index:2;transition:all 0.3s;opacity:0}
   .bento-card:hover .bento-arrow{opacity:1;transform:scale(1.1)}
 
-  /* GALLERY */
+  /* ===================== BRIDAL CAROUSEL (replaces gallery) ===================== */
   #transformation{background:#0d0806;padding:5rem 0;overflow:hidden}
   .transform-header{text-align:center;margin-bottom:3rem}
   .transform-header .section-title{color:var(--white)}
   .transform-header .section-title em{color:var(--gold-light)}
   .transform-subtitle{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:rgba(255,255,255,0.5);font-style:italic;margin-top:0.6rem}
-  .gallery-outer{padding:0 4rem}
-  .gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:280px 280px;gap:1rem}
-  .gallery-item{border-radius:16px;overflow:hidden;position:relative;cursor:pointer}
-  .gallery-item.tall{grid-row:span 2}
-  .gallery-item.wide{grid-column:span 2}
-  .gallery-fill{position:absolute;inset:0;transition:transform 0.6s ease}
-  .gallery-item:hover .gallery-fill{transform:scale(1.06)}
-  .gf-1{background:radial-gradient(ellipse at 40% 30%,rgba(197,132,106,0.55),transparent 65%),linear-gradient(160deg,#3d1f12,#1a0e08)}
-  .gf-2{background:radial-gradient(ellipse at 60% 40%,rgba(130,60,180,0.45),transparent 60%),linear-gradient(135deg,#1a0830,#0d0518)}
-  .gf-3{background:radial-gradient(ellipse at 50% 30%,rgba(201,168,76,0.4),transparent 60%),linear-gradient(135deg,#2a1a00,#0d0806)}
-  .gf-4{background:radial-gradient(ellipse at 30% 60%,rgba(80,150,200,0.35),transparent 60%),linear-gradient(135deg,#051520,#0a2030)}
-  .gf-5{background:radial-gradient(ellipse at 50% 40%,rgba(197,132,106,0.35),transparent 60%),linear-gradient(135deg,#2a0a18,#0d0806)}
-  .gf-6{background:radial-gradient(ellipse at 40% 30%,rgba(80,200,100,0.25),transparent 60%),linear-gradient(135deg,#051008,#0a2010)}
-  /* shine sweep */
-  .gallery-shine{position:absolute;inset:0;background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,0.06) 50%,transparent 60%);transform:translateX(-100%);transition:transform 0.7s ease;pointer-events:none;z-index:2}
-  .gallery-item:hover .gallery-shine{transform:translateX(100%)}
-  /* overlay gradient */
-  .gallery-overlay{position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,rgba(0,0,0,0.78) 100%);z-index:1}
-  /* always-visible bottom label */
-  .gallery-static{position:absolute;bottom:0;left:0;right:0;z-index:3;padding:0.9rem 1.2rem;display:flex;align-items:center;gap:0.5rem;transition:transform 0.4s,opacity 0.4s}
-  .gallery-item:hover .gallery-static{transform:translateY(6px);opacity:0}
-  .gallery-dot{width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0}
-  .gallery-static-name{font-family:'Bodoni Moda',serif;font-size:0.85rem;font-style:italic;color:rgba(255,255,255,0.8)}
-  /* hover caption */
-  .gallery-caption{position:absolute;bottom:0;left:0;right:0;z-index:4;padding:1.2rem 1.4rem;transform:translateY(12px);opacity:0;transition:transform 0.4s,opacity 0.4s}
-  .gallery-item:hover .gallery-caption{transform:translateY(0);opacity:1}
-  .gallery-badge{display:inline-block;background:linear-gradient(135deg,var(--gold),var(--copper));color:var(--white);font-family:'Jost',sans-serif;font-size:0.58rem;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;padding:0.3rem 0.8rem;border-radius:20px;margin-bottom:0.4rem}
-  .gallery-name{font-family:'Bodoni Moda',serif;font-size:1.15rem;font-weight:400;color:var(--white);line-height:1.2;margin-bottom:0.25rem}
-  .gallery-name em{font-style:italic;color:var(--gold-light)}
-  .gallery-quote{font-family:'Cormorant Garamond',serif;font-size:0.82rem;color:rgba(255,255,255,0.7);font-style:italic;line-height:1.5}
-  /* center icon */
-  .gallery-icon{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:3.5rem;opacity:0.12;z-index:1;pointer-events:none;transition:opacity 0.4s}
-  .gallery-item.tall .gallery-icon{font-size:5rem}
-  .gallery-item:hover .gallery-icon{opacity:0.05}
+
+  /* Infinite marquee carousel */
+  .carousel-outer{position:relative;overflow:hidden;padding:1rem 0}
+  .carousel-outer::before{content:'';position:absolute;top:0;left:0;bottom:0;width:120px;background:linear-gradient(90deg,#0d0806,transparent);z-index:4;pointer-events:none}
+  .carousel-outer::after{content:'';position:absolute;top:0;right:0;bottom:0;width:120px;background:linear-gradient(270deg,#0d0806,transparent);z-index:4;pointer-events:none}
+  .carousel-track{display:flex;gap:1.5rem;width:max-content;animation:marquee-scroll 32s linear infinite}
+  .carousel-outer:hover .carousel-track{animation-play-state:paused}
+  @keyframes marquee-scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+  .bride-card{flex-shrink:0;width:320px;border-radius:20px;overflow:hidden;position:relative;background:rgba(255,255,255,0.03);border:1px solid rgba(201,168,76,0.12);transition:border-color 0.4s,box-shadow 0.4s}
+  .bride-card:hover{border-color:rgba(201,168,76,0.45);box-shadow:0 20px 60px rgba(201,168,76,0.15)}
+  .bride-card-visual{height:200px;position:relative;overflow:hidden}
+  .bride-fill{position:absolute;inset:0;transition:transform 0.6s ease}
+  .bride-card:hover .bride-fill{transform:scale(1.07)}
+  .bf-1{background:radial-gradient(ellipse at 40% 30%,rgba(197,132,106,0.6),transparent 65%),linear-gradient(160deg,#3d1f12,#1a0e08)}
+  .bf-2{background:radial-gradient(ellipse at 60% 40%,rgba(130,60,180,0.5),transparent 60%),linear-gradient(135deg,#1a0830,#0d0518)}
+  .bf-3{background:radial-gradient(ellipse at 50% 30%,rgba(201,168,76,0.45),transparent 60%),linear-gradient(135deg,#2a1a00,#0d0806)}
+  .bf-4{background:radial-gradient(ellipse at 30% 60%,rgba(80,150,200,0.4),transparent 60%),linear-gradient(135deg,#051520,#0a2030)}
+  .bf-5{background:radial-gradient(ellipse at 50% 40%,rgba(197,132,106,0.4),transparent 60%),linear-gradient(135deg,#2a0a18,#0d0806)}
+  .bf-6{background:radial-gradient(ellipse at 40% 30%,rgba(100,200,120,0.3),transparent 60%),linear-gradient(135deg,#051008,#0a2010)}
+  .bride-emoji{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:3rem;opacity:0.2;z-index:1;pointer-events:none;transition:opacity 0.4s}
+  .bride-card:hover .bride-emoji{opacity:0.1}
+  .bride-overlay{position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(0,0,0,0.65) 100%);z-index:2}
+  .bride-ceremony{position:absolute;bottom:0.8rem;left:1rem;z-index:3;display:flex;align-items:center;gap:0.5rem}
+  .bride-dot{width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0}
+  .bride-ceremony-name{font-family:'Bodoni Moda',serif;font-size:0.82rem;font-style:italic;color:rgba(255,255,255,0.85)}
+  .bride-card-body{padding:1.2rem 1.4rem 1.4rem}
+  .bride-badge{display:inline-block;background:linear-gradient(135deg,var(--gold),var(--copper));color:#fff;font-family:'Jost',sans-serif;font-size:0.56rem;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;padding:0.25rem 0.7rem;border-radius:20px;margin-bottom:0.6rem}
+  .bride-name{font-family:'Bodoni Moda',serif;font-size:1.1rem;font-weight:400;color:#fff;margin-bottom:0.5rem;line-height:1.2}
+  .bride-name em{font-style:italic;color:var(--gold-light)}
+  .bride-quote{font-family:'Cormorant Garamond',serif;font-size:0.88rem;color:rgba(255,255,255,0.6);font-style:italic;line-height:1.6}
+  .bride-stars{display:flex;gap:2px;margin-top:0.7rem}
+  .bride-star{color:var(--gold);font-size:0.75rem}
 
   /* TESTIMONIALS */
   #trust{background:var(--cream);padding:5rem 0;overflow:hidden}
@@ -194,7 +227,7 @@
   .testimonials-fade-left{position:absolute;top:0;left:0;bottom:0;width:80px;background:linear-gradient(90deg,var(--cream),transparent);z-index:2;pointer-events:none}
   .testimonials-fade-right{position:absolute;top:0;right:0;bottom:0;width:80px;background:linear-gradient(270deg,var(--cream),transparent);z-index:2;pointer-events:none}
 
-  /* JOURNEY — STORYTELLING */
+  /* JOURNEY */
   #timeline{background:linear-gradient(170deg,#0d0806 0%,#1a0e08 50%,#0d0806 100%);padding:7rem 0;overflow:hidden;position:relative}
   #timeline::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,rgba(201,168,76,0.07) 0%,transparent 65%);pointer-events:none}
   .timeline-header{text-align:center;margin-bottom:5rem}
@@ -205,10 +238,8 @@
   .story-timeline::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:1px;background:linear-gradient(180deg,transparent,rgba(201,168,76,0.3) 10%,rgba(201,168,76,0.3) 90%,transparent);transform:translateX(-50%)}
   .story-node{display:grid;grid-template-columns:1fr 64px 1fr;align-items:center;gap:0;margin-bottom:4rem;position:relative;opacity:0;transform:translateY(28px);transition:opacity 0.7s ease,transform 0.7s ease}
   .story-node.in-view{opacity:1;transform:translateY(0)}
-  /* odd: content left */
   .story-node:nth-child(odd) .sn-left{visibility:visible}
   .story-node:nth-child(odd) .sn-right{visibility:hidden}
-  /* even: content right */
   .story-node:nth-child(even) .sn-left{visibility:hidden}
   .story-node:nth-child(even) .sn-right{visibility:visible}
   .sn-left{text-align:right;padding-right:2rem}
@@ -225,21 +256,105 @@
   .story-body{font-family:'Jost',sans-serif;font-size:0.82rem;line-height:1.75;color:rgba(255,255,255,0.5);font-weight:300}
   .story-quote{font-family:'Cormorant Garamond',serif;font-size:0.9rem;font-style:italic;color:rgba(201,168,76,0.7);border-left:2px solid rgba(201,168,76,0.3);padding-left:0.8rem;margin-top:0.7rem;line-height:1.5}
 
-  /* FINAL CTA */
-  #cta{position:relative;overflow:hidden;padding:7rem 0;background:#0d0806;text-align:center}
-  .cta-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 30%,rgba(201,168,76,0.15) 0%,transparent 60%),radial-gradient(ellipse at 20% 80%,rgba(197,132,106,0.1) 0%,transparent 50%),radial-gradient(ellipse at 80% 70%,rgba(181,98,42,0.08) 0%,transparent 50%)}
-  .cta-ornament{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:600px;border:1px solid rgba(201,168,76,0.06);border-radius:50%;pointer-events:none}
-  .cta-ornament::before{content:'';position:absolute;inset:60px;border:1px solid rgba(201,168,76,0.04);border-radius:50%}
-  .cta-content{position:relative;z-index:2}
-  .cta-eyebrow{font-family:'Jost',sans-serif;font-size:0.68rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem;display:block}
-  .cta-title{font-family:'Bodoni Moda',serif;font-size:clamp(2.2rem,6vw,4.5rem);font-weight:400;color:var(--white);line-height:1.15;margin-bottom:1.2rem}
-  .cta-title em{font-style:italic;background:linear-gradient(135deg,var(--gold-light),var(--copper-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-  .cta-subtitle{font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:rgba(255,255,255,0.5);font-style:italic;margin-bottom:2.5rem;line-height:1.7}
-  .cta-actions{display:flex;gap:1.2rem;justify-content:center;flex-wrap:wrap}
-  .btn-gold{background:linear-gradient(135deg,var(--gold),var(--gold-dark));color:var(--white);padding:1rem 2.5rem;border-radius:50px;text-decoration:none;font-family:'Jost',sans-serif;font-size:0.78rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;transition:all 0.4s;box-shadow:0 4px 30px rgba(201,168,76,0.35);display:inline-flex;align-items:center;gap:0.7rem}
-  .btn-gold:hover{transform:translateY(-3px);box-shadow:0 15px 45px rgba(201,168,76,0.45)}
-  .btn-whatsapp{background:linear-gradient(135deg,#25D366,#128C7E);color:var(--white);padding:1rem 2.5rem;border-radius:50px;text-decoration:none;font-family:'Jost',sans-serif;font-size:0.78rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;transition:all 0.4s;box-shadow:0 4px 30px rgba(37,211,102,0.25);display:inline-flex;align-items:center;gap:0.7rem}
-  .btn-whatsapp:hover{transform:translateY(-3px);box-shadow:0 15px 40px rgba(37,211,102,0.35)}
+  /* ===================== BOOKING — TWO COLUMN ===================== */
+  #booking{position:relative;overflow:hidden;padding:7rem 0;background:linear-gradient(160deg,#0d0806 0%,#1a0c06 50%,#0d0806 100%)}
+  #booking::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 30%,rgba(201,168,76,0.13) 0%,transparent 55%),radial-gradient(ellipse at 80% 70%,rgba(197,132,106,0.08) 0%,transparent 45%);pointer-events:none}
+
+  .booking-wrap{max-width:1160px;margin:0 auto;padding:0 4rem;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;position:relative;z-index:2}
+
+  /* LEFT */
+  .booking-lhs{position:relative}
+  .booking-lhs-eyebrow{display:inline-flex;align-items:center;gap:0.8rem;margin-bottom:1.4rem}
+  .booking-lhs-eyebrow span{font-family:'Jost',sans-serif;font-size:0.68rem;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold-light)}
+  .bel{width:28px;height:1px;background:rgba(201,168,76,0.5)}
+  .booking-lhs-title{font-family:'Bodoni Moda',serif;font-size:clamp(2rem,3.5vw,3rem);font-weight:400;line-height:1.12;color:var(--white);margin-bottom:1.4rem}
+  .booking-lhs-title em{font-style:italic;background:linear-gradient(135deg,var(--gold-light),var(--copper-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:block}
+  .booking-lhs-lead{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-style:italic;color:rgba(255,255,255,0.55);line-height:1.85;margin-bottom:2.2rem}
+  .booking-features{display:flex;flex-direction:column;gap:1.1rem;margin-bottom:2.5rem}
+  .bk-feat{display:flex;align-items:flex-start;gap:0.9rem}
+  .bk-feat-dot{width:34px;height:34px;border-radius:50%;background:rgba(201,168,76,0.12);border:1px solid rgba(201,168,76,0.25);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;margin-top:0.1rem}
+  .bk-feat-txt .bk-ft{font-family:'Jost',sans-serif;font-size:0.82rem;font-weight:500;color:rgba(255,255,255,0.85);letter-spacing:0.03em}
+  .bk-feat-txt .bk-fs{font-family:'Jost',sans-serif;font-size:0.74rem;color:rgba(255,255,255,0.35);margin-top:0.15rem;font-weight:300}
+  .lhs-testimonial{background:rgba(255,255,255,0.04);border:1px solid rgba(201,168,76,0.14);border-radius:16px;padding:1.4rem 1.6rem;position:relative;overflow:hidden}
+  .lhs-testimonial::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:linear-gradient(180deg,var(--gold),var(--copper))}
+  .lhs-t-text{font-family:'Cormorant Garamond',serif;font-size:1rem;font-style:italic;color:rgba(255,255,255,0.6);line-height:1.7;margin-bottom:0.8rem}
+  .lhs-t-author{display:flex;align-items:center;gap:0.6rem}
+  .lhs-t-avatar{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--rose-gold),var(--copper));display:flex;align-items:center;justify-content:center;font-size:0.65rem;font-weight:600;color:#fff;font-family:'Jost',sans-serif}
+  .lhs-t-name{font-family:'Jost',sans-serif;font-size:0.75rem;font-weight:500;color:var(--gold-light)}
+  .lhs-t-role{font-family:'Jost',sans-serif;font-size:0.68rem;color:rgba(255,255,255,0.3)}
+  .lhs-stars{display:flex;gap:2px;margin-bottom:0.6rem}
+  .lhs-stars .s{color:var(--gold);font-size:0.75rem}
+
+  /* RIGHT — Card */
+  .booking-card{background:rgba(255,255,255,0.03);border:1px solid rgba(201,168,76,0.15);border-radius:24px;overflow:hidden;backdrop-filter:blur(20px)}
+  .step-bar{display:flex;align-items:center;justify-content:center;padding:1.8rem 2.5rem 1.4rem;gap:0;border-bottom:1px solid rgba(201,168,76,0.1)}
+  .step-item{display:flex;align-items:center;gap:0.55rem}
+  .step-dot{width:32px;height:32px;border-radius:50%;border:1.5px solid rgba(201,168,76,0.25);display:flex;align-items:center;justify-content:center;font-size:11px;color:rgba(255,255,255,0.25);font-weight:500;transition:all 0.45s ease;position:relative;flex-shrink:0}
+  .step-dot.active{border-color:var(--gold);color:#fff;background:linear-gradient(135deg,var(--gold),var(--copper));box-shadow:0 0 20px rgba(201,168,76,0.45)}
+  .step-dot.done{border-color:var(--gold);background:rgba(201,168,76,0.12);color:var(--gold-light)}
+  .step-dot .s-num{transition:opacity 0.3s}
+  .step-dot .s-chk{display:none;font-size:13px}
+  .step-dot.done .s-num{display:none}
+  .step-dot.done .s-chk{display:flex}
+  .step-label{font-size:10.5px;color:rgba(255,255,255,0.25);letter-spacing:0.08em;text-transform:uppercase;transition:color 0.4s;font-family:'Jost',sans-serif;white-space:nowrap}
+  .step-item.active .step-label{color:var(--gold-light)}
+  .step-item.done .step-label{color:rgba(201,168,76,0.55)}
+  .step-conn{flex:1;max-width:50px;height:1px;background:rgba(201,168,76,0.15);margin:0 0.4rem;transition:background 0.5s}
+  .step-conn.done{background:rgba(201,168,76,0.5)}
+  .form-body{overflow:hidden;position:relative}
+  .f-panel{padding:2rem 2.5rem;transition:transform 0.5s cubic-bezier(0.77,0,0.175,1),opacity 0.35s ease;position:absolute;top:0;left:0;right:0;width:100%}
+  .f-panel.active{position:relative;transform:translateX(0);opacity:1;pointer-events:all}
+  .f-panel.gone-left{transform:translateX(-110%);opacity:0;pointer-events:none}
+  .f-panel.gone-right{transform:translateX(110%);opacity:0;pointer-events:none}
+  .field{margin-bottom:1.2rem}
+  .field-lbl{display:block;font-family:'Jost',sans-serif;font-size:10.5px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(201,168,76,0.7);margin-bottom:0.45rem;font-weight:500}
+  .req{color:var(--copper-light);margin-left:2px}
+  .booking-card input[type="text"],
+  .booking-card input[type="tel"],
+  .booking-card input[type="date"],
+  .booking-card input[type="number"],
+  .booking-card select,
+  .booking-card textarea{width:100%;background:rgba(255,255,255,0.04);border:1px solid rgba(201,168,76,0.18);border-radius:12px;color:#fff;font-family:'Jost',sans-serif;font-size:14px;padding:0.72rem 1rem;outline:none;transition:border-color 0.3s,background 0.3s,box-shadow 0.3s;box-sizing:border-box;-webkit-appearance:none;appearance:none}
+  .booking-card input:focus,.booking-card select:focus,.booking-card textarea:focus{border-color:var(--gold);background:rgba(201,168,76,0.06);box-shadow:0 0 0 4px rgba(201,168,76,0.1)}
+  .booking-card input::placeholder,.booking-card textarea::placeholder{color:rgba(255,255,255,0.18)}
+  .booking-card select option{background:#1a0e08;color:#fff}
+  .booking-card input.err,.booking-card select.err,.booking-card textarea.err{border-color:#e24b4a}
+  .err-txt{font-size:11px;color:#f09595;margin-top:0.32rem;display:none;letter-spacing:0.03em;font-family:'Jost',sans-serif}
+  .err-txt.show{display:block}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+  .svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0.6rem}
+  .svc-pill{background:rgba(255,255,255,0.03);border:1px solid rgba(201,168,76,0.15);border-radius:12px;padding:0.8rem 0.5rem;text-align:center;cursor:pointer;transition:all 0.3s;font-family:'Jost',sans-serif;font-size:12px;color:rgba(255,255,255,0.45);letter-spacing:0.05em;line-height:1.4}
+  .svc-pill:hover{border-color:rgba(201,168,76,0.45);background:rgba(201,168,76,0.06);color:rgba(255,255,255,0.8)}
+  .svc-pill.sel{border-color:var(--gold);background:rgba(201,168,76,0.13);color:var(--gold-light)}
+  .svc-icon{font-size:18px;display:block;margin-bottom:0.3rem}
+  .ppl-row{display:inline-flex;align-items:center;border:1px solid rgba(201,168,76,0.18);border-radius:12px;overflow:hidden;background:rgba(255,255,255,0.04)}
+  .ppl-btn{width:44px;height:44px;background:none;border:none;color:var(--gold-light);font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.2s;font-family:'Jost',sans-serif;line-height:1}
+  .ppl-btn:hover{background:rgba(201,168,76,0.1)}
+  .ppl-val{min-width:56px;text-align:center;font-size:16px;font-weight:500;color:#fff;border-left:1px solid rgba(201,168,76,0.15);border-right:1px solid rgba(201,168,76,0.15);height:44px;display:flex;align-items:center;justify-content:center;font-family:'Jost',sans-serif}
+  .budget-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.55rem;margin-bottom:0.9rem}
+  .bdg-pill{background:rgba(255,255,255,0.03);border:1px solid rgba(201,168,76,0.15);border-radius:11px;padding:0.65rem 0.8rem;text-align:center;cursor:pointer;transition:all 0.3s;font-family:'Jost',sans-serif;font-size:12.5px;color:rgba(255,255,255,0.45);letter-spacing:0.03em}
+  .bdg-pill:hover{border-color:rgba(201,168,76,0.45);background:rgba(201,168,76,0.06);color:rgba(255,255,255,0.8)}
+  .bdg-pill.sel{border-color:var(--gold);background:rgba(201,168,76,0.13);color:var(--gold-light)}
+  .bdg-pill.full{grid-column:1/-1}
+  .booking-card textarea{resize:none;height:80px;font-size:13px}
+  .form-foot{display:flex;align-items:center;gap:0.8rem;padding:1rem 2.5rem 2rem}
+  .btn-back-f{background:transparent;border:1px solid rgba(201,168,76,0.2);border-radius:50px;color:rgba(255,255,255,0.45);font-family:'Jost',sans-serif;font-size:11.5px;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;padding:0.7rem 1.6rem;cursor:pointer;transition:all 0.3s;flex-shrink:0}
+  .btn-back-f:hover{border-color:rgba(201,168,76,0.5);color:rgba(255,255,255,0.8)}
+  .btn-nxt{flex:1;background:linear-gradient(135deg,var(--gold),var(--copper));border:none;border-radius:50px;color:#fff;font-family:'Jost',sans-serif;font-size:12px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;padding:0.8rem 1.5rem;cursor:pointer;transition:all 0.35s;box-shadow:0 4px 22px rgba(201,168,76,0.35);display:flex;align-items:center;justify-content:center;gap:0.55rem;text-decoration:none}
+  .btn-nxt:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(201,168,76,0.48)}
+  .btn-nxt:active{transform:scale(0.98)}
+  .btn-wa-f{background:linear-gradient(135deg,#25D366,#128C7E);box-shadow:0 4px 22px rgba(37,211,102,0.28)}
+  .btn-wa-f:hover{box-shadow:0 10px 32px rgba(37,211,102,0.42)}
+  .step-flash{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0.5);width:74px;height:74px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--copper));display:flex;align-items:center;justify-content:center;font-size:26px;opacity:0;pointer-events:none;z-index:9999;transition:none}
+  .step-flash.go{animation:flash-pop 0.65s cubic-bezier(0.34,1.56,0.64,1) forwards}
+  @keyframes flash-pop{0%{opacity:0;transform:translate(-50%,-50%) scale(0.4)}40%{opacity:1;transform:translate(-50%,-50%) scale(1.1)}70%{opacity:1;transform:translate(-50%,-50%) scale(0.95)}100%{opacity:0;transform:translate(-50%,-50%) scale(1.35)}}
+  .success-cover{position:absolute;inset:0;background:rgba(13,8,6,0.97);display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.45s;z-index:30;border-radius:24px;text-align:center;padding:2rem}
+  .success-cover.show{opacity:1;pointer-events:all}
+  .success-ring{width:76px;height:76px;border-radius:50%;border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;margin:0 auto 1.1rem;font-size:28px}
+  .success-ring.pop{animation:ring-pop 0.65s cubic-bezier(0.34,1.56,0.64,1) forwards}
+  @keyframes ring-pop{0%{transform:scale(0.5);opacity:0;box-shadow:0 0 0 0 rgba(201,168,76,0.5)}60%{transform:scale(1.12);box-shadow:0 0 0 18px rgba(201,168,76,0)}100%{transform:scale(1);opacity:1}}
+  .success-title{font-family:'Bodoni Moda',serif;font-size:1.4rem;color:#fff;font-style:italic;margin-bottom:0.3rem}
+  .success-sub{font-size:12px;color:rgba(255,255,255,0.38);letter-spacing:0.08em;font-family:'Jost',sans-serif}
 
   /* FOOTER */
   footer{background:#080503;padding:3.5rem 4rem 2rem;border-top:1px solid rgba(201,168,76,0.1)}
@@ -271,6 +386,10 @@
   @keyframes scroll-pulse{0%,100%{opacity:0.3}50%{opacity:1}}
 
   /* RESPONSIVE */
+  @media(max-width:1024px){
+    .booking-wrap{grid-template-columns:1fr;gap:3rem}
+    .booking-lhs{max-width:600px;margin:0 auto}
+  }
   @media(max-width:900px){
     nav{padding:0.9rem 1.2rem}
     nav.scrolled{padding:0.7rem 1.2rem}
@@ -280,25 +399,31 @@
     .process-grid{grid-template-columns:1fr;padding:0 1.2rem;gap:1rem}
     .process-grid::before{display:none}
     .bento-grid{grid-template-columns:1fr;gap:0.8rem}
-    .gallery-outer{padding:0 1.2rem}
-    .gallery-grid{grid-template-columns:1fr 1fr;grid-template-rows:auto;gap:0.8rem}
-    .gallery-item.tall{grid-row:span 1}
-    .gallery-item .gallery-inner{min-height:200px}
     .stats-bar{grid-template-columns:repeat(2,1fr);padding:1.5rem 1.2rem}
     .story-timeline{display:none}
     footer{padding:2.5rem 1.2rem 1.5rem}
     .footer-main{grid-template-columns:1fr;gap:2rem}
     .footer-bottom{flex-direction:column;align-items:flex-start}
-    #cta{padding:5rem 0}
+    #booking{padding:4rem 0}
+    .booking-wrap{padding:0 1rem}
     section{padding:4rem 0}
     .trust-header{padding:0 1.2rem}
     #timeline{padding:5rem 0}
+    .two-col{grid-template-columns:1fr}
+    .step-label{display:none}
+    .step-conn{max-width:28px}
+    .f-panel{padding:1.4rem 1.2rem}
+    .form-foot{padding:0.8rem 1.2rem 1.5rem}
+    .step-bar{padding:1.4rem 1.2rem 1rem}
+    .bride-card{width:260px}
+    .bride-card-visual{height:160px}
   }
   @media(max-width:600px){
-    .gallery-grid{grid-template-columns:1fr}
-    .gallery-item.wide{grid-column:span 1}
     .hero-title{font-size:2.5rem}
     .footer-bottom-links{flex-wrap:wrap;gap:0.8rem}
+    .svc-grid{grid-template-columns:1fr 1fr}
+    .budget-grid{grid-template-columns:1fr 1fr}
+    .bride-card{width:240px}
   }
   @media(min-width:901px){
     .hamburger{display:none !important}
@@ -307,23 +432,28 @@
     #mobileTimeline{display:none !important}
   }
 
-  /* Mobile timeline styles */
+  /* Mobile timeline */
   .mobile-story-node{display:flex;gap:1rem;align-items:flex-start;margin-bottom:2.5rem;opacity:0;transform:translateY(20px);transition:opacity 0.7s ease,transform 0.7s ease;position:relative}
   .mobile-story-node.in-view{opacity:1;transform:translateY(0)}
-  .mobile-story-dot{width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--copper));display:flex;align-items:center;justify-content:center;font-size:1.2rem;box-shadow:0 4px 20px rgba(197,132,106,0.4);flex-shrink:0;position:relative;z-index:2}
   </style>
 </head>
 <body>
 
+<div class="step-flash" id="stepFlash"></div>
 <div class="mobile-overlay" id="mobileOverlay"></div>
+
 <nav class="mobile-nav" id="mobileNav" aria-hidden="true">
   <span class="mobile-section-label">Main</span>
   <a href="#story" onclick="closeMobileNav()">Story</a>
   <a href="#services" onclick="closeMobileNav()">Services</a>
-  <a href="#transformation" onclick="closeMobileNav()">Gallery</a>
+  <a href="#transformation" onclick="closeMobileNav()">Brides</a>
   <a href="#trust" onclick="closeMobileNav()">Reviews</a>
   <a href="#timeline" onclick="closeMobileNav()">Journey</a>
-  <a href="#cta" class="mobile-cta" onclick="closeMobileNav()">Book Now</a>
+  <span class="mobile-section-label">Services</span>
+  <a href="./bridal-makeup.html" onclick="closeMobileNav()">👰 Bridal Makeup</a>
+  <a href="./party-makeup.html" onclick="closeMobileNav()">✨ Party Makeup</a>
+  <a href="./skin-care.html" onclick="closeMobileNav()">🌿 Skin Care</a>
+  <a href="#booking" class="mobile-cta" onclick="closeMobileNav()">Book Now</a>
 </nav>
 
 <!-- MAIN NAV -->
@@ -334,13 +464,41 @@
   </div>
   <ul class="nav-links">
     <li><a href="#story">Story</a></li>
-    <li><a href="#services">Services</a></li>
-    <li><a href="#transformation">Gallery</a></li>
+    <!-- SERVICES DROPDOWN — hover only, no JS needed -->
+    <li class="nav-dropdown">
+      <a href="#services">Services <span class="caret">▼</span></a>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="./bridal-makeup.html">
+          <span class="di-icon">👰</span>
+          <span class="di-info">
+            <span class="di-label">Bridal Makeup</span>
+            <span class="di-sub">Full-day bridal artistry</span>
+          </span>
+        </a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="./party-makeup.html">
+          <span class="di-icon">✨</span>
+          <span class="di-info">
+            <span class="di-label">Party Makeup</span>
+            <span class="di-sub">Bold glow for every occasion</span>
+          </span>
+        </a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="./skin-care.html">
+          <span class="di-icon">🌿</span>
+          <span class="di-info">
+            <span class="di-label">Skin Care</span>
+            <span class="di-sub">Pre-bridal glow treatments</span>
+          </span>
+        </a>
+      </div>
+    </li>
+    <li><a href="#transformation">Brides</a></li>
     <li><a href="#trust">Reviews</a></li>
     <li><a href="#timeline">Journey</a></li>
   </ul>
   <div style="display:flex;align-items:center;gap:1rem">
-    <a href="#cta" class="nav-cta">Book Now</a>
+    <a href="#booking" class="nav-cta">Book Now</a>
     <button class="hamburger" id="hamburgerBtn" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav">
       <span></span><span></span><span></span>
     </button>
@@ -364,8 +522,8 @@
     </h1>
     <p class="hero-subtitle">We bring it to life — one brushstroke, one glow, one unforgettable moment at a time.</p>
     <div class="hero-actions">
-      <a href="#cta" class="btn-primary"><span>✦</span> Book Your Glow</a>
-      <a href="https://wa.me/919XXXXXXXXX" target="_blank" rel="noopener" class="btn-secondary"><span>💬</span> WhatsApp Now</a>
+      <a href="#booking" class="btn-primary"><span>✦</span> Book Your Glow</a>
+      <a href="https://wa.me/919344089990" target="_blank" rel="noopener" class="btn-secondary"><span>💬</span> WhatsApp Now</a>
     </div>
   </div>
   <div class="hero-scroll">
@@ -438,7 +596,7 @@
   </div>
 </section>
 
-<!-- SERVICES — 3 items -->
+<!-- SERVICES -->
 <section id="services">
   <div class="container">
     <div class="services-intro reveal">
@@ -492,7 +650,7 @@
   </div>
 </section>
 
-<!-- GALLERY -->
+<!-- BRIDAL CAROUSEL (replaces gallery) -->
 <section id="transformation">
   <div class="transform-header reveal">
     <div class="section-eyebrow" style="justify-content:center">
@@ -501,95 +659,12 @@
       <div class="eyebrow-line" style="background:rgba(201,168,76,0.5)"></div>
     </div>
     <h2 class="section-title">Stories of <em>pure transformation</em></h2>
-    <p class="transform-subtitle">Each face carries a unique story. Here are a few of our most cherished.</p>
+    <p class="transform-subtitle">Hover to pause — each face carries a cherished story.</p>
   </div>
-  <div class="gallery-outer">
-    <div class="gallery-grid">
 
-      <!-- tall left -->
-      <div class="gallery-item tall reveal">
-        <div class="gallery-fill gf-1"></div>
-        <div class="gallery-shine"></div>
-        <div class="gallery-icon">👰</div>
-        <div class="gallery-overlay"></div>
-        <div class="gallery-static"><div class="gallery-dot"></div><span class="gallery-static-name">South Indian Bridal</span></div>
-        <div class="gallery-caption">
-          <span class="gallery-badge">✦ Featured Bride</span>
-          <p class="gallery-name">Meenakshi <em>R.</em></p>
-          <p class="gallery-quote">"I looked in the mirror and didn't recognise myself — in the most magical way."</p>
-        </div>
-      </div>
-
-      <!-- top-mid -->
-      <div class="gallery-item reveal" style="transition-delay:0.08s">
-        <div class="gallery-fill gf-2"></div>
-        <div class="gallery-shine"></div>
-        <div class="gallery-icon">🌸</div>
-        <div class="gallery-overlay"></div>
-        <div class="gallery-static"><div class="gallery-dot"></div><span class="gallery-static-name">Reception Night</span></div>
-        <div class="gallery-caption">
-          <span class="gallery-badge">✦ Transformation</span>
-          <p class="gallery-name">Priya <em>K.</em></p>
-          <p class="gallery-quote">"Every guest asked who did my makeup. Pavi is pure magic."</p>
-        </div>
-      </div>
-
-      <!-- top-right -->
-      <div class="gallery-item reveal" style="transition-delay:0.16s">
-        <div class="gallery-fill gf-3"></div>
-        <div class="gallery-shine"></div>
-        <div class="gallery-icon">💎</div>
-        <div class="gallery-overlay"></div>
-        <div class="gallery-static"><div class="gallery-dot"></div><span class="gallery-static-name">Engagement Ceremony</span></div>
-        <div class="gallery-caption">
-          <span class="gallery-badge">✦ Our Bride</span>
-          <p class="gallery-name">Deepa <em>M.</em></p>
-          <p class="gallery-quote">"She gave me something more beautiful than I imagined."</p>
-        </div>
-      </div>
-
-      <!-- wide bottom-right spanning 2 cols -->
-      <div class="gallery-item wide reveal" style="transition-delay:0.22s">
-        <div class="gallery-fill gf-4"></div>
-        <div class="gallery-shine"></div>
-        <div class="gallery-icon">🌺</div>
-        <div class="gallery-overlay"></div>
-        <div class="gallery-static"><div class="gallery-dot"></div><span class="gallery-static-name">Hindu Wedding Bridal</span></div>
-        <div class="gallery-caption">
-          <span class="gallery-badge">✦ Glow Story</span>
-          <p class="gallery-name">Lakshmi <em>S.</em></p>
-          <p class="gallery-quote">"My mother cried when she saw me. That alone says everything about Pavi's work."</p>
-        </div>
-      </div>
-
-      <!-- bottom-left -->
-      <div class="gallery-item reveal" style="transition-delay:0.3s">
-        <div class="gallery-fill gf-5"></div>
-        <div class="gallery-shine"></div>
-        <div class="gallery-icon">✨</div>
-        <div class="gallery-overlay"></div>
-        <div class="gallery-static"><div class="gallery-dot"></div><span class="gallery-static-name">Christian Wedding</span></div>
-        <div class="gallery-caption">
-          <span class="gallery-badge">✦ Real Bride</span>
-          <p class="gallery-name">Anitha <em>V.</em></p>
-          <p class="gallery-quote">"Natural yet stunning. She made me glow from within."</p>
-        </div>
-      </div>
-
-      <!-- extra -->
-      <div class="gallery-item reveal" style="transition-delay:0.36s">
-        <div class="gallery-fill gf-6"></div>
-        <div class="gallery-shine"></div>
-        <div class="gallery-icon">💐</div>
-        <div class="gallery-overlay"></div>
-        <div class="gallery-static"><div class="gallery-dot"></div><span class="gallery-static-name">Sangeet Ceremony</span></div>
-        <div class="gallery-caption">
-          <span class="gallery-badge">✦ Glow Bride</span>
-          <p class="gallery-name">Kavitha <em>N.</em></p>
-          <p class="gallery-quote">"I felt like a queen. Every single detail was perfect."</p>
-        </div>
-      </div>
-
+  <div class="carousel-outer">
+    <div class="carousel-track" id="bridesTrack">
+      <!-- Cards injected by JS (doubled for seamless loop) -->
     </div>
   </div>
 </section>
@@ -623,112 +698,191 @@
       <h2 class="section-title">A story of<br><em>dedication &amp; craft</em></h2>
       <p class="timeline-intro">Eight years. Hundreds of brides. One unshakeable belief — every woman deserves to feel extraordinary.</p>
     </div>
-
-    <!-- DESKTOP: alternating vertical timeline -->
     <div class="story-timeline" id="storyTimeline">
-
       <div class="story-node">
-        <div class="sn-left">
-          <div class="story-content">
-            <span class="story-tag-line">✦ Where it all began</span>
-            <h4 class="story-heading">The First <em>Brush Stroke</em></h4>
-            <p class="story-body">Pavi began with a passion for beauty and a belief that every woman deserves to feel extraordinary. A small chair, a big dream, and a brush full of purpose.</p>
-            <p class="story-quote">"Beauty is not what you wear — it is how you carry your soul."</p>
-          </div>
-        </div>
-        <div class="sn-center">
-          <div class="story-dot">🌱</div>
-          <span class="story-year-tag">2016</span>
-        </div>
+        <div class="sn-left"><div class="story-content"><span class="story-tag-line">✦ Where it all began</span><h4 class="story-heading">The First <em>Brush Stroke</em></h4><p class="story-body">Pavi began with a passion for beauty and a belief that every woman deserves to feel extraordinary. A small chair, a big dream, and a brush full of purpose.</p><p class="story-quote">"Beauty is not what you wear — it is how you carry your soul."</p></div></div>
+        <div class="sn-center"><div class="story-dot">🌱</div><span class="story-year-tag">2016</span></div>
         <div class="sn-right"></div>
       </div>
-
       <div class="story-node">
         <div class="sn-left"></div>
-        <div class="sn-center">
-          <div class="story-dot">💍</div>
-          <span class="story-year-tag">2018</span>
-        </div>
-        <div class="sn-right">
-          <div class="story-content">
-            <span class="story-tag-line">✦ A milestone of trust</span>
-            <h4 class="story-heading">100 Brides <em>Transformed</em></h4>
-            <p class="story-body">Word spread through the hearts of happy brides. When you pour your soul into your work, no advertising is needed — only the smiles of those you've touched.</p>
-          </div>
-        </div>
+        <div class="sn-center"><div class="story-dot">💍</div><span class="story-year-tag">2018</span></div>
+        <div class="sn-right"><div class="story-content"><span class="story-tag-line">✦ A milestone of trust</span><h4 class="story-heading">100 Brides <em>Transformed</em></h4><p class="story-body">Word spread through the hearts of happy brides. When you pour your soul into your work, no advertising is needed — only the smiles of those you've touched.</p></div></div>
       </div>
-
       <div class="story-node">
-        <div class="sn-left">
-          <div class="story-content">
-            <span class="story-tag-line">✦ Elevating the craft</span>
-            <h4 class="story-heading">Advanced <em>Mastery</em></h4>
-            <p class="story-body">Certified in airbrush artistry and advanced bridal techniques. Pavi invested in her craft — because brides deserve nothing less than cinematic perfection.</p>
-          </div>
-        </div>
-        <div class="sn-center">
-          <div class="story-dot">🎓</div>
-          <span class="story-year-tag">2020</span>
-        </div>
+        <div class="sn-left"><div class="story-content"><span class="story-tag-line">✦ Elevating the craft</span><h4 class="story-heading">Advanced <em>Mastery</em></h4><p class="story-body">Certified in airbrush artistry and advanced bridal techniques. Pavi invested in her craft — because brides deserve nothing less than cinematic perfection.</p></div></div>
+        <div class="sn-center"><div class="story-dot">🎓</div><span class="story-year-tag">2020</span></div>
         <div class="sn-right"></div>
       </div>
-
       <div class="story-node">
         <div class="sn-left"></div>
-        <div class="sn-center">
-          <div class="story-dot">🏛️</div>
-          <span class="story-year-tag">2022</span>
-        </div>
-        <div class="sn-right">
-          <div class="story-content">
-            <span class="story-tag-line">✦ A home for dreams</span>
-            <h4 class="story-heading">Studio <em>Launch</em></h4>
-            <p class="story-body">Glow Pavi's Makeover studio opened — a sanctuary designed entirely for the comfort, calm, and transformation of our brides on their most cherished day.</p>
-          </div>
-        </div>
+        <div class="sn-center"><div class="story-dot">🏛️</div><span class="story-year-tag">2022</span></div>
+        <div class="sn-right"><div class="story-content"><span class="story-tag-line">✦ A home for dreams</span><h4 class="story-heading">Studio <em>Launch</em></h4><p class="story-body">Glow Pavi's Makeover studio opened — a sanctuary designed entirely for the comfort, calm, and transformation of our brides on their most cherished day.</p></div></div>
       </div>
-
       <div class="story-node">
-        <div class="sn-left">
-          <div class="story-content">
-            <span class="story-tag-line">✦ The legacy continues</span>
-            <h4 class="story-heading">500+ Stories <em>of Glow</em></h4>
-            <p class="story-body">Every morning a bride sits in Pavi's chair carrying a dream. Every morning, she leaves having lived it. 500 transformations. 500 memories. Forever.</p>
-            <p class="story-quote">"The greatest reward is not the applause — it is the tear of joy in a bride's eye."</p>
-          </div>
-        </div>
-        <div class="sn-center">
-          <div class="story-dot">✨</div>
-          <span class="story-year-tag">Today</span>
-        </div>
+        <div class="sn-left"><div class="story-content"><span class="story-tag-line">✦ The legacy continues</span><h4 class="story-heading">500+ Stories <em>of Glow</em></h4><p class="story-body">Every morning a bride sits in Pavi's chair carrying a dream. Every morning, she leaves having lived it. 500 transformations. 500 memories. Forever.</p><p class="story-quote">"The greatest reward is not the applause — it is the tear of joy in a bride's eye."</p></div></div>
+        <div class="sn-center"><div class="story-dot">✨</div><span class="story-year-tag">Today</span></div>
         <div class="sn-right"></div>
       </div>
-
     </div>
-
-    <!-- MOBILE: stacked -->
     <div id="mobileTimeline" style="display:none;padding:0 0.5rem;position:relative">
       <div style="position:absolute;left:24px;top:0;bottom:0;width:1px;background:linear-gradient(180deg,transparent,rgba(201,168,76,0.3) 8%,rgba(201,168,76,0.3) 92%,transparent)"></div>
     </div>
-
   </div>
 </section>
 
-<!-- FINAL CTA -->
-<section id="cta">
-  <div class="cta-bg"></div>
-  <div class="cta-ornament"></div>
-  <div class="container">
-    <div class="cta-content reveal">
-      <span class="cta-eyebrow">✦ Your Moment Awaits</span>
-      <h2 class="cta-title">Ready to unveil<br><em>your glow?</em></h2>
-      <p class="cta-subtitle">Your wedding day is once. Your look should be forever remembered.<br>Let's create something extraordinary together.</p>
-      <div class="cta-actions">
-        <a href="#" class="btn-gold"><span>✦</span> Book Your Glow Session</a>
-        <a href="https://wa.me/919XXXXXXXXX" target="_blank" rel="noopener" class="btn-whatsapp">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-          WhatsApp Now
-        </a>
+<!-- BOOKING -->
+<section id="booking">
+  <div class="booking-wrap">
+    <div class="booking-lhs reveal">
+      <div class="booking-lhs-eyebrow">
+        <div class="bel"></div>
+        <span>✦ Your Moment Awaits</span>
+        <div class="bel"></div>
+      </div>
+      <h2 class="booking-lhs-title">
+        Your wedding day<br>
+        <em>comes only once.</em>
+      </h2>
+      <p class="booking-lhs-lead">
+        You've dreamed of this moment your entire life — the dress, the flowers, the people you love. Let your face tell the story of how deeply you've hoped for this day. Pavi will make sure that when you look back at your photos, you see exactly who you felt like — radiant, unshakeable, and entirely yourself.
+      </p>
+      <div class="booking-features">
+        <div class="bk-feat">
+          <div class="bk-feat-dot">💌</div>
+          <div class="bk-feat-txt">
+            <div class="bk-ft">We reply within 2 hours on WhatsApp</div>
+            <div class="bk-fs">No waiting, no uncertainty — just warmth and clarity</div>
+          </div>
+        </div>
+        <div class="bk-feat">
+          <div class="bk-feat-dot">🎨</div>
+          <div class="bk-feat-txt">
+            <div class="bk-ft">Your look is designed only for you</div>
+            <div class="bk-fs">No templates. Pavi listens, then creates something entirely personal.</div>
+          </div>
+        </div>
+        <div class="bk-feat">
+          <div class="bk-feat-dot">🌸</div>
+          <div class="bk-feat-txt">
+            <div class="bk-ft">8+ years of bridal expertise</div>
+            <div class="bk-fs">500+ brides trusted Pavi with their most important day</div>
+          </div>
+        </div>
+        <div class="bk-feat">
+          <div class="bk-feat-dot">✦</div>
+          <div class="bk-feat-txt">
+            <div class="bk-ft">Your comfort is always the priority</div>
+            <div class="bk-fs">Gentle, calming, and deeply attentive from the first moment</div>
+          </div>
+        </div>
+      </div>
+      <div class="lhs-testimonial">
+        <div class="lhs-stars">
+          <span class="s">★</span><span class="s">★</span><span class="s">★</span><span class="s">★</span><span class="s">★</span>
+        </div>
+        <p class="lhs-t-text">"I sat in Pavi's chair terrified I wouldn't look like myself. Two hours later, I walked out and my mother burst into tears. That is Pavi's gift — she doesn't cover you up, she reveals you."</p>
+        <div class="lhs-t-author">
+          <div class="lhs-t-avatar">DV</div>
+          <div>
+            <div class="lhs-t-name">Dharini V.</div>
+            <div class="lhs-t-role">Bridal Client, Madurai Wedding</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="booking-rhs reveal" style="transition-delay:0.2s">
+      <div class="booking-card" style="position:relative">
+        <div class="success-cover" id="successCover">
+          <div class="success-ring" id="successRing">✓</div>
+          <p class="success-title">Redirecting to WhatsApp</p>
+          <p class="success-sub">Your details are ready — opening chat now</p>
+        </div>
+        <div class="step-bar">
+          <div class="step-item active" id="si1">
+            <div class="step-dot active" id="sd1"><span class="s-num">1</span><span class="s-chk">✓</span></div>
+            <span class="step-label">Your Info</span>
+          </div>
+          <div class="step-conn" id="sc1"></div>
+          <div class="step-item" id="si2">
+            <div class="step-dot" id="sd2"><span class="s-num">2</span><span class="s-chk">✓</span></div>
+            <span class="step-label">Event Details</span>
+          </div>
+          <div class="step-conn" id="sc2"></div>
+          <div class="step-item" id="si3">
+            <div class="step-dot" id="sd3"><span class="s-num">3</span><span class="s-chk">✓</span></div>
+            <span class="step-label">Budget &amp; Finish</span>
+          </div>
+        </div>
+        <div class="form-body" id="formBody">
+          <div class="f-panel active" id="fp1">
+            <div class="field">
+              <label class="field-lbl" for="f-name">Full Name <span class="req">*</span></label>
+              <input type="text" id="f-name" placeholder="e.g. Meenakshi Rajan" autocomplete="name">
+              <div class="err-txt" id="e-name">Please enter your full name</div>
+            </div>
+            <div class="field">
+              <label class="field-lbl" for="f-phone">WhatsApp Number <span class="req">*</span></label>
+              <input type="tel" id="f-phone" placeholder="e.g. 9344089990" autocomplete="tel" maxlength="10">
+              <div class="err-txt" id="e-phone">Please enter a valid 10-digit mobile number</div>
+            </div>
+          </div>
+          <div class="f-panel gone-right" id="fp2">
+            <div class="two-col">
+              <div class="field">
+                <label class="field-lbl" for="f-date">Event Date <span class="req">*</span></label>
+                <input type="date" id="f-date">
+                <div class="err-txt" id="e-date">Please select your event date</div>
+              </div>
+              <div class="field">
+                <label class="field-lbl">Number of People <span class="req">*</span></label>
+                <div class="ppl-row">
+                  <button class="ppl-btn" id="pplMinus" type="button">−</button>
+                  <div class="ppl-val" id="pplVal">1</div>
+                  <button class="ppl-btn" id="pplPlus" type="button">+</button>
+                </div>
+              </div>
+            </div>
+            <div class="field">
+              <label class="field-lbl">Service Type <span class="req">*</span></label>
+              <div class="svc-grid" id="svcGrid">
+                <button class="svc-pill" type="button" data-v="Bridal Makeup"><span class="svc-icon">👰</span>Bridal</button>
+                <button class="svc-pill" type="button" data-v="Engagement Makeup"><span class="svc-icon">💍</span>Engagement</button>
+                <button class="svc-pill" type="button" data-v="Party Makeup"><span class="svc-icon">✨</span>Party</button>
+              </div>
+              <div class="err-txt" id="e-service">Please select a service type</div>
+            </div>
+          </div>
+          <div class="f-panel gone-right" id="fp3">
+            <div class="field">
+              <label class="field-lbl">Budget Range <span class="req">*</span></label>
+              <div class="budget-grid" id="budgetGrid">
+                <button class="bdg-pill" type="button" data-v="₹10k – ₹20k">₹10k – ₹20k</button>
+                <button class="bdg-pill" type="button" data-v="₹20k – ₹30k">₹20k – ₹30k</button>
+                <button class="bdg-pill" type="button" data-v="₹30k – ₹50k">₹30k – ₹50k</button>
+                <button class="bdg-pill" type="button" data-v="₹50k+">₹50k+</button>
+                <button class="bdg-pill full" type="button" data-v="Not sure – Let's discuss on call">🤝 Not sure — Let's discuss on call</button>
+              </div>
+              <div class="err-txt" id="e-budget">Please select a budget range</div>
+            </div>
+            <div class="field">
+              <label class="field-lbl">Custom Budget (optional)</label>
+              <input type="text" id="f-custom-budget" placeholder="e.g. ₹25,000 for 2 people">
+            </div>
+            <div class="field">
+              <label class="field-lbl">Message (optional)</label>
+              <textarea id="f-msg" placeholder="Any special requests, look references, or questions…"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="form-foot" id="formFoot">
+          <button class="btn-back-f" id="btnBack" style="display:none" type="button">← Back</button>
+          <button class="btn-nxt" id="btnNext" type="button">
+            <span id="btnNextTxt">Next: Event Details</span>
+            <span>→</span>
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -739,32 +893,31 @@
   <div class="footer-main">
     <div>
       <div class="footer-logo">
-        <img src="/mnt/user-data/uploads/1776159164148_Logo3.png" alt="Glow Pavi's Makeover"
-          onerror="this.style.display='none'">
+        <img src="/mnt/user-data/uploads/1776159164148_Logo3.png" alt="Glow Pavi's Makeover" onerror="this.style.display='none'">
       </div>
       <p class="footer-slogan">Every bride deserves to feel like the most beautiful version of herself.</p>
       <div class="footer-social">
         <a class="social-btn" href="#" title="Instagram"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
         <a class="social-btn" href="#" title="Facebook"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
         <a class="social-btn" href="#" title="YouTube"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205a31.247 31.247 0 0 0-.522 5.805 31.247 31.247 0 0 0 .522 5.783 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088 31.247 31.247 0 0 0 .5-5.783 31.247 31.247 0 0 0-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg></a>
-        <a class="social-btn" href="https://wa.me/919XXXXXXXXX" target="_blank" rel="noopener" title="WhatsApp"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+        <a class="social-btn" href="https://wa.me/919344089990" target="_blank" rel="noopener" title="WhatsApp"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
       </div>
     </div>
     <div>
       <span class="footer-col-title">Services</span>
       <div class="footer-col-links">
-        <a href="#services">Bridal Makeup</a>
-        <a href="#services">Party Makeup</a>
-        <a href="#services">Skin Care</a>
+        <a href="./bridal-makeup.html">Bridal Makeup</a>
+        <a href="./party-makeup.html">Party Makeup</a>
+        <a href="./skin-care.html">Skin Care</a>
       </div>
     </div>
     <div>
       <span class="footer-col-title">Policies</span>
       <div class="footer-col-links">
-        <a href="#">Privacy Policy</a>
-        <a href="#">Terms &amp; Conditions</a>
-        <a href="#">Booking &amp; Cancellation</a>
-        <a href="#">FAQ</a>
+        <a href="./privacy-policy.html">Privacy Policy</a>
+        <a href="./terms.html">Terms &amp; Conditions</a>
+        <a href="./booking-cancellation.html">Booking &amp; Cancellation</a>
+        <a href="./faq.html">FAQ</a>
       </div>
     </div>
   </div>
@@ -779,122 +932,146 @@
 </footer>
 
 <script>
-// NAV SCROLL
+/* ===================== NAV — scroll ===================== */
 const nav = document.getElementById('mainNav');
-window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',window.scrollY>80),{passive:true});
+window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 80), {passive:true});
 
-// HAMBURGER
-const hamburger=document.getElementById('hamburgerBtn');
-const mobileNav=document.getElementById('mobileNav');
-const mobileOverlay=document.getElementById('mobileOverlay');
-hamburger.addEventListener('click',()=>{
-  const isOpen=mobileNav.classList.toggle('open');
-  hamburger.classList.toggle('open',isOpen);
-  mobileOverlay.classList.toggle('show',isOpen);
-  hamburger.setAttribute('aria-expanded',isOpen);
-  mobileNav.setAttribute('aria-hidden',!isOpen);
-  document.body.style.overflow=isOpen?'hidden':'';
+/* ===================== MOBILE NAV ===================== */
+const hamburger = document.getElementById('hamburgerBtn');
+const mobileNav = document.getElementById('mobileNav');
+const mobileOverlay = document.getElementById('mobileOverlay');
+hamburger.addEventListener('click', () => {
+  const isOpen = mobileNav.classList.toggle('open');
+  hamburger.classList.toggle('open', isOpen);
+  mobileOverlay.classList.toggle('show', isOpen);
+  hamburger.setAttribute('aria-expanded', isOpen);
+  mobileNav.setAttribute('aria-hidden', !isOpen);
+  document.body.style.overflow = isOpen ? 'hidden' : '';
 });
-mobileOverlay.addEventListener('click',closeMobileNav);
-function closeMobileNav(){
+mobileOverlay.addEventListener('click', closeMobileNav);
+function closeMobileNav() {
   mobileNav.classList.remove('open');
   hamburger.classList.remove('open');
   mobileOverlay.classList.remove('show');
-  hamburger.setAttribute('aria-expanded','false');
-  mobileNav.setAttribute('aria-hidden','true');
-  document.body.style.overflow='';
+  hamburger.setAttribute('aria-expanded', 'false');
+  mobileNav.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
 }
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&mobileNav.classList.contains('open'))closeMobileNav();});
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && mobileNav.classList.contains('open')) closeMobileNav(); });
 
-// PARTICLES
-const pc=document.getElementById('particlesContainer');
-for(let i=0;i<30;i++){
-  const p=document.createElement('div');p.className='particle';
-  p.style.cssText=`left:${Math.random()*100}%;animation-duration:${8+Math.random()*12}s;animation-delay:${Math.random()*10}s;width:${1+Math.random()*2}px;height:${1+Math.random()*2}px`;
+/* ===================== PARTICLES ===================== */
+const pc = document.getElementById('particlesContainer');
+for (let i = 0; i < 30; i++) {
+  const p = document.createElement('div'); p.className = 'particle';
+  p.style.cssText = `left:${Math.random()*100}%;animation-duration:${8+Math.random()*12}s;animation-delay:${Math.random()*10}s;width:${1+Math.random()*2}px;height:${1+Math.random()*2}px`;
   pc.appendChild(p);
 }
 
-// SCROLL REVEAL
-const revealEls=document.querySelectorAll('.reveal');
-const revealObs=new IntersectionObserver((entries)=>{
-  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');revealObs.unobserve(e.target);}});
-},{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
-revealEls.forEach(el=>revealObs.observe(el));
+/* ===================== SCROLL REVEAL ===================== */
+const revealEls = document.querySelectorAll('.reveal');
+const revealObs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); } });
+}, {threshold:0.1, rootMargin:'0px 0px -40px 0px'});
+revealEls.forEach(el => revealObs.observe(el));
 
-// PROCESS CARD ANIMATION
-const processCards=document.querySelectorAll('.process-card');
-const processObs=new IntersectionObserver((entries)=>{
-  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in-view');processObs.unobserve(e.target);}});
-},{threshold:0.2});
-processCards.forEach(c=>processObs.observe(c));
+/* ===================== PROCESS CARDS ===================== */
+const processCards = document.querySelectorAll('.process-card');
+const processObs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in-view'); processObs.unobserve(e.target); } });
+}, {threshold:0.2});
+processCards.forEach(c => processObs.observe(c));
 
-// NUMBER COUNT-UP
-function animateCount(el,target,suffix,duration){
-  const start=performance.now();
-  function step(now){
-    const p=Math.min((now-start)/duration,1);
-    const ease=1-Math.pow(1-p,3);
-    el.textContent=Math.round(target*ease)+suffix;
-    if(p<1)requestAnimationFrame(step);
-    else el.textContent=target+suffix;
+/* ===================== COUNT UP ===================== */
+function animateCount(el, target, suffix, duration) {
+  const start = performance.now();
+  function step(now) {
+    const p = Math.min((now - start) / duration, 1);
+    const ease = 1 - Math.pow(1 - p, 3);
+    el.textContent = Math.round(target * ease) + suffix;
+    if (p < 1) requestAnimationFrame(step);
+    else el.textContent = target + suffix;
   }
   requestAnimationFrame(step);
 }
-const statNums=document.querySelectorAll('.stat-num[data-target]');
-const statObs=new IntersectionObserver((entries)=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting){
-      animateCount(e.target,parseFloat(e.target.dataset.target),e.target.dataset.suffix||'',1800);
+const statNums = document.querySelectorAll('.stat-num[data-target]');
+const statObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      animateCount(e.target, parseFloat(e.target.dataset.target), e.target.dataset.suffix || '', 1800);
       statObs.unobserve(e.target);
     }
   });
-},{threshold:0.5});
-statNums.forEach(el=>statObs.observe(el));
+}, {threshold:0.5});
+statNums.forEach(el => statObs.observe(el));
 
-// STORY NODES (desktop)
-const storyNodes=document.querySelectorAll('.story-node');
-const storyObs=new IntersectionObserver((entries)=>{
-  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in-view');storyObs.unobserve(e.target);}});
-},{threshold:0.2});
-storyNodes.forEach((n,i)=>{n.style.transitionDelay=(i*0.15)+'s';storyObs.observe(n);});
+/* ===================== STORY NODES ===================== */
+const storyNodes = document.querySelectorAll('.story-node');
+const storyObs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in-view'); storyObs.unobserve(e.target); } });
+}, {threshold:0.2});
+storyNodes.forEach((n, i) => { n.style.transitionDelay = (i * 0.15) + 's'; storyObs.observe(n); });
 
-// MOBILE TIMELINE
-const timelineData=[
+/* ===================== MOBILE TIMELINE ===================== */
+const timelineData = [
   {icon:'🌱',year:'2016',tag:'Where it all began',heading:'The First Brush Stroke',body:'Pavi began with a passion for beauty and a belief that every woman deserves to feel extraordinary.'},
   {icon:'💍',year:'2018',tag:'A milestone of trust',heading:'100 Brides Transformed',body:'Word spread through the hearts of happy brides. When you pour soul into work, no advertising is needed.'},
   {icon:'🎓',year:'2020',tag:'Elevating the craft',heading:'Advanced Mastery',body:'Certified in airbrush artistry and advanced bridal techniques — elevating every look to cinematic perfection.'},
-  {icon:'🏛️',year:'2022',tag:'A home for dreams',heading:'Studio Launch',body:'Glow Pavi\'s Makeover studio opened — a sanctuary for the comfort and transformation of our brides.'},
-  {icon:'✨',year:'Today',tag:'The legacy continues',heading:'500+ Stories of Glow',body:'Every morning a bride sits in Pavi\'s chair carrying a dream. Every morning, she leaves having lived it.'},
+  {icon:'🏛️',year:'2022',tag:'A home for dreams',heading:'Studio Launch',body:"Glow Pavi's Makeover studio opened — a sanctuary for the comfort and transformation of our brides."},
+  {icon:'✨',year:'Today',tag:'The legacy continues',heading:'500+ Stories of Glow',body:"Every morning a bride sits in Pavi's chair carrying a dream. Every morning, she leaves having lived it."},
 ];
-function buildMobileTimeline(){
-  if(window.innerWidth>900)return;
-  const mEl=document.getElementById('mobileTimeline');
-  if(mEl.querySelector('.mobile-story-node'))return;
-  mEl.style.display='block';
-  document.getElementById('storyTimeline').style.display='none';
-  timelineData.forEach((d,i)=>{
-    const node=document.createElement('div');
-    node.className='mobile-story-node';
-    node.style.cssText=`padding-left:3.5rem;margin-bottom:2.5rem;opacity:0;transform:translateY(20px);transition:opacity 0.7s ease ${i*0.12}s,transform 0.7s ease ${i*0.12}s;position:relative`;
-    node.innerHTML=`
-      <div style="position:absolute;left:0;top:0;width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,#C9A84C,#B5622A);display:flex;align-items:center;justify-content:center;font-size:1.2rem;box-shadow:0 4px 20px rgba(197,132,106,0.4);z-index:2">${d.icon}</div>
-      <div>
-        <div style="font-family:Jost,sans-serif;font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;color:#C9A84C;margin-bottom:0.25rem">${d.year} · ${d.tag}</div>
-        <div style="font-family:'Bodoni Moda',serif;font-size:1rem;color:#fff;margin-bottom:0.4rem;font-style:italic">${d.heading}</div>
-        <div style="font-family:Jost,sans-serif;font-size:0.8rem;color:rgba(255,255,255,0.5);line-height:1.7;font-weight:300">${d.body}</div>
-      </div>`;
+function buildMobileTimeline() {
+  if (window.innerWidth > 900) return;
+  const mEl = document.getElementById('mobileTimeline');
+  if (mEl.querySelector('div[data-node]')) return;
+  mEl.style.display = 'block';
+  document.getElementById('storyTimeline').style.display = 'none';
+  timelineData.forEach((d, i) => {
+    const node = document.createElement('div');
+    node.setAttribute('data-node', i);
+    node.style.cssText = `padding-left:3.5rem;margin-bottom:2.5rem;opacity:0;transform:translateY(20px);transition:opacity 0.7s ease ${i*0.12}s,transform 0.7s ease ${i*0.12}s;position:relative`;
+    node.innerHTML = `<div style="position:absolute;left:0;top:0;width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,#C9A84C,#B5622A);display:flex;align-items:center;justify-content:center;font-size:1.2rem;box-shadow:0 4px 20px rgba(197,132,106,0.4);z-index:2">${d.icon}</div><div><div style="font-family:Jost,sans-serif;font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;color:#C9A84C;margin-bottom:0.25rem">${d.year} · ${d.tag}</div><div style="font-family:'Bodoni Moda',serif;font-size:1rem;color:#fff;margin-bottom:0.4rem;font-style:italic">${d.heading}</div><div style="font-family:Jost,sans-serif;font-size:0.8rem;color:rgba(255,255,255,0.5);line-height:1.7;font-weight:300">${d.body}</div></div>`;
     mEl.appendChild(node);
   });
-  const mObs=new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0)';mObs.unobserve(e.target);}});
-  },{threshold:0.2});
-  document.querySelectorAll('#mobileTimeline > div').forEach(n=>mObs.observe(n));
+  const mObs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.style.opacity = '1'; e.target.style.transform = 'translateY(0)'; mObs.unobserve(e.target); } });
+  }, {threshold:0.2});
+  document.querySelectorAll('#mobileTimeline > div[data-node]').forEach(n => mObs.observe(n));
 }
 buildMobileTimeline();
-window.addEventListener('resize',buildMobileTimeline,{passive:true});
+window.addEventListener('resize', buildMobileTimeline, {passive:true});
 
-// TESTIMONIALS
-const testimonialsData=[
+/* ===================== BRIDAL CAROUSEL ===================== */
+const bridesData = [
+  {fill:'bf-1',emoji:'👰',ceremony:'South Indian Bridal',badge:'Featured Bride',name:'Meenakshi',initial:'R.',quote:'"I looked in the mirror and didn\'t recognise myself — in the most magical way."'},
+  {fill:'bf-2',emoji:'🌸',ceremony:'Reception Night',badge:'Transformation',name:'Priya',initial:'K.',quote:'"Every guest asked who did my makeup. Pavi is pure magic."'},
+  {fill:'bf-3',emoji:'💎',ceremony:'Engagement Ceremony',badge:'Our Bride',name:'Deepa',initial:'M.',quote:'"She gave me something more beautiful than I ever imagined."'},
+  {fill:'bf-4',emoji:'🌺',ceremony:'Hindu Wedding Bridal',badge:'Glow Story',name:'Lakshmi',initial:'S.',quote:'"My mother cried when she saw me. That alone says everything about Pavi\'s work."'},
+  {fill:'bf-5',emoji:'✨',ceremony:'Christian Wedding',badge:'Real Bride',name:'Anitha',initial:'V.',quote:'"Natural yet stunning. She made me glow from within."'},
+  {fill:'bf-6',emoji:'💐',ceremony:'Sangeet Ceremony',badge:'Glow Bride',name:'Kavitha',initial:'N.',quote:'"I felt like a queen. Every single detail was perfect."'},
+];
+function makeBrideCard(d) {
+  return `<div class="bride-card">
+    <div class="bride-card-visual">
+      <div class="bride-fill ${d.fill}"></div>
+      <div class="bride-emoji">${d.emoji}</div>
+      <div class="bride-overlay"></div>
+      <div class="bride-ceremony"><div class="bride-dot"></div><span class="bride-ceremony-name">${d.ceremony}</span></div>
+    </div>
+    <div class="bride-card-body">
+      <span class="bride-badge">✦ ${d.badge}</span>
+      <p class="bride-name">${d.name} <em>${d.initial}</em></p>
+      <p class="bride-quote">${d.quote}</p>
+      <div class="bride-stars">${'<span class="bride-star">★</span>'.repeat(5)}</div>
+    </div>
+  </div>`;
+}
+// Double the cards for seamless infinite loop
+const track = document.getElementById('bridesTrack');
+const doubled = [...bridesData, ...bridesData];
+track.innerHTML = doubled.map(makeBrideCard).join('');
+
+/* ===================== TESTIMONIALS ===================== */
+const testimonialsData = [
   {init:'SR',type:'rose',name:'Sowmya R.',occasion:'Bridal Client — Chennai Wedding',text:'"I had tears in my eyes when I saw myself in the mirror. Pavi has this incredible gift of understanding exactly what you want, even when you can\'t put it into words."'},
   {init:'PK',type:'gold',name:'Preethi K.',occasion:'Bridal Client — Temple Ceremony',text:'"The makeup lasted 14 hours — through all the ceremonies, the dancing, the crying. It was flawless from morning to night. Worth every rupee and more."'},
   {init:'DV',type:'blush',name:'Dharini V.',occasion:'Party Makeup Client',text:'"Not just a makeup artist — she\'s a dream keeper. She remembered everything I mentioned during our trial and made it even better."'},
@@ -902,35 +1079,256 @@ const testimonialsData=[
   {init:'NK',type:'gold',name:'Nithya K.',occasion:'Reception Look Client',text:'"Pavi made me feel like royalty. The whole experience was so peaceful and personal. She has such a warm energy — you feel beautiful before she even finishes."'},
   {init:'JS',type:'blush',name:'Janani S.',occasion:'Full Bridal Package Client',text:'"Every photo from my wedding is magazine-worthy. Even my photographer said my makeup was the best she\'s seen. That\'s Pavi\'s standard."'}
 ];
-function buildCard(d){
-  return`<div class="review-card"><div class="review-quote-mark">"</div><div class="review-stars">${'<span class="star">★</span>'.repeat(5)}</div><p class="review-text">${d.text}</p><div class="review-author"><div class="author-avatar ${d.type}">${d.init}</div><div><p class="author-name">${d.name}</p><p class="author-type">${d.occasion}</p></div></div></div>`;
+function buildCard(d) {
+  return `<div class="review-card"><div class="review-quote-mark">"</div><div class="review-stars">${'<span class="star">★</span>'.repeat(5)}</div><p class="review-text">${d.text}</p><div class="review-author"><div class="author-avatar ${d.type}">${d.init}</div><div><p class="author-name">${d.name}</p><p class="author-type">${d.occasion}</p></div></div></div>`;
 }
-const tTrack=document.getElementById('testimonialsTrack');
-const tWrap=document.getElementById('testimonialsWrap');
-const allCards=[...testimonialsData,...testimonialsData,...testimonialsData];
-tTrack.innerHTML=allCards.map(buildCard).join('');
-const CARD_W=360+24,SET_LEN=testimonialsData.length;
-let tPos=SET_LEN*CARD_W,tPaused=false;
-tTrack.style.transform=`translateX(-${tPos}px)`;
-function animateT(){
-  if(tPaused)return;
-  tPos+=0.7;
-  if(tPos>=SET_LEN*2*CARD_W){
+const tTrack = document.getElementById('testimonialsTrack');
+const tWrap = document.getElementById('testimonialsWrap');
+const allCards = [...testimonialsData, ...testimonialsData, ...testimonialsData];
+tTrack.innerHTML = allCards.map(buildCard).join('');
+const CARD_W = 360 + 24, SET_LEN = testimonialsData.length;
+let tPos = SET_LEN * CARD_W, tPaused = false;
+tTrack.style.transform = `translateX(-${tPos}px)`;
+function animateT() {
+  if (tPaused) return;
+  tPos += 0.7;
+  if (tPos >= SET_LEN * 2 * CARD_W) {
     tTrack.classList.add('no-transition');
-    tPos=SET_LEN*CARD_W;
-    tTrack.style.transform=`translateX(-${tPos}px)`;
+    tPos = SET_LEN * CARD_W;
+    tTrack.style.transform = `translateX(-${tPos}px)`;
     void tTrack.offsetWidth;
     tTrack.classList.remove('no-transition');
   }
-  tTrack.style.transform=`translateX(-${tPos}px)`;
+  tTrack.style.transform = `translateX(-${tPos}px)`;
   requestAnimationFrame(animateT);
 }
-tWrap.addEventListener('mouseenter',()=>{tPaused=true;});
-tWrap.addEventListener('mouseleave',()=>{tPaused=false;animateT();});
-let tTouchStart=0;
-tWrap.addEventListener('touchstart',e=>{tPaused=true;tTouchStart=e.touches[0].clientX;},{passive:true});
-tWrap.addEventListener('touchend',e=>{tPos+=tTouchStart-e.changedTouches[0].clientX;tPaused=false;animateT();},{passive:true});
+tWrap.addEventListener('mouseenter', () => { tPaused = true; });
+tWrap.addEventListener('mouseleave', () => { tPaused = false; animateT(); });
+let tTouchStart = 0;
+tWrap.addEventListener('touchstart', e => { tPaused = true; tTouchStart = e.touches[0].clientX; }, {passive:true});
+tWrap.addEventListener('touchend', e => { tPos += tTouchStart - e.changedTouches[0].clientX; tPaused = false; animateT(); }, {passive:true});
 animateT();
+
+/* ===================== MULTI-STEP BOOKING FORM ===================== */
+let currentStep = 1;
+let formData = { name:'', phone:'', date:'', service:'', people:1, budget:'', customBudget:'', message:'' };
+
+const panels = { 1: document.getElementById('fp1'), 2: document.getElementById('fp2'), 3: document.getElementById('fp3') };
+const btnNext = document.getElementById('btnNext');
+const btnBack = document.getElementById('btnBack');
+const btnNextTxt = document.getElementById('btnNextTxt');
+const stepFlash = document.getElementById('stepFlash');
+
+let peopleCount = 1;
+document.getElementById('pplMinus').addEventListener('click', () => {
+  if (peopleCount > 1) { peopleCount--; document.getElementById('pplVal').textContent = peopleCount; formData.people = peopleCount; }
+});
+document.getElementById('pplPlus').addEventListener('click', () => {
+  if (peopleCount < 20) { peopleCount++; document.getElementById('pplVal').textContent = peopleCount; formData.people = peopleCount; }
+});
+
+document.getElementById('svcGrid').addEventListener('click', e => {
+  const btn = e.target.closest('.svc-pill');
+  if (!btn) return;
+  document.querySelectorAll('.svc-pill').forEach(b => b.classList.remove('sel'));
+  btn.classList.add('sel');
+  formData.service = btn.dataset.v;
+  document.getElementById('e-service').classList.remove('show');
+});
+
+document.getElementById('budgetGrid').addEventListener('click', e => {
+  const btn = e.target.closest('.bdg-pill');
+  if (!btn) return;
+  document.querySelectorAll('.bdg-pill').forEach(b => b.classList.remove('sel'));
+  btn.classList.add('sel');
+  formData.budget = btn.dataset.v;
+  document.getElementById('e-budget').classList.remove('show');
+});
+
+function showErr(inputId, errId) {
+  const inp = document.getElementById(inputId);
+  const err = document.getElementById(errId);
+  if (inp) inp.classList.add('err');
+  if (err) err.classList.add('show');
+}
+
+document.getElementById('f-name').addEventListener('input', () => { document.getElementById('f-name').classList.remove('err'); document.getElementById('e-name').classList.remove('show'); });
+document.getElementById('f-phone').addEventListener('input', () => { document.getElementById('f-phone').classList.remove('err'); document.getElementById('e-phone').classList.remove('show'); });
+document.getElementById('f-date').addEventListener('change', () => { document.getElementById('f-date').classList.remove('err'); document.getElementById('e-date').classList.remove('show'); });
+
+function validateStep(step) {
+  let valid = true;
+  if (step === 1) {
+    const name = document.getElementById('f-name').value.trim();
+    const phone = document.getElementById('f-phone').value.trim();
+    if (!name) { showErr('f-name', 'e-name'); valid = false; }
+    if (!/^[6-9]\d{9}$/.test(phone)) { showErr('f-phone', 'e-phone'); valid = false; }
+    if (valid) { formData.name = name; formData.phone = phone; }
+  }
+  if (step === 2) {
+    const date = document.getElementById('f-date').value;
+    if (!date) { showErr('f-date', 'e-date'); valid = false; }
+    if (!formData.service) { document.getElementById('e-service').classList.add('show'); valid = false; }
+    if (valid) { formData.date = date; formData.people = peopleCount; }
+  }
+  if (step === 3) {
+    if (!formData.budget) { document.getElementById('e-budget').classList.add('show'); valid = false; }
+    if (valid) {
+      formData.customBudget = document.getElementById('f-custom-budget').value.trim();
+      formData.message = document.getElementById('f-msg').value.trim();
+    }
+  }
+  return valid;
+}
+
+function fireFlash(emoji) {
+  stepFlash.textContent = emoji;
+  stepFlash.classList.remove('go');
+  void stepFlash.offsetWidth;
+  stepFlash.classList.add('go');
+  stepFlash.addEventListener('animationend', () => stepFlash.classList.remove('go'), {once:true});
+}
+
+function updateStepUI(from, to, direction) {
+  const leavingClass = direction === 'forward' ? 'gone-left' : 'gone-right';
+  const enteringClass = direction === 'forward' ? 'gone-right' : 'gone-left';
+  panels[from].classList.remove('active');
+  panels[from].classList.add(leavingClass);
+  panels[to].classList.remove('gone-left', 'gone-right', 'active');
+  panels[to].classList.add(enteringClass);
+  void panels[to].offsetWidth;
+  panels[to].classList.remove(enteringClass);
+  panels[to].classList.add('active');
+  updateBodyHeight(to);
+
+  for (let i = 1; i <= 3; i++) {
+    const dot = document.getElementById('sd' + i);
+    const item = document.getElementById('si' + i);
+    dot.classList.remove('active', 'done');
+    item.classList.remove('active', 'done');
+    if (i < to) { dot.classList.add('done'); item.classList.add('done'); }
+    else if (i === to) { dot.classList.add('active'); item.classList.add('active'); }
+  }
+  for (let i = 1; i <= 2; i++) {
+    document.getElementById('sc' + i).classList.toggle('done', i < to);
+  }
+
+  btnBack.style.display = to > 1 ? 'block' : 'none';
+  if (to === 3) {
+    btnNext.classList.add('btn-wa-f');
+    btnNextTxt.textContent = 'Check Availability on WhatsApp';
+  } else {
+    btnNext.classList.remove('btn-wa-f');
+    btnNextTxt.textContent = to === 1 ? 'Next: Event Details' : 'Next: Budget & Message';
+  }
+  btnNext.querySelector('span:last-child').textContent = '→';
+}
+
+function updateBodyHeight(step) {
+  const fb = document.getElementById('formBody');
+  const panel = panels[step];
+  fb.style.height = panel.offsetHeight + 'px';
+}
+
+window.addEventListener('load', () => { updateBodyHeight(1); });
+window.addEventListener('resize', () => { updateBodyHeight(currentStep); }, {passive:true});
+
+btnNext.addEventListener('click', () => {
+  if (!validateStep(currentStep)) return;
+  if (currentStep === 3) { submitForm(); return; }
+  fireFlash(['✓','✨','🌸'][currentStep - 1]);
+  const from = currentStep;
+  currentStep++;
+  updateStepUI(from, currentStep, 'forward');
+});
+
+btnBack.addEventListener('click', () => {
+  if (currentStep === 1) return;
+  const from = currentStep;
+  currentStep--;
+  updateStepUI(from, currentStep, 'back');
+});
+
+function formatDate(dateStr) {
+  if (!dateStr) return 'Not specified';
+  return new Date(dateStr).toLocaleDateString('en-IN', {day:'numeric', month:'long', year:'numeric'});
+}
+
+function submitForm() {
+  fireFlash('💫');
+  const cover = document.getElementById('successCover');
+  const ring = document.getElementById('successRing');
+  cover.classList.add('show');
+  setTimeout(() => { ring.classList.add('pop'); }, 100);
+  const lines = [
+    '✨ *Booking Enquiry — Glow Pavi\'s Makeover*','',
+    `👤 *Name:* ${formData.name}`,
+    `📱 *Phone:* ${formData.phone}`,
+    `📅 *Event Date:* ${formatDate(formData.date)}`,
+    `💄 *Service:* ${formData.service}`,
+    `👥 *No. of People:* ${formData.people}`,
+    `💰 *Budget:* ${formData.budget}`,
+  ];
+  if (formData.customBudget) lines.push(`📝 *Custom Budget:* ${formData.customBudget}`);
+  if (formData.message) lines.push(`💬 *Message:* ${formData.message}`);
+  lines.push('','_(Sent via Glow Pavi website booking form)_');
+  const msg = encodeURIComponent(lines.join('\n'));
+  setTimeout(() => { window.open(`https://wa.me/919344089990?text=${msg}`, '_blank'); }, 1400);
+}
+
+/* ===================== SUPABASE ===================== */
+const SUPA_URL = 'https://qjgnxvauaqshhzlqtvdc.supabase.co';
+const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFqZ254dmF1YXFzaGh6bHF0dmRjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYyMzU2NzgsImV4cCI6MjA5MTgxMTY3OH0.USCOgGQqFhM4MvEGhDnR1uVtgA1G6rsYeQneRbwt5TU';
+
+async function supaFetch(table, query='') {
+  const res = await fetch(`${SUPA_URL}/rest/v1/${table}${query}`, {
+    headers: {'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}`}
+  });
+  return res.json();
+}
+
+async function loadFromSupabase() {
+  try {
+    const content = await supaFetch('site_content', '');
+    content?.forEach(r => {
+      const v = r.value;
+      if (r.id === 'hero') {
+        const eyebrow = document.querySelector('.hero-eyebrow span');
+        if (eyebrow && v.eyebrow) eyebrow.textContent = v.eyebrow;
+        const title = document.querySelector('.hero-title');
+        if (title && v.title1) title.innerHTML = `${v.title1}<br><em>${v.title2}</em>`;
+        const sub = document.querySelector('.hero-subtitle');
+        if (sub && v.subtitle) sub.textContent = v.subtitle;
+      }
+      if (r.id === 'stats') {
+        const nums = document.querySelectorAll('.stat-num[data-target]');
+        const lbls = document.querySelectorAll('.stat-label');
+        const vals = [v.stat1, v.stat2, v.stat3, v.stat4];
+        nums.forEach((el, i) => {
+          if (vals[i]) { el.dataset.target = vals[i].num; el.dataset.suffix = vals[i].suffix; el.textContent = vals[i].num + vals[i].suffix; }
+        });
+        lbls.forEach((el, i) => { if (vals[i]?.label) el.textContent = vals[i].label; });
+      }
+      if (r.id === 'contact') {
+        document.querySelectorAll('a[href*="wa.me"]').forEach(a => {
+          if (v.whatsapp) a.href = `https://wa.me/${v.whatsapp}`;
+        });
+        const slogan = document.querySelector('.footer-slogan');
+        if (slogan && v.slogan) slogan.textContent = v.slogan;
+      }
+    });
+    const reviews = await supaFetch('testimonials', '?is_active=eq.true&order=sort_order');
+    if (reviews?.length) {
+      function makeCard(r) {
+        return `<div class="review-card"><div class="review-quote-mark">"</div><div class="review-stars">${'<span class="star">★</span>'.repeat(r.stars||5)}</div><p class="review-text">"${r.review_text}"</p><div class="review-author"><div class="author-avatar ${r.avatar_color||'rose'}">${r.initials||'?'}</div><div><p class="author-name">${r.client_name}</p><p class="author-type">${r.occasion||''}</p></div></div></div>`;
+      }
+      const all = [...reviews, ...reviews, ...reviews];
+      tTrack.innerHTML = all.map(makeCard).join('');
+    }
+  } catch(e) { console.log('Supabase load error:', e); }
+}
+
+document.addEventListener('DOMContentLoaded', loadFromSupabase);
 </script>
 </body>
 </html>
