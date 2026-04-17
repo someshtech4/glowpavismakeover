@@ -1,317 +1,336 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Party Makeup — Glow Pavi's Makeover</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-:root{
-  --gold:#C9A84C;--gold-light:#E8C97A;--gold-dark:#9A7A32;
-  --blush:#F2D0C8;--blush-deep:#E8A89A;--blush-soft:#FAF0EC;
-  --rose-gold:#C5846A;--rose-light:#EBC4B8;
-  --white:#FFFFFF;--off-white:#FDF8F5;--cream:#FAF3EE;
-  --text-dark:#2C1810;--text-mid:#6B4C3B;--text-light:#A07060;
-  --copper:#B5622A;--copper-light:#D4895A;
-  --purple-dark:#1e0a30;--purple-mid:#2d1045;
-}
-html{scroll-behavior:smooth;overflow-x:hidden}
-body{font-family:'Jost',sans-serif;background:var(--off-white);color:var(--text-dark);overflow-x:hidden}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Skin Care | Glow Pavi's Makeover</title>
+  <link rel="icon" type="image/png" href="./assets/image/favicon.png">
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,600;0,6..96,700;1,6..96,400;1,6..96,600&family=DM+Serif+Display:ital@0;1&family=Jost:wght@200;300;400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+  <style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --gold:#C9A84C;--gold-light:#E8C97A;--gold-dark:#9A7A32;
+    --blush:#F2D0C8;--blush-deep:#E8A89A;--blush-soft:#FAF0EC;
+    --rose-gold:#C5846A;--rose-light:#EBC4B8;
+    --white:#FFFFFF;--off-white:#FDF8F5;--cream:#FAF3EE;
+    --text-dark:#2C1810;--text-mid:#6B4C3B;--text-light:#A07060;
+    --copper:#B5622A;--copper-light:#D4895A;
+    --green:#2D5A4A;--green-light:#3D7A62;--green-pale:#E8F5F0;
+  }
+  html{scroll-behavior:smooth;overflow-x:hidden}
+  body{font-family:'Jost',sans-serif;background:var(--off-white);color:var(--text-dark);overflow-x:hidden}
 
-/* ===== NAV ===== */
-nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0.6rem 4rem;display:flex;justify-content:space-between;align-items:center;transition:all 0.4s ease;background:transparent}
-nav.scrolled{background:rgba(253,248,245,0.97);backdrop-filter:blur(20px);border-bottom:1px solid rgba(197,132,106,0.15);padding:0.45rem 4rem}
-.nav-logo img{height:60px;width:60px;object-fit:contain}
-.nav-links{display:flex;gap:2.5rem;list-style:none;align-items:center}
-.nav-links a{text-decoration:none;color:var(--white);font-family:'Jost',sans-serif;font-size:0.78rem;font-weight:400;letter-spacing:0.14em;text-transform:uppercase;transition:color 0.3s}
-nav.scrolled .nav-links a{color:var(--text-mid)}
-.nav-links a:hover{color:var(--gold)}
-.nav-dropdown{position:relative}
-.nav-dropdown>a{display:flex;align-items:center;gap:0.35rem;cursor:pointer}
-.nav-dropdown>a .caret{font-size:0.55rem;transition:transform 0.3s;opacity:0.7;margin-top:1px}
-.nav-dropdown:hover>a .caret{transform:rotate(180deg)}
-.dropdown-menu{position:absolute;top:calc(100% + 1.2rem);left:50%;transform:translateX(-50%) translateY(-8px);background:#fff;border-radius:16px;padding:0.6rem;box-shadow:0 20px 60px rgba(44,24,16,0.18),0 2px 12px rgba(44,24,16,0.08);border:1px solid rgba(197,132,106,0.15);min-width:220px;opacity:0;pointer-events:none;transition:opacity 0.25s ease,transform 0.25s ease}
-.dropdown-menu::before{content:'';position:absolute;top:-1.5rem;left:0;right:0;height:1.5rem;background:transparent}
-.dropdown-menu::after{content:'';position:absolute;top:-6px;left:50%;width:12px;height:12px;background:#fff;border-left:1px solid rgba(197,132,106,0.15);border-top:1px solid rgba(197,132,106,0.15);transform:translateX(-50%) rotate(45deg);pointer-events:none}
-.nav-dropdown:hover .dropdown-menu{opacity:1;pointer-events:all;transform:translateX(-50%) translateY(0)}
-.dropdown-item{display:flex;align-items:center;gap:0.75rem;padding:0.7rem 0.9rem;border-radius:10px;text-decoration:none;transition:background 0.2s;font-family:'Jost',sans-serif;font-size:0.78rem;color:var(--text-mid);font-weight:400;letter-spacing:0.06em;text-transform:none;cursor:pointer}
-.dropdown-item:hover{background:rgba(201,168,76,0.09);color:var(--text-dark)}
-.dropdown-item .di-icon{width:34px;height:34px;border-radius:8px;background:linear-gradient(135deg,rgba(201,168,76,0.15),rgba(197,132,106,0.12));display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
-.dropdown-item .di-info{display:flex;flex-direction:column;gap:0.1rem}
-.dropdown-item .di-label{font-size:0.8rem;font-weight:500;color:var(--text-dark)}
-.dropdown-item .di-sub{font-size:0.68rem;color:var(--text-light);font-style:italic}
-.dropdown-divider{height:1px;background:rgba(197,132,106,0.1);margin:0.3rem 0}
-.nav-cta{background:linear-gradient(135deg,var(--gold),var(--copper));color:var(--white);padding:0.55rem 1.5rem;border-radius:30px;text-decoration:none;font-family:'Jost',sans-serif;font-size:0.75rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;transition:all 0.3s;border:none;cursor:pointer;box-shadow:0 4px 20px rgba(197,132,106,0.4)}
-.nav-cta:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(197,132,106,0.5)}
-.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;z-index:1100;background:none;border:none}
-.hamburger span{display:block;width:24px;height:2px;background:var(--white);border-radius:2px;transition:all 0.35s ease}
-nav.scrolled .hamburger span{background:var(--text-dark)}
-.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
-.hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0)}
-.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
-.mobile-nav{position:fixed;top:0;right:-100%;width:min(320px,85vw);height:100vh;background:linear-gradient(160deg,#1a0e08 0%,#0d0806 60%,#180f08 100%);z-index:1050;transition:right 0.42s cubic-bezier(0.77,0,0.175,1);padding:4.5rem 2.5rem 3rem;display:flex;flex-direction:column;gap:0;border-left:1px solid rgba(201,168,76,0.12);visibility:hidden;pointer-events:none;overflow-y:auto;-webkit-overflow-scrolling:touch}
-.mobile-nav.open{right:0;visibility:visible;pointer-events:all}
-.mobile-nav a{display:block;color:rgba(255,255,255,0.75);text-decoration:none;font-family:'Jost',sans-serif;font-size:1rem;font-weight:300;letter-spacing:0.08em;padding:0.85rem 0;border-bottom:1px solid rgba(201,168,76,0.08);transition:color 0.3s,padding-left 0.3s}
-.mobile-nav a:hover,.mobile-nav a:active{color:var(--gold-light);padding-left:0.5rem}
-.mobile-section-label{font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(201,168,76,0.5);margin-top:1.4rem;margin-bottom:0.3rem;display:block}
-.mobile-cta{margin-top:1.8rem;background:linear-gradient(135deg,var(--gold),var(--copper));color:var(--white) !important;text-align:center;padding:0.85rem !important;border-radius:30px;font-size:0.82rem;letter-spacing:0.1em;text-transform:uppercase;font-weight:500;border-bottom:none !important}
-.mobile-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:1040;opacity:0;pointer-events:none;transition:opacity 0.4s;backdrop-filter:blur(2px)}
-.mobile-overlay.show{opacity:1;pointer-events:all}
+  /* ===== NAV ===== */
+  nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0.5rem 4rem;display:flex;justify-content:space-between;align-items:center;transition:all 0.4s ease;background:transparent}
+  nav.scrolled{background:rgba(253,248,245,0.96);backdrop-filter:blur(20px);border-bottom:1px solid rgba(197,132,106,0.15);padding:0.4rem 4rem}
+  .nav-logo img{height:62px;width:62px;object-fit:contain}
+  .nav-links{display:flex;gap:2.5rem;list-style:none;align-items:center}
+  .nav-links a{text-decoration:none;color:var(--white);font-family:'Jost',sans-serif;font-size:0.78rem;font-weight:400;letter-spacing:0.14em;text-transform:uppercase;transition:color 0.3s}
+  nav.scrolled .nav-links a{color:var(--text-mid)}
+  .nav-links a:hover{color:var(--gold)}
+  .nav-dropdown{position:relative}
+  .nav-dropdown>a{display:flex;align-items:center;gap:0.35rem;cursor:pointer}
+  .nav-dropdown>a .caret{font-size:0.55rem;transition:transform 0.3s;opacity:0.7;margin-top:1px}
+  .nav-dropdown::after{content:'';position:absolute;top:100%;left:0;right:0;height:1.5rem;background:transparent;display:none}
+  .nav-dropdown:hover::after{display:block}
+  .nav-dropdown:hover>a .caret{transform:rotate(180deg)}
+  .dropdown-menu{position:absolute;top:calc(100% + 1.2rem);left:50%;transform:translateX(-50%) translateY(-8px);background:#fff;border-radius:16px;padding:0.6rem;box-shadow:0 20px 60px rgba(44,24,16,0.18),0 2px 12px rgba(44,24,16,0.08);border:1px solid rgba(197,132,106,0.15);min-width:220px;opacity:0;pointer-events:none;transition:opacity 0.25s ease,transform 0.25s ease;padding-top:0.6rem}
+  .dropdown-menu::before{content:'';position:absolute;top:-1.5rem;left:0;right:0;height:1.5rem;background:transparent}
+  .dropdown-menu::after{content:'';position:absolute;top:-6px;left:50%;width:12px;height:12px;background:#fff;border-left:1px solid rgba(197,132,106,0.15);border-top:1px solid rgba(197,132,106,0.15);transform:translateX(-50%) rotate(45deg);pointer-events:none}
+  .nav-dropdown:hover .dropdown-menu{opacity:1;pointer-events:all;transform:translateX(-50%) translateY(0)}
+  .dropdown-item{display:flex;align-items:center;gap:0.75rem;padding:0.7rem 0.9rem;border-radius:10px;text-decoration:none;transition:background 0.2s;font-family:'Jost',sans-serif;font-size:0.78rem;color:var(--text-mid);font-weight:400;letter-spacing:0.06em;text-transform:none;cursor:pointer}
+  .dropdown-item:hover{background:rgba(201,168,76,0.09);color:var(--text-dark)}
+  .dropdown-item .di-icon{width:34px;height:34px;border-radius:8px;background:linear-gradient(135deg,rgba(201,168,76,0.15),rgba(197,132,106,0.12));display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
+  .dropdown-item .di-label{font-size:0.8rem;font-weight:500;color:var(--text-dark)}
+  .dropdown-divider{height:1px;background:rgba(197,132,106,0.1);margin:0.3rem 0}
+  .nav-cta{background:linear-gradient(135deg,var(--gold),var(--copper));color:var(--white);padding:0.55rem 1.5rem;border-radius:30px;text-decoration:none;font-family:'Jost',sans-serif;font-size:0.75rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;transition:all 0.3s;border:none;cursor:pointer;box-shadow:0 4px 20px rgba(197,132,106,0.4)}
+  .nav-cta:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(197,132,106,0.5)}
+  .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;z-index:1100;background:none;border:none}
+  .hamburger span{display:block;width:24px;height:2px;background:var(--white);border-radius:2px;transition:all 0.35s ease}
+  nav.scrolled .hamburger span{background:var(--text-dark)}
+  .hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+  .hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+  .mobile-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:1040;opacity:0;pointer-events:none;transition:opacity 0.4s;backdrop-filter:blur(2px)}
+  .mobile-overlay.show{opacity:1;pointer-events:all}
+  .mobile-nav{position:fixed;top:0;right:-100%;width:min(320px,85vw);height:100vh;background:linear-gradient(160deg,#1a0e08 0%,#0d0806 60%,#180f08 100%);z-index:1050;transition:right 0.42s cubic-bezier(0.77,0,0.175,1);padding:4.5rem 2.5rem 3rem;display:flex;flex-direction:column;gap:0;border-left:1px solid rgba(201,168,76,0.12);visibility:hidden;pointer-events:none;overflow-y:auto;-webkit-overflow-scrolling:touch}
+  .mobile-nav.open{right:0;visibility:visible;pointer-events:all}
+  .mobile-nav a{display:block;color:rgba(255,255,255,0.75);text-decoration:none;font-family:'Jost',sans-serif;font-size:1rem;font-weight:300;letter-spacing:0.08em;padding:0.85rem 0;border-bottom:1px solid rgba(201,168,76,0.08);transition:color 0.3s,padding-left 0.3s}
+  .mobile-nav a:hover,.mobile-nav a:active{color:var(--gold-light);padding-left:0.5rem}
+  .mobile-section-label{font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(201,168,76,0.5);margin-top:1.4rem;margin-bottom:0.3rem;display:block}
+  .mobile-cta{margin-top:1.8rem;background:linear-gradient(135deg,var(--gold),var(--copper));color:var(--white) !important;text-align:center;padding:0.85rem !important;border-radius:30px;font-size:0.82rem;letter-spacing:0.1em;text-transform:uppercase;font-weight:500;border-bottom:none !important}
 
-/* ===== HERO — FULL SCREEN ===== */
-#hero{height:100vh;min-height:620px;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#070312}
-.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,rgba(130,60,180,0.22) 0%,transparent 55%),radial-gradient(ellipse at 80% 25%,rgba(201,168,76,0.12) 0%,transparent 45%),linear-gradient(135deg,#0d0518 0%,#070312 40%,#120520 100%);z-index:0}
-.hero-particles{position:absolute;inset:0;z-index:1;pointer-events:none}
-.particle{position:absolute;background:var(--gold-light);border-radius:50%;animation:float-particle linear infinite;opacity:0}
-.hero-content{position:relative;z-index:3;text-align:center;max-width:860px;padding:2rem 1.5rem}
-.hero-eyebrow{display:inline-flex;align-items:center;gap:1rem;margin-bottom:1.5rem;opacity:0;animation:fadeUp 1s 0.4s forwards}
-.hero-line{width:40px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
-.hero-eyebrow span{font-size:0.72rem;font-weight:400;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold-light)}
-.hero-title{font-family:'Playfair Display',serif;font-size:clamp(2.6rem,6.5vw,5rem);font-weight:400;line-height:1.1;color:var(--white);margin-bottom:1.2rem;opacity:0;animation:fadeUp 1s 0.7s forwards}
-.hero-title em{font-style:italic;background:linear-gradient(135deg,var(--gold-light),#d4895a,var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:block}
-.hero-subtitle{font-family:'Cormorant Garamond',serif;font-size:clamp(1rem,2.5vw,1.35rem);font-weight:300;color:rgba(255,255,255,0.6);line-height:1.8;max-width:580px;margin:0 auto 2.5rem;opacity:0;animation:fadeUp 1s 1s forwards;font-style:italic}
-.hero-actions{display:flex;gap:1.2rem;justify-content:center;flex-wrap:wrap;opacity:0;animation:fadeUp 1s 1.3s forwards}
-.btn-primary{background:linear-gradient(135deg,var(--gold),var(--copper));color:var(--white);padding:0.9rem 2.2rem;border-radius:50px;text-decoration:none;font-size:0.82rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;transition:all 0.4s;box-shadow:0 4px 30px rgba(201,168,76,0.4);display:inline-flex;align-items:center;gap:0.6rem}
-.btn-primary:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(201,168,76,0.5)}
-.btn-secondary{background:transparent;color:var(--white);padding:0.9rem 2.2rem;border-radius:50px;text-decoration:none;font-size:0.82rem;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;transition:all 0.4s;border:1px solid rgba(201,168,76,0.5);display:inline-flex;align-items:center;gap:0.6rem}
-.btn-secondary:hover{background:rgba(201,168,76,0.1);border-color:var(--gold);transform:translateY(-2px)}
-.hero-ornament{position:absolute;width:500px;height:500px;border-radius:50%;border:1px solid rgba(130,60,180,0.1);top:50%;left:50%;transform:translate(-50%,-50%);z-index:1;animation:slow-rotate 30s linear infinite}
-.hero-ornament::before{content:'';position:absolute;inset:40px;border-radius:50%;border:1px solid rgba(201,168,76,0.05)}
-.breadcrumb{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:0.6rem;opacity:0;animation:fadeIn 1s 1.6s forwards}
-.breadcrumb a,.breadcrumb span{font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.35);text-decoration:none;transition:color 0.3s}
-.breadcrumb a:hover{color:var(--gold-light)}
-.breadcrumb .sep{color:rgba(201,168,76,0.3)}
-.breadcrumb .current{color:var(--gold-light)}
-/* Scroll cue */
-.scroll-cue{position:absolute;bottom:1.2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:0.4rem;opacity:0;animation:fadeIn 1s 2s forwards}
-.scroll-cue span{font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.25)}
-.scroll-arrow{width:1px;height:36px;background:linear-gradient(to bottom,rgba(201,168,76,0.5),transparent);margin:0 auto;animation:scrollPulse 2s ease infinite}
+  /* ===== FIX 1: FULL-SCREEN HERO BANNER ===== */
+  #hero{
+    width:100%;height:100vh;min-height:680px;
+    position:relative;display:flex;align-items:center;justify-content:center;
+    overflow:hidden;background:#050d0a
+  }
+  .hero-bg{
+    position:absolute;inset:0;
+    background:
+      radial-gradient(ellipse at 20% 60%,rgba(45,90,74,0.55) 0%,transparent 55%),
+      radial-gradient(ellipse at 80% 25%,rgba(201,168,76,0.18) 0%,transparent 50%),
+      radial-gradient(ellipse at 60% 80%,rgba(197,132,106,0.15) 0%,transparent 45%),
+      linear-gradient(160deg,#050d0a 0%,#0a1a12 45%,#0d0806 100%);
+    z-index:0
+  }
+  /* Floating botanical shapes */
+  .hero-leaf{position:absolute;border-radius:50% 5% 50% 5%;opacity:0.06;pointer-events:none;z-index:1}
+  .hero-leaf:nth-child(1){width:300px;height:180px;background:var(--green-light);top:15%;left:8%;transform:rotate(-25deg);animation:leaf-float 8s ease-in-out infinite}
+  .hero-leaf:nth-child(2){width:200px;height:120px;background:var(--gold);top:60%;right:10%;transform:rotate(30deg);animation:leaf-float 11s ease-in-out 2s infinite reverse}
+  .hero-leaf:nth-child(3){width:150px;height:90px;background:var(--green-light);bottom:20%;left:20%;transform:rotate(10deg);animation:leaf-float 9s ease-in-out 4s infinite}
+  @keyframes leaf-float{0%,100%{transform:rotate(-25deg) translateY(0)}50%{transform:rotate(-20deg) translateY(-18px)}}
+  .hero-particles{position:absolute;inset:0;z-index:1;pointer-events:none}
+  .particle{position:absolute;border-radius:50%;animation:float-particle linear infinite;opacity:0}
+  @keyframes float-particle{0%{opacity:0;transform:translateY(100vh) scale(0)}10%{opacity:0.8}90%{opacity:0.4}100%{opacity:0;transform:translateY(-100px) scale(1.5)}}
+  .hero-ornament{position:absolute;width:700px;height:700px;border-radius:50%;border:1px solid rgba(45,90,74,0.12);top:50%;left:50%;transform:translate(-50%,-50%);z-index:1;animation:slow-rotate 35s linear infinite}
+  .hero-ornament::before{content:'';position:absolute;inset:50px;border-radius:50%;border:1px solid rgba(201,168,76,0.07)}
+  @keyframes slow-rotate{from{transform:translate(-50%,-50%) rotate(0deg)}to{transform:translate(-50%,-50%) rotate(360deg)}}
+  .hero-content{position:relative;z-index:3;text-align:center;max-width:950px;padding:2rem}
+  .hero-eyebrow{display:inline-flex;align-items:center;gap:1rem;margin-bottom:1.5rem;opacity:0;animation:fadeUp 1s 0.5s forwards}
+  .hero-line{width:40px;height:1px;background:linear-gradient(90deg,transparent,var(--green-light),transparent)}
+  .hero-eyebrow span{font-family:'Jost',sans-serif;font-size:0.72rem;font-weight:400;letter-spacing:0.25em;text-transform:uppercase;color:rgba(61,122,98,0.9)}
+  .hero-title{font-family:'Bodoni Moda',serif;font-size:clamp(2.8rem,7vw,5.5rem);font-weight:400;line-height:1.1;color:var(--white);margin-bottom:1.2rem;opacity:0;animation:fadeUp 1s 0.8s forwards}
+  .hero-title em{font-style:italic;background:linear-gradient(135deg,var(--gold-light),var(--copper-light),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:block}
+  .hero-subtitle{font-family:'Cormorant Garamond',serif;font-size:clamp(1rem,2.5vw,1.4rem);font-weight:300;color:rgba(255,255,255,0.6);line-height:1.85;max-width:640px;margin:0 auto 2.5rem;opacity:0;animation:fadeUp 1s 1.1s forwards;font-style:italic}
+  .hero-actions{display:flex;gap:1.2rem;justify-content:center;flex-wrap:wrap;opacity:0;animation:fadeUp 1s 1.4s forwards}
+  .btn-primary{background:linear-gradient(135deg,var(--gold),var(--copper));color:var(--white);padding:0.9rem 2.2rem;border-radius:50px;text-decoration:none;font-family:'Jost',sans-serif;font-size:0.78rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;transition:all 0.4s;box-shadow:0 4px 30px rgba(201,168,76,0.4);border:none;cursor:pointer;display:inline-flex;align-items:center;gap:0.6rem}
+  .btn-primary:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(201,168,76,0.5)}
+  .btn-secondary{background:transparent;color:var(--white);padding:0.9rem 2.2rem;border-radius:50px;text-decoration:none;font-family:'Jost',sans-serif;font-size:0.78rem;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;transition:all 0.4s;border:1px solid rgba(201,168,76,0.4);display:inline-flex;align-items:center;gap:0.6rem}
+  .btn-secondary:hover{background:rgba(201,168,76,0.1);border-color:var(--gold);transform:translateY(-2px)}
+  .hero-scroll{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:0.5rem;opacity:0;animation:fadeIn 1s 2s forwards}
+  .scroll-text{font-family:'Jost',sans-serif;font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.35)}
+  .scroll-dot{width:1px;height:40px;background:linear-gradient(180deg,var(--gold),transparent);animation:scroll-pulse 2s ease-in-out infinite}
+  @keyframes scroll-pulse{0%,100%{opacity:0.3}50%{opacity:1}}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 
-/* ===== SHARED ===== */
-section{padding:4rem 0}
-.container{max-width:1200px;margin:0 auto;padding:0 4rem}
-.section-eyebrow{display:inline-flex;align-items:center;gap:0.8rem;margin-bottom:0.8rem}
-.section-eyebrow span{font-size:0.7rem;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold-dark)}
-.eyebrow-line{width:30px;height:1px;background:var(--gold)}
-.section-title{font-family:'Playfair Display',serif;font-size:clamp(1.7rem,4vw,3rem);font-weight:400;line-height:1.2;color:var(--text-dark)}
-.section-title em{font-style:italic;color:var(--rose-gold)}
-.section-header{text-align:center;margin-bottom:2.5rem}
+  /* ===== COMMON ===== */
+  .container{max-width:1200px;margin:0 auto;padding:0 4rem}
+  .section-eyebrow{display:inline-flex;align-items:center;gap:0.8rem;margin-bottom:1rem}
+  .section-eyebrow span{font-family:'Jost',sans-serif;font-size:0.7rem;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:var(--green)}
+  .eyebrow-line{width:30px;height:1px;background:var(--green-light)}
+  .section-title{font-family:'Bodoni Moda',serif;font-size:clamp(2rem,5vw,3.2rem);font-weight:400;line-height:1.15;color:var(--text-dark)}
+  .section-title em{font-style:italic;color:var(--rose-gold)}
+  .reveal{opacity:0;transform:translateY(30px);transition:opacity 0.7s ease,transform 0.7s ease}
+  .reveal.visible{opacity:1;transform:translateY(0)}
 
-/* ===== ABOUT ===== */
-#about{background:var(--cream)}
-.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
-.about-main-box{background:linear-gradient(135deg,#0d0518,#1e0a30);border-radius:24px;padding:3rem 2.5rem;text-align:center;position:relative;overflow:hidden}
-.about-main-box::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 30%,rgba(130,60,180,0.3),transparent 60%)}
-.about-icon{font-size:4.5rem;display:block;margin-bottom:1rem;position:relative;z-index:1}
-.about-badge-text{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:400;color:var(--white);position:relative;z-index:1;line-height:1.3}
-.about-badge-text em{font-style:italic;color:var(--gold-light)}
-.about-float-1,.about-float-2{position:absolute;background:var(--cream);border:1px solid rgba(201,168,76,0.2);border-radius:16px;padding:0.9rem 1.2rem;font-size:0.78rem}
-.about-float-1{bottom:-1.5rem;left:-1.5rem;font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--text-mid);max-width:170px;line-height:1.5;box-shadow:0 8px 30px rgba(0,0,0,0.07)}
-.about-float-2{top:1.5rem;right:-1.5rem;display:flex;align-items:center;gap:0.5rem;box-shadow:0 8px 30px rgba(0,0,0,0.07)}
-.about-float-2 .dot{width:8px;height:8px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--copper))}
-.about-float-2 span{color:var(--text-mid);font-size:0.75rem;font-weight:500}
-.about-lead{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--text-mid);font-style:italic;line-height:1.8;margin-bottom:1.2rem}
-.about-body{font-size:0.88rem;color:var(--text-light);line-height:1.85;margin-bottom:1.2rem;font-weight:300}
-.about-pills{display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:1rem}
-.pill{background:linear-gradient(135deg,rgba(201,168,76,0.1),rgba(197,132,106,0.08));border:1px solid rgba(201,168,76,0.25);border-radius:30px;padding:0.3rem 0.85rem;font-size:0.71rem;letter-spacing:0.08em;color:var(--gold-dark);font-weight:500}
+  /* ===== TRUST BAR ===== */
+  .trust-bar{background:linear-gradient(135deg,#0a1a12,#050d0a);padding:2rem 4rem;display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;border-top:1px solid rgba(45,90,74,0.2);border-bottom:1px solid rgba(201,168,76,0.1)}
+  .tb-item{text-align:center}
+  .tb-num{font-family:'Bodoni Moda',serif;font-size:2rem;font-weight:400;background:linear-gradient(135deg,var(--gold-light),var(--green-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1}
+  .tb-label{font-family:'Jost',sans-serif;font-size:0.68rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-top:0.3rem}
 
-/* ===== OCCASIONS ===== */
-#occasions{background:var(--off-white)}
-.occ-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
-.occ-card{border-radius:20px;overflow:hidden;cursor:pointer;transition:transform 0.4s,box-shadow 0.4s;position:relative}
-.occ-card:hover{transform:translateY(-6px);box-shadow:0 24px 50px rgba(0,0,0,0.13)}
-.occ-inner{padding:2rem 1.6rem;min-height:220px;display:flex;flex-direction:column;justify-content:flex-end;position:relative;overflow:hidden}
-.occ-bg{position:absolute;inset:0;transition:transform 0.6s}
-.occ-card:hover .occ-bg{transform:scale(1.04)}
-.occ-bg.engagement{background:linear-gradient(150deg,#1a0e08,#3d2010)}
-.occ-bg.reception{background:linear-gradient(150deg,#0d0518,#2a1045)}
-.occ-bg.sangeet{background:linear-gradient(150deg,#14080e,#2a1020)}
-.occ-bg.birthday{background:linear-gradient(150deg,#060a14,#0e1c38)}
-.occ-bg.corporate{background:linear-gradient(150deg,#080f08,#14201a)}
-.occ-bg.cocktail{background:linear-gradient(150deg,#0a0a1a,#151530)}
-.occ-glow{position:absolute;inset:0}
-.occ-bg.engagement+.occ-glow{background:radial-gradient(ellipse at 50% 30%,rgba(201,168,76,0.2),transparent 55%)}
-.occ-bg.reception+.occ-glow{background:radial-gradient(ellipse at 50% 30%,rgba(130,60,180,0.22),transparent 55%)}
-.occ-bg.sangeet+.occ-glow{background:radial-gradient(ellipse at 50% 30%,rgba(197,132,106,0.2),transparent 55%)}
-.occ-bg.birthday+.occ-glow{background:radial-gradient(ellipse at 50% 30%,rgba(80,130,220,0.2),transparent 55%)}
-.occ-bg.corporate+.occ-glow{background:radial-gradient(ellipse at 50% 30%,rgba(80,180,120,0.15),transparent 55%)}
-.occ-bg.cocktail+.occ-glow{background:radial-gradient(ellipse at 50% 30%,rgba(220,80,150,0.18),transparent 55%)}
-.occ-icon{position:absolute;top:1.2rem;left:1.4rem;font-size:1.8rem;opacity:0.4;z-index:1}
-.occ-content{position:relative;z-index:2}
-.occ-tag{font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold-light);margin-bottom:0.35rem;display:block}
-.occ-name{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:400;color:var(--white);margin-bottom:0.3rem}
-.occ-desc{font-size:0.76rem;color:rgba(255,255,255,0.45);line-height:1.55;font-weight:300}
-.occ-hover{position:absolute;inset:0;background:rgba(201,168,76,0.06);border:1px solid rgba(201,168,76,0.18);border-radius:20px;opacity:0;transition:opacity 0.35s;z-index:1}
-.occ-card:hover .occ-hover{opacity:1}
+  /* ===== INTRO BELIEF ===== */
+  #belief{background:var(--cream);padding:6rem 0}
+  .belief-inner{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+  .belief-visual{position:relative}
+  .belief-orb{width:100%;aspect-ratio:1;border-radius:50%;background:radial-gradient(ellipse at 35% 35%,rgba(45,90,74,0.22),rgba(201,168,76,0.08) 60%,transparent);border:1px solid rgba(45,90,74,0.15);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+  .belief-orb::before{content:'';position:absolute;inset:20px;border-radius:50%;border:1px dashed rgba(201,168,76,0.18);animation:slow-rotate 20s linear infinite}
+  .belief-orb-center{text-align:center;z-index:2;position:relative}
+  .belief-emoji{font-size:4rem;display:block;margin-bottom:0.5rem;filter:drop-shadow(0 4px 16px rgba(45,90,74,0.3))}
+  .belief-orb-text{font-family:'Cormorant Garamond',serif;font-size:1rem;font-style:italic;color:var(--green);line-height:1.5;max-width:160px;margin:0 auto}
+  .belief-pill{position:absolute;background:var(--white);border:1px solid rgba(45,90,74,0.15);border-radius:40px;padding:0.55rem 1.1rem;display:flex;align-items:center;gap:0.5rem;box-shadow:0 8px 24px rgba(0,0,0,0.07);font-family:'Jost',sans-serif;font-size:0.72rem;color:var(--text-mid);font-weight:400;white-space:nowrap}
+  .belief-pill.p1{top:12%;right:-8%;animation:pill-bob 5s ease-in-out infinite}
+  .belief-pill.p2{bottom:18%;left:-10%;animation:pill-bob 6s ease-in-out 1.5s infinite}
+  .belief-pill.p3{top:55%;right:-12%;animation:pill-bob 7s ease-in-out 3s infinite}
+  @keyframes pill-bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+  .belief-copy{}
+  .belief-copy .section-eyebrow{margin-bottom:1.2rem}
+  .belief-lead{font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-style:italic;color:var(--text-mid);line-height:1.85;margin-top:1.2rem;margin-bottom:1.8rem}
+  .belief-points{display:flex;flex-direction:column;gap:1rem}
+  .bp{display:flex;align-items:flex-start;gap:0.9rem}
+  .bp-dot{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,rgba(45,90,74,0.15),rgba(201,168,76,0.1));border:1px solid rgba(45,90,74,0.2);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
+  .bp-txt .bp-t{font-family:'Jost',sans-serif;font-size:0.85rem;font-weight:500;color:var(--text-dark)}
+  .bp-txt .bp-s{font-family:'Jost',sans-serif;font-size:0.76rem;color:var(--text-light);margin-top:0.15rem;font-weight:300}
 
-/* ===== SIGNATURE LOOKS ===== */
-#looks{background:var(--cream)}
-.looks-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.2rem}
-.look-card{background:var(--white);border-radius:20px;padding:1.8rem;border:1px solid rgba(197,132,106,0.1);display:flex;align-items:flex-start;gap:1.3rem;transition:all 0.35s;cursor:pointer}
-.look-card:hover{transform:translateY(-4px);box-shadow:0 20px 45px rgba(0,0,0,0.07);border-color:rgba(201,168,76,0.25)}
-.look-icon-wrap{width:58px;height:58px;border-radius:14px;background:linear-gradient(135deg,var(--purple-dark),var(--purple-mid));display:flex;align-items:center;justify-content:center;font-size:1.6rem;flex-shrink:0;position:relative;overflow:hidden}
-.look-icon-wrap::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 30%,rgba(201,168,76,0.2),transparent)}
-.look-icon{position:relative;z-index:1}
-.look-title{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:400;color:var(--text-dark);margin-bottom:0.35rem}
-.look-title em{font-style:italic;color:var(--rose-gold)}
-.look-desc{font-size:0.82rem;color:var(--text-light);line-height:1.7;font-weight:300}
-.look-tags{display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:0.7rem}
-.look-tag{font-size:0.63rem;letter-spacing:0.07em;border-radius:20px;padding:0.2rem 0.6rem;background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.2);color:var(--gold-dark)}
+  /* ===== TREATMENTS ===== */
+  #treatments{background:var(--off-white);padding:6rem 0}
+  .treatments-header{text-align:center;margin-bottom:3.5rem}
+  .treatments-subtitle{font-family:'Cormorant Garamond',serif;font-size:1.15rem;color:var(--text-light);font-style:italic;margin-top:0.8rem;line-height:1.7}
+  .treatments-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem}
+  .treat-card{background:var(--white);border:1px solid rgba(45,90,74,0.1);border-radius:20px;overflow:hidden;transition:transform 0.4s,box-shadow 0.4s;cursor:pointer;position:relative}
+  .treat-card:hover{transform:translateY(-8px);box-shadow:0 30px 60px rgba(0,0,0,0.1)}
+  .treat-img{height:180px;position:relative;overflow:hidden}
+  .treat-fill{position:absolute;inset:0;transition:transform 0.6s}
+  .treat-card:hover .treat-fill{transform:scale(1.07)}
+  .tf1{background:linear-gradient(135deg,#0a1a12,#1a3a28)}
+  .tf2{background:linear-gradient(135deg,#1a0e08,#3d2010)}
+  .tf3{background:linear-gradient(135deg,#050d18,#0a1a30)}
+  .tf4{background:linear-gradient(135deg,#180810,#30102a)}
+  .tf5{background:linear-gradient(135deg,#0a1a12,#152812)}
+  .tf6{background:linear-gradient(135deg,#1a1208,#3d2808)}
+  .treat-icon{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:2.8rem;z-index:2;opacity:0.5;transition:all 0.4s}
+  .treat-card:hover .treat-icon{opacity:0.7;transform:translate(-50%,-58%) scale(1.1)}
+  .treat-badge{position:absolute;bottom:0.8rem;left:1rem;font-family:'Jost',sans-serif;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.7);background:rgba(0,0,0,0.35);padding:0.2rem 0.6rem;border-radius:20px}
+  .treat-content{padding:1.4rem 1.6rem 1.8rem}
+  .treat-title{font-family:'Bodoni Moda',serif;font-size:1.2rem;font-weight:400;color:var(--text-dark);margin-bottom:0.5rem;line-height:1.25}
+  .treat-desc{font-family:'Jost',sans-serif;font-size:0.82rem;color:var(--text-mid);line-height:1.7;font-weight:300;margin-bottom:0.8rem}
+  .treat-tag{font-family:'Jost',sans-serif;font-size:0.68rem;font-weight:500;letter-spacing:0.08em;color:var(--green);background:rgba(45,90,74,0.08);padding:0.22rem 0.7rem;border-radius:20px;display:inline-block}
+  .treat-hover-bar{position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--green-light),var(--gold));opacity:0;transition:opacity 0.4s}
+  .treat-card:hover .treat-hover-bar{opacity:1}
 
-/* ===== GALLERY ===== */
-#gallery{background:var(--off-white);overflow:hidden}
-.gallery-track-wrap{position:relative;overflow:hidden}
-.gallery-track-wrap::before,.gallery-track-wrap::after{content:'';position:absolute;top:0;bottom:0;width:80px;z-index:2;pointer-events:none}
-.gallery-track-wrap::before{left:0;background:linear-gradient(to right,var(--off-white),transparent)}
-.gallery-track-wrap::after{right:0;background:linear-gradient(to left,var(--off-white),transparent)}
-.gallery-track{display:flex;gap:1rem;width:max-content;animation:galleryScroll 32s linear infinite}
-.gallery-track:hover{animation-play-state:paused}
-.gallery-slide{width:260px;height:340px;border-radius:18px;overflow:hidden;flex-shrink:0;position:relative;cursor:pointer}
-.gallery-slide img{width:100%;height:100%;object-fit:cover;transition:transform 0.5s ease;display:block}
-.gallery-slide:hover img{transform:scale(1.07)}
-.gallery-slide-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(13,5,24,0.65) 0%,transparent 45%);border-radius:18px;opacity:0;transition:opacity 0.35s}
-.gallery-slide:hover .gallery-slide-overlay{opacity:1}
-.gallery-slide-label{position:absolute;bottom:1rem;left:1rem;right:1rem;font-family:'Cormorant Garamond',serif;font-size:0.88rem;font-style:italic;color:rgba(255,255,255,0.9);opacity:0;transition:opacity 0.35s;z-index:2}
-.gallery-slide:hover .gallery-slide-label{opacity:1}
-/* Placeholder gradient cards when no real images */
-.gallery-slide.placeholder{background:linear-gradient(135deg,var(--purple-dark),var(--purple-mid))}
-.gallery-slide.g1{background:linear-gradient(135deg,#1e0a2e,#4a1560)}
-.gallery-slide.g2{background:linear-gradient(135deg,#1a0a08,#5a2510)}
-.gallery-slide.g3{background:linear-gradient(135deg,#080518,#1a0f40)}
-.gallery-slide.g4{background:linear-gradient(135deg,#1a0818,#4a1035)}
-.gallery-slide.g5{background:linear-gradient(135deg,#0a1218,#153045)}
-.gallery-slide.g6{background:linear-gradient(135deg,#18100a,#3a2015)}
-.gallery-slide.g7{background:linear-gradient(135deg,#0e0818,#2a1555)}
-.gallery-slide.g8{background:linear-gradient(135deg,#180810,#4a1525)}
-.gallery-slide.g9{background:linear-gradient(135deg,#0a1008,#1a2810)}
-.gallery-slide.g10{background:linear-gradient(135deg,#100818,#2a0e4a)}
-.gallery-emoji{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.5rem}
-.gallery-emoji span.big{font-size:3.5rem;opacity:0.45}
-.gallery-emoji span.small{font-size:0.72rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.3)}
+  /* ===== FIX 3: JOURNEY ZIGZAG (desktop) / VERTICAL (mobile) ===== */
+  #journey{background:linear-gradient(170deg,#050d0a 0%,#0a1a12 50%,#050d0a 100%);padding:7rem 0;overflow:hidden;position:relative}
+  #journey::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,rgba(45,90,74,0.1) 0%,transparent 65%);pointer-events:none}
+  .journey-header{text-align:center;margin-bottom:5rem}
+  .journey-header .section-title{color:var(--white)}
+  .journey-header .section-title em{color:var(--gold-light)}
+  .journey-subtitle{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:rgba(255,255,255,0.45);font-style:italic;margin-top:0.8rem;line-height:1.7}
 
-/* Mobile swipe gallery */
-.gallery-mobile{display:none;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;gap:0.8rem;padding:0 1.2rem 1rem;scrollbar-width:none}
-.gallery-mobile::-webkit-scrollbar{display:none}
-.gallery-mobile .gallery-slide{scroll-snap-align:start;width:220px;height:290px;flex-shrink:0}
+  /* DESKTOP ZIGZAG: shown on 901px+ */
+  .journey-desktop{display:block;max-width:900px;margin:0 auto;padding:0 4rem;position:relative}
+  .journey-desktop::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:1px;background:linear-gradient(180deg,transparent,rgba(45,90,74,0.5) 8%,rgba(45,90,74,0.5) 92%,transparent);transform:translateX(-50%)}
+  .jd-node{display:grid;grid-template-columns:1fr 64px 1fr;align-items:center;gap:0;margin-bottom:4.5rem;opacity:0;transform:translateY(28px);transition:opacity 0.7s ease,transform 0.7s ease}
+  .jd-node.in-view{opacity:1;transform:translateY(0)}
+  /* Odd nodes: content LEFT, right side hidden */
+  .jd-node:nth-child(odd) .jdn-left{visibility:visible}
+  .jd-node:nth-child(odd) .jdn-right{visibility:hidden}
+  /* Even nodes: content RIGHT, left side hidden */
+  .jd-node:nth-child(even) .jdn-left{visibility:hidden}
+  .jd-node:nth-child(even) .jdn-right{visibility:visible}
+  .jdn-left{text-align:right;padding-right:2rem}
+  .jdn-right{text-align:left;padding-left:2rem}
+  .jdn-center{display:flex;flex-direction:column;align-items:center;gap:0.5rem;z-index:2}
+  .j-dot{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--green-light),var(--green));display:flex;align-items:center;justify-content:center;font-size:1.4rem;box-shadow:0 0 0 6px rgba(45,90,74,0.15),0 6px 24px rgba(45,90,74,0.4);transition:transform 0.4s,box-shadow 0.4s;flex-shrink:0}
+  .jd-node:hover .j-dot{transform:scale(1.1);box-shadow:0 0 0 12px rgba(45,90,74,0.18),0 12px 36px rgba(45,90,74,0.5)}
+  .j-step-tag{font-family:'Jost',sans-serif;font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--green-light);font-weight:600;white-space:nowrap;background:rgba(45,90,74,0.18);padding:0.22rem 0.6rem;border-radius:10px;border:1px solid rgba(45,90,74,0.3)}
+  .j-card{background:rgba(255,255,255,0.03);border:1px solid rgba(45,90,74,0.18);border-radius:14px;padding:1.5rem 1.7rem;backdrop-filter:blur(10px);transition:background 0.4s,border-color 0.4s,transform 0.4s;display:inline-block;width:100%}
+  .jd-node:hover .j-card{background:rgba(255,255,255,0.06);border-color:rgba(45,90,74,0.4);transform:translateY(-3px)}
+  .j-tag{font-family:'Jost',sans-serif;font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--green-light);margin-bottom:0.4rem;display:block;opacity:0.8}
+  .j-heading{font-family:'Bodoni Moda',serif;font-size:1.1rem;font-weight:400;color:var(--white);margin-bottom:0.5rem;line-height:1.3}
+  .j-heading em{font-style:italic;color:var(--gold-light)}
+  .j-body{font-family:'Jost',sans-serif;font-size:0.82rem;line-height:1.8;color:rgba(255,255,255,0.5);font-weight:300}
+  .j-tip{font-family:'Cormorant Garamond',serif;font-size:0.9rem;font-style:italic;color:rgba(45,90,74,0.8);border-left:2px solid rgba(45,90,74,0.4);padding-left:0.8rem;margin-top:0.7rem;line-height:1.5}
 
-/* ===== PRICING ===== */
-#pricing{background:linear-gradient(135deg,#0d0518,#070312);padding:4rem 0}
-.pricing-header{text-align:center;margin-bottom:2.5rem}
-.pricing-header .section-title{color:var(--white)}
-.pricing-header .section-title em{color:var(--gold-light)}
-.pricing-sub{font-family:'Cormorant Garamond',serif;font-size:1rem;color:rgba(255,255,255,0.45);font-style:italic;margin-top:0.6rem}
-.pricing-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
-.price-card{background:rgba(255,255,255,0.04);border:1px solid rgba(201,168,76,0.15);border-radius:20px;padding:1.8rem;text-align:center;transition:all 0.4s;cursor:pointer}
-.price-card:hover{background:rgba(201,168,76,0.06);border-color:rgba(201,168,76,0.35);transform:translateY(-6px)}
-.price-card.featured{border-color:rgba(201,168,76,0.4);background:rgba(201,168,76,0.05)}
-.price-icon{font-size:1.8rem;display:block;margin-bottom:0.8rem}
-.price-name{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--white);margin-bottom:0.3rem}
-.price-name em{font-style:italic;color:var(--gold-light)}
-.price-desc{font-size:0.77rem;color:rgba(255,255,255,0.38);line-height:1.6;margin-bottom:1rem;font-weight:300}
-.price-divider{width:40px;height:1px;background:linear-gradient(90deg,transparent,rgba(201,168,76,0.5),transparent);margin:0.7rem auto}
-.price-includes{font-size:0.74rem;color:rgba(255,255,255,0.5);line-height:1.8;font-weight:300}
-.price-cta{margin-top:1.3rem;background:linear-gradient(135deg,var(--gold),var(--copper));color:var(--white);border:none;border-radius:50px;padding:0.65rem 1.4rem;font-size:0.74rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;transition:all 0.3s;text-decoration:none;display:inline-block}
-.price-cta:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(201,168,76,0.35)}
-.price-cta.outline{background:transparent;border:1px solid rgba(201,168,76,0.35);color:rgba(255,255,255,0.6)}
-.price-cta.outline:hover{background:rgba(201,168,76,0.08);color:var(--gold-light)}
+  /* MOBILE VERTICAL: shown on 900px and below */
+  .journey-mobile{display:none;padding:0 1.2rem;position:relative}
+  .journey-mobile::before{content:'';position:absolute;left:28px;top:0;bottom:0;width:1px;background:linear-gradient(180deg,transparent,rgba(45,90,74,0.5) 5%,rgba(45,90,74,0.5) 95%,transparent)}
+  .jm-node{display:flex;gap:1rem;align-items:flex-start;margin-bottom:2.8rem;opacity:0;transform:translateY(20px);transition:opacity 0.6s ease,transform 0.6s ease;padding-left:0;position:relative}
+  .jm-node.in-view{opacity:1;transform:translateY(0)}
+  .jm-dot-wrap{flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:0;z-index:2}
+  .jm-dot{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--green-light),var(--green));display:flex;align-items:center;justify-content:center;font-size:1.3rem;box-shadow:0 0 0 5px rgba(45,90,74,0.15),0 4px 18px rgba(45,90,74,0.4);flex-shrink:0}
+  .jm-content{flex:1;padding-top:0.3rem}
+  .jm-step{font-family:'Jost',sans-serif;font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--green-light);margin-bottom:0.4rem;display:block}
+  .jm-heading{font-family:'Bodoni Moda',serif;font-size:1rem;font-weight:400;color:var(--white);margin-bottom:0.4rem;font-style:italic}
+  .jm-body{font-family:'Jost',sans-serif;font-size:0.8rem;line-height:1.75;color:rgba(255,255,255,0.5);font-weight:300}
 
-/* ===== FAQ ===== */
-#faq{background:var(--off-white)}
-.faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.9rem;max-width:920px;margin:0 auto}
-.faq-item{background:var(--white);border-radius:16px;padding:1.3rem;border:1px solid rgba(197,132,106,0.1);cursor:pointer;transition:all 0.3s}
-.faq-item:hover{border-color:rgba(201,168,76,0.25);box-shadow:0 8px 30px rgba(0,0,0,0.05)}
-.faq-item.open{border-color:rgba(201,168,76,0.3)}
-.faq-q{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem}
-.faq-q-text{font-family:'Playfair Display',serif;font-size:0.92rem;font-weight:400;color:var(--text-dark);line-height:1.4}
-.faq-icon{flex-shrink:0;width:22px;height:22px;border-radius:50%;border:1px solid rgba(201,168,76,0.3);display:flex;align-items:center;justify-content:center;font-size:0.8rem;color:var(--gold-dark);transition:transform 0.3s;margin-top:2px}
-.faq-item.open .faq-icon{transform:rotate(45deg)}
-.faq-a{max-height:0;overflow:hidden;transition:max-height 0.4s ease,margin-top 0.3s;font-size:0.82rem;color:var(--text-light);line-height:1.75;font-weight:300}
-.faq-item.open .faq-a{max-height:200px;margin-top:0.7rem}
+  /* ===== INGREDIENTS ===== */
+  #ingredients{background:var(--cream);padding:6rem 0}
+  .ing-header{text-align:center;margin-bottom:3.5rem}
+  .ing-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.4rem}
+  .ing-card{background:var(--white);border:1px solid rgba(45,90,74,0.1);border-radius:18px;padding:2rem 1.5rem;text-align:center;transition:transform 0.4s,box-shadow 0.4s;cursor:default}
+  .ing-card:hover{transform:translateY(-6px);box-shadow:0 24px 50px rgba(0,0,0,0.08)}
+  .ing-icon{font-size:2.5rem;display:block;margin-bottom:1rem;filter:drop-shadow(0 2px 8px rgba(45,90,74,0.2))}
+  .ing-name{font-family:'Bodoni Moda',serif;font-size:1.1rem;font-weight:400;color:var(--text-dark);margin-bottom:0.4rem}
+  .ing-desc{font-family:'Jost',sans-serif;font-size:0.78rem;color:var(--text-mid);line-height:1.65;font-weight:300}
+  .ing-benefit{font-family:'Jost',sans-serif;font-size:0.65rem;font-weight:500;letter-spacing:0.08em;color:var(--green);background:rgba(45,90,74,0.08);padding:0.22rem 0.7rem;border-radius:20px;display:inline-block;margin-top:0.7rem}
 
-/* ===== CTA ===== */
-#cta{background:#0d0806;padding:5rem 0;text-align:center;position:relative;overflow:hidden}
-.cta-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 30%,rgba(130,60,180,0.12) 0%,transparent 60%)}
-.cta-content{position:relative;z-index:2}
-.cta-eyebrow{font-size:0.68rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);margin-bottom:1.2rem;display:block}
-.cta-title{font-family:'Playfair Display',serif;font-size:clamp(1.9rem,5vw,3.8rem);font-weight:400;color:var(--white);line-height:1.15;margin-bottom:0.9rem}
-.cta-title em{font-style:italic;background:linear-gradient(135deg,var(--gold-light),var(--copper-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.cta-sub{font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:rgba(255,255,255,0.45);font-style:italic;margin-bottom:2.2rem;line-height:1.7}
-.cta-btns{display:flex;gap:1.2rem;justify-content:center;flex-wrap:wrap}
-.btn-gold{background:linear-gradient(135deg,var(--gold),var(--gold-dark));color:var(--white);padding:0.95rem 2.4rem;border-radius:50px;text-decoration:none;font-size:0.82rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;transition:all 0.4s;box-shadow:0 4px 30px rgba(201,168,76,0.35);display:inline-flex;align-items:center;gap:0.7rem}
-.btn-gold:hover{transform:translateY(-3px);box-shadow:0 15px 45px rgba(201,168,76,0.45)}
-.btn-wa{background:linear-gradient(135deg,#25D366,#128C7E);color:var(--white);padding:0.95rem 2.4rem;border-radius:50px;text-decoration:none;font-size:0.82rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;transition:all 0.4s;display:inline-flex;align-items:center;gap:0.7rem}
-.btn-wa:hover{transform:translateY(-3px);box-shadow:0 12px 35px rgba(37,211,102,0.3)}
+  /* ===== RESULTS SOCIAL PROOF ===== */
+  #results{background:var(--off-white);padding:6rem 0}
+  .results-header{text-align:center;margin-bottom:3.5rem}
+  .reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem}
+  .review-card{background:var(--white);border:1px solid rgba(197,132,106,0.1);border-radius:20px;padding:2rem;position:relative;overflow:hidden;transition:transform 0.3s,box-shadow 0.3s}
+  .review-card:hover{transform:translateY(-4px);box-shadow:0 20px 50px rgba(0,0,0,0.08)}
+  .review-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--green-light),var(--gold),var(--green-light))}
+  .r-stars{display:flex;gap:0.3rem;margin-bottom:0.8rem}
+  .r-star{color:var(--gold);font-size:0.85rem}
+  .r-text{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-style:italic;color:var(--text-mid);line-height:1.8;margin-bottom:1.2rem}
+  .r-author{display:flex;align-items:center;gap:0.8rem}
+  .r-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--green),var(--green-light));display:flex;align-items:center;justify-content:center;font-size:0.72rem;font-weight:500;color:#fff;font-family:'Jost',sans-serif;flex-shrink:0}
+  .r-name{font-family:'Jost',sans-serif;font-size:0.84rem;font-weight:500;color:var(--text-dark)}
+  .r-type{font-family:'Jost',sans-serif;font-size:0.7rem;color:var(--text-light);margin-top:0.1rem}
+  .r-qmark{position:absolute;top:0.8rem;right:1.2rem;font-family:'Bodoni Moda',serif;font-size:4rem;color:rgba(45,90,74,0.05);line-height:1;font-weight:700}
 
-/* ===== FOOTER ===== */
-footer{background:#080503;padding:3rem 4rem 1.8rem;border-top:1px solid rgba(201,168,76,0.1)}
-.footer-main{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:4rem;margin-bottom:2rem}
-.footer-logo img{height:64px;width:64px;object-fit:contain;opacity:0.9;margin-bottom:0.8rem;display:block}
-.footer-slogan{font-family:'Cormorant Garamond',serif;font-style:italic;color:rgba(255,255,255,0.4);font-size:0.92rem;line-height:1.6;max-width:220px}
-.footer-social{display:flex;gap:0.7rem;margin-top:1.2rem}
-.social-btn{width:34px;height:34px;border-radius:50%;border:1px solid rgba(201,168,76,0.2);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.35);font-size:0.8rem;transition:all 0.3s;text-decoration:none}
-.social-btn:hover{border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,0.08)}
-.footer-col-title{font-family:'Jost',sans-serif;font-size:0.63rem;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:1.1rem;display:block}
-.footer-col-links{display:flex;flex-direction:column;gap:0.5rem}
-.footer-col-links a{font-family:'Jost',sans-serif;color:rgba(255,255,255,0.38);text-decoration:none;font-size:0.8rem;letter-spacing:0.04em;transition:all 0.3s;line-height:1.5}
-.footer-col-links a:hover{color:rgba(255,255,255,0.75);padding-left:4px}
-.footer-bottom{border-top:1px solid rgba(201,168,76,0.08);padding-top:1.3rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.8rem}
-.footer-copy{font-family:'Jost',sans-serif;color:rgba(255,255,255,0.18);font-size:0.7rem;letter-spacing:0.05em}
-.footer-bottom-links{display:flex;gap:1.5rem}
-.footer-bottom-links a{font-family:'Jost',sans-serif;color:rgba(255,255,255,0.2);font-size:0.68rem;text-decoration:none;transition:color 0.3s}
-.footer-bottom-links a:hover{color:rgba(255,255,255,0.5)}
-.footer-location{font-family:'Jost',sans-serif;color:rgba(255,255,255,0.2);font-size:0.68rem;display:flex;align-items:center;gap:0.4rem}
+  /* ===== BOOKING CTA ===== */
+  #book-cta{background:linear-gradient(160deg,#050d0a 0%,#0a1a12 50%,#050d0a 100%);padding:7rem 0;position:relative;overflow:hidden}
+  #book-cta::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 40%,rgba(45,90,74,0.25) 0%,transparent 55%),radial-gradient(ellipse at 80% 70%,rgba(201,168,76,0.1) 0%,transparent 45%);pointer-events:none}
+  .cta-inner{text-align:center;position:relative;z-index:2;max-width:720px;margin:0 auto;padding:0 2rem}
+  .cta-eyebrow{display:inline-flex;align-items:center;gap:0.8rem;margin-bottom:1.4rem}
+  .cta-eyebrow span{font-family:'Jost',sans-serif;font-size:0.7rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--green-light)}
+  .cta-line{width:28px;height:1px;background:rgba(61,122,98,0.5)}
+  .cta-title{font-family:'Bodoni Moda',serif;font-size:clamp(2rem,4vw,3.2rem);font-weight:400;color:var(--white);line-height:1.15;margin-bottom:1.2rem}
+  .cta-title em{font-style:italic;background:linear-gradient(135deg,var(--gold-light),var(--copper-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:block}
+  .cta-body{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-style:italic;color:rgba(255,255,255,0.5);line-height:1.85;margin-bottom:2.2rem}
+  .cta-buttons{display:flex;gap:1.2rem;justify-content:center;flex-wrap:wrap}
+  .cta-features{display:flex;justify-content:center;gap:2rem;flex-wrap:wrap;margin-top:2.5rem}
+  .cf{display:flex;align-items:center;gap:0.5rem;font-family:'Jost',sans-serif;font-size:0.75rem;color:rgba(255,255,255,0.4);letter-spacing:0.04em}
+  .cf span:first-child{font-size:1rem}
 
-/* ===== REVEAL ===== */
-.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.7s,transform 0.7s}
-.reveal.visible{opacity:1;transform:translateY(0)}
+  /* ===== FOOTER ===== */
+  footer{background:#030806;padding:3.5rem 4rem 2rem;border-top:1px solid rgba(45,90,74,0.12)}
+  .footer-main{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:4rem;margin-bottom:2.5rem}
+  .footer-logo img{height:68px;width:68px;object-fit:contain;opacity:0.9;margin-bottom:0.8rem;display:block}
+  .footer-slogan{font-family:'Cormorant Garamond',serif;font-style:italic;color:rgba(255,255,255,0.4);font-size:0.95rem;line-height:1.6;max-width:220px}
+  .footer-social{display:flex;gap:0.7rem;margin-top:1.2rem}
+  .social-btn{width:34px;height:34px;border-radius:50%;border:1px solid rgba(45,90,74,0.25);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.35);font-size:0.8rem;transition:all 0.3s;text-decoration:none}
+  .social-btn:hover{border-color:var(--green-light);color:var(--green-light);background:rgba(45,90,74,0.12)}
+  .footer-col-title{font-family:'Jost',sans-serif;font-size:0.65rem;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--green-light);margin-bottom:1.2rem;display:block}
+  .footer-col-links{display:flex;flex-direction:column;gap:0.5rem}
+  .footer-col-links a{font-family:'Jost',sans-serif;color:rgba(255,255,255,0.38);text-decoration:none;font-size:0.82rem;letter-spacing:0.04em;transition:all 0.3s;line-height:1.5}
+  .footer-col-links a:hover{color:rgba(255,255,255,0.75);padding-left:4px}
+  .footer-bottom{border-top:1px solid rgba(45,90,74,0.08);padding-top:1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.8rem}
+  .footer-copy{font-family:'Jost',sans-serif;color:rgba(255,255,255,0.18);font-size:0.72rem;letter-spacing:0.05em}
+  .footer-bottom-links{display:flex;gap:1.5rem}
+  .footer-bottom-links a{font-family:'Jost',sans-serif;color:rgba(255,255,255,0.2);font-size:0.7rem;text-decoration:none;transition:color 0.3s}
+  .footer-bottom-links a:hover{color:rgba(255,255,255,0.5)}
+  .footer-location{font-family:'Jost',sans-serif;color:rgba(255,255,255,0.2);font-size:0.7rem;display:flex;align-items:center;gap:0.4rem}
 
-/* ===== ANIMATIONS ===== */
-@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
-@keyframes float-particle{0%{opacity:0;transform:translateY(100vh) scale(0)}10%{opacity:0.8}90%{opacity:0.4}100%{opacity:0;transform:translateY(-100px) scale(1.5)}}
-@keyframes slow-rotate{from{transform:translate(-50%,-50%) rotate(0deg)}to{transform:translate(-50%,-50%) rotate(360deg)}}
-@keyframes scrollPulse{0%,100%{opacity:0.3;transform:scaleY(1)}50%{opacity:0.8;transform:scaleY(1.3)}}
-@keyframes galleryScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+  /* ===== RESPONSIVE ===== */
+  @media(max-width:1024px){
+    .belief-inner{grid-template-columns:1fr;gap:3rem}
+    .belief-visual{max-width:400px;margin:0 auto}
+    .ing-grid{grid-template-columns:repeat(2,1fr)}
+  }
 
-/* ===== RESPONSIVE ===== */
-@media(max-width:900px){
-  nav{padding:0.7rem 1.2rem}
-  nav.scrolled{padding:0.5rem 1.2rem}
-  .nav-links{display:none}
-  .hamburger{display:flex}
-  .container{padding:0 1.2rem}
-  section{padding:3rem 0}
-  .about-grid{grid-template-columns:1fr;gap:2rem}
-  .about-float-1,.about-float-2{display:none}
-  .occ-grid{grid-template-columns:1fr 1fr;gap:0.7rem}
-  .looks-grid{grid-template-columns:1fr;gap:1rem}
-  .pricing-cards{grid-template-columns:1fr;gap:0.8rem}
-  .faq-grid{grid-template-columns:1fr}
-  footer{padding:2.2rem 1.2rem 1.4rem}
-  .footer-main{grid-template-columns:1fr;gap:2rem}
-  .footer-bottom{flex-direction:column;align-items:flex-start}
-  .gallery-track-wrap{display:none}
-  .gallery-mobile{display:flex}
-  .hero-ornament{width:300px;height:300px}
-}
-@media(max-width:600px){
-  .occ-grid{grid-template-columns:1fr}
-  .hero-title{font-size:2.2rem}
-  .hero-subtitle{font-size:1rem}
-  .hero-actions{gap:0.8rem}
-  .btn-primary,.btn-secondary{padding:0.8rem 1.6rem;font-size:0.78rem}
-  .footer-bottom-links{flex-wrap:wrap;gap:0.8rem}
-  .cta-btns{flex-direction:column;align-items:center}
-  .btn-gold,.btn-wa{width:100%;max-width:280px;justify-content:center}
-}
-@media(min-width:901px){
-  .hamburger{display:none !important}
-  .mobile-nav{display:none !important}
-  .mobile-overlay{display:none !important}
-  .gallery-mobile{display:none !important}
-}
-</style>
+  @media(max-width:900px){
+    nav{padding:0.9rem 1.2rem}
+    nav.scrolled{padding:0.7rem 1.2rem}
+    .nav-links{display:none}
+    .hamburger{display:flex}
+    .container{padding:0 1.2rem}
+    .trust-bar{grid-template-columns:repeat(2,1fr);padding:1.5rem 1.2rem}
+    .treatments-grid{grid-template-columns:1fr;gap:1rem}
+    .reviews-grid{grid-template-columns:1fr;gap:1rem}
+    .ing-grid{grid-template-columns:repeat(2,1fr);gap:1rem}
+    footer{padding:2.5rem 1.2rem 1.5rem}
+    .footer-main{grid-template-columns:1fr;gap:2rem}
+    .footer-bottom{flex-direction:column;align-items:flex-start}
+    /* FIX 3: hide desktop zigzag, show mobile vertical */
+    .journey-desktop{display:none}
+    .journey-mobile{display:block}
+    #journey{padding:4rem 0}
+    .journey-header{padding:0 1.2rem;margin-bottom:3rem}
+    .belief-pill.p2,.belief-pill.p3{display:none}
+    .belief-pill.p1{right:0}
+    #belief{padding:3.5rem 0}
+    #treatments{padding:3.5rem 0}
+    #ingredients{padding:3.5rem 0}
+    #results{padding:3.5rem 0}
+    #book-cta{padding:4rem 0}
+    .cta-features{gap:1.2rem}
+    .treatments-header,.ing-header,.results-header{padding:0 1.2rem}
+  }
+
+  @media(max-width:600px){
+    .hero-title{font-size:2.4rem}
+    .ing-grid{grid-template-columns:1fr 1fr}
+    .trust-bar{gap:1rem}
+    .footer-bottom-links{flex-wrap:wrap;gap:0.8rem}
+    .belief-inner{padding:0 0.5rem}
+    .belief-orb{max-width:280px;margin:0 auto}
+    .jm-node{margin-bottom:2.2rem}
+  }
+
+  @media(min-width:901px){
+    .hamburger{display:none !important}
+    .mobile-nav{display:none !important}
+    .mobile-overlay{display:none !important}
+    .journey-mobile{display:none !important}
+    .journey-desktop{display:block !important}
+  }
+  </style>
 </head>
 <body>
 
@@ -320,494 +339,534 @@ footer{background:#080503;padding:3rem 4rem 1.8rem;border-top:1px solid rgba(201
 <!-- MOBILE NAV -->
 <nav class="mobile-nav" id="mobileNav" aria-hidden="true">
   <span class="mobile-section-label">Main</span>
-  <a href="index.html#story" onclick="closeMobileNav()">Story</a>
-  <a href="index.html#services" onclick="closeMobileNav()">Services</a>
-  <a href="index.html#transformation" onclick="closeMobileNav()">Brides</a>
-  <a href="index.html#trust" onclick="closeMobileNav()">Reviews</a>
-  <a href="index.html#timeline" onclick="closeMobileNav()">Journey</a>
+  <a href="./index.html#story" onclick="closeMobileNav()">Story</a>
+  <a href="./index.html#services" onclick="closeMobileNav()">Services</a>
+  <a href="./index.html#transformation" onclick="closeMobileNav()">Brides</a>
+  <a href="./index.html#trust" onclick="closeMobileNav()">Reviews</a>
+  <a href="./index.html#timeline" onclick="closeMobileNav()">Journey</a>
   <span class="mobile-section-label">Services</span>
-  <a href="./bridal-makeup.html" onclick="closeMobileNav()">👰 Bridal Makeup</a>
-  <a href="./party-makeup.html" onclick="closeMobileNav()">✨ Party Makeup</a>
-  <a href="./skin-care.html" onclick="closeMobileNav()">🌿 Skin Care</a>
-  <a href="index.html#booking" class="mobile-cta" onclick="closeMobileNav()">Book Now</a>
+  <a href="./bridal-makeup.html" onclick="closeMobileNav()">Bridal Makeup</a>
+  <a href="./party-makeup.html" onclick="closeMobileNav()">Party Makeup</a>
+  <a href="./skin-care.html" onclick="closeMobileNav()">Skin Care</a>
+  <a href="#book-cta" class="mobile-cta" onclick="closeMobileNav()">Book Now</a>
 </nav>
 
 <!-- MAIN NAV -->
 <nav id="mainNav">
   <div class="nav-logo">
-    <img src="./assets/image/logo1.png" alt="Glow Pavi's Makeover"
-      onerror="this.style.display='none';this.parentElement.innerHTML='<span style=\'font-family:Playfair Display,serif;font-size:1.1rem;font-weight:600;background:linear-gradient(135deg,#C9A84C,#C5846A);-webkit-background-clip:text;-webkit-text-fill-color:transparent\'>Glow Pavi\'s</span>'">
+    <img src="./assets/image/logo.png" alt="Glow Pavi's Makeover"
+      onerror="this.style.display='none';this.parentElement.innerHTML='<span style=\'font-family:Bodoni Moda,serif;font-size:1.1rem;font-weight:600;background:linear-gradient(135deg,#C9A84C,#C5846A);-webkit-background-clip:text;-webkit-text-fill-color:transparent\'>Glow Pavi\'s</span>'">
   </div>
   <ul class="nav-links">
-    <li><a href="index.html#story">Story</a></li>
+    <li><a href="./index.html#story">Story</a></li>
     <li class="nav-dropdown">
-      <a href="index.html#services">Services <span class="caret">▼</span></a>
+      <a href="./index.html#services">Services <span class="caret">▼</span></a>
       <div class="dropdown-menu">
         <a class="dropdown-item" href="./bridal-makeup.html">
           <span class="di-icon">👰</span>
-          <span class="di-info"><span class="di-label">Bridal Makeup</span>
+          <span class="di-info"><span class="di-label">Bridal Makeup</span></span>
         </a>
         <div class="dropdown-divider"></div>
         <a class="dropdown-item" href="./party-makeup.html">
           <span class="di-icon">✨</span>
-          <span class="di-info"><span class="di-label">Party Makeup</span>
-          
+          <span class="di-info"><span class="di-label">Party Makeup</span></span>
         </a>
         <div class="dropdown-divider"></div>
         <a class="dropdown-item" href="./skin-care.html">
           <span class="di-icon">🌿</span>
-          <span class="di-info"><span class="di-label">Skin Care</span>
+          <span class="di-info"><span class="di-label">Skin Care</span></span>
         </a>
       </div>
     </li>
-    <li><a href="index.html#transformation">Brides</a></li>
-    <li><a href="index.html#trust">Reviews</a></li>
-    <li><a href="index.html#timeline">Journey</a></li>
+    <li><a href="./index.html#transformation">Brides</a></li>
+    <li><a href="./index.html#trust">Reviews</a></li>
+    <li><a href="./index.html#timeline">Journey</a></li>
   </ul>
   <div style="display:flex;align-items:center;gap:1rem">
-    <a href="index.html#booking" class="nav-cta">Book Now</a>
+    <a href="#book-cta" class="nav-cta">Book Now</a>
     <button class="hamburger" id="hamburgerBtn" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav">
       <span></span><span></span><span></span>
     </button>
   </div>
 </nav>
 
-<!-- HERO -->
+<!-- FIX 1: FULL-SCREEN HERO -->
 <section id="hero">
   <div class="hero-bg"></div>
+  <div class="hero-leaf"></div>
+  <div class="hero-leaf"></div>
+  <div class="hero-leaf"></div>
   <div class="hero-particles" id="particlesContainer"></div>
   <div class="hero-ornament"></div>
   <div class="hero-content">
     <div class="hero-eyebrow">
       <div class="hero-line"></div>
-      <span>Celebration Glow by Pavi</span>
+      <span>Skin Wellness by Pavi</span>
       <div class="hero-line"></div>
     </div>
     <h1 class="hero-title">
-      Turn heads. Own the room.
-      <em>Be unforgettable.</em>
+      Your skin holds
+      <em>every story you lived</em>
     </h1>
-    <p class="hero-subtitle">Bold, radiant, effortless. Party makeup that lasts all night and looks stunning in every single photo.</p>
+    <!-- FIX 2: No em dash, emotional copy -->
+    <p class="hero-subtitle">You have laughed in the sun, cried for the ones you love, and carried life on your face. Now let us give your skin the care it has always deserved. Because your most beautiful day begins with skin that truly glows from within.</p>
     <div class="hero-actions">
-      <a href="#occasions" class="btn-primary"><span>✦</span> See All Occasions</a>
-      <a href="https://wa.me/919344089990" class="btn-secondary" target="_blank" rel="noopener"><span>💬</span> WhatsApp Us</a>
+      <a href="#book-cta" class="btn-primary"><span>🌿</span> Start My Glow Journey</a>
+      <a href="https://wa.me/919344089990" target="_blank" rel="noopener" class="btn-secondary"><span>💬</span> Talk to Pavi</a>
     </div>
   </div>
-  <div class="breadcrumb">
-    <a href="index.html">Home</a>
-    <span class="sep">›</span>
-    <span class="current">Party Makeup</span>
-  </div>
-  <div class="scroll-cue">
-    <div class="scroll-arrow"></div>
-    <span>Scroll</span>
+  <div class="hero-scroll">
+    <span class="scroll-text">Scroll</span>
+    <div class="scroll-dot"></div>
   </div>
 </section>
 
-<!-- ABOUT -->
-<section id="about">
+<!-- TRUST BAR -->
+<div class="trust-bar">
+  <div class="tb-item reveal">
+    <div class="tb-num">100%</div>
+    <div class="tb-label">Natural Ingredients</div>
+  </div>
+  <div class="tb-item reveal" style="transition-delay:0.1s">
+    <div class="tb-num">8+</div>
+    <div class="tb-label">Years of Skin Expertise</div>
+  </div>
+  <div class="tb-item reveal" style="transition-delay:0.2s">
+    <div class="tb-num">500+</div>
+    <div class="tb-label">Brides Prepared</div>
+  </div>
+  <div class="tb-item reveal" style="transition-delay:0.3s">
+    <div class="tb-num">5★</div>
+    <div class="tb-label">Rated by Clients</div>
+  </div>
+</div>
+
+<!-- BELIEF SECTION -->
+<!-- FIX 2: No em dashes, strong emotional language -->
+<section id="belief">
   <div class="container">
-    <div class="about-grid">
-      <div class="about-visual reveal" style="position:relative">
-        <div class="about-main-box">
-          <span class="about-icon">✨</span>
-          <p class="about-badge-text">Made to shine,<br>built to <em>last the night</em></p>
+    <div class="belief-inner">
+      <div class="belief-visual reveal">
+        <div class="belief-orb">
+          <div class="belief-orb-center">
+            <span class="belief-emoji">🌿</span>
+            <p class="belief-orb-text">Gentle. Intentional. Pure.</p>
+          </div>
         </div>
-        <div class="about-float-1">"Pavi made me feel like a movie star at my cousin's reception."</div>
-        <div class="about-float-2">
-          <div class="dot"></div>
-          <span>Every occasion, every glow</span>
-        </div>
+        <div class="belief-pill p1"><span>✦</span> Skin-first approach</div>
+        <div class="belief-pill p2"><span>🌸</span> Pre-bridal prep</div>
+        <div class="belief-pill p3"><span>💧</span> Deep hydration</div>
       </div>
-      <div class="about-text reveal" style="transition-delay:0.15s">
+      <div class="belief-copy reveal" style="transition-delay:0.15s">
         <div class="section-eyebrow">
           <div class="eyebrow-line"></div>
-          <span>About This Service</span>
+          <span>Our Skin Philosophy</span>
         </div>
-        <h2 class="section-title">Party Makeup —<br><em>your night, your glow</em></h2>
-        <p class="about-lead">Whether it's a reception, a sangeet, a birthday bash, or just a night you want to remember — you deserve a look that turns heads the moment you walk in.</p>
-        <p class="about-body">At Glow Pavi's, party makeup isn't just about colours and products. It's about understanding who you are, what you're wearing, and what feeling you want to carry when you walk into that room. We keep it bold without heavy, glowing without overdone — and we make it last from the first photo to the last dance.</p>
-        <div class="about-pills">
-          <span class="pill">Long-Lasting Hold</span>
-          <span class="pill">Sweat-Proof</span>
-          <span class="pill">Flash-Friendly</span>
-          <span class="pill">All Skin Tones</span>
-          <span class="pill">Outfit Matched</span>
-          <span class="pill">Quick Sessions</span>
+        <h2 class="section-title">Great makeup starts<br><em>with great skin</em></h2>
+        <p class="belief-lead">
+          No filter can replace the confidence of knowing your skin is genuinely healthy. Before Pavi ever touches a brush, she works to give your skin what it truly needs. Clean, calming, deeply nourishing care that prepares you to glow on your wedding day and every day after.
+        </p>
+        <div class="belief-points">
+          <div class="bp">
+            <div class="bp-dot">🧬</div>
+            <div class="bp-txt">
+              <div class="bp-t">Skin analysis before every session</div>
+              <div class="bp-s">No one-size-fits-all. Every skin is read and respected individually.</div>
+            </div>
+          </div>
+          <div class="bp">
+            <div class="bp-dot">🌱</div>
+            <div class="bp-txt">
+              <div class="bp-t">Only skin-safe, tested products</div>
+              <div class="bp-s">Sensitive or reactive skin is treated with the same care and devotion.</div>
+            </div>
+          </div>
+          <div class="bp">
+            <div class="bp-dot">💛</div>
+            <div class="bp-txt">
+              <div class="bp-t">Results you can see and feel</div>
+              <div class="bp-s">Not just for the camera. Real transformation that lasts beyond the big day.</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- OCCASIONS -->
-<section id="occasions">
+<!-- TREATMENTS -->
+<section id="treatments">
   <div class="container">
-    <div class="section-header reveal">
+    <div class="treatments-header reveal">
       <div class="section-eyebrow" style="justify-content:center">
-        <div class="eyebrow-line"></div>
-        <span>Perfect For</span>
-        <div class="eyebrow-line"></div>
+        <div class="eyebrow-line"></div><span>What We Offer</span><div class="eyebrow-line"></div>
       </div>
-      <h2 class="section-title">Every celebration<br><em>deserves its own glow</em></h2>
-      <p style="font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--text-light);font-style:italic;margin-top:0.6rem">From receptions to rooftop parties — we've got your look covered.</p>
+      <h2 class="section-title" style="text-align:center">Treatments crafted<br><em>for your skin story</em></h2>
+      <!-- FIX 2: No em dash -->
+      <p class="treatments-subtitle" style="text-align:center">From your first bridal consultation to the morning of your wedding, every session is a ritual of care.</p>
     </div>
-    <div class="occ-grid">
-      <div class="occ-card reveal">
-        <div class="occ-inner">
-          <div class="occ-bg engagement"></div><div class="occ-glow"></div><div class="occ-hover"></div>
-          <span class="occ-icon">💍</span>
-          <div class="occ-content">
-            <span class="occ-tag">✦ Milestone Event</span>
-            <h3 class="occ-name">Engagement Ceremony</h3>
-            <p class="occ-desc">Soft gold tones, warm contour. Your first big look as a couple.</p>
-          </div>
+    <div class="treatments-grid">
+
+      <div class="treat-card reveal">
+        <div class="treat-hover-bar"></div>
+        <div class="treat-img">
+          <div class="treat-fill tf1"></div>
+          <div class="treat-icon">✨</div>
+          <span class="treat-badge">Signature Treatment</span>
+        </div>
+        <div class="treat-content">
+          <h3 class="treat-title">Pre-Bridal Glow Facial</h3>
+          <!-- FIX 2: No em dash -->
+          <p class="treat-desc">A deeply nourishing ritual designed to awaken your skin weeks before the big day. Brightening, calming, and completely personalised.</p>
+          <span class="treat-tag">4 session package</span>
         </div>
       </div>
-      <div class="occ-card reveal" style="transition-delay:0.08s">
-        <div class="occ-inner">
-          <div class="occ-bg reception"></div><div class="occ-glow"></div><div class="occ-hover"></div>
-          <span class="occ-icon">🥂</span>
-          <div class="occ-content">
-            <span class="occ-tag">✦ Celebration Night</span>
-            <h3 class="occ-name">Reception Night</h3>
-            <p class="occ-desc">Dramatic eyes, sculpted contour. Born for the spotlight.</p>
-          </div>
+
+      <div class="treat-card reveal" style="transition-delay:0.1s">
+        <div class="treat-hover-bar"></div>
+        <div class="treat-img">
+          <div class="treat-fill tf2"></div>
+          <div class="treat-icon">🌸</div>
+          <span class="treat-badge">Tan Removal</span>
+        </div>
+        <div class="treat-content">
+          <h3 class="treat-title">De-Tan Skin Treatment</h3>
+          <p class="treat-desc">Sun damage, uneven tone, dullness. This intensive treatment brings your natural radiance back to the surface gently and effectively.</p>
+          <span class="treat-tag">Single or series</span>
         </div>
       </div>
-      <div class="occ-card reveal" style="transition-delay:0.16s">
-        <div class="occ-inner">
-          <div class="occ-bg sangeet"></div><div class="occ-glow"></div><div class="occ-hover"></div>
-          <span class="occ-icon">💃</span>
-          <div class="occ-content">
-            <span class="occ-tag">✦ Dance Night</span>
-            <h3 class="occ-name">Sangeet & Mehndi</h3>
-            <p class="occ-desc">Vibrant, playful, sweat-proof. Made for dancing all night long.</p>
-          </div>
+
+      <div class="treat-card reveal" style="transition-delay:0.2s">
+        <div class="treat-hover-bar"></div>
+        <div class="treat-img">
+          <div class="treat-fill tf3"></div>
+          <div class="treat-icon">💧</div>
+          <span class="treat-badge">Deep Hydration</span>
+        </div>
+        <div class="treat-content">
+          <h3 class="treat-title">Hydra Boost Therapy</h3>
+          <p class="treat-desc">Intense moisture restoration for dry, stressed skin. Your face will feel replenished, plump, and absolutely soft to the touch.</p>
+          <span class="treat-tag">Recommended weekly</span>
         </div>
       </div>
-      <div class="occ-card reveal" style="transition-delay:0.08s">
-        <div class="occ-inner">
-          <div class="occ-bg birthday"></div><div class="occ-glow"></div><div class="occ-hover"></div>
-          <span class="occ-icon">🎂</span>
-          <div class="occ-content">
-            <span class="occ-tag">✦ Your Day</span>
-            <h3 class="occ-name">Birthday Parties</h3>
-            <p class="occ-desc">Camera-ready glow that photographs beautifully all evening.</p>
-          </div>
+
+      <div class="treat-card reveal">
+        <div class="treat-hover-bar"></div>
+        <div class="treat-img">
+          <div class="treat-fill tf4"></div>
+          <div class="treat-icon">🌙</div>
+          <span class="treat-badge">Anti-Pigmentation</span>
+        </div>
+        <div class="treat-content">
+          <h3 class="treat-title">Pigmentation Correction</h3>
+          <p class="treat-desc">Dark spots, old acne marks, or uneven patches. Targeted treatment that works patiently and gently to reveal clear, even skin.</p>
+          <span class="treat-tag">Requires consultation</span>
         </div>
       </div>
-      <div class="occ-card reveal" style="transition-delay:0.16s">
-        <div class="occ-inner">
-          <div class="occ-bg corporate"></div><div class="occ-glow"></div><div class="occ-hover"></div>
-          <span class="occ-icon">👔</span>
-          <div class="occ-content">
-            <span class="occ-tag">✦ Professional</span>
-            <h3 class="occ-name">Corporate Events</h3>
-            <p class="occ-desc">Polished, confident, and effortlessly chic — without looking overdone.</p>
-          </div>
+
+      <div class="treat-card reveal" style="transition-delay:0.1s">
+        <div class="treat-hover-bar"></div>
+        <div class="treat-img">
+          <div class="treat-fill tf5"></div>
+          <div class="treat-icon">🍃</div>
+          <span class="treat-badge">Natural Rituals</span>
+        </div>
+        <div class="treat-content">
+          <h3 class="treat-title">Herbal Skin Ritual</h3>
+          <p class="treat-desc">Rooted in traditional Indian beauty wisdom. Plant-based blends that detoxify, soothe, and bring a timeless glow your grandmothers would recognise.</p>
+          <span class="treat-tag">Chemical-free</span>
         </div>
       </div>
-      <div class="occ-card reveal" style="transition-delay:0.24s">
-        <div class="occ-inner">
-          <div class="occ-bg cocktail"></div><div class="occ-glow"></div><div class="occ-hover"></div>
-          <span class="occ-icon">🌙</span>
-          <div class="occ-content">
-            <span class="occ-tag">✦ Evening Event</span>
-            <h3 class="occ-name">Cocktail & Gala</h3>
-            <p class="occ-desc">Sultry, sophisticated, and stunning. Perfect for evening affairs.</p>
-          </div>
+
+      <div class="treat-card reveal" style="transition-delay:0.2s">
+        <div class="treat-hover-bar"></div>
+        <div class="treat-img">
+          <div class="treat-fill tf6"></div>
+          <div class="treat-icon">🔆</div>
+          <span class="treat-badge">Day-of Prep</span>
+        </div>
+        <div class="treat-content">
+          <h3 class="treat-title">Wedding Day Skin Prep</h3>
+          <!-- FIX 2: No em dash -->
+          <p class="treat-desc">A gentle morning ritual on your wedding day. Primes your skin perfectly so every product applies flawlessly and your glow lasts all day long.</p>
+          <span class="treat-tag">Add-on available</span>
         </div>
       </div>
+
     </div>
   </div>
 </section>
 
-<!-- SIGNATURE LOOKS -->
-<section id="looks">
+<!-- FIX 3: BRIDAL SKIN JOURNEY: ZIGZAG ON DESKTOP, ONE-BY-ONE ON MOBILE -->
+<section id="journey">
   <div class="container">
-    <div class="section-header reveal">
+    <div class="journey-header reveal">
       <div class="section-eyebrow" style="justify-content:center">
-        <div class="eyebrow-line"></div>
-        <span>Signature Looks</span>
-        <div class="eyebrow-line"></div>
+        <div class="eyebrow-line" style="background:rgba(61,122,98,0.5)"></div>
+        <span style="color:var(--green-light)">The Journey</span>
+        <div class="eyebrow-line" style="background:rgba(61,122,98,0.5)"></div>
       </div>
-      <h2 class="section-title">Choose your<br><em>statement look</em></h2>
+      <h2 class="section-title">Your Bridal <em>Skin Journey</em></h2>
+      <!-- FIX 2: No em dash -->
+      <p class="journey-subtitle">Every great bridal look begins 60 days before the wedding. Here is how we walk that path together, step by step, skin first.</p>
     </div>
-    <div class="looks-grid">
-      <div class="look-card reveal">
-        <div class="look-icon-wrap"><span class="look-icon">🌟</span></div>
-        <div>
-          <h3 class="look-title">Dewy <em>Goddess</em></h3>
-          <p class="look-desc">That "I woke up glowing" look — but elevated. Glass-skin finish, natural flush, luminous highlight. Light on skin, heavy on compliments. Best for morning and afternoon events when natural light is your best friend.</p>
-          <div class="look-tags"><span class="look-tag">Radiant Finish</span><span class="look-tag">Natural Glow</span><span class="look-tag">Lightweight</span></div>
+
+    <!-- DESKTOP: Zigzag alternating layout -->
+    <div class="journey-desktop" id="journeyDesktop">
+
+      <div class="jd-node">
+        <div class="jdn-left">
+          <div class="j-card">
+            <span class="j-tag">Step 01</span>
+            <h4 class="j-heading">Skin Consultation <em>and Analysis</em></h4>
+            <p class="j-body">We start by listening. Your concerns, your skin history, your sensitivities. Pavi studies your skin carefully before recommending anything, because no two faces are the same.</p>
+            <p class="j-tip">60 days before your wedding is the ideal time to begin.</p>
+          </div>
+        </div>
+        <div class="jdn-center">
+          <div class="j-dot">🌱</div>
+          <span class="j-step-tag">Day 1</span>
+        </div>
+        <div class="jdn-right"></div>
+      </div>
+
+      <div class="jd-node">
+        <div class="jdn-left"></div>
+        <div class="jdn-center">
+          <div class="j-dot">🧴</div>
+          <span class="j-step-tag">Week 2</span>
+        </div>
+        <div class="jdn-right">
+          <div class="j-card">
+            <span class="j-tag">Step 02</span>
+            <h4 class="j-heading">First Treatment <em>Session</em></h4>
+            <p class="j-body">The first deep cleanse and hydration ritual. Your skin begins to breathe again. Any existing pigmentation or congestion is treated gently from the first session.</p>
+          </div>
         </div>
       </div>
-      <div class="look-card reveal" style="transition-delay:0.1s">
-        <div class="look-icon-wrap"><span class="look-icon">🌃</span></div>
-        <div>
-          <h3 class="look-title">Smoky <em>Night Queen</em></h3>
-          <p class="look-desc">This look doesn't ask for attention — it demands it. Deep, sultry eyes, sculpted contour, and a bold lip that says "I'm here." The perfect evening look for reception nights and late celebrations.</p>
-          <div class="look-tags"><span class="look-tag">Dramatic Eyes</span><span class="look-tag">Bold Contour</span><span class="look-tag">Night Events</span></div>
+
+      <div class="jd-node">
+        <div class="jdn-left">
+          <div class="j-card">
+            <span class="j-tag">Step 03</span>
+            <h4 class="j-heading">Targeted <em>Glow Sessions</em></h4>
+            <p class="j-body">Two to three weekly sessions of targeted brightening, de-tanning, and nourishing care. Your skin texture visibly improves. Family and friends start to notice.</p>
+            <p class="j-tip">Most brides see visible change by session three.</p>
+          </div>
+        </div>
+        <div class="jdn-center">
+          <div class="j-dot">✨</div>
+          <span class="j-step-tag">Weeks 3 to 5</span>
+        </div>
+        <div class="jdn-right"></div>
+      </div>
+
+      <div class="jd-node">
+        <div class="jdn-left"></div>
+        <div class="jdn-center">
+          <div class="j-dot">🌸</div>
+          <span class="j-step-tag">Week 7</span>
+        </div>
+        <div class="jdn-right">
+          <div class="j-card">
+            <span class="j-tag">Step 04</span>
+            <h4 class="j-heading">Final Prep <em>and Seal</em></h4>
+            <p class="j-body">A soothing deep moisture session one week before your wedding. Calms your skin, locks in the glow, and primes your face perfectly for the makeup that follows.</p>
+          </div>
         </div>
       </div>
-      <div class="look-card reveal" style="transition-delay:0.15s">
-        <div class="look-icon-wrap"><span class="look-icon">🌹</span></div>
-        <div>
-          <h3 class="look-title">Rosy <em>Flush</em></h3>
-          <p class="look-desc">Soft, romantic, and wonderfully fresh. Rosy blush, defined brows, and a warmth that makes you look like you're glowing from the inside. Ideal for engagements, mehndi, or any daytime celebration.</p>
-          <div class="look-tags"><span class="look-tag">Soft & Sweet</span><span class="look-tag">Romantic</span><span class="look-tag">Daytime</span></div>
+
+      <div class="jd-node">
+        <div class="jdn-left">
+          <div class="j-card">
+            <span class="j-tag">Step 05</span>
+            <h4 class="j-heading">Wedding Day <em>Morning Ritual</em></h4>
+            <p class="j-body">The day has arrived. Pavi begins with a gentle skin prep that makes every product melt into your skin beautifully. You glow not because of what is on your face. You glow because of what is in it.</p>
+            <p class="j-tip">"She looked in the mirror and whispered, this is me."</p>
+          </div>
+        </div>
+        <div class="jdn-center">
+          <div class="j-dot">💍</div>
+          <span class="j-step-tag">Wedding Day</span>
+        </div>
+        <div class="jdn-right"></div>
+      </div>
+
+    </div><!-- end journey-desktop -->
+
+    <!-- MOBILE: One-by-one vertical layout -->
+    <div class="journey-mobile" id="journeyMobile">
+
+      <div class="jm-node">
+        <div class="jm-dot-wrap"><div class="jm-dot">🌱</div></div>
+        <div class="jm-content">
+          <span class="jm-step">Day 1 · Step 01</span>
+          <h4 class="jm-heading">Skin Consultation and Analysis</h4>
+          <p class="jm-body">We start by listening. Your concerns, your skin history, your sensitivities. Pavi studies your skin carefully before recommending anything at all.</p>
         </div>
       </div>
-      <div class="look-card reveal" style="transition-delay:0.2s">
-        <div class="look-icon-wrap"><span class="look-icon">✨</span></div>
-        <div>
-          <h3 class="look-title">Golden <em>Hour</em></h3>
-          <p class="look-desc">Warm bronzed skin, gold-kissed eyes, and a glossy lip that catches the light just right. This is the look that photographs beautifully in every frame — from candid shots to group photos.</p>
-          <div class="look-tags"><span class="look-tag">Bronze & Gold</span><span class="look-tag">Reception</span><span class="look-tag">Celebrations</span></div>
+
+      <div class="jm-node">
+        <div class="jm-dot-wrap"><div class="jm-dot">🧴</div></div>
+        <div class="jm-content">
+          <span class="jm-step">Week 2 · Step 02</span>
+          <h4 class="jm-heading">First Treatment Session</h4>
+          <p class="jm-body">The first deep cleanse and hydration ritual. Your skin begins to breathe again and any congestion is treated gently from the very first session.</p>
         </div>
       </div>
-    </div>
+
+      <div class="jm-node">
+        <div class="jm-dot-wrap"><div class="jm-dot">✨</div></div>
+        <div class="jm-content">
+          <span class="jm-step">Weeks 3 to 5 · Step 03</span>
+          <h4 class="jm-heading">Targeted Glow Sessions</h4>
+          <p class="jm-body">Weekly brightening, de-tanning, and nourishing care. Your skin texture visibly improves. Family and friends start to notice something different about you.</p>
+        </div>
+      </div>
+
+      <div class="jm-node">
+        <div class="jm-dot-wrap"><div class="jm-dot">🌸</div></div>
+        <div class="jm-content">
+          <span class="jm-step">Week 7 · Step 04</span>
+          <h4 class="jm-heading">Final Prep and Seal</h4>
+          <p class="jm-body">A soothing deep moisture session one week before your wedding. Locks in the glow and primes your face perfectly for the makeup that follows.</p>
+        </div>
+      </div>
+
+      <div class="jm-node">
+        <div class="jm-dot-wrap"><div class="jm-dot">💍</div></div>
+        <div class="jm-content">
+          <span class="jm-step">Wedding Day · Step 05</span>
+          <h4 class="jm-heading">Wedding Day Morning Ritual</h4>
+          <p class="jm-body">Pavi begins with a gentle skin prep that makes every product melt into your skin beautifully. You glow because of what is in your skin, not just on it.</p>
+        </div>
+      </div>
+
+    </div><!-- end journey-mobile -->
+
   </div>
 </section>
 
-<!-- GALLERY -->
-<section id="gallery">
+<!-- INGREDIENTS -->
+<section id="ingredients">
   <div class="container">
-    <div class="section-header reveal">
+    <div class="ing-header reveal">
       <div class="section-eyebrow" style="justify-content:center">
-        <div class="eyebrow-line"></div>
-        <span>Our Work</span>
-        <div class="eyebrow-line"></div>
+        <div class="eyebrow-line"></div><span>Nature's Best</span><div class="eyebrow-line"></div>
       </div>
-      <h2 class="section-title">Real Glow,<br><em>Real Results</em></h2>
-      <p style="font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--text-light);font-style:italic;margin-top:0.6rem">Every face has a story. Here's how we told a few of them.</p>
+      <h2 class="section-title" style="text-align:center">What we put on your skin<br><em>matters deeply</em></h2>
+      <!-- FIX 2: No em dash, clean copy -->
+      <p class="treatments-subtitle" style="text-align:center;margin-top:0.8rem">Every product Pavi uses is chosen with the same care she gives to every bride who sits in her chair.</p>
     </div>
-  </div>
-
-  <!-- Desktop auto-scroll carousel -->
-  <div class="gallery-track-wrap">
-    <div class="gallery-track" id="galleryTrack">
-      <!-- Original set -->
-      <div class="gallery-slide g1 placeholder">
-        <div class="gallery-emoji"><span class="big">💄</span><span class="small">Reception Glam</span></div>
-        <div class="gallery-slide-overlay"></div>
-        <div class="gallery-slide-label">Reception Night</div>
+    <div class="ing-grid">
+      <div class="ing-card reveal">
+        <span class="ing-icon">🌹</span>
+        <h4 class="ing-name">Rose Water</h4>
+        <p class="ing-desc">Centuries of skin wisdom in a single ingredient. Calms, tones, and gives your complexion a delicate luminosity nothing synthetic can replicate.</p>
+        <span class="ing-benefit">Toning and Brightening</span>
       </div>
-      <div class="gallery-slide g2 placeholder">
-        <div class="gallery-emoji"><span class="big">✨</span><span class="small">Close-Up</span></div>
-        <div class="gallery-slide-overlay"></div>
-        <div class="gallery-slide-label">Dewy Goddess</div>
+      <div class="ing-card reveal" style="transition-delay:0.1s">
+        <span class="ing-icon">🍯</span>
+        <h4 class="ing-name">Raw Honey</h4>
+        <p class="ing-desc">Nature's gentlest healer. Draws moisture deep into the skin and leaves a softness that stays with you long after you leave the chair.</p>
+        <span class="ing-benefit">Hydration and Healing</span>
       </div>
-      <div class="gallery-slide g3 placeholder">
-        <div class="gallery-emoji"><span class="big">🌙</span><span class="small">Night Glam</span></div>
-        <div class="gallery-slide-overlay"></div>
-        <div class="gallery-slide-label">Smoky Night Queen</div>
+      <div class="ing-card reveal" style="transition-delay:0.2s">
+        <span class="ing-icon">🌿</span>
+        <h4 class="ing-name">Neem and Tulsi</h4>
+        <p class="ing-desc">The most trusted plants in Indian skincare. Purify, fight impurities, and bring balance to even the most sensitive or acne-prone skin.</p>
+        <span class="ing-benefit">Purifying and Balancing</span>
       </div>
-      <div class="gallery-slide g4 placeholder">
-        <div class="gallery-emoji"><span class="big">💃</span><span class="small">Sangeet Look</span></div>
-        <div class="gallery-slide-overlay"></div>
-        <div class="gallery-slide-label">Sangeet Glam</div>
-      </div>
-      <div class="gallery-slide g5 placeholder">
-        <div class="gallery-emoji"><span class="big">🎂</span><span class="small">Birthday Glow</span></div>
-        <div class="gallery-slide-overlay"></div>
-        <div class="gallery-slide-label">Birthday Party</div>
-      </div>
-      <div class="gallery-slide g6 placeholder">
-        <div class="gallery-emoji"><span class="big">👰</span><span class="small">Full Face</span></div>
-        <div class="gallery-slide-overlay"></div>
-        <div class="gallery-slide-label">Engagement Look</div>
-      </div>
-      <div class="gallery-slide g7 placeholder">
-        <div class="gallery-emoji"><span class="big">🌹</span><span class="small">Rosy Flush</span></div>
-        <div class="gallery-slide-overlay"></div>
-        <div class="gallery-slide-label">Rosy Flush</div>
-      </div>
-      <div class="gallery-slide g8 placeholder">
-        <div class="gallery-emoji"><span class="big">🥂</span><span class="small">Cocktail Night</span></div>
-        <div class="gallery-slide-overlay"></div>
-        <div class="gallery-slide-label">Cocktail Glam</div>
-      </div>
-      <div class="gallery-slide g9 placeholder">
-        <div class="gallery-emoji"><span class="big">💛</span><span class="small">Golden Hour</span></div>
-        <div class="gallery-slide-overlay"></div>
-        <div class="gallery-slide-label">Golden Hour</div>
-      </div>
-      <div class="gallery-slide g10 placeholder">
-        <div class="gallery-emoji"><span class="big">💍</span><span class="small">Close-Up Eyes</span></div>
-        <div class="gallery-slide-overlay"></div>
-        <div class="gallery-slide-label">Dramatic Eyes</div>
-      </div>
-      <!-- Duplicate set for seamless loop -->
-      <div class="gallery-slide g1 placeholder">
-        <div class="gallery-emoji"><span class="big">💄</span><span class="small">Reception Glam</span></div>
-        <div class="gallery-slide-overlay"></div>
-        <div class="gallery-slide-label">Reception Night</div>
-      </div>
-      <div class="gallery-slide g2 placeholder">
-        <div class="gallery-emoji"><span class="big">✨</span><span class="small">Close-Up</span></div>
-        <div class="gallery-slide-overlay"></div>
-        <div class="gallery-slide-label">Dewy Goddess</div>
-      </div>
-      <div class="gallery-slide g3 placeholder">
-        <div class="gallery-emoji"><span class="big">🌙</span><span class="small">Night Glam</span></div>
-        <div class="gallery-slide-overlay"></div>
-        <div class="gallery-slide-label">Smoky Night Queen</div>
-      </div>
-      <div class="gallery-slide g4 placeholder">
-        <div class="gallery-emoji"><span class="big">💃</span><span class="small">Sangeet Look</span></div>
-        <div class="gallery-slide-overlay"></div>
-        <div class="gallery-slide-label">Sangeet Glam</div>
-      </div>
-      <div class="gallery-slide g5 placeholder">
-        <div class="gallery-emoji"><span class="big">🎂</span><span class="small">Birthday Glow</span></div>
-        <div class="gallery-slide-overlay"></div>
-        <div class="gallery-slide-label">Birthday Party</div>
-      </div>
-      <div class="gallery-slide g6 placeholder">
-        <div class="gallery-emoji"><span class="big">👰</span><span class="small">Full Face</span></div>
-        <div class="gallery-slide-overlay"></div>
-        <div class="gallery-slide-label">Engagement Look</div>
-      </div>
-      <div class="gallery-slide g7 placeholder">
-        <div class="gallery-emoji"><span class="big">🌹</span><span class="small">Rosy Flush</span></div>
-        <div class="gallery-slide-overlay"></div>
-        <div class="gallery-slide-label">Rosy Flush</div>
-      </div>
-      <div class="gallery-slide g8 placeholder">
-        <div class="gallery-emoji"><span class="big">🥂</span><span class="small">Cocktail Night</span></div>
-        <div class="gallery-slide-overlay"></div>
-        <div class="gallery-slide-label">Cocktail Glam</div>
-      </div>
-      <div class="gallery-slide g9 placeholder">
-        <div class="gallery-emoji"><span class="big">💛</span><span class="small">Golden Hour</span></div>
-        <div class="gallery-slide-overlay"></div>
-        <div class="gallery-slide-label">Golden Hour</div>
-      </div>
-      <div class="gallery-slide g10 placeholder">
-        <div class="gallery-emoji"><span class="big">💍</span><span class="small">Close-Up Eyes</span></div>
-        <div class="gallery-slide-overlay"></div>
-        <div class="gallery-slide-label">Dramatic Eyes</div>
+      <div class="ing-card reveal" style="transition-delay:0.3s">
+        <span class="ing-icon">🥥</span>
+        <h4 class="ing-name">Coconut and Aloe</h4>
+        <p class="ing-desc">Two ingredients your skin recognises and trusts immediately. Deeply nourishing, soothing on irritation, and profoundly kind to every skin type.</p>
+        <span class="ing-benefit">Nourishing and Soothing</span>
       </div>
     </div>
-  </div>
-
-  <!-- Mobile swipe gallery -->
-  <div class="gallery-mobile" id="galleryMobile">
-    <div class="gallery-slide g1 placeholder"><div class="gallery-emoji"><span class="big">💄</span><span class="small">Reception Glam</span></div></div>
-    <div class="gallery-slide g2 placeholder"><div class="gallery-emoji"><span class="big">✨</span><span class="small">Close-Up</span></div></div>
-    <div class="gallery-slide g3 placeholder"><div class="gallery-emoji"><span class="big">🌙</span><span class="small">Night Glam</span></div></div>
-    <div class="gallery-slide g4 placeholder"><div class="gallery-emoji"><span class="big">💃</span><span class="small">Sangeet Look</span></div></div>
-    <div class="gallery-slide g5 placeholder"><div class="gallery-emoji"><span class="big">🎂</span><span class="small">Birthday Glow</span></div></div>
-    <div class="gallery-slide g6 placeholder"><div class="gallery-emoji"><span class="big">👰</span><span class="small">Full Face</span></div></div>
-    <div class="gallery-slide g7 placeholder"><div class="gallery-emoji"><span class="big">🌹</span><span class="small">Rosy Flush</span></div></div>
-    <div class="gallery-slide g8 placeholder"><div class="gallery-emoji"><span class="big">🥂</span><span class="small">Cocktail Night</span></div></div>
-    <div class="gallery-slide g9 placeholder"><div class="gallery-emoji"><span class="big">💛</span><span class="small">Golden Hour</span></div></div>
-    <div class="gallery-slide g10 placeholder"><div class="gallery-emoji"><span class="big">💍</span><span class="small">Close-Up Eyes</span></div></div>
-  </div>
-
-  <div style="text-align:center;margin-top:2rem" class="reveal">
-    <p style="font-family:'Cormorant Garamond',serif;font-size:0.9rem;font-style:italic;color:var(--text-light)">Replace placeholders with your real photos — just swap the background gradient cards with <code>&lt;img&gt;</code> tags inside each <code>.gallery-slide</code>.</p>
   </div>
 </section>
 
-<!-- PRICING -->
-<section id="pricing">
+<!-- REVIEWS -->
+<section id="results">
   <div class="container">
-    <div class="pricing-header reveal">
+    <div class="results-header reveal">
       <div class="section-eyebrow" style="justify-content:center">
-        <div class="eyebrow-line" style="background:rgba(201,168,76,0.5)"></div>
-        <span style="color:var(--gold-light)">Party Packages</span>
-        <div class="eyebrow-line" style="background:rgba(201,168,76,0.5)"></div>
+        <div class="eyebrow-line"></div><span>Skin Stories</span><div class="eyebrow-line"></div>
       </div>
-      <h2 class="section-title">Simple, transparent<br><em>pricing</em></h2>
-      <p class="pricing-sub">No hidden charges. Just beautiful results.</p>
+      <h2 class="section-title" style="text-align:center">What brides say about<br><em>their skin transformation</em></h2>
     </div>
-    <div class="pricing-cards">
-      <div class="price-card reveal">
-        <span class="price-icon">💫</span>
-        <p class="price-name">The <em>Glow</em></p>
-        <p class="price-desc">Great for a quick, beautiful finish for daytime events and intimate get-togethers</p>
-        <div class="price-divider"></div>
-        <p class="price-includes">Full face makeup · Natural finish<br>60–90 minute session · Kajal & lashes</p>
-        <a href="index.html#booking" class="price-cta outline">Enquire</a>
+    <div class="reviews-grid">
+
+      <div class="review-card reveal">
+        <div class="r-qmark">"</div>
+        <div class="r-stars"><span class="r-star">★</span><span class="r-star">★</span><span class="r-star">★</span><span class="r-star">★</span><span class="r-star">★</span></div>
+        <!-- FIX 2: No em dash in any review text -->
+        <p class="r-text">"I have always had dull, uneven skin and I was convinced no one could fix it in time for my wedding. Four sessions with Pavi later, my mother did not recognise me in the best possible way."</p>
+        <div class="r-author">
+          <div class="r-avatar">SR</div>
+          <div>
+            <p class="r-name">Sowmya R.</p>
+            <p class="r-type">Pre-Bridal Skin Package Client</p>
+          </div>
+        </div>
       </div>
-      <div class="price-card featured reveal" style="transition-delay:0.1s">
-        <span class="price-icon">✨</span>
-        <p class="price-name">The <em>Radiance</em></p>
-        <p class="price-desc">Our most loved — perfect for receptions, birthdays, and sangeet nights</p>
-        <div class="price-divider"></div>
-        <p class="price-includes">Full glam makeup · HD finish<br>Premium lashes · Contouring<br>Hair pinning included · 2–2.5 hours</p>
-        <a href="index.html#booking" class="price-cta">Book Now</a>
+
+      <div class="review-card reveal" style="transition-delay:0.1s">
+        <div class="r-qmark">"</div>
+        <div class="r-stars"><span class="r-star">★</span><span class="r-star">★</span><span class="r-star">★</span><span class="r-star">★</span><span class="r-star">★</span></div>
+        <p class="r-text">"My skin is sensitive and I have had reactions before. I was terrified. Pavi was so careful and so gentle. Not a single reaction. Just pure radiance on my wedding morning."</p>
+        <div class="r-author">
+          <div class="r-avatar">AM</div>
+          <div>
+            <p class="r-name">Archana M.</p>
+            <p class="r-type">Sensitive Skin Treatment Client</p>
+          </div>
+        </div>
       </div>
-      <div class="price-card reveal" style="transition-delay:0.2s">
-        <span class="price-icon">🌙</span>
-        <p class="price-name">The <em>Iconic</em></p>
-        <p class="price-desc">The full experience — for high-profile events, galas, and unforgettable nights</p>
-        <div class="price-divider"></div>
-        <p class="price-includes">Airbrush or HD glam · Full hair styling<br>False lashes & kajal · Contouring<br>Touch-up kit · Priority booking</p>
-        <a href="index.html#booking" class="price-cta outline">Enquire</a>
+
+      <div class="review-card reveal" style="transition-delay:0.2s">
+        <div class="r-qmark">"</div>
+        <div class="r-stars"><span class="r-star">★</span><span class="r-star">★</span><span class="r-star">★</span><span class="r-star">★</span><span class="r-star">★</span></div>
+        <p class="r-text">"I started Pavi's skin journey 45 days before my wedding. By week three, my own friends were asking what I was using. On my wedding day, I needed almost no filter on my photos at all."</p>
+        <div class="r-author">
+          <div class="r-avatar">NK</div>
+          <div>
+            <p class="r-name">Nithya K.</p>
+            <p class="r-type">Full Bridal Skin Journey Client</p>
+          </div>
+        </div>
       </div>
+
     </div>
   </div>
 </section>
 
-<!-- FAQ -->
-<section id="faq">
-  <div class="container">
-    <div class="section-header reveal">
-      <div class="section-eyebrow" style="justify-content:center">
-        <div class="eyebrow-line"></div>
-        <span>Questions</span>
-        <div class="eyebrow-line"></div>
-      </div>
-      <h2 class="section-title">Everything you<br><em>need to know</em></h2>
+<!-- BOOKING CTA -->
+<section id="book-cta">
+  <div class="cta-inner reveal">
+    <div class="cta-eyebrow">
+      <div class="cta-line"></div>
+      <span>Your Glow Awaits</span>
+      <div class="cta-line"></div>
     </div>
-    <div class="faq-grid">
-      <div class="faq-item reveal">
-        <div class="faq-q"><span class="faq-q-text">How long does party makeup take?</span><div class="faq-icon">+</div></div>
-        <div class="faq-a">Usually 60–90 minutes for a natural look, and up to 2.5 hours for full glam with hair. We recommend booking a little early so you're never rushing before the event.</div>
-      </div>
-      <div class="faq-item reveal" style="transition-delay:0.1s">
-        <div class="faq-q"><span class="faq-q-text">Can you come to my venue or home?</span><div class="faq-icon">+</div></div>
-        <div class="faq-a">Yes! We offer home and venue visits across Madurai. Travel charges apply for locations beyond a certain distance. Just send us a message to check availability.</div>
-      </div>
-      <div class="faq-item reveal" style="transition-delay:0.12s">
-        <div class="faq-q"><span class="faq-q-text">How long does the makeup last?</span><div class="faq-icon">+</div></div>
-        <div class="faq-a">Party makeup is designed to hold strong for 8–12 hours using long-hold, sweat-proof products. So whether the party ends at 10pm or 2am — you're covered.</div>
-      </div>
-      <div class="faq-item reveal" style="transition-delay:0.18s">
-        <div class="faq-q"><span class="faq-q-text">Do I need to bring anything?</span><div class="faq-icon">+</div></div>
-        <div class="faq-a">Just yourself! We bring everything. One small tip: wear a front-open outfit during the session so it doesn't smudge your look when you change.</div>
-      </div>
-      <div class="faq-item reveal" style="transition-delay:0.22s">
-        <div class="faq-q"><span class="faq-q-text">Can I request a specific look?</span><div class="faq-icon">+</div></div>
-        <div class="faq-a">Absolutely. Share reference images from Pinterest or Instagram and we'll customise it to match your vision, outfit colour, and skin tone. The more you share, the better the result.</div>
-      </div>
-      <div class="faq-item reveal" style="transition-delay:0.28s">
-        <div class="faq-q"><span class="faq-q-text">Do you do group bookings?</span><div class="faq-icon">+</div></div>
-        <div class="faq-a">Yes — and we love them! Group bookings for family functions, bachelorette parties, and friend groups are welcome. Special rates apply for groups of 3 or more.</div>
-      </div>
+    <h2 class="cta-title">
+      Your wedding day<br>
+      <em>is closer than you think.</em>
+    </h2>
+    <!-- FIX 2: No em dash, warm emotional copy -->
+    <p class="cta-body">
+      Every bride who walked out of Pavi's studio glowing started exactly where you are right now. With one question and one small step. Let today be the day you choose to show up radiant.
+    </p>
+    <div class="cta-buttons">
+      <a href="./index.html#booking" class="btn-primary"><span>✦</span> Book a Skin Consultation</a>
+      <a href="https://wa.me/919344089990" target="_blank" rel="noopener" class="btn-secondary"><span>💬</span> Ask Pavi on WhatsApp</a>
     </div>
-  </div>
-</section>
-
-<!-- CTA -->
-<section id="cta">
-  <div class="cta-bg"></div>
-  <div class="container">
-    <div class="cta-content reveal">
-      <span class="cta-eyebrow">✦ Your Celebration Awaits</span>
-      <h2 class="cta-title">Ready to be the most<br><em>beautiful one there?</em></h2>
-      <p class="cta-sub">Book your party glam session today. Slots fill up fast — don't miss yours.</p>
-      <div class="cta-btns">
-        <a href="index.html#booking" class="btn-gold"><span>✦</span> Book Your Glow</a>
-        <a href="https://wa.me/919344089990" class="btn-wa" target="_blank" rel="noopener">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-          WhatsApp Now
-        </a>
-      </div>
+    <div class="cta-features">
+      <div class="cf"><span>🌿</span> Natural and safe products only</div>
+      <div class="cf"><span>💛</span> Sensitive skin friendly</div>
+      <div class="cf"><span>⏱</span> Results visible within 2 weeks</div>
+      <div class="cf"><span>📞</span> Reply within 2 hours on WhatsApp</div>
     </div>
   </div>
 </section>
@@ -819,11 +878,10 @@ footer{background:#080503;padding:3rem 4rem 1.8rem;border-top:1px solid rgba(201
       <div class="footer-logo">
         <img src="./assets/image/logo.png" alt="Glow Pavi's Makeover" onerror="this.style.display='none'">
       </div>
-      <p class="footer-slogan">Every celebration deserves a look you'll remember for years.</p>
+      <p class="footer-slogan">Every bride deserves to feel like the most beautiful version of herself.</p>
       <div class="footer-social">
         <a class="social-btn" href="#" title="Instagram"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
         <a class="social-btn" href="#" title="Facebook"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
-        <a class="social-btn" href="#" title="YouTube"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205a31.247 31.247 0 0 0-.522 5.805 31.247 31.247 0 0 0 .522 5.783 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088 31.247 31.247 0 0 0 .5-5.783 31.247 31.247 0 0 0-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg></a>
         <a class="social-btn" href="https://wa.me/919344089990" target="_blank" rel="noopener" title="WhatsApp"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
       </div>
     </div>
@@ -839,15 +897,15 @@ footer{background:#080503;padding:3rem 4rem 1.8rem;border-top:1px solid rgba(201
       <span class="footer-col-title">Policies</span>
       <div class="footer-col-links">
         <a href="./privacy-policy.html">Privacy Policy</a>
-        <a href="./terms.html">Terms & Conditions</a>
-        <a href="./booking-cancellation.html">Booking & Cancellation</a>
+        <a href="./terms.html">Terms and Conditions</a>
+        <a href="./booking-cancellation.html">Booking and Cancellation</a>
         <a href="./faq.html">FAQ</a>
       </div>
     </div>
   </div>
   <div class="footer-bottom">
-    <p class="footer-copy">© 2025 Glow Pavi's Makeover. All rights reserved.</p>
-    <div class="footer-bottom-links"><a href="./privacy-policy.html">Privacy</a><a href="./terms.html">Terms</a></div>
+    <p class="footer-copy">2025 Glow Pavi's Makeover. All rights reserved.</p>
+    <div class="footer-bottom-links"><a href="#">Privacy</a><a href="#">Terms</a></div>
     <div class="footer-location">
       <svg width="10" height="12" viewBox="0 0 12 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 1C3.79 1 2 2.79 2 5c0 3.25 4 9 4 9s4-5.75 4-9c0-2.21-1.79-4-4-4z"/><circle cx="6" cy="5" r="1.5"/></svg>
       Madurai, Tamil Nadu
@@ -856,83 +914,90 @@ footer{background:#080503;padding:3rem 4rem 1.8rem;border-top:1px solid rgba(201
 </footer>
 
 <script>
-/* ── NAV SCROLL ── */
+/* ===== NAV ===== */
 const nav = document.getElementById('mainNav');
 window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 80), {passive:true});
 
-/* ── HAMBURGER / MOBILE NAV ── */
+/* ===== SMOOTH SCROLL ===== */
+function smoothScrollTo(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const navH = nav.offsetHeight || 70;
+  const top = el.getBoundingClientRect().top + window.scrollY - navH;
+  window.scrollTo({top, behavior:'smooth'});
+}
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', function(e) {
+    const id = this.getAttribute('href').slice(1);
+    if (!id) return;
+    const target = document.getElementById(id);
+    if (target) { e.preventDefault(); smoothScrollTo(id); }
+  });
+});
+
+/* ===== MOBILE NAV ===== */
 const hamburger = document.getElementById('hamburgerBtn');
 const mobileNav = document.getElementById('mobileNav');
 const mobileOverlay = document.getElementById('mobileOverlay');
-
 hamburger.addEventListener('click', () => {
   const isOpen = mobileNav.classList.toggle('open');
   hamburger.classList.toggle('open', isOpen);
   mobileOverlay.classList.toggle('show', isOpen);
-  mobileNav.setAttribute('aria-hidden', !isOpen);
   hamburger.setAttribute('aria-expanded', isOpen);
+  mobileNav.setAttribute('aria-hidden', !isOpen);
   document.body.style.overflow = isOpen ? 'hidden' : '';
 });
 mobileOverlay.addEventListener('click', closeMobileNav);
-document.addEventListener('keydown', e => { if(e.key === 'Escape') closeMobileNav(); });
-
 function closeMobileNav() {
   mobileNav.classList.remove('open');
   hamburger.classList.remove('open');
   mobileOverlay.classList.remove('show');
-  mobileNav.setAttribute('aria-hidden', 'true');
   hamburger.setAttribute('aria-expanded', 'false');
+  mobileNav.setAttribute('aria-hidden', 'true');
   document.body.style.overflow = '';
 }
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && mobileNav.classList.contains('open')) closeMobileNav();
+});
 
-/* ── PARTICLES ── */
+/* ===== PARTICLES ===== */
 const pc = document.getElementById('particlesContainer');
-for (let i = 0; i < 25; i++) {
+const colors = ['#C9A84C','#3D7A62','#E8C97A','#C5846A'];
+for (let i = 0; i < 28; i++) {
   const p = document.createElement('div');
   p.className = 'particle';
-  p.style.cssText = `left:${Math.random()*100}%;animation-duration:${8+Math.random()*12}s;animation-delay:${Math.random()*10}s;width:${1+Math.random()*2}px;height:${1+Math.random()*2}px`;
+  const c = colors[i % colors.length];
+  const size = 1 + Math.random() * 2;
+  p.style.cssText = `left:${Math.random()*100}%;width:${size}px;height:${size}px;background:${c};animation-duration:${10+Math.random()*14}s;animation-delay:${Math.random()*12}s`;
   pc.appendChild(p);
 }
 
-/* ── REVEAL ON SCROLL ── */
-const revealObs = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); }
-  });
-}, {threshold: 0.08, rootMargin: '0px 0px -30px 0px'});
-document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+/* ===== SCROLL REVEAL ===== */
+const revealEls = document.querySelectorAll('.reveal');
+const revObs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revObs.unobserve(e.target); } });
+}, {threshold:0.1, rootMargin:'0px 0px -40px 0px'});
+revealEls.forEach(el => revObs.observe(el));
 
-/* ── FAQ ACCORDION ── */
-document.querySelectorAll('.faq-item').forEach(item => {
-  item.addEventListener('click', () => {
-    const wasOpen = item.classList.contains('open');
-    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
-    if (!wasOpen) item.classList.add('open');
-  });
+/* ===== FIX 3: JOURNEY DESKTOP ZIGZAG REVEAL ===== */
+const desktopNodes = document.querySelectorAll('.jd-node');
+const desktopObs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in-view'); desktopObs.unobserve(e.target); } });
+}, {threshold:0.2});
+desktopNodes.forEach((n, i) => {
+  n.style.transitionDelay = (i * 0.15) + 's';
+  desktopObs.observe(n);
 });
 
-/* ── GALLERY: pause on hover (CSS handles it), seamless loop via duplicate set ── */
-/* The CSS animation + duplicate slides = seamless infinite scroll */
-/* Pause animation when hovering any slide */
-const track = document.getElementById('galleryTrack');
-if (track) {
-  track.addEventListener('mouseenter', () => track.style.animationPlayState = 'paused');
-  track.addEventListener('mouseleave', () => track.style.animationPlayState = 'running');
-}
-
-/* ── MOBILE GALLERY: touch swipe support ── */
-const mobileGallery = document.getElementById('galleryMobile');
-if (mobileGallery) {
-  let startX = 0, scrollStart = 0;
-  mobileGallery.addEventListener('touchstart', e => {
-    startX = e.touches[0].clientX;
-    scrollStart = mobileGallery.scrollLeft;
-  }, {passive:true});
-  mobileGallery.addEventListener('touchmove', e => {
-    const dx = startX - e.touches[0].clientX;
-    mobileGallery.scrollLeft = scrollStart + dx;
-  }, {passive:true});
-}
+/* ===== FIX 3: JOURNEY MOBILE ONE-BY-ONE REVEAL ===== */
+const mobileNodes = document.querySelectorAll('.jm-node');
+const mobileJObs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in-view'); mobileJObs.unobserve(e.target); } });
+}, {threshold:0.15});
+mobileNodes.forEach((n, i) => {
+  n.style.transitionDelay = (i * 0.12) + 's';
+  mobileJObs.observe(n);
+});
 </script>
 </body>
 </html>
