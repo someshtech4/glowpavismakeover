@@ -3,9 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>About Us — Glow Pavi's Makeover</title>
+  <title>About Pavi — Story Behind Glow Pavi's Makeover | Madurai</title>
   <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,600;0,6..96,700;1,6..96,400;1,6..96,600&family=DM+Serif+Display:ital@0;1&family=Jost:wght@200;300;400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
-  <style>
+    <link rel="stylesheet" href="./navbar.css">
+  <link rel="stylesheet" href="./footer.css">
+<style>
   *{margin:0;padding:0;box-sizing:border-box}
   :root{
     --gold:#C9A84C;--gold-light:#E8C97A;--gold-dark:#9A7A32;
@@ -19,102 +21,56 @@
   html{scroll-behavior:smooth;overflow-x:hidden}
   body{font-family:'Jost',sans-serif;background:var(--off-white);color:var(--text-dark);overflow-x:hidden}
 /* ===================== NAV ===================== */
-  nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0.5rem 4rem;display:flex;justify-content:space-between;align-items:center;transition:all 0.4s ease;background:transparent}
-  nav.scrolled{background:rgba(253,248,245,0.96);backdrop-filter:blur(20px);border-bottom:1px solid rgba(197,132,106,0.15);padding:0.4rem 4rem}
-  .nav-logo img{height:62px;width:62px;object-fit:contain}
-  .nav-links{display:flex;gap:2.5rem;list-style:none;align-items:center}
-  .nav-links a{text-decoration:none;color:var(--white);font-family:'Jost',sans-serif;font-size:0.78rem;font-weight:400;letter-spacing:0.14em;text-transform:uppercase;transition:color 0.3s}
-  nav.scrolled .nav-links a{color:var(--text-mid)}
-  .nav-links a:hover{color:var(--gold)}
+  
+  
+  
+  
+  
+  
+  
 
   /* ===================== FIX 1: SERVICES DROPDOWN — hover-safe with padding bridge ===================== */
-  .nav-dropdown{position:relative}
-  .nav-dropdown > a{display:flex;align-items:center;gap:0.35rem;cursor:pointer}
-  .nav-dropdown > a .caret{font-size:0.55rem;transition:transform 0.3s;opacity:0.7;margin-top:1px}
+  
+  
+  
   /* Invisible bridge fills the gap between link and menu so mouse doesn't leave the trigger zone */
-  .nav-dropdown::after{content:'';position:absolute;top:100%;left:0;right:0;height:1.5rem;background:transparent;display:none}
-  .nav-dropdown:hover::after{display:block}
-  .nav-dropdown:hover > a .caret{transform:rotate(180deg)}
-  .dropdown-menu{
-    position:absolute;top:calc(100% + 1.2rem);left:50%;transform:translateX(-50%) translateY(-8px);
-    background:#fff;border-radius:16px;padding:0.6rem;
-    box-shadow:0 20px 60px rgba(44,24,16,0.18),0 2px 12px rgba(44,24,16,0.08);
-    border:1px solid rgba(197,132,106,0.15);
-    min-width:220px;opacity:0;pointer-events:none;
-    transition:opacity 0.25s ease,transform 0.25s ease;
-    /* Add top padding so the hover zone extends to cover the gap */
-    padding-top:0.6rem;
-  }
+  
+  
+  
+  
   /* The real fix: extend the dropdown-menu's hover area upward with a pseudo-element */
-  .dropdown-menu::before{
-    content:'';position:absolute;
-    /* Cover the gap between nav link and dropdown */
-    top:-1.5rem;left:0;right:0;height:1.5rem;
-    background:transparent;
-  }
-  .dropdown-menu::after{
-    content:'';position:absolute;top:-6px;left:50%;
-    width:12px;height:12px;background:#fff;border-left:1px solid rgba(197,132,106,0.15);
-    border-top:1px solid rgba(197,132,106,0.15);transform:translateX(-50%) rotate(45deg);
-    pointer-events:none;
-  }
-  .nav-dropdown:hover .dropdown-menu{opacity:1;pointer-events:all;transform:translateX(-50%) translateY(0)}
-  .dropdown-item{
-    display:flex;align-items:center;gap:0.75rem;padding:0.7rem 0.9rem;
-    border-radius:10px;text-decoration:none;transition:background 0.2s;
-    font-family:'Jost',sans-serif;font-size:0.78rem;color:var(--text-mid);
-    font-weight:400;letter-spacing:0.06em;text-transform:none;
-    cursor:pointer;
-  }
-  .dropdown-item:hover{background:rgba(201,168,76,0.09);color:var(--text-dark)}
-  .dropdown-item .di-icon{width:34px;height:34px;border-radius:8px;background:linear-gradient(135deg,rgba(201,168,76,0.15),rgba(197,132,106,0.12));display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
-  .dropdown-item .di-info{display:flex;flex-direction:column;gap:0.1rem}
-  .dropdown-item .di-label{font-size:0.8rem;font-weight:500;color:var(--text-dark)}
-  .dropdown-item .di-sub{font-size:0.68rem;color:var(--text-light);font-style:italic}
-  .dropdown-divider{height:1px;background:rgba(197,132,106,0.1);margin:0.3rem 0}
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 
-  .nav-cta{background:linear-gradient(135deg,var(--gold),var(--copper));color:var(--white);padding:0.55rem 1.5rem;border-radius:30px;text-decoration:none;font-family:'Jost',sans-serif;font-size:0.75rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;transition:all 0.3s;border:none;cursor:pointer;box-shadow:0 4px 20px rgba(197,132,106,0.4)}
-  .nav-cta:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(197,132,106,0.5)}
+  
+  
 
   /* ===================== FIX 5: HAMBURGER + MOBILE NAV ===================== */
-  .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;z-index:1100;background:none;border:none}
-  .hamburger span{display:block;width:24px;height:2px;background:var(--white);border-radius:2px;transition:all 0.35s ease}
-  nav.scrolled .hamburger span{background:var(--text-dark)}
-  .hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
-  .hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0)}
-  .hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+  
+  
+  
+  
+  
+  
 
   /* Mobile nav — smooth slide with proper z-index layering */
-  .mobile-nav{
-    position:fixed;top:0;right:-100%;width:min(320px,85vw);height:100vh;
-    background:linear-gradient(160deg,#1a0e08 0%,#0d0806 60%,#180f08 100%);
-    z-index:1050;
-    transition:right 0.42s cubic-bezier(0.77,0,0.175,1);
-    padding:4.5rem 2.5rem 3rem;
-    display:flex;flex-direction:column;gap:0;
-    border-left:1px solid rgba(201,168,76,0.12);
-    visibility:hidden;pointer-events:none;
-    overflow-y:auto;
-    -webkit-overflow-scrolling:touch;
-  }
-  .mobile-nav.open{right:0;visibility:visible;pointer-events:all}
+  
+  
   /* FIX: smooth scroll within mobile nav links */
-  .mobile-nav a{
-    display:block;color:rgba(255,255,255,0.75);text-decoration:none;
-    font-family:'Jost',sans-serif;font-size:1rem;font-weight:300;
-    letter-spacing:0.08em;
-    padding:0.85rem 0;
-    border-bottom:1px solid rgba(201,168,76,0.08);
-    transition:color 0.3s,padding-left 0.3s;
-    /* FIX: ensure anchor links respect scroll-behavior */
-    scroll-behavior:smooth;
-  }
-  .mobile-nav a:hover,.mobile-nav a:active{color:var(--gold-light);padding-left:0.5rem}
-  .mobile-section-label{font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(201,168,76,0.5);margin-top:1.4rem;margin-bottom:0.3rem;display:block}
-  .mobile-cta{margin-top:1.8rem;background:linear-gradient(135deg,var(--gold),var(--copper));color:var(--white) !important;text-align:center;padding:0.85rem !important;border-radius:30px;font-size:0.82rem;letter-spacing:0.1em;text-transform:uppercase;font-weight:500;border-bottom:none !important}
-  .mobile-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:1040;opacity:0;pointer-events:none;transition:opacity 0.4s;backdrop-filter:blur(2px)}
-  .mobile-overlay.show{opacity:1;pointer-events:all}
-
+  
+  
+  
+  
+  
+  
 
   /* ── PAGE HERO — FULL SCREEN HEIGHT ── */
   .page-hero{
@@ -367,23 +323,23 @@
   .btn-whatsapp:hover{transform:translateY(-3px);box-shadow:0 15px 40px rgba(37,211,102,0.35)}
 
   /* ── FOOTER ── */
-  footer{background:#080503;padding:3.5rem 4rem 2rem;border-top:1px solid rgba(201,168,76,0.1)}
-  .footer-main{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:4rem;margin-bottom:2.5rem}
-  .footer-logo img{height:68px;width:68px;object-fit:contain;opacity:0.9;margin-bottom:0.8rem;display:block}
-  .footer-slogan{font-family:'Cormorant Garamond',serif;font-style:italic;color:rgba(255,255,255,0.4);font-size:0.95rem;line-height:1.6;max-width:220px}
-  .footer-social{display:flex;gap:0.7rem;margin-top:1.2rem}
-  .social-btn{width:34px;height:34px;border-radius:50%;border:1px solid rgba(201,168,76,0.2);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.35);font-size:0.8rem;transition:all 0.3s;text-decoration:none}
-  .social-btn:hover{border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,0.08)}
-  .footer-col-title{font-family:'Jost',sans-serif;font-size:0.65rem;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:1.2rem;display:block}
-  .footer-col-links{display:flex;flex-direction:column;gap:0.5rem}
-  .footer-col-links a{font-family:'Jost',sans-serif;color:rgba(255,255,255,0.38);text-decoration:none;font-size:0.82rem;letter-spacing:0.04em;transition:all 0.3s;line-height:1.5}
-  .footer-col-links a:hover{color:rgba(255,255,255,0.75);padding-left:4px}
-  .footer-bottom{border-top:1px solid rgba(201,168,76,0.08);padding-top:1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.8rem}
-  .footer-copy{font-family:'Jost',sans-serif;color:rgba(255,255,255,0.18);font-size:0.72rem;letter-spacing:0.05em}
-  .footer-bottom-links{display:flex;gap:1.5rem}
-  .footer-bottom-links a{font-family:'Jost',sans-serif;color:rgba(255,255,255,0.2);font-size:0.7rem;text-decoration:none;transition:color 0.3s}
-  .footer-bottom-links a:hover{color:rgba(255,255,255,0.5)}
-  .footer-location{font-family:'Jost',sans-serif;color:rgba(255,255,255,0.2);font-size:0.7rem;display:flex;align-items:center;gap:0.4rem}
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 
   /* ── ANIMATIONS ── */
   @keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
@@ -394,10 +350,10 @@
 
   /* ── RESPONSIVE ── */
   @media(max-width:900px){
-  nav{padding:0.9rem 1.2rem}
-    nav.scrolled{padding:0.7rem 1.2rem}
-    .nav-links{display:none}
-    .hamburger{display:flex}
+  
+    
+    
+    
     .container{padding:0 1.2rem}
     .process-grid{grid-template-columns:1fr;padding:0 1.2rem;gap:1rem}
     .process-grid::before{display:none}
@@ -426,13 +382,13 @@
     .tl-mobile{display:block}
 
     .journey-header{margin-bottom:2.5rem}
-    footer{padding:2.5rem 1.2rem 1.5rem}
-    .footer-main{grid-template-columns:1fr;gap:2rem}
-    .footer-bottom{flex-direction:column;align-items:flex-start}
+    
+    
+    
     .page-hero{min-height:100svh}
   }
   @media(max-width:600px){
-    .footer-bottom-links{flex-wrap:wrap;gap:0.8rem}
+    
     .stats-strip{gap:1rem}
     .story-card{padding:2rem 1.5rem}
     .numbers-grid{grid-template-columns:1fr 1fr}
@@ -440,77 +396,81 @@
     .btn-gold,.btn-whatsapp{justify-content:center;width:100%;max-width:280px}
   }
   @media(min-width:901px){
-  .hamburger{display:none !important}
-    .mobile-nav{display:none !important}
-    .mobile-overlay{display:none !important}
+  
+    
+    
     #mobileTimeline{display:none !important}
   }
   </style>
+  <meta name="description" content="Meet Pavi, Madurai's passionate bridal makeup artist with 8+ years of experience. Learn her story, values, and the artistry behind Glow Pavi's Makeover.">
+  <meta name="keywords" content="about Glow Pavi, bridal makeup artist Madurai, Pavi makeup artist story, best makeup artist Madurai">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="Glow Pavi's Makeover">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="About Pavi — Story Behind Glow Pavi's Makeover">
+  <meta property="og:description" content="8+ years of bridal artistry, 500+ brides transformed. Meet the face behind Glow Pavi's Makeover in Madurai.">
+  <meta property="og:url" content="https://glowpavismakeover.com/about.html">
+  <meta property="og:site_name" content="Glow Pavi's Makeover">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="About Pavi — Story Behind Glow Pavi's Makeover">
+  <meta name="twitter:description" content="8+ years of bridal artistry, 500+ brides transformed. Meet the face behind Glow Pavi's Makeover in Madurai.">
+  <link rel="canonical" href="https://glowpavismakeover.com/about.html">
 </head>
 <body>
 
+<a class="sticky-wa" href="https://wa.me/919344089990" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  Book on WhatsApp
+</a>
+
 <div class="mobile-overlay" id="mobileOverlay"></div>
 
-<!-- ===================== FIX 5: MOBILE NAV with proper scroll handling ===================== -->
 <nav class="mobile-nav" id="mobileNav" aria-hidden="true">
   <span class="mobile-section-label">Main</span>
-  <a href="#story" onclick="smoothScrollTo('story');closeMobileNav();return false;">Story</a>
-  <a href="#services" onclick="smoothScrollTo('services');closeMobileNav();return false;">Services</a>
-  <a href="#transformation" onclick="smoothScrollTo('transformation');closeMobileNav();return false;">Brides</a>
-  <a href="#trust" onclick="smoothScrollTo('trust');closeMobileNav();return false;">Reviews</a>
-  <a href="#timeline" onclick="smoothScrollTo('timeline');closeMobileNav();return false;">Journey</a>
+  <a href="./index.html">Home</a>
+  <a href="./index.html#about">About Pavi</a>
+  <a href="./index.html#beforeafter">Results</a>
+  <a href="./index.html#trust-section">Reviews</a>
+  <a href="./index.html#faq">FAQ</a>
   <span class="mobile-section-label">Services</span>
   <a href="./bridal-makeup.html" onclick="closeMobileNav()">👰 Bridal Makeup</a>
   <a href="./party-makeup.html" onclick="closeMobileNav()">✨ Party Makeup</a>
   <a href="./skin-care.html" onclick="closeMobileNav()">🌿 Skin Care</a>
-  <a href="#booking" class="mobile-cta" onclick="smoothScrollTo('booking');closeMobileNav();return false;">Book Now</a>
+  <a href="./index.html#booking" class="mobile-cta">Book Now</a>
 </nav>
 
-<!-- MAIN NAV -->
 <nav id="mainNav">
   <div class="nav-logo">
-    <img src="./assets/image/logo1.png" alt="Glow Pavi's Makeover"
-      onerror="this.style.display='none';this.parentElement.innerHTML='<span style=\'font-family:Bodoni Moda,serif;font-size:1.1rem;font-weight:600;background:linear-gradient(135deg,#C9A84C,#C5846A);-webkit-background-clip:text;-webkit-text-fill-color:transparent\'>Glow Pavi\'s</span>'">
+    <a href="./index.html">
+      <img src="./assets/image/logo1.png" alt="Glow Pavi's Makeover"
+        onerror="this.style.display='none';this.parentElement.innerHTML='<span style=\'font-family:Bodoni Moda,serif;font-size:1.1rem;font-weight:600;background:linear-gradient(135deg,#C9A84C,#C5846A);-webkit-background-clip:text;-webkit-text-fill-color:transparent\'>Glow Pavi\'s</span>'">
+    </a>
   </div>
   <ul class="nav-links">
-    <li><a href="#story">Story</a></li>
-    <!-- FIX 1: Services dropdown — hover-safe with invisible bridge -->
+    <li><a href="./index.html">Home</a></li>
     <li class="nav-dropdown">
-      <a href="#services">Services <span class="caret">▼</span></a>
+      <a href="./index.html#services">Services <span class="caret">▼</span></a>
       <div class="dropdown-menu">
-        <a class="dropdown-item" href="./bridal-makeup.html">
-          <span class="di-icon">👰</span>
-          <span class="di-info">
-             <span class="di-label">Bridal Makeup</span>
-          </span>
-        </a>
+        <a class="dropdown-item" href="./bridal-makeup.html"><span class="di-icon">👰</span><span class="di-label">Bridal Makeup</span></a>
         <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="./party-makeup.html">
-          <span class="di-icon">✨</span>
-          <span class="di-info">
-           <span class="di-label">Party Makeup</span>
-          </span>
-        </a>
+        <a class="dropdown-item" href="./party-makeup.html"><span class="di-icon">✨</span><span class="di-label">Party Makeup</span></a>
         <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="./skin-care.html">
-          <span class="di-icon">🌿</span>
-          <span class="di-info">
-     <span class="di-label">Skin Care</span>
-          </span>
-        </a>
+        <a class="dropdown-item" href="./skin-care.html"><span class="di-icon">🌿</span><span class="di-label">Skin Care</span></a>
       </div>
     </li>
-    <li><a href="#transformation">Brides</a></li>
-    <li><a href="#trust">Reviews</a></li>
-    <li><a href="#timeline">Journey</a></li>
+    <li><a href="./about.html">About</a></li>
+    <li><a href="./index.html#beforeafter">Results</a></li>
+    <li><a href="./index.html#trust-section">Reviews</a></li>
+    <li><a href="./index.html#faq">FAQ</a></li>
   </ul>
   <div style="display:flex;align-items:center;gap:1rem">
-    <a href="#booking" class="nav-cta">Book Now</a>
-    <button class="hamburger" id="hamburgerBtn" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav">
+    <a href="./index.html#booking" class="nav-cta">Book Now</a>
+    <button class="hamburger" id="hamburgerBtn" aria-label="Open menu" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
   </div>
 </nav>
+
 
 <!-- ══ PAGE HERO — FULL SCREEN ══ -->
 <section class="page-hero">
@@ -895,7 +855,7 @@
       <p class="cta-sub">150 brides trusted us with their most precious moment. You deserve the same care, artistry, and love.</p>
       <div class="cta-actions">
         <a href="#" class="btn-gold"><span>✦</span> Book Your Session</a>
-        <a href="https://wa.me/919XXXXXXXXX" target="_blank" rel="noopener" class="btn-whatsapp">
+        <a href="https://wa.me/919344089990" target="_blank" rel="noopener" class="btn-whatsapp">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
           WhatsApp Now
         </a>
@@ -909,13 +869,18 @@
   <div class="footer-main">
     <div>
       <div class="footer-logo">
-        <img src="Logo3.png" alt="Glow Pavi's Makeover" onerror="this.style.display='none'">
+        <a href="./index.html">
+          <img src="./assets/image/logo1.png" alt="Glow Pavi's Makeover logo" onerror="this.style.display='none'">
+        </a>
       </div>
       <p class="footer-slogan">Every bride deserves to feel like the most beautiful version of herself.</p>
       <div class="footer-social">
-        <a class="social-btn" href="#" title="Instagram"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
-        <a class="social-btn" href="#" title="Facebook"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
-        <a class="social-btn" href="https://wa.me/919XXXXXXXXX" target="_blank" rel="noopener" title="WhatsApp"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+        <a class="social-btn" href="https://www.instagram.com/glowpavis/" target="_blank" rel="noopener noreferrer" title="Instagram" aria-label="Follow on Instagram">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        </a>
+        <a class="social-btn" href="https://wa.me/919344089990" target="_blank" rel="noopener" title="WhatsApp" aria-label="Chat on WhatsApp">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        </a>
       </div>
     </div>
     <div>
@@ -927,22 +892,27 @@
       </div>
     </div>
     <div>
-      <span class="footer-col-title">Company</span>
+      <span class="footer-col-title">Quick Links</span>
       <div class="footer-col-links">
-        <a href="about.html">About Us</a>
-        <a href="#">FAQ</a>
-        <a href="#">Privacy Policy</a>
-        <a href="#">Booking & Cancellation</a>
+        <a href="./about.html">About Us</a>
+        <a href="./faq.html">FAQ</a>
+        <a href="./privacy-policy.html">Privacy Policy</a>
+        <a href="./terms.html">Terms &amp; Conditions</a>
+        <a href="./booking-cancellation.html">Booking &amp; Cancellation</a>
       </div>
     </div>
   </div>
   <div class="footer-bottom">
-    <p class="footer-copy">© 2025 Glow Pavi's Makeover. All rights reserved.</p>
-    <div class="footer-bottom-links"><a href="#">Privacy</a><a href="#">Terms</a></div>
-    <div class="footer-location">
+    <p class="footer-copy">© 2025 Glow Pavi's Makeover. All rights reserved. Madurai, Tamil Nadu.</p>
+    <div class="footer-bottom-links">
+      <a href="./privacy-policy.html">Privacy</a>
+      <a href="./terms.html">Terms</a>
+      <a href="./booking-cancellation.html">Cancellation</a>
+    </div>
+    <address class="footer-location" style="font-style:normal">
       <svg width="10" height="12" viewBox="0 0 12 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 1C3.79 1 2 2.79 2 5c0 3.25 4 9 4 9s4-5.75 4-9c0-2.21-1.79-4-4-4z"/><circle cx="6" cy="5" r="1.5"/></svg>
       Madurai, Tamil Nadu
-    </div>
+    </address>
   </div>
 </footer>
 
