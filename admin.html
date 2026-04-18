@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Glow Pavi's — Admin Panel</title>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;1,6..96,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --gold:#C9A84C;--gold-light:#E8C97A;--gold-dark:#9A7A32;
+  --rose-gold:#C5846A;--copper:#B5622A;--copper-light:#D4895A;
+  --dark:#0d0806;--dark2:#1a0e08;
+  --white:#FFFFFF;--off-white:#FDF8F5;--cream:#FAF3EE;
+  --text-dark:#2C1810;--text-mid:#6B4C3B;--text-light:#A07060;
+  --sidebar-w:250px;
+  --success:#2a7a4f;--danger:#c0392b;
+}
+html,body{height:100%;font-family:'Jost',sans-serif;background:#f5ede6;color:var(--text-dark)}
+
+/* LOGIN */
+#loginScreen{display:flex;align-items:center;justify-content:center;min-height:100vh;background:linear-gradient(135deg,#1a0e08,#0d0806);position:fixed;inset:0;z-index:9999;transition:opacity 0.4s}
+#loginScreen.hidden{opacity:0;pointer-events:none}
+.login-box{background:rgba(255,255,255,0.05);border:1px solid rgba(201,168,76,0.2);border-radius:20px;padding:2.5rem 2rem;width:100%;max-width:400px;text-align:center}
+.login-logo{font-family:'Bodoni Moda',serif;font-size:1.5rem;color:#fff;margin-bottom:0.3rem}
+.login-logo em{font-style:italic;color:var(--gold-light)}
+.login-sub{font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:2rem}
+.lf{margin-bottom:1rem;text-align:left}
+.lf label{display:block;font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:0.4rem}
+.lf input{width:100%;background:rgba(255,255,255,0.07);border:1px solid rgba(201,168,76,0.2);border-radius:8px;padding:0.75rem 0.9rem;color:#fff;font-family:'Jost',sans-serif;font-size:0.88rem;outline:none;transition:border-color 0.3s}
+.lf input:focus{border-color:var(--gold)}
+.login-btn{width:100%;background:linear-gradient(135deg,var(--gold),var(--copper));color:#fff;border:none;border-radius:50px;padding:0.85rem;font-family:'Jost',sans-serif;font-size:0.8rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;margin-top:0.5rem;transition:all 0.3s}
+.login-btn:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(201,168,76,0.4)}
+.login-err{color:#e8594a;font-size:0.76rem;margin-top:0.7rem;display:none}
+.login-err.show{display:block}
+
+/* LAYOUT */
+#adminLayout{display:flex;min-height:100vh}
+
+/* SIDEBAR */
+.sidebar{width:var(--sidebar-w);background:linear-gradient(180deg,#1a0e08,#0d0806);position:fixed;top:0;left:0;height:100vh;display:flex;flex-direction:column;z-index:100;border-right:1px solid rgba(201,168,76,0.1);overflow-y:auto}
+.sidebar-logo{padding:1.5rem 1.2rem 1.2rem;border-bottom:1px solid rgba(201,168,76,0.1)}
+.sidebar-logo h1{font-family:'Bodoni Moda',serif;font-size:1rem;color:#fff;line-height:1.3}
+.sidebar-logo h1 em{font-style:italic;color:var(--gold-light)}
+.sidebar-logo p{font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.2);margin-top:0.2rem}
+.nav-sec{padding:0.8rem 1.2rem 0.2rem;font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.18)}
+.nav-item{display:flex;align-items:center;gap:0.7rem;padding:0.65rem 1.2rem;cursor:pointer;transition:all 0.2s;border-left:2px solid transparent;color:rgba(255,255,255,0.45);font-size:0.8rem;user-select:none}
+.nav-item:hover{color:var(--gold-light);background:rgba(201,168,76,0.06);border-left-color:rgba(201,168,76,0.3)}
+.nav-item.active{color:var(--gold-light);background:rgba(201,168,76,0.1);border-left-color:var(--gold)}
+.nav-item .ni{font-size:0.95rem;width:18px;text-align:center;flex-shrink:0}
+.sidebar-footer{padding:1rem 1.2rem;border-top:1px solid rgba(201,168,76,0.1);margin-top:auto}
+.logout-btn{width:100%;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:6px;padding:0.55rem;color:rgba(255,255,255,0.35);font-family:'Jost',sans-serif;font-size:0.72rem;cursor:pointer;transition:all 0.2s;letter-spacing:0.06em}
+.logout-btn:hover{background:rgba(192,57,43,0.2);border-color:rgba(192,57,43,0.4);color:#e8594a}
+
+/* MAIN */
+.main{margin-left:var(--sidebar-w);flex:1;display:flex;flex-direction:column}
+.topbar{background:#fff;border-bottom:1px solid rgba(197,132,106,0.15);padding:0 1.8rem;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
+.topbar-title{font-family:'Bodoni Moda',serif;font-size:1.1rem;color:var(--text-dark)}
+.conn-status{display:flex;align-items:center;gap:0.5rem;font-size:0.7rem;color:var(--text-light)}
+.conn-dot{width:8px;height:8px;border-radius:50%;background:#ccc;transition:background 0.3s}
+.conn-dot.ok{background:#2a7a4f}
+.conn-dot.err{background:#c0392b}
+
+/* PANELS */
+.panel{display:none;padding:1.5rem;flex:1}
+.panel.active{display:block}
+
+/* CARDS */
+.card{background:#fff;border:1px solid rgba(197,132,106,0.15);border-radius:14px;padding:1.5rem;margin-bottom:1.2rem}
+.card h2{font-family:'Bodoni Moda',serif;font-size:1rem;color:var(--text-dark);margin-bottom:0.3rem}
+.card-sub{font-size:0.76rem;color:var(--text-light);margin-bottom:1.2rem;line-height:1.6}
+
+/* FORM */
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:0.8rem;margin-bottom:0.8rem}
+.frow.full{grid-template-columns:1fr}
+.fg{display:flex;flex-direction:column;gap:0.35rem}
+.fg label{font-size:0.68rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-mid)}
+.fg input,.fg textarea,.fg select{border:1px solid rgba(197,132,106,0.25);border-radius:7px;padding:0.65rem 0.8rem;font-family:'Jost',sans-serif;font-size:0.83rem;color:var(--text-dark);background:var(--off-white);outline:none;transition:border-color 0.3s;width:100%}
+.fg input:focus,.fg textarea:focus{border-color:var(--gold)}
+.fg textarea{resize:vertical;min-height:80px}
+
+/* BEFORE/AFTER UPLOAD UI */
+.ba-upload-section{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+.ba-slot{border:2px dashed rgba(201,168,76,0.3);border-radius:12px;padding:1.2rem;text-align:center;position:relative;background:rgba(201,168,76,0.02);transition:all 0.3s}
+.ba-slot.before-slot{border-color:rgba(197,132,106,0.4);background:rgba(197,132,106,0.03)}
+.ba-slot.after-slot{border-color:rgba(201,168,76,0.4);background:rgba(201,168,76,0.03)}
+.ba-slot:hover{border-color:var(--gold);background:rgba(201,168,76,0.06)}
+.ba-slot input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.ba-slot-label{font-size:0.65rem;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:0.5rem}
+.before-slot .ba-slot-label{color:var(--rose-gold)}
+.after-slot .ba-slot-label{color:var(--gold-dark)}
+.ba-slot-icon{font-size:1.8rem;display:block;margin-bottom:0.3rem}
+.ba-slot-text{font-size:0.75rem;color:var(--text-light)}
+.ba-slot-text strong{color:var(--text-mid)}
+.ba-preview{width:100%;height:120px;object-fit:cover;border-radius:8px;display:none;margin-top:0.5rem}
+
+/* BA PAIRS LIST */
+.ba-pairs{margin-top:1rem}
+.ba-pair{display:grid;grid-template-columns:1fr 1fr auto;gap:0.8rem;align-items:center;background:var(--off-white);border:1px solid rgba(197,132,106,0.15);border-radius:10px;padding:0.8rem;margin-bottom:0.6rem}
+.ba-pair img{width:100%;height:80px;object-fit:cover;border-radius:6px;display:block}
+.ba-pair-del{background:rgba(192,57,43,0.1);border:1px solid rgba(192,57,43,0.2);border-radius:6px;padding:0.4rem 0.7rem;color:#c0392b;font-size:0.72rem;cursor:pointer;transition:all 0.2s;white-space:nowrap}
+.ba-pair-del:hover{background:#c0392b;color:#fff}
+.ba-pair-label{font-size:0.62rem;text-align:center;color:var(--text-light);margin-top:0.3rem;letter-spacing:0.08em;text-transform:uppercase}
+
+/* GALLERY UPLOAD */
+.upload-zone{border:2px dashed rgba(201,168,76,0.3);border-radius:12px;padding:1.8rem;text-align:center;cursor:pointer;transition:all 0.3s;background:rgba(201,168,76,0.02);position:relative}
+.upload-zone:hover,.upload-zone.drag{border-color:var(--gold);background:rgba(201,168,76,0.07)}
+.upload-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.uz-icon{font-size:1.8rem;margin-bottom:0.4rem}
+.uz-text{font-size:0.8rem;color:var(--text-light)}
+.uz-text strong{color:var(--gold-dark)}
+
+/* IMAGE GRID */
+.img-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:0.8rem;margin-top:1rem}
+.img-item{position:relative;border-radius:8px;overflow:hidden;aspect-ratio:1;background:#f0e8e0}
+.img-item img{width:100%;height:100%;object-fit:cover;display:block}
+.img-overlay{position:absolute;inset:0;background:rgba(13,8,6,0);display:flex;align-items:center;justify-content:center;transition:background 0.2s}
+.img-item:hover .img-overlay{background:rgba(13,8,6,0.55)}
+.img-del{opacity:0;background:rgba(192,57,43,0.8);border:none;border-radius:6px;padding:0.35rem 0.6rem;color:#fff;font-size:0.7rem;cursor:pointer;transform:translateY(6px);transition:all 0.2s}
+.img-item:hover .img-del{opacity:1;transform:translateY(0)}
+.img-main-badge{position:absolute;top:0.3rem;left:0.3rem;background:var(--gold);color:var(--dark);font-size:0.55rem;font-weight:700;letter-spacing:0.1em;padding:0.12rem 0.35rem;border-radius:3px;text-transform:uppercase}
+.img-caption{position:absolute;bottom:0;left:0;right:0;background:rgba(13,8,6,0.65);padding:0.3rem 0.4rem;font-size:0.62rem;color:rgba(255,255,255,0.75);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:0.45rem;padding:0.65rem 1.3rem;border-radius:50px;border:none;cursor:pointer;font-family:'Jost',sans-serif;font-size:0.76rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;transition:all 0.3s}
+.btn-gold{background:linear-gradient(135deg,var(--gold),var(--copper));color:#fff;box-shadow:0 4px 16px rgba(201,168,76,0.3)}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(201,168,76,0.4)}
+.btn-gold:disabled{opacity:0.5;cursor:not-allowed;transform:none}
+.btn-outline{background:transparent;border:1px solid rgba(197,132,106,0.3);color:var(--text-mid)}
+.btn-outline:hover{border-color:var(--gold);color:var(--text-dark)}
+.btn-actions{display:flex;gap:0.7rem;align-items:center;margin-top:1rem;padding-top:1rem;border-top:1px solid rgba(197,132,106,0.1)}
+
+/* TABS */
+.tabs{display:flex;gap:0.4rem;margin-bottom:1rem;flex-wrap:wrap}
+.tab{padding:0.45rem 0.9rem;border-radius:30px;border:1px solid rgba(197,132,106,0.25);background:transparent;color:var(--text-light);font-family:'Jost',sans-serif;font-size:0.72rem;cursor:pointer;transition:all 0.2s;letter-spacing:0.05em}
+.tab.active{background:linear-gradient(135deg,var(--gold),var(--copper));color:#fff;border-color:transparent}
+.tab:hover:not(.active){border-color:var(--gold);color:var(--text-dark)}
+
+/* STATS */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:0.8rem;margin-bottom:1.2rem}
+.stat-card{background:#fff;border:1px solid rgba(197,132,106,0.15);border-radius:12px;padding:1.2rem;display:flex;align-items:center;gap:0.8rem}
+.stat-icon{width:38px;height:38px;border-radius:8px;background:linear-gradient(135deg,rgba(201,168,76,0.15),rgba(197,132,106,0.1));display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+.stat-num{font-family:'Bodoni Moda',serif;font-size:1.5rem;color:var(--text-dark);line-height:1}
+.stat-label{font-size:0.65rem;color:var(--text-light);letter-spacing:0.06em;text-transform:uppercase;margin-top:0.15rem}
+
+/* TOAST */
+#toast{position:fixed;bottom:1.5rem;right:1.5rem;z-index:9999;display:flex;flex-direction:column;gap:0.5rem;pointer-events:none}
+.toast-item{background:var(--dark2);color:#fff;padding:0.75rem 1rem;border-radius:8px;font-size:0.8rem;display:flex;align-items:center;gap:0.5rem;box-shadow:0 6px 25px rgba(0,0,0,0.3);border-left:3px solid var(--gold);animation:tin 0.3s ease;min-width:260px}
+.toast-item.success{border-left-color:#2a7a4f}
+.toast-item.error{border-left-color:#c0392b}
+@keyframes tin{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)}}
+
+/* SECTION DIVIDER */
+.divider{height:1px;background:rgba(197,132,106,0.12);margin:1rem 0}
+
+/* INFO BOX */
+.info-box{background:rgba(201,168,76,0.07);border:1px solid rgba(201,168,76,0.2);border-radius:8px;padding:0.8rem 1rem;font-size:0.78rem;color:var(--text-mid);line-height:1.6;margin-bottom:1rem}
+
+/* EMPTY */
+.empty{text-align:center;padding:2rem;color:var(--text-light);font-size:0.82rem;font-style:italic}
+
+/* SPIN */
+@keyframes spin{to{transform:rotate(360deg)}}
+.spin{display:inline-block;width:12px;height:12px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin 0.7s linear infinite}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="loginScreen">
+  <div class="login-box">
+    <div class="login-logo">Glow <em>Pavi's</em></div>
+    <div class="login-sub">Admin Panel</div>
+    <div class="lf"><label>Username</label><input type="text" id="lu" placeholder="admin"></div>
+    <div class="lf"><label>Password</label><input type="password" id="lp" placeholder="••••••••"></div>
+    <button class="login-btn" onclick="doLogin()">Sign In →</button>
+    <div class="login-err" id="lerr">Wrong username or password!</div>
+  </div>
+</div>
+
+<!-- ADMIN -->
+<div id="adminLayout" style="display:none">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <h1>Glow <em>Pavi's</em></h1>
+      <p>Admin Panel</p>
+    </div>
+    <div style="flex:1">
+      <div class="nav-sec">Overview</div>
+      <div class="nav-item active" data-p="dashboard" onclick="go(this)"><span class="ni">📊</span>Dashboard</div>
+      <div class="nav-sec">Pages</div>
+      <div class="nav-item" data-p="home" onclick="go(this)"><span class="ni">🏠</span>Home Page</div>
+      <div class="nav-item" data-p="bridal" onclick="go(this)"><span class="ni">💍</span>Bridal Makeup</div>
+      <div class="nav-item" data-p="party" onclick="go(this)"><span class="ni">🎉</span>Party Makeup</div>
+      <div class="nav-item" data-p="skincare" onclick="go(this)"><span class="ni">🌿</span>Skin Care</div>
+      <div class="nav-item" data-p="about" onclick="go(this)"><span class="ni">✨</span>About Page</div>
+      <div class="nav-sec">Settings</div>
+      <div class="nav-item" data-p="settings" onclick="go(this)"><span class="ni">⚙️</span>Supabase Config</div>
+    </div>
+    <div class="sidebar-footer">
+      <button class="logout-btn" onclick="doLogout()">Sign Out</button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <!-- TOPBAR -->
+    <div class="topbar">
+      <div class="topbar-title" id="ttitle">Dashboard</div>
+      <div class="conn-status">
+        <div class="conn-dot" id="cdot"></div>
+        <span id="ctext">Not connected</span>
+      </div>
+    </div>
+
+    <!-- ══ DASHBOARD ══ -->
+    <div class="panel active" id="panel-dashboard">
+      <div class="stats-row">
+        <div class="stat-card"><div class="stat-icon">🖼️</div><div><div class="stat-num" id="s-total">—</div><div class="stat-label">Total Images</div></div></div>
+        <div class="stat-card"><div class="stat-icon">💍</div><div><div class="stat-num" id="s-bridal">—</div><div class="stat-label">Bridal</div></div></div>
+        <div class="stat-card"><div class="stat-icon">🎉</div><div><div class="stat-num" id="s-party">—</div><div class="stat-label">Party</div></div></div>
+        <div class="stat-card"><div class="stat-icon">🌿</div><div><div class="stat-num" id="s-skin">—</div><div class="stat-label">Skin Care</div></div></div>
+      </div>
+      <div class="card">
+        <h2>Welcome to Admin Panel 🌸</h2>
+        <p class="card-sub">Manage all your website images and content from here. Select a page from the sidebar to get started.</p>
+        <div style="display:flex;gap:0.7rem;flex-wrap:wrap">
+          <button class="btn btn-gold" onclick="goById('bridal')">💍 Bridal Gallery</button>
+          <button class="btn btn-gold" onclick="goById('party')">🎉 Party Gallery</button>
+          <button class="btn btn-gold" onclick="goById('skincare')">🌿 Skin Care Gallery</button>
+          <button class="btn btn-outline" onclick="goById('settings')">⚙️ Settings</button>
+        </div>
+      </div>
+      <div class="card">
+        <h2>Recent Uploads</h2>
+        <p class="card-sub">Latest images uploaded across all pages.</p>
+        <div id="recent-grid"><div class="empty">No images yet.</div></div>
+      </div>
+    </div>
+
+    <!-- ══ HOME PAGE ══ -->
+    <div class="panel" id="panel-home">
+      <div class="card">
+        <h2>🏠 Home Page — Hero Text</h2>
+        <p class="card-sub">Update the main hero heading and subtitle on index.html</p>
+        <div class="frow">
+          <div class="fg"><label>Hero Title</label><input id="home_hero_title" placeholder="Your Bridal Vision"></div>
+          <div class="fg"><label>Hero Italic Line</label><input id="home_hero_italic" placeholder="Brought to Life"></div>
+        </div>
+        <div class="frow full">
+          <div class="fg"><label>Hero Subtitle</label><textarea id="home_hero_subtitle" placeholder="Subtitle..."></textarea></div>
+        </div>
+        <div class="btn-actions">
+          <button class="btn btn-gold" onclick="saveText('home','hero',['title','italic','subtitle'])">💾 Save Hero Text</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>🏠 Home — Trust Bar Numbers</h2>
+        <p class="card-sub">Update the 4 stat numbers in the dark strip below the hero.</p>
+        <div class="frow">
+          <div class="fg"><label>Happy Brides</label><input id="home_trust_brides" placeholder="500+"></div>
+          <div class="fg"><label>Years Experience</label><input id="home_trust_years" placeholder="8+"></div>
+        </div>
+        <div class="frow">
+          <div class="fg"><label>5-Star Reviews</label><input id="home_trust_reviews" placeholder="200+"></div>
+          <div class="fg"><label>Cities Served</label><input id="home_trust_cities" placeholder="15+"></div>
+        </div>
+        <div class="btn-actions">
+          <button class="btn btn-gold" onclick="saveText('home','trust',['brides','years','reviews','cities'])">💾 Save Numbers</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>🏠 Home — Bento Card Images</h2>
+        <p class="card-sub">Upload background images for the 3 service cards on the home page.</p>
+        <div class="tabs">
+          <button class="tab active" onclick="setTab(this,'home-tabs','bridal_card')">Bridal Card</button>
+          <button class="tab" onclick="setTab(this,'home-tabs','party_card')">Party Card</button>
+          <button class="tab" onclick="setTab(this,'home-tabs','skin_card')">Skin Card</button>
+          <button class="tab" onclick="setTab(this,'home-tabs','hero_bg')">Hero BG</button>
+        </div>
+        <div class="upload-zone" id="home-tabs-zone">
+          <input type="file" accept="image/*" multiple onchange="uploadGallery('home',currentTab['home-tabs'],this.files,this)">
+          <div class="uz-icon">📁</div>
+          <div class="uz-text"><strong>Click or drag</strong> image here</div>
+        </div>
+        <div class="img-grid" id="home-gallery-grid"></div>
+      </div>
+    </div>
+
+    <!-- ══ BRIDAL PAGE ══ -->
+    <div class="panel" id="panel-bridal">
+      <div class="card">
+        <h2>💍 Bridal — Hero Text</h2>
+        <p class="card-sub">Update hero content for bridal-makeup.html</p>
+        <div class="frow">
+          <div class="fg"><label>Hero Title</label><input id="bridal_hero_title" placeholder="Bridal Makeup"></div>
+          <div class="fg"><label>Italic Line</label><input id="bridal_hero_italic" placeholder="In Madurai"></div>
+        </div>
+        <div class="frow full">
+          <div class="fg"><label>Subtitle</label><textarea id="bridal_hero_subtitle"></textarea></div>
+        </div>
+        <div class="btn-actions">
+          <button class="btn btn-gold" onclick="saveText('bridal','hero',['title','italic','subtitle'])">💾 Save</button>
+        </div>
+      </div>
+
+      <!-- BEFORE / AFTER -->
+      <div class="card">
+        <h2>💍 Bridal — Before / After Images</h2>
+        <p class="card-sub">Upload <strong>Before</strong> image and <strong>After</strong> image separately. They will appear in the transformation slider on the bridal page.</p>
+        <div class="info-box">📌 Upload order matters: Upload <strong>Before</strong> first, then <strong>After</strong>. Each pair = 1 slider card on the page.</div>
+        <div class="ba-upload-section">
+          <div class="ba-slot before-slot">
+            <input type="file" accept="image/*" onchange="uploadSingle('bridal','before_after','before',this)">
+            <div class="ba-slot-label">⬅ Before Image</div>
+            <span class="ba-slot-icon">📷</span>
+            <div class="ba-slot-text"><strong>Click</strong> to upload Before photo</div>
+          </div>
+          <div class="ba-slot after-slot">
+            <input type="file" accept="image/*" onchange="uploadSingle('bridal','before_after','after',this)">
+            <div class="ba-slot-label">After Image ➡</div>
+            <span class="ba-slot-icon">✨</span>
+            <div class="ba-slot-text"><strong>Click</strong> to upload After photo</div>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <strong style="font-size:0.75rem;color:var(--text-mid);letter-spacing:0.08em;text-transform:uppercase">Uploaded Before/After Images</strong>
+        <div id="bridal-ba-grid" style="margin-top:0.8rem"><div class="empty">No images yet.</div></div>
+      </div>
+
+      <!-- INSTAGRAM / PORTFOLIO -->
+      <div class="card">
+        <h2>💍 Bridal — Instagram Grid Photos</h2>
+        <p class="card-sub">These photos appear in the Instagram grid section at the bottom of the bridal page. Upload multiple at once.</p>
+        <div class="upload-zone">
+          <input type="file" accept="image/*" multiple onchange="uploadGallery('bridal','instagram',this.files,this)">
+          <div class="uz-icon">📸</div>
+          <div class="uz-text"><strong>Click or drag</strong> photos here — upload multiple at once</div>
+        </div>
+        <div class="img-grid" id="bridal-ig-grid"></div>
+      </div>
+    </div>
+
+    <!-- ══ PARTY PAGE ══ -->
+    <div class="panel" id="panel-party">
+      <div class="card">
+        <h2>🎉 Party — Hero Text</h2>
+        <p class="card-sub">Update hero content for party-makeup.html</p>
+        <div class="frow">
+          <div class="fg"><label>Hero Title</label><input id="party_hero_title" placeholder="Party Makeup Artist"></div>
+          <div class="fg"><label>Italic Line</label><input id="party_hero_italic" placeholder="your night, your glow"></div>
+        </div>
+        <div class="frow full">
+          <div class="fg"><label>Subtitle</label><textarea id="party_hero_subtitle"></textarea></div>
+        </div>
+        <div class="btn-actions">
+          <button class="btn btn-gold" onclick="saveText('party','hero',['title','italic','subtitle'])">💾 Save</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>🎉 Party — Before / After Images</h2>
+        <p class="card-sub">Upload Before and After images for the transformation section on party-makeup.html</p>
+        <div class="info-box">📌 <strong>Before</strong> image first, then <strong>After</strong> image. Each pair = 1 comparison card.</div>
+        <div class="ba-upload-section">
+          <div class="ba-slot before-slot">
+            <input type="file" accept="image/*" onchange="uploadSingle('party','before_after','before',this)">
+            <div class="ba-slot-label">⬅ Before Image</div>
+            <span class="ba-slot-icon">📷</span>
+            <div class="ba-slot-text"><strong>Click</strong> to upload Before photo</div>
+          </div>
+          <div class="ba-slot after-slot">
+            <input type="file" accept="image/*" onchange="uploadSingle('party','before_after','after',this)">
+            <div class="ba-slot-label">After Image ➡</div>
+            <span class="ba-slot-icon">✨</span>
+            <div class="ba-slot-text"><strong>Click</strong> to upload After photo</div>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <strong style="font-size:0.75rem;color:var(--text-mid);letter-spacing:0.08em;text-transform:uppercase">Uploaded Before/After Images</strong>
+        <div id="party-ba-grid" style="margin-top:0.8rem"><div class="empty">No images yet.</div></div>
+      </div>
+
+      <div class="card">
+        <h2>🎉 Party — Gallery Photos</h2>
+        <p class="card-sub">Upload party makeup portfolio photos. These appear in the gallery/works section.</p>
+        <div class="upload-zone">
+          <input type="file" accept="image/*" multiple onchange="uploadGallery('party','gallery',this.files,this)">
+          <div class="uz-icon">📸</div>
+          <div class="uz-text"><strong>Click or drag</strong> photos here</div>
+        </div>
+        <div class="img-grid" id="party-gallery-grid"></div>
+      </div>
+    </div>
+
+    <!-- ══ SKIN CARE PAGE ══ -->
+    <div class="panel" id="panel-skincare">
+      <div class="card">
+        <h2>🌿 Skin Care — Hero Text</h2>
+        <p class="card-sub">Update hero content for skin-care.html</p>
+        <div class="frow">
+          <div class="fg"><label>Hero Title</label><input id="skincare_hero_title" placeholder="Glow From Within"></div>
+          <div class="fg"><label>Italic Line</label><input id="skincare_hero_italic" placeholder="Skin Care Rituals"></div>
+        </div>
+        <div class="frow full">
+          <div class="fg"><label>Subtitle</label><textarea id="skincare_hero_subtitle"></textarea></div>
+        </div>
+        <div class="btn-actions">
+          <button class="btn btn-gold" onclick="saveText('skincare','hero',['title','italic','subtitle'])">💾 Save</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>🌿 Skin Care — Before / After Images</h2>
+        <p class="card-sub">Upload Before and After skin treatment photos for skin-care.html</p>
+        <div class="info-box">📌 <strong>Before</strong> image first, then <strong>After</strong> image. Each pair = 1 comparison card.</div>
+        <div class="ba-upload-section">
+          <div class="ba-slot before-slot">
+            <input type="file" accept="image/*" onchange="uploadSingle('skincare','before_after','before',this)">
+            <div class="ba-slot-label">⬅ Before Image</div>
+            <span class="ba-slot-icon">📷</span>
+            <div class="ba-slot-text"><strong>Click</strong> to upload Before photo</div>
+          </div>
+          <div class="ba-slot after-slot">
+            <input type="file" accept="image/*" onchange="uploadSingle('skincare','before_after','after',this)">
+            <div class="ba-slot-label">After Image ➡</div>
+            <span class="ba-slot-icon">✨</span>
+            <div class="ba-slot-text"><strong>Click</strong> to upload After photo</div>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <strong style="font-size:0.75rem;color:var(--text-mid);letter-spacing:0.08em;text-transform:uppercase">Uploaded Before/After Images</strong>
+        <div id="skincare-ba-grid" style="margin-top:0.8rem"><div class="empty">No images yet.</div></div>
+      </div>
+
+      <div class="card">
+        <h2>🌿 Skin Care — Treatment Gallery</h2>
+        <p class="card-sub">Upload skin treatment result photos for the gallery section.</p>
+        <div class="upload-zone">
+          <input type="file" accept="image/*" multiple onchange="uploadGallery('skincare','gallery',this.files,this)">
+          <div class="uz-icon">📸</div>
+          <div class="uz-text"><strong>Click or drag</strong> photos here</div>
+        </div>
+        <div class="img-grid" id="skincare-gallery-grid"></div>
+      </div>
+    </div>
+
+    <!-- ══ ABOUT PAGE ══ -->
+    <div class="panel" id="panel-about">
+      <div class="card">
+        <h2>✨ About — Pavi's Story</h2>
+        <p class="card-sub">Update the bio text on about.html</p>
+        <div class="frow">
+          <div class="fg"><label>Page Heading</label><input id="about_story_heading" placeholder="The Story Behind"></div>
+          <div class="fg"><label>Heading Italic</label><input id="about_story_heading_italic" placeholder="Glow Pavi's"></div>
+        </div>
+        <div class="frow full">
+          <div class="fg"><label>Intro Paragraph</label><textarea id="about_story_intro" style="min-height:100px"></textarea></div>
+        </div>
+        <div class="frow full">
+          <div class="fg"><label>Body Paragraph</label><textarea id="about_story_body" style="min-height:100px"></textarea></div>
+        </div>
+        <div class="btn-actions">
+          <button class="btn btn-gold" onclick="saveText('about','story',['heading','heading_italic','intro','body'])">💾 Save Story</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>✨ About — Pavi's Profile Photo</h2>
+        <p class="card-sub">Upload the main photo of Pavi shown on the about page.</p>
+        <div class="upload-zone">
+          <input type="file" accept="image/*" onchange="uploadGallery('about','profile',this.files,this)">
+          <div class="uz-icon">📸</div>
+          <div class="uz-text"><strong>Click</strong> to upload Pavi's photo</div>
+        </div>
+        <div class="img-grid" id="about-profile-grid"></div>
+      </div>
+    </div>
+
+    <!-- ══ SETTINGS ══ -->
+    <div class="panel" id="panel-settings">
+      <div class="card">
+        <h2>⚙️ Supabase Connection</h2>
+        <p class="card-sub">Your Supabase credentials. Already saved!</p>
+        <div class="frow">
+          <div class="fg"><label>Project URL</label><input id="supa-url" placeholder="https://xxx.supabase.co"></div>
+          <div class="fg"><label>Anon Key</label><input id="supa-key" type="password" placeholder="eyJ..."></div>
+        </div>
+        <div class="btn-actions">
+          <button class="btn btn-gold" onclick="saveConfig()">💾 Save & Test</button>
+          <button class="btn btn-outline" onclick="clearConfig()">🗑 Clear</button>
+        </div>
+        <div id="test-result" style="margin-top:0.8rem;font-size:0.8rem;display:none"></div>
+      </div>
+
+      <div class="card">
+        <h2>🔑 Change Admin Password</h2>
+        <div class="frow">
+          <div class="fg"><label>New Username</label><input id="new-user" placeholder="admin"></div>
+          <div class="fg"><label>New Password</label><input id="new-pass" type="password" placeholder="New password"></div>
+        </div>
+        <div class="btn-actions">
+          <button class="btn btn-gold" onclick="saveCreds()">💾 Update</button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- TOAST -->
+<div id="toast"></div>
+
+<script>
+// ══════════════════════════════════════════════════
+// CONFIG
+// ══════════════════════════════════════════════════
+var BUCKET = 'glow-pavi-images';
+var supaUrl = '';
+var supaKey = '';
+
+// Tab state per tab-group
+var currentTab = {
+  'home-tabs': 'bridal_card'
+};
+
+// Page titles
+var PAGE_TITLES = {
+  dashboard:'Dashboard', home:'Home Page', bridal:'Bridal Makeup',
+  party:'Party Makeup', skincare:'Skin Care', about:'About Page', settings:'Settings'
+};
+
+// ══════════════════════════════════════════════════
+// LOGIN
+// ══════════════════════════════════════════════════
+function doLogin() {
+  var u = document.getElementById('lu').value.trim();
+  var p = document.getElementById('lp').value.trim();
+  var su = localStorage.getItem('gp_user') || 'admin';
+  var sp = localStorage.getItem('gp_pass') || 'glowpavi2024';
+  if (u === su && p === sp) {
+    document.getElementById('loginScreen').classList.add('hidden');
+    setTimeout(function(){ document.getElementById('loginScreen').style.display='none'; },400);
+    document.getElementById('adminLayout').style.display = 'flex';
+    initAdmin();
+  } else {
+    document.getElementById('lerr').classList.add('show');
+  }
+}
+function doLogout() {
+  location.reload();
+}
+document.getElementById('lp').addEventListener('keydown', function(e){ if(e.key==='Enter') doLogin(); });
+document.getElementById('lu').addEventListener('keydown', function(e){ if(e.key==='Enter') doLogin(); });
+
+function saveCreds() {
+  var u = document.getElementById('new-user').value.trim();
+  var p = document.getElementById('new-pass').value.trim();
+  if (!u||!p){ toast('Enter both fields','error'); return; }
+  localStorage.setItem('gp_user', u);
+  localStorage.setItem('gp_pass', p);
+  toast('Credentials updated ✓','success');
+}
+
+// ══════════════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════════════
+function initAdmin() {
+  supaUrl = localStorage.getItem('gp_supa_url') || '';
+  supaKey = localStorage.getItem('gp_supa_key') || '';
+  if (supaUrl) {
+    document.getElementById('supa-url').value = supaUrl;
+    document.getElementById('supa-key').value = supaKey;
+    testConn(false);
+  }
+  loadStats();
+}
+
+// ══════════════════════════════════════════════════
+// NAVIGATION
+// ══════════════════════════════════════════════════
+function go(el) {
+  document.querySelectorAll('.nav-item').forEach(function(n){ n.classList.remove('active'); });
+  el.classList.add('active');
+  var p = el.getAttribute('data-p');
+  showPanel(p);
+}
+function goById(p) {
+  document.querySelectorAll('.nav-item').forEach(function(n){
+    if (n.getAttribute('data-p') === p) n.classList.add('active');
+    else n.classList.remove('active');
+  });
+  showPanel(p);
+}
+function showPanel(p) {
+  document.querySelectorAll('.panel').forEach(function(x){ x.classList.remove('active'); });
+  document.getElementById('panel-'+p).classList.add('active');
+  document.getElementById('ttitle').textContent = PAGE_TITLES[p] || p;
+
+  // Load grids when switching pages
+  if (p==='bridal')   { loadGrid('bridal','before_after','bridal-ba-grid'); loadGrid('bridal','instagram','bridal-ig-grid'); }
+  if (p==='party')    { loadGrid('party','before_after','party-ba-grid'); loadGrid('party','gallery','party-gallery-grid'); }
+  if (p==='skincare') { loadGrid('skincare','before_after','skincare-ba-grid'); loadGrid('skincare','gallery','skincare-gallery-grid'); }
+  if (p==='about')    { loadGrid('about','profile','about-profile-grid'); }
+  if (p==='home')     { loadGrid('home', currentTab['home-tabs'], 'home-gallery-grid'); }
+  if (p==='dashboard'){ loadStats(); }
+}
+
+// ══════════════════════════════════════════════════
+// TABS
+// ══════════════════════════════════════════════════
+function setTab(el, groupId, section) {
+  el.closest('.tabs').querySelectorAll('.tab').forEach(function(t){ t.classList.remove('active'); });
+  el.classList.add('active');
+  currentTab[groupId] = section;
+  loadGrid('home', section, 'home-gallery-grid');
+}
+
+// ══════════════════════════════════════════════════
+// SUPABASE HELPERS
+// ══════════════════════════════════════════════════
+function dbFetch(endpoint, opts) {
+  if (!supaUrl||!supaKey) return Promise.reject(new Error('Supabase not configured'));
+  opts = opts || {};
+  return fetch(supaUrl.replace(/\/$/,'') + endpoint, {
+    method: opts.method || 'GET',
+    headers: Object.assign({
+      'apikey': supaKey,
+      'Authorization': 'Bearer ' + supaKey,
+      'Content-Type': 'application/json',
+      'Prefer': opts.prefer || 'return=representation'
+    }, opts.headers || {}),
+    body: opts.body ? JSON.stringify(opts.body) : undefined
+  }).then(function(r){
+    if (!r.ok) return r.json().then(function(e){ throw new Error(e.message||'API error '+r.status); });
+    if (opts.method==='DELETE') return null;
+    return r.json();
+  });
+}
+
+function uploadFile(file, path) {
+  return fetch(supaUrl.replace(/\/$/,'') + '/storage/v1/object/' + BUCKET + '/' + path, {
+    method: 'POST',
+    headers: {
+      'apikey': supaKey,
+      'Authorization': 'Bearer ' + supaKey,
+      'Content-Type': file.type,
+      'x-upsert': 'true'
+    },
+    body: file
+  }).then(function(r){
+    if (!r.ok) return r.json().then(function(e){ throw new Error(e.message||'Upload failed'); });
+    return supaUrl.replace(/\/$/,'') + '/storage/v1/object/public/' + BUCKET + '/' + path;
+  });
+}
+
+function insertImage(page, section, url, path, alt) {
+  return dbFetch('/rest/v1/gp_gallery', {
+    method: 'POST',
+    body: { page:page, section:section, url:url, storage_path:path, alt_text:alt }
+  });
+}
+
+function deleteImageDB(id) {
+  return dbFetch('/rest/v1/gp_gallery?id=eq.'+id, { method:'DELETE', prefer:'' });
+}
+
+function deleteFile(path) {
+  if (!path) return Promise.resolve();
+  return fetch(supaUrl.replace(/\/$/,'') + '/storage/v1/object/' + BUCKET + '/' + path, {
+    method: 'DELETE',
+    headers: { 'apikey': supaKey, 'Authorization': 'Bearer ' + supaKey }
+  });
+}
+
+function getImages(page, section) {
+  return dbFetch('/rest/v1/gp_gallery?page=eq.'+page+'&section=eq.'+section+'&order=created_at.asc&select=*');
+}
+
+// ══════════════════════════════════════════════════
+// UPLOAD — GALLERY (multiple images)
+// ══════════════════════════════════════════════════
+function uploadGallery(page, section, files, inputEl) {
+  if (!files||files.length===0) return;
+  if (!supaUrl) { toast('Configure Supabase first!','error'); return; }
+  var arr = Array.from(files);
+  var done = 0;
+
+  function next(i) {
+    if (i >= arr.length) {
+      if (done > 0) {
+        loadStats();
+        // Reload correct grid
+        var gridId = page+'-gallery-grid';
+        if (section==='instagram') gridId = 'bridal-ig-grid';
+        if (section==='profile')   gridId = 'about-profile-grid';
+        if (section.indexOf('_card')>-1||section==='hero_bg') gridId = 'home-gallery-grid';
+        loadGrid(page, section, gridId);
+      }
+      if (inputEl) inputEl.value = '';
+      return;
+    }
+    var file = arr[i];
+    if (!file) { next(i+1); return; }
+    if (file.size > 5*1024*1024) { toast(file.name+' too large (max 5MB)','error'); next(i+1); return; }
+    var safe = file.name.replace(/[^a-z0-9._-]/gi,'_').toLowerCase();
+    var path = page+'/'+section+'/'+Date.now()+'_'+i+'_'+safe;
+    toast('Uploading '+file.name+'…');
+    uploadFile(file, path).then(function(url){
+      return insertImage(page, section, url, path, file.name.replace(/\.[^.]+$/,''));
+    }).then(function(){
+      done++;
+      toast(file.name+' uploaded ✓','success');
+      next(i+1);
+    }).catch(function(e){
+      toast('Failed: '+file.name+' — '+e.message,'error');
+      next(i+1);
+    });
+  }
+  next(0);
+}
+
+// ══════════════════════════════════════════════════
+// UPLOAD — SINGLE (before or after)
+// ══════════════════════════════════════════════════
+function uploadSingle(page, section, type, inputEl) {
+  var files = inputEl.files;
+  if (!files||files.length===0) return;
+  if (!supaUrl) { toast('Configure Supabase first!','error'); return; }
+  var file = files[0];
+  if (file.size > 5*1024*1024) { toast('File too large (max 5MB)','error'); return; }
+  var safe = file.name.replace(/[^a-z0-9._-]/gi,'_').toLowerCase();
+  var path = page+'/'+section+'/'+type+'_'+Date.now()+'_'+safe;
+  toast('Uploading '+type+' image…');
+  uploadFile(file, path).then(function(url){
+    // alt_text stores "before" or "after" so loader knows which is which
+    return insertImage(page, section, url, path, type);
+  }).then(function(){
+    toast(type.charAt(0).toUpperCase()+type.slice(1)+' image uploaded ✓','success');
+    loadStats();
+    var gridId = page+'-ba-grid';
+    loadGrid(page, section, gridId);
+    inputEl.value='';
+  }).catch(function(e){
+    toast('Failed: '+e.message,'error');
+  });
+}
+
+// ══════════════════════════════════════════════════
+// LOAD IMAGE GRID
+// ══════════════════════════════════════════════════
+function loadGrid(page, section, gridId) {
+  var grid = document.getElementById(gridId);
+  if (!grid) return;
+  if (!supaUrl) { grid.innerHTML='<div class="empty">Configure Supabase first.</div>'; return; }
+  grid.innerHTML='<div class="empty">Loading…</div>';
+  getImages(page, section).then(function(rows){
+    if (!rows.length) { grid.innerHTML='<div class="empty">No images yet. Upload one above!</div>'; return; }
+    var html = '';
+    rows.forEach(function(r){
+      var label = r.alt_text ? r.alt_text : '';
+      html += '<div class="img-item" id="ii-'+r.id+'">';
+      html += '<img src="'+r.url+'" alt="'+label+'" loading="lazy">';
+      html += '<div class="img-overlay"><button class="img-del" onclick="delImg('+r.id+',\''+escQ(r.storage_path||'')+'\',\''+page+'\',\''+section+'\',\''+gridId+'\')">🗑 Delete</button></div>';
+      if (label) html += '<div class="img-caption">'+label+'</div>';
+      html += '</div>';
+    });
+    grid.innerHTML = html;
+  }).catch(function(e){
+    grid.innerHTML='<div class="empty">Error: '+e.message+'</div>';
+  });
+}
+
+function escQ(s){ return s.replace(/'/g,"\\'"); }
+
+function delImg(id, path, page, section, gridId) {
+  if (!confirm('Delete this image?')) return;
+  deleteImageDB(id).then(function(){
+    if (path) deleteFile(path);
+    toast('Deleted ✓','success');
+    loadStats();
+    loadGrid(page, section, gridId);
+  }).catch(function(e){ toast('Delete failed: '+e.message,'error'); });
+}
+
+// ══════════════════════════════════════════════════
+// SAVE TEXT CONTENT
+// ══════════════════════════════════════════════════
+function saveText(page, section, keys) {
+  if (!supaUrl) { toast('Configure Supabase first!','error'); return; }
+  var promises = keys.map(function(key){
+    var el = document.getElementById(page+'_'+section+'_'+key);
+    if (!el) return Promise.resolve();
+    return dbFetch('/rest/v1/gp_content', {
+      method: 'POST',
+      prefer: 'resolution=merge-duplicates,return=representation',
+      body: { page:page, section:section, key:key, value:el.value, updated_at:new Date().toISOString() }
+    });
+  });
+  Promise.all(promises).then(function(){
+    toast('Saved ✓','success');
+  }).catch(function(e){
+    toast('Save failed: '+e.message,'error');
+  });
+}
+
+// ══════════════════════════════════════════════════
+// SUPABASE CONFIG
+// ══════════════════════════════════════════════════
+function saveConfig() {
+  var u = document.getElementById('supa-url').value.trim();
+  var k = document.getElementById('supa-key').value.trim();
+  if (!u||!k) { toast('Enter both URL and key','error'); return; }
+  supaUrl = u; supaKey = k;
+  localStorage.setItem('gp_supa_url', u);
+  localStorage.setItem('gp_supa_key', k);
+  toast('Saved. Testing…');
+  testConn(true);
+}
+function clearConfig() {
+  localStorage.removeItem('gp_supa_url');
+  localStorage.removeItem('gp_supa_key');
+  supaUrl=''; supaKey='';
+  document.getElementById('supa-url').value='';
+  document.getElementById('supa-key').value='';
+  document.getElementById('cdot').className='conn-dot';
+  document.getElementById('ctext').textContent='Not connected';
+  toast('Cleared');
+}
+function testConn(show) {
+  dbFetch('/rest/v1/gp_gallery?limit=1').then(function(){
+    document.getElementById('cdot').className='conn-dot ok';
+    document.getElementById('ctext').textContent='Connected ✓';
+    if (show) {
+      var r=document.getElementById('test-result');
+      r.style.display='block'; r.style.color='var(--success)';
+      r.textContent='✅ Connected! Tables found.';
+    }
+    loadStats();
+  }).catch(function(e){
+    document.getElementById('cdot').className='conn-dot err';
+    document.getElementById('ctext').textContent='Not connected';
+    if (show) {
+      var r=document.getElementById('test-result');
+      r.style.display='block'; r.style.color='var(--danger)';
+      r.textContent='❌ '+e.message;
+    }
+  });
+}
+
+// ══════════════════════════════════════════════════
+// STATS
+// ══════════════════════════════════════════════════
+function loadStats() {
+  if (!supaUrl) return;
+  Promise.all([
+    dbFetch('/rest/v1/gp_gallery?select=id'),
+    dbFetch('/rest/v1/gp_gallery?page=eq.bridal&select=id'),
+    dbFetch('/rest/v1/gp_gallery?page=eq.party&select=id'),
+    dbFetch('/rest/v1/gp_gallery?page=eq.skincare&select=id'),
+    dbFetch('/rest/v1/gp_gallery?order=created_at.desc&limit=6&select=*')
+  ]).then(function(r){
+    document.getElementById('s-total').textContent  = r[0].length||0;
+    document.getElementById('s-bridal').textContent = r[1].length||0;
+    document.getElementById('s-party').textContent  = r[2].length||0;
+    document.getElementById('s-skin').textContent   = r[3].length||0;
+    var recent = r[4];
+    var rg = document.getElementById('recent-grid');
+    if (!recent.length) { rg.innerHTML='<div class="empty">No images yet.</div>'; return; }
+    var html='<div class="img-grid">';
+    recent.forEach(function(im){
+      html+='<div class="img-item"><img src="'+im.url+'" loading="lazy"><div class="img-caption">'+im.page+' / '+im.section+'</div></div>';
+    });
+    html+='</div>';
+    rg.innerHTML=html;
+  }).catch(function(){});
+}
+
+// ══════════════════════════════════════════════════
+// TOAST
+// ══════════════════════════════════════════════════
+function toast(msg, type) {
+  var c = document.getElementById('toast');
+  var el = document.createElement('div');
+  el.className='toast-item '+(type||'');
+  el.textContent=msg;
+  c.appendChild(el);
+  setTimeout(function(){
+    el.style.opacity='0';
+    el.style.transition='opacity 0.3s';
+    setTimeout(function(){ el.remove(); },300);
+  },3000);
+}
+
+// ══════════════════════════════════════════════════
+// DRAG & DROP
+// ══════════════════════════════════════════════════
+document.querySelectorAll('.upload-zone,.ba-slot').forEach(function(z){
+  z.addEventListener('dragover',function(e){ e.preventDefault(); z.classList.add('drag'); });
+  z.addEventListener('dragleave',function(){ z.classList.remove('drag'); });
+  z.addEventListener('drop',function(e){
+    e.preventDefault(); z.classList.remove('drag');
+    var inp=z.querySelector('input[type=file]');
+    if (inp&&e.dataTransfer.files.length){
+      var dt=new DataTransfer();
+      Array.from(e.dataTransfer.files).forEach(function(f){ dt.items.add(f); });
+      inp.files=dt.files;
+      inp.dispatchEvent(new Event('change',{bubbles:true}));
+    }
+  });
+});
+</script>
+</body>
+</html>
