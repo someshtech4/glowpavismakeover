@@ -22,14 +22,6 @@ html{scroll-behavior:smooth;overflow-x:hidden}
 body{font-family:'Jost',sans-serif;background:var(--off-white);color:var(--text-dark);overflow-x:hidden}
 
 /* ══════════════════════════════════════════
-   NAV
-══════════════════════════════════════════ */
-
-/* ══════════════════════════════════════════
-   MOBILE NAV (FIXED & CLEAN)
-══════════════════════════════════════════ */
-
-/* ══════════════════════════════════════════
    HERO
 ══════════════════════════════════════════ */
 #hero{height:100vh;min-height:620px;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--dark)}
@@ -143,19 +135,18 @@ body{font-family:'Jost',sans-serif;background:var(--off-white);color:var(--text-
 .ba-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;max-width:1100px;margin:0 auto;padding:0 4rem}
 .ba-card{border-radius:20px;overflow:hidden;background:var(--white);border:1px solid rgba(197,132,106,0.1);transition:box-shadow 0.4s;user-select:none}
 .ba-card:hover{box-shadow:0 24px 50px rgba(0,0,0,0.1)}
-.ba-slider{position:relative;height:280px;overflow:hidden;cursor:ew-resize;touch-action:pan-y}
+.ba-slider{position:relative;height:300px;overflow:hidden;cursor:ew-resize;touch-action:pan-y}
 .ba-before-panel,.ba-after-panel{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
 .ba-before-panel{z-index:1}
 .ba-after-panel{z-index:2;overflow:hidden;width:50%}
-.ba-before-inner,.ba-after-inner{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
-.ba-after-inner{width:var(--full-w,100%)}
+/* Fix: after-inner must be exactly the slider width to prevent gaps */
+.ba-after-inner{position:absolute;top:0;left:0;bottom:0;width:var(--slider-w,100%)}
 .ba-card:nth-child(1) .ba-before-panel{background:linear-gradient(135deg,#e8ddd5,#d4c0b0)}
 .ba-card:nth-child(1) .ba-after-inner{background:linear-gradient(135deg,#3d1f12,#1a0e08)}
 .ba-card:nth-child(2) .ba-before-panel{background:linear-gradient(135deg,#ddd5e8,#c0b0d4)}
 .ba-card:nth-child(2) .ba-after-inner{background:linear-gradient(135deg,#1e0a30,#0d0518)}
 .ba-card:nth-child(3) .ba-before-panel{background:linear-gradient(135deg,#d5e8e0,#b0d4c8)}
 .ba-card:nth-child(3) .ba-after-inner{background:linear-gradient(135deg,#051520,#0a2030)}
-.ba-emoji-wrap{font-size:3rem;opacity:0.3;pointer-events:none}
 .ba-handle{position:absolute;top:0;bottom:0;z-index:10;width:44px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;cursor:ew-resize}
 .ba-handle-line{width:2px;flex:1;background:rgba(255,255,255,0.85)}
 .ba-handle-circle{width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.95);border:2.5px solid rgba(201,168,76,0.7);display:flex;align-items:center;justify-content:center;box-shadow:0 2px 20px rgba(0,0,0,0.22);flex-shrink:0}
@@ -164,7 +155,7 @@ body{font-family:'Jost',sans-serif;background:var(--off-white);color:var(--text-
 .ba-lbl{font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;font-weight:600;padding:0.2rem 0.55rem;border-radius:20px}
 .ba-lbl.before{background:rgba(0,0,0,0.25);color:rgba(255,255,255,0.7)}
 .ba-lbl.after{background:rgba(201,168,76,0.5);color:#fff}
-.ba-hint{position:absolute;bottom:0.6rem;left:50%;transform:translateX(-50%);font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.45);pointer-events:none;white-space:nowrap;transition:opacity 0.4s}
+.ba-hint{position:absolute;bottom:0.6rem;left:50%;transform:translateX(-50%);font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.45);pointer-events:none;white-space:nowrap;transition:opacity 0.4s;z-index:11}
 .ba-card.dragging .ba-hint{opacity:0}
 .ba-body{padding:1.2rem 1.4rem 1.5rem}
 .ba-occasion{font-size:0.65rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold-dark);font-weight:500;margin-bottom:0.3rem}
@@ -185,19 +176,94 @@ body{font-family:'Jost',sans-serif;background:var(--off-white);color:var(--text-
 .step-title{font-family:'Bodoni Moda',serif;font-size:.92rem;font-weight:400;color:var(--text-dark);margin-bottom:.4rem;line-height:1.35}
 .step-desc{font-size:.76rem;color:var(--text-light);line-height:1.65;font-weight:300}
 
-/* FAQ */
-#faq{background:var(--cream);padding:5rem 0}
-.faq-header{text-align:center;margin-bottom:3rem}
-.faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;max-width:920px;margin:0 auto}
-.faq-item{background:var(--white);border-radius:16px;padding:1.5rem;border:1px solid rgba(197,132,106,.1);cursor:pointer;transition:border-color .3s,box-shadow .3s;user-select:none}
-.faq-item:hover{border-color:rgba(201,168,76,.25);box-shadow:0 8px 30px rgba(0,0,0,.05)}
-.faq-item.open{border-color:rgba(201,168,76,.3)}
+/* ══════════════════════════════════════════
+   FAQ — Redesigned with dark cards, gold accents
+   All text colours use !important to override
+   any cascade from navbar.css / footer.css
+══════════════════════════════════════════ */
+#faq{background:linear-gradient(160deg,#1a0e08 0%,#0d0806 60%,#1f0f07 100%);padding:5rem 0;position:relative;overflow:hidden}
+#faq::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 20% 50%,rgba(197,132,106,.13) 0%,transparent 55%),
+             radial-gradient(ellipse at 80% 20%,rgba(201,168,76,.09) 0%,transparent 45%);
+  pointer-events:none
+}
+.faq-header{text-align:center;margin-bottom:3rem;position:relative;z-index:2}
+.faq-header .section-eyebrow span{color:var(--gold-light) !important}
+.faq-header .section-title{color:var(--white) !important}
+.faq-header .section-title em{color:var(--gold-light) !important}
+.faq-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:1rem;
+  max-width:940px;
+  margin:0 auto;
+  position:relative;
+  z-index:2
+}
+.faq-item{
+  background:rgba(255,255,255,.04) !important;
+  border-radius:18px !important;
+  padding:1.6rem 1.8rem !important;
+  border:1px solid rgba(201,168,76,.18) !important;
+  cursor:pointer;
+  transition:border-color .35s,background .35s,box-shadow .35s;
+  user-select:none;
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px)
+}
+.faq-item:hover{
+  border-color:rgba(201,168,76,.4) !important;
+  background:rgba(255,255,255,.07) !important;
+  box-shadow:0 12px 40px rgba(0,0,0,.3)
+}
+.faq-item.open{
+  border-color:rgba(201,168,76,.5) !important;
+  background:rgba(201,168,76,.07) !important;
+  box-shadow:0 16px 48px rgba(0,0,0,.35)
+}
 .faq-q{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem}
-.faq-q-text{font-family:'Bodoni Moda',serif;font-size:.95rem;font-weight:400;color:var(--text-dark);line-height:1.4}
-.faq-icon{flex-shrink:0;width:22px;height:22px;border-radius:50%;border:1px solid rgba(201,168,76,.3);display:flex;align-items:center;justify-content:center;font-size:.8rem;color:var(--gold-dark);transition:transform .3s,background .3s;margin-top:2px}
-.faq-item.open .faq-icon{transform:rotate(45deg);background:rgba(201,168,76,.1)}
-.faq-a{max-height:0;overflow:hidden;transition:max-height .4s ease,margin-top .3s;font-size:.83rem;color:var(--text-light);line-height:1.75;font-weight:300}
-.faq-item.open .faq-a{max-height:200px;margin-top:.8rem}
+.faq-q-text{
+  font-family:'Bodoni Moda',serif !important;
+  font-size:1rem !important;
+  font-weight:400 !important;
+  color:#ffffff !important;
+  line-height:1.45 !important
+}
+.faq-icon{
+  flex-shrink:0;
+  width:26px;height:26px;
+  border-radius:50%;
+  border:1.5px solid rgba(201,168,76,.5) !important;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.85rem;
+  color:var(--gold-light) !important;
+  transition:transform .35s,background .35s,border-color .35s;
+  margin-top:1px;
+  font-weight:300
+}
+.faq-item.open .faq-icon{
+  transform:rotate(45deg);
+  background:rgba(201,168,76,.2) !important;
+  border-color:var(--gold) !important
+}
+.faq-a{
+  max-height:0;
+  overflow:hidden;
+  transition:max-height .45s ease,margin-top .3s,padding-top .3s,border-color .3s;
+  font-size:.87rem !important;
+  color:rgba(255,255,255,.75) !important;
+  line-height:1.8 !important;
+  font-weight:300 !important;
+  border-top:1px solid transparent;
+  padding-top:0;
+  margin-top:0
+}
+.faq-item.open .faq-a{
+  margin-top:.6rem;
+  padding-top:.9rem;
+  border-top:1px solid rgba(201,168,76,.15)
+}
 
 /* ══════════════════════════════════════════
    INSTAGRAM SECTION
@@ -225,7 +291,6 @@ body{font-family:'Jost',sans-serif;background:var(--off-white);color:var(--text-
 .ig-handle-link:hover{opacity:.7}
 .ig-handle-link svg{opacity:.8}
 
-/* Grid of video/post tiles */
 .ig-grid{
   display:grid;
   grid-template-columns:repeat(4,1fr);
@@ -249,7 +314,6 @@ body{font-family:'Jost',sans-serif;background:var(--off-white);color:var(--text-
   box-shadow:0 20px 50px rgba(0,0,0,.4);
   border-color:rgba(201,168,76,.35)
 }
-/* Placeholder gradient backgrounds for tiles */
 .ig-tile:nth-child(1){background:linear-gradient(135deg,#2d1508 0%,#8B3A1A 60%,#C5846A 100%)}
 .ig-tile:nth-child(2){background:linear-gradient(135deg,#1a0d20 0%,#4a1e5e 60%,#C5846A 100%)}
 .ig-tile:nth-child(3){background:linear-gradient(135deg,#0d1a0e 0%,#1e4a20 60%,#C9A84C 100%)}
@@ -259,7 +323,6 @@ body{font-family:'Jost',sans-serif;background:var(--off-white);color:var(--text-
 .ig-tile:nth-child(7){background:linear-gradient(135deg,#1a1a08 0%,#3a3a10 60%,#E8C97A 100%)}
 .ig-tile:nth-child(8){background:linear-gradient(135deg,#0a1a10 0%,#1a3a28 60%,#C9A84C 100%)}
 
-/* Overlay on hover */
 .ig-tile-overlay{
   position:absolute;inset:0;
   background:linear-gradient(to top,rgba(13,8,6,.85) 0%,transparent 50%);
@@ -270,18 +333,9 @@ body{font-family:'Jost',sans-serif;background:var(--off-white);color:var(--text-
   padding:1rem
 }
 .ig-tile:hover .ig-tile-overlay{opacity:1}
-.ig-tile-label{
-  font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;
-  color:rgba(255,255,255,.8);
-  font-weight:400
-}
-.ig-tile-sub{
-  font-family:'Cormorant Garamond',serif;
-  font-size:.82rem;color:var(--gold-light);
-  font-style:italic;margin-top:.2rem
-}
+.ig-tile-label{font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.8);font-weight:400}
+.ig-tile-sub{font-family:'Cormorant Garamond',serif;font-size:.82rem;color:var(--gold-light);font-style:italic;margin-top:.2rem}
 
-/* Play icon for video tiles */
 .ig-play-icon{
   position:absolute;top:50%;left:50%;
   transform:translate(-50%,-50%);
@@ -296,7 +350,6 @@ body{font-family:'Jost',sans-serif;background:var(--off-white);color:var(--text-
 .ig-play-icon svg{margin-left:3px}
 .ig-tile:hover .ig-play-icon{background:rgba(201,168,76,.35);border-color:var(--gold)}
 
-/* Emoji decoration inside tile */
 .ig-tile-emoji{
   position:absolute;top:50%;left:50%;
   transform:translate(-50%,-50%);
@@ -306,28 +359,7 @@ body{font-family:'Jost',sans-serif;background:var(--off-white);color:var(--text-
 }
 .ig-tile:hover .ig-tile-emoji{opacity:.1}
 
-/* actual iframe embed tile */
-.ig-embed-tile{
-  aspect-ratio:1;
-  border-radius:16px;
-  overflow:hidden;
-  position:relative;
-  border:1px solid rgba(201,168,76,.1);
-  transition:transform .4s,box-shadow .4s
-}
-.ig-embed-tile:hover{transform:translateY(-4px);box-shadow:0 20px 50px rgba(0,0,0,.4)}
-.ig-embed-tile iframe{
-  width:100%;height:100%;
-  border:none;
-  display:block;
-  pointer-events:none /* prevent scroll hijack */
-}
-
-/* CTA row below grid */
-.ig-cta-row{
-  text-align:center;margin-top:2.5rem;
-  position:relative;z-index:2
-}
+.ig-cta-row{text-align:center;margin-top:2.5rem;position:relative;z-index:2}
 .ig-follow-btn{
   display:inline-flex;align-items:center;gap:.7rem;
   background:linear-gradient(135deg,rgba(201,168,76,.15),rgba(197,132,106,.1));
@@ -361,7 +393,31 @@ body{font-family:'Jost',sans-serif;background:var(--off-white);color:var(--text-
 .btn-wa{background:linear-gradient(135deg,#25D366,#128C7E);color:var(--white);padding:1rem 2.5rem;border-radius:50px;text-decoration:none;font-size:.82rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;transition:all .4s;display:inline-flex;align-items:center;gap:.7rem}
 .btn-wa:hover{transform:translateY(-3px);box-shadow:0 12px 35px rgba(37,211,102,.3)}
 
-/* FOOTER */
+/* CAROUSEL */
+.carousel-section{background:var(--cream);padding:5rem 0;overflow:hidden}
+.carousel-hdr{text-align:center;margin-bottom:3rem}
+.carousel-subtitle{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-style:italic;color:var(--text-light);margin-top:0.8rem;line-height:1.7}
+.carousel-outer{position:relative;overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.carousel-track{display:flex;gap:1.4rem;width:max-content;animation:carousel-scroll 36s linear infinite}
+.carousel-track:hover{animation-play-state:paused}
+@keyframes carousel-scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.review-card{background:var(--white);border-radius:20px;padding:1.8rem;border:1px solid rgba(197,132,106,0.12);position:relative;overflow:hidden;transition:box-shadow 0.4s,transform 0.4s;width:340px;flex-shrink:0}
+.review-card:hover{box-shadow:0 20px 44px rgba(0,0,0,0.09);transform:translateY(-2px)}
+.review-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--blush),var(--gold),var(--blush))}
+.review-quote-mark{position:absolute;top:0.8rem;right:1.2rem;font-family:'Bodoni Moda',serif;font-size:4rem;color:rgba(201,168,76,0.08);line-height:1;pointer-events:none}
+.review-stars{display:flex;gap:0.25rem;margin-bottom:0.8rem;color:var(--gold);font-size:0.9rem}
+.review-text{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-style:italic;color:var(--text-mid);line-height:1.8;margin-bottom:1.3rem;position:relative;z-index:1}
+.review-author{display:flex;align-items:center;gap:0.8rem}
+.author-avatar{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:500;color:var(--white);flex-shrink:0}
+.author-avatar.rose{background:linear-gradient(135deg,var(--rose-gold),var(--copper))}
+.author-avatar.gold{background:linear-gradient(135deg,var(--gold-dark),var(--gold))}
+.author-avatar.blush{background:linear-gradient(135deg,var(--blush),var(--rose-gold))}
+.author-avatar.copper{background:linear-gradient(135deg,var(--copper),var(--copper-light))}
+.author-name{font-size:0.88rem;font-weight:500;color:var(--text-dark);display:block}
+.author-meta{font-size:0.72rem;color:var(--text-light);margin-top:0.15rem;display:block}
+.carousel-cta-row{text-align:center;margin-top:2.5rem}
+.carousel-cta-row a{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.76rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold-dark);border-bottom:1px solid rgba(201,168,76,0.3);padding-bottom:2px;transition:all 0.3s;text-decoration:none}
+.carousel-cta-row a:hover{color:var(--copper);border-color:var(--copper)}
 
 /* REVEAL */
 .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s,transform .7s}
@@ -384,10 +440,7 @@ body{font-family:'Jost',sans-serif;background:var(--off-white);color:var(--text-
   .ig-grid{grid-template-columns:repeat(3,1fr)}
 }
 @media(max-width:900px){
-  
-  
   .nav-links,.nav-dropdown .dropdown-menu{display:none}
-  
   .container{padding:0 1.2rem}
   section{padding:3rem 0}
   #hero{height:100vh;min-height:600px}
@@ -398,9 +451,6 @@ body{font-family:'Jost',sans-serif;background:var(--off-white);color:var(--text-
   .process-track{grid-template-columns:1fr 1fr;gap:1.5rem 1rem}
   .process-connector{display:none}
   .faq-grid{grid-template-columns:1fr}
-  
-  
-  
   #cta{padding:3.5rem 0}
   .why-grid{grid-template-columns:repeat(2,1fr);gap:1rem}
   .inclusions-inner{grid-template-columns:1fr;gap:2.5rem}
@@ -417,22 +467,24 @@ body{font-family:'Jost',sans-serif;background:var(--off-white);color:var(--text-
   .why-grid{grid-template-columns:1fr 1fr}
   .packages-grid{grid-template-columns:1fr}
   .ig-grid{grid-template-columns:repeat(2,1fr);gap:.6rem;padding:0 1rem}
+  .ba-grid{padding:0 1rem}
+  .ba-note{padding:0 1rem}
 }
-
 </style>
-  <meta name="description" content="Book the best bridal makeup artist in Madurai. Glow Pavi's Makeover offers HD bridal makeup, airbrush finish, hair styling & draping for South Indian, modern & fusion brides. Limited slots.">
+  <meta name="description" content="Book the best bridal makeup artist in Madurai. Glow Pavi's Makeover offers HD bridal makeup, airbrush finish, hair styling and draping for South Indian, modern and fusion brides. Limited slots.">
   <meta name="keywords" content="bridal makeup Madurai, bridal makeup artist Madurai, South Indian bridal makeup, HD bridal makeup Madurai, airbrush bridal makeup Tamil Nadu">
   <meta name="robots" content="index, follow">
   <meta name="author" content="Glow Pavi's Makeover">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Bridal Makeup in Madurai | Glow Pavi's Makeover">
-  <meta property="og:description" content="Premium bridal makeup in Madurai — HD, airbrush & South Indian styles. 500+ brides transformed. Book your trial today.">
+  <meta property="og:description" content="Premium bridal makeup in Madurai. HD, airbrush and South Indian styles. 500+ brides transformed. Book your trial today.">
   <meta property="og:url" content="https://glowpavismakeover.com/bridal-makeup.html">
   <meta property="og:site_name" content="Glow Pavi's Makeover">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Bridal Makeup in Madurai | Glow Pavi's Makeover">
-  <meta name="twitter:description" content="Premium bridal makeup in Madurai — HD, airbrush & South Indian styles. 500+ brides transformed. Book your trial today.">
+  <meta name="twitter:description" content="Premium bridal makeup in Madurai. HD, airbrush and South Indian styles. 500+ brides transformed. Book your trial today.">
   <link rel="canonical" href="https://glowpavismakeover.com/bridal-makeup.html">
+  <link rel="stylesheet" href="./shared.css">
 </head>
 <body>
 
@@ -538,8 +590,8 @@ body{font-family:'Jost',sans-serif;background:var(--off-white);color:var(--text-
           <span>About This Service</span>
         </div>
         <h2 class="section-title" id="about-heading">Bridal Makeup<br><em>as an art form</em></h2>
-        <p class="about-lead">Your wedding makeup is the first thing your partner sees when you walk towards them. It is the look that fills a thousand photographs.</p>
-        <p class="about-body">At Glow Pavi's Makeover, bridal makeup is our most cherished offering. We take time to understand your skin tone, outfit, ceremony, and personality to create a look that belongs entirely to you — camera-ready, tear-proof, and built to last every moment of your day and night.</p>
+        <p class="about-lead">Your wedding makeup is the first thing your partner sees when you walk toward them. It is the look that fills a thousand photographs and lives in your memory forever.</p>
+        <p class="about-body">At Glow Pavi's Makeover, bridal makeup is our most cherished offering. We take time to understand your skin tone, outfit, ceremony, and personality so we can create a look that belongs entirely to you. Camera-ready, tear-proof, and built to last through every moment of your day and night.</p>
       </div>
     </div>
   </div>
@@ -557,11 +609,31 @@ body{font-family:'Jost',sans-serif;background:var(--off-white);color:var(--text-
       <h2 class="section-title" style="text-align:center" id="why-heading">5 reasons brides<br><em>trust us</em></h2>
     </div>
     <div class="why-grid">
-      <article class="why-card reveal"><span class="why-icon" aria-hidden="true">🌿</span><h3 class="why-title">Hygienic Products</h3><p class="why-desc">Fresh brushes, sealed products, and dermatologically safe brands for every bride.</p></article>
-      <article class="why-card reveal" style="transition-delay:.08s"><span class="why-icon" aria-hidden="true">⏳</span><h3 class="why-title">All-Day Longevity</h3><p class="why-desc">Sweat-proof, tear-proof formulas that hold from ceremony to reception without a retouch.</p></article>
-      <article class="why-card reveal" style="transition-delay:.16s"><span class="why-icon" aria-hidden="true">🎨</span><h3 class="why-title">Personalised Trial</h3><p class="why-desc">Every bride gets a dedicated trial session so your final look is already perfected.</p></article>
-      <article class="why-card reveal" style="transition-delay:.24s"><span class="why-icon" aria-hidden="true">🕊️</span><h3 class="why-title">Calm Bridal Space</h3><p class="why-desc">We create a peaceful, unhurried getting-ready experience so you arrive stress-free.</p></article>
-      <article class="why-card reveal" style="transition-delay:.32s"><span class="why-icon" aria-hidden="true">🕐</span><h3 class="why-title">On-Time, Every Time</h3><p class="why-desc">We respect your schedule. Our artists arrive early and never rush your big moments.</p></article>
+      <article class="why-card reveal">
+        <span class="why-icon" aria-hidden="true">🌿</span>
+        <h3 class="why-title">Hygienic Products</h3>
+        <p class="why-desc">We use fresh brushes, sealed products, and dermatologically safe brands for every bride, every time.</p>
+      </article>
+      <article class="why-card reveal" style="transition-delay:.08s">
+        <span class="why-icon" aria-hidden="true">⏳</span>
+        <h3 class="why-title">All-Day Longevity</h3>
+        <p class="why-desc">Our sweat-proof, tear-proof formulas hold from the ceremony to the reception without a single retouch.</p>
+      </article>
+      <article class="why-card reveal" style="transition-delay:.16s">
+        <span class="why-icon" aria-hidden="true">🎨</span>
+        <h3 class="why-title">Personalised Trial</h3>
+        <p class="why-desc">Every bride receives a dedicated trial session so your final look is already perfected before the big day.</p>
+      </article>
+      <article class="why-card reveal" style="transition-delay:.24s">
+        <span class="why-icon" aria-hidden="true">🕊️</span>
+        <h3 class="why-title">Calm Bridal Space</h3>
+        <p class="why-desc">We create a peaceful, unhurried getting-ready experience so you arrive at your ceremony feeling centered and joyful.</p>
+      </article>
+      <article class="why-card reveal" style="transition-delay:.32s">
+        <span class="why-icon" aria-hidden="true">🕐</span>
+        <h3 class="why-title">On-Time, Every Time</h3>
+        <p class="why-desc">We respect your schedule. Our artists arrive early and never rush through your most important moments.</p>
+      </article>
     </div>
   </div>
 </section>
@@ -576,13 +648,13 @@ body{font-family:'Jost',sans-serif;background:var(--off-white);color:var(--text-
           <span>What's Included</span>
         </div>
         <h2 class="section-title" id="inclusions-heading">Everything your<br><em>bridal look needs</em></h2>
-        <p class="inclusions-lead">No hidden extras. No last-minute surprises. One complete experience, delivered beautifully.</p>
+        <p class="inclusions-lead">No hidden extras. No last-minute surprises. One complete experience, delivered with care.</p>
         <ul class="inclusions-list" aria-label="Bridal package inclusions">
-          <li><div class="inc-icon" aria-hidden="true">💄</div><div class="inc-info"><strong>Full Bridal Makeup</strong><span>Face, eyes, lips — complete HD finish</span></div></li>
-          <li><div class="inc-icon" aria-hidden="true">💇‍♀️</div><div class="inc-info"><strong>Bridal Hairstyle</strong><span>Traditional or modern, matching your look</span></div></li>
-          <li><div class="inc-icon" aria-hidden="true">🥻</div><div class="inc-info"><strong>Saree Draping</strong><span>Expert draping for the perfect silhouette</span></div></li>
-          <li><div class="inc-icon" aria-hidden="true">👁️</div><div class="inc-info"><strong>Lash Application</strong><span>Premium false lashes for a dramatic finish</span></div></li>
-          <li><div class="inc-icon" aria-hidden="true">🎁</div><div class="inc-info"><strong>Touch-Up Kit</strong><span>Complimentary kit to take home after</span></div></li>
+          <li><div class="inc-icon" aria-hidden="true">💄</div><div class="inc-info"><strong>Full Bridal Makeup</strong><span>Face, eyes, lips with a complete HD finish</span></div></li>
+          <li><div class="inc-icon" aria-hidden="true">💇‍♀️</div><div class="inc-info"><strong>Bridal Hairstyle</strong><span>Traditional or modern, perfectly matched to your look</span></div></li>
+          <li><div class="inc-icon" aria-hidden="true">🥻</div><div class="inc-info"><strong>Saree Draping</strong><span>Expert draping for the most flattering silhouette</span></div></li>
+          <li><div class="inc-icon" aria-hidden="true">👁️</div><div class="inc-info"><strong>Lash Application</strong><span>Premium false lashes for a dramatic, lasting finish</span></div></li>
+          <li><div class="inc-icon" aria-hidden="true">🎁</div><div class="inc-info"><strong>Touch-Up Kit</strong><span>A complimentary kit for you to take home after</span></div></li>
           <li><div class="inc-icon" aria-hidden="true">🚗</div><div class="inc-info"><strong>Travel to Venue</strong><span>Available across Madurai (travel charges apply)</span></div></li>
         </ul>
       </div>
@@ -598,7 +670,7 @@ body{font-family:'Jost',sans-serif;background:var(--off-white);color:var(--text-
           <span class="inc-tag"><span aria-hidden="true">✦</span> Camera-Ready</span>
           <span class="inc-tag"><span aria-hidden="true">✦</span> Skin-Safe Brands</span>
         </div>
-        <p class="inc-tag-note">Inclusions vary slightly by package. All details are discussed during your consultation.</p>
+        <p class="inc-tag-note">Inclusions vary slightly by package. We discuss all details clearly during your consultation.</p>
       </div>
     </div>
   </div>
@@ -627,7 +699,7 @@ body{font-family:'Jost',sans-serif;background:var(--off-white);color:var(--text-
           <ul class="pkg-features">
             <li>Full bridal makeup on your wedding day</li>
             <li>One pre-bridal skin preparation session</li>
-            <li>Bridal trial included before the big day</li>
+            <li>A bridal trial included before the big day</li>
             <li>Traditional or modern finish, your choice</li>
             <li>HD and camera-ready products throughout</li>
             <li>Complimentary touch-up kit to take home</li>
@@ -645,7 +717,7 @@ body{font-family:'Jost',sans-serif;background:var(--off-white);color:var(--text-
         <div class="pkg-body">
           <ul class="pkg-features">
             <li>Full bridal makeup with bridal hair styling</li>
-            <li>Two pre-bridal skin sessions before the wedding</li>
+            <li>Two pre-bridal skin sessions before your wedding</li>
             <li>Your artist stays with you through the entire day</li>
             <li>Bridal trial plus a family trial session</li>
             <li>Reception night look included in the package</li>
@@ -663,7 +735,7 @@ body{font-family:'Jost',sans-serif;background:var(--off-white);color:var(--text-
         </div>
         <div class="pkg-body">
           <ul class="pkg-features">
-            <li>Mehendi, engagement and wedding day covered</li>
+            <li>Mehendi, engagement, and wedding day covered</li>
             <li>Reception and farewell looks included</li>
             <li>Complete pre-bridal skin care package</li>
             <li>Full hair styling for every event</li>
@@ -735,11 +807,31 @@ body{font-family:'Jost',sans-serif;background:var(--off-white);color:var(--text-
     <div style="position:relative">
       <div class="process-connector" aria-hidden="true"></div>
       <ol class="process-track" aria-label="Bridal makeup process steps">
-        <li class="step reveal"><div class="step-circle" aria-hidden="true"><div class="step-circle-inner">📞</div><div class="step-num">01</div></div><h3 class="step-title">Consultation</h3><p class="step-desc">We understand your vision, date, and ceremony type.</p></li>
-        <li class="step reveal" style="transition-delay:.1s"><div class="step-circle" aria-hidden="true"><div class="step-circle-inner">🌿</div><div class="step-num">02</div></div><h3 class="step-title">Skin Prep</h3><p class="step-desc">Pre-bridal treatments to get your skin glowing and ready.</p></li>
-        <li class="step reveal" style="transition-delay:.2s"><div class="step-circle" aria-hidden="true"><div class="step-circle-inner">🎨</div><div class="step-num">03</div></div><h3 class="step-title">Bridal Trial</h3><p class="step-desc">We rehearse your full look weeks before, no surprises.</p></li>
-        <li class="step reveal" style="transition-delay:.3s"><div class="step-circle" aria-hidden="true"><div class="step-circle-inner">👰</div><div class="step-num">04</div></div><h3 class="step-title">Wedding Day</h3><p class="step-desc">We arrive early and create your look with care and calm.</p></li>
-        <li class="step reveal" style="transition-delay:.4s"><div class="step-circle" aria-hidden="true"><div class="step-circle-inner">✨</div><div class="step-num">05</div></div><h3 class="step-title">The Reveal</h3><p class="step-desc">That quiet gasp when you see yourself. That is what we live for.</p></li>
+        <li class="step reveal">
+          <div class="step-circle" aria-hidden="true"><div class="step-circle-inner">📞</div><div class="step-num">01</div></div>
+          <h3 class="step-title">Consultation</h3>
+          <p class="step-desc">We begin by understanding your vision, your wedding date, and the ceremonies ahead.</p>
+        </li>
+        <li class="step reveal" style="transition-delay:.1s">
+          <div class="step-circle" aria-hidden="true"><div class="step-circle-inner">🌿</div><div class="step-num">02</div></div>
+          <h3 class="step-title">Skin Prep</h3>
+          <p class="step-desc">Pre-bridal treatments get your skin glowing, healthy, and ready for its close-up.</p>
+        </li>
+        <li class="step reveal" style="transition-delay:.2s">
+          <div class="step-circle" aria-hidden="true"><div class="step-circle-inner">🎨</div><div class="step-num">03</div></div>
+          <h3 class="step-title">Bridal Trial</h3>
+          <p class="step-desc">We rehearse your full look weeks before so your wedding morning holds no surprises.</p>
+        </li>
+        <li class="step reveal" style="transition-delay:.3s">
+          <div class="step-circle" aria-hidden="true"><div class="step-circle-inner">👰</div><div class="step-num">04</div></div>
+          <h3 class="step-title">Wedding Day</h3>
+          <p class="step-desc">We arrive early and bring your look to life with patience, precision, and love.</p>
+        </li>
+        <li class="step reveal" style="transition-delay:.4s">
+          <div class="step-circle" aria-hidden="true"><div class="step-circle-inner">✨</div><div class="step-num">05</div></div>
+          <h3 class="step-title">The Reveal</h3>
+          <p class="step-desc">That quiet gasp when you see yourself in the mirror. That is what we live for.</p>
+        </li>
       </ol>
     </div>
   </div>
@@ -750,26 +842,67 @@ body{font-family:'Jost',sans-serif;background:var(--off-white);color:var(--text-
   <div class="container">
     <div class="faq-header reveal">
       <div class="section-eyebrow" style="justify-content:center">
-        <div class="eyebrow-line" aria-hidden="true"></div>
+        <div class="eyebrow-line" style="background:var(--gold-light)" aria-hidden="true"></div>
         <span>Common Questions</span>
-        <div class="eyebrow-line" aria-hidden="true"></div>
+        <div class="eyebrow-line" style="background:var(--gold-light)" aria-hidden="true"></div>
       </div>
       <h2 class="section-title" style="text-align:center" id="faq-heading">Everything you<br><em>need to know</em></h2>
     </div>
     <div class="faq-grid" id="faqGrid" role="list">
-      <div class="faq-item reveal" role="listitem"><div class="faq-q"><span class="faq-q-text">How far in advance should I book?</span><div class="faq-icon" aria-hidden="true">+</div></div><div class="faq-a">Book at least 3 to 6 months before your wedding, especially from October to February. Popular dates fill quickly, so early booking gives you the best pick.</div></div>
-      <div class="faq-item reveal" style="transition-delay:.1s" role="listitem"><div class="faq-q"><span class="faq-q-text">Is a bridal trial included?</span><div class="faq-icon" aria-hidden="true">+</div></div><div class="faq-a">Yes. Every package includes a trial 2 to 4 weeks before your wedding so we can refine the look and ensure your morning runs smoothly.</div></div>
-      <div class="faq-item reveal" style="transition-delay:.15s" role="listitem"><div class="faq-q"><span class="faq-q-text">Do you travel to the wedding venue?</span><div class="faq-icon" aria-hidden="true">+</div></div><div class="faq-a">Absolutely. We travel to homes and venues across Madurai and surrounding areas. Travel charges are discussed clearly during your consultation.</div></div>
-      <div class="faq-item reveal" style="transition-delay:.2s" role="listitem"><div class="faq-q"><span class="faq-q-text">How long does bridal makeup take?</span><div class="faq-icon" aria-hidden="true">+</div></div><div class="faq-a">Typically 2.5 to 4 hours depending on the look and whether hair styling is included. We always schedule enough time so there is never any rushing.</div></div>
-      <div class="faq-item reveal" style="transition-delay:.25s" role="listitem"><div class="faq-q"><span class="faq-q-text">What products do you use?</span><div class="faq-icon" aria-hidden="true">+</div></div><div class="faq-a">We use premium professional brands known for longevity, HD performance, and skin safety. All products are dermatologically friendly and tested for long wear.</div></div>
-      <div class="faq-item reveal" style="transition-delay:.3s" role="listitem"><div class="faq-q"><span class="faq-q-text">Can family members get makeup done too?</span><div class="faq-icon" aria-hidden="true">+</div></div><div class="faq-a">Of course. We offer add-ons for mothers, sisters, and bridesmaids. Just let us know when you book so we can build the right schedule for everyone.</div></div>
+
+      <div class="faq-item reveal" role="listitem">
+        <div class="faq-q">
+          <span class="faq-q-text">How far in advance should I book?</span>
+          <div class="faq-icon" aria-hidden="true">+</div>
+        </div>
+        <div class="faq-a">We recommend booking at least 3 to 6 months before your wedding, especially from October to February. Popular dates fill quickly, so booking early gives you the best choice of dates and packages.</div>
+      </div>
+
+      <div class="faq-item reveal" style="transition-delay:.1s" role="listitem">
+        <div class="faq-q">
+          <span class="faq-q-text">Is a bridal trial included?</span>
+          <div class="faq-icon" aria-hidden="true">+</div>
+        </div>
+        <div class="faq-a">Yes. Every package includes a full trial session 2 to 4 weeks before your wedding. We use that time to refine your look together so your wedding morning runs smoothly and confidently.</div>
+      </div>
+
+      <div class="faq-item reveal" style="transition-delay:.15s" role="listitem">
+        <div class="faq-q">
+          <span class="faq-q-text">Do you travel to the wedding venue?</span>
+          <div class="faq-icon" aria-hidden="true">+</div>
+        </div>
+        <div class="faq-a">Absolutely. We travel to homes and venues across Madurai and the surrounding areas. Travel charges are discussed clearly and transparently during your consultation so there are no surprises.</div>
+      </div>
+
+      <div class="faq-item reveal" style="transition-delay:.2s" role="listitem">
+        <div class="faq-q">
+          <span class="faq-q-text">How long does bridal makeup take?</span>
+          <div class="faq-icon" aria-hidden="true">+</div>
+        </div>
+        <div class="faq-a">Most bridal sessions take 2.5 to 4 hours depending on the look and whether hair styling is included. We always schedule enough time so you never feel rushed on your most important day.</div>
+      </div>
+
+      <div class="faq-item reveal" style="transition-delay:.25s" role="listitem">
+        <div class="faq-q">
+          <span class="faq-q-text">What products do you use?</span>
+          <div class="faq-icon" aria-hidden="true">+</div>
+        </div>
+        <div class="faq-a">We use premium professional brands known for longevity, HD performance, and skin safety. Every product we apply is dermatologically friendly and tested for long, comfortable wear across all skin types.</div>
+      </div>
+
+      <div class="faq-item reveal" style="transition-delay:.3s" role="listitem">
+        <div class="faq-q">
+          <span class="faq-q-text">Can family members get makeup done too?</span>
+          <div class="faq-icon" aria-hidden="true">+</div>
+        </div>
+        <div class="faq-a">Of course. We offer add-ons for mothers, sisters, and bridesmaids. Simply let us know when you book so we can build the right schedule and make sure everyone feels beautiful on your big day.</div>
+      </div>
+
     </div>
   </div>
 </section>
 
-<!-- ══════════════════════════════════════════
-     INSTAGRAM SECTION
-══════════════════════════════════════════ -->
+<!-- ══ INSTAGRAM ══ -->
 <section id="instagram" aria-labelledby="ig-heading">
   <div class="ig-header reveal">
     <div class="section-eyebrow" style="justify-content:center">
@@ -778,28 +911,13 @@ body{font-family:'Jost',sans-serif;background:var(--off-white);color:var(--text-
       <div class="eyebrow-line" aria-hidden="true"></div>
     </div>
     <h2 class="section-title" id="ig-heading">As seen on<br><em>Instagram</em></h2>
-    <!--
-      உங்க Instagram handle இங்க போடுங்க.
-      href="https://instagram.com/YOUR_HANDLE"
-    -->
     <a href="https://instagram.com/glowpavismakeover" target="_blank" rel="noopener" class="ig-handle-link" aria-label="Follow us on Instagram">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
       @glowpavismakeover
     </a>
   </div>
 
-  <!-- ══ INSTAGRAM GRID ══
-       உங்க real Instagram post URL-களை
-       data-url attribute-ல போடுங்க.
-       Example: data-url="https://www.instagram.com/p/POST_ID/"
-       
-       இப்போ placeholder tiles இருக்கு.
-       ஒவ்வொரு tile-லயும் click பண்ணா
-       உங்க Instagram post-க்கு போகும்.
-  -->
   <div class="ig-grid" id="igGrid">
-
-    <!-- Tile 1 — Video post -->
     <div class="ig-tile reveal"
          role="link" tabindex="0" aria-label="Instagram post — Bridal look"
          data-url="https://www.instagram.com/reel/C7MUpHHvcNa/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=="
@@ -813,11 +931,9 @@ body{font-family:'Jost',sans-serif;background:var(--off-white);color:var(--text-
         <div class="ig-tile-sub">South Indian Bride</div>
       </div>
     </div>
-
-    <!-- Tile 2 — Photo post -->
     <div class="ig-tile reveal" style="transition-delay:.06s"
          role="link" tabindex="0" aria-label="Instagram post — Reception look"
-         data-url="https://www.instagram.com/p/REPLACE_POST_ID_2/"
+         data-url="https://www.instagram.com/glowpavismakeover/"
          onclick="openIgPost(this)" onkeydown="if(event.key==='Enter')openIgPost(this)">
       <span class="ig-tile-emoji" aria-hidden="true">💄</span>
       <div class="ig-tile-overlay">
@@ -825,11 +941,9 @@ body{font-family:'Jost',sans-serif;background:var(--off-white);color:var(--text-
         <div class="ig-tile-sub">Royal Bride Package</div>
       </div>
     </div>
-
-    <!-- Tile 3 — Video post -->
     <div class="ig-tile reveal" style="transition-delay:.12s"
          role="link" tabindex="0" aria-label="Instagram post — Hair styling"
-         data-url="https://www.instagram.com/p/REPLACE_POST_ID_3/"
+         data-url="https://www.instagram.com/glowpavismakeover/"
          onclick="openIgPost(this)" onkeydown="if(event.key==='Enter')openIgPost(this)">
       <span class="ig-tile-emoji" aria-hidden="true">💇‍♀️</span>
       <div class="ig-play-icon" aria-hidden="true">
@@ -840,11 +954,9 @@ body{font-family:'Jost',sans-serif;background:var(--off-white);color:var(--text-
         <div class="ig-tile-sub">Traditional Bun</div>
       </div>
     </div>
-
-    <!-- Tile 4 — Photo post -->
     <div class="ig-tile reveal" style="transition-delay:.18s"
          role="link" tabindex="0" aria-label="Instagram post — Engagement makeup"
-         data-url="https://www.instagram.com/p/REPLACE_POST_ID_4/"
+         data-url="https://www.instagram.com/glowpavismakeover/"
          onclick="openIgPost(this)" onkeydown="if(event.key==='Enter')openIgPost(this)">
       <span class="ig-tile-emoji" aria-hidden="true">💍</span>
       <div class="ig-tile-overlay">
@@ -852,11 +964,9 @@ body{font-family:'Jost',sans-serif;background:var(--off-white);color:var(--text-
         <div class="ig-tile-sub">Soft Glam</div>
       </div>
     </div>
-
-    <!-- Tile 5 — Video post -->
     <div class="ig-tile reveal" style="transition-delay:.24s"
          role="link" tabindex="0" aria-label="Instagram post — Transformation reel"
-         data-url="https://www.instagram.com/p/REPLACE_POST_ID_5/"
+         data-url="https://www.instagram.com/glowpavismakeover/"
          onclick="openIgPost(this)" onkeydown="if(event.key==='Enter')openIgPost(this)">
       <span class="ig-tile-emoji" aria-hidden="true">✨</span>
       <div class="ig-play-icon" aria-hidden="true">
@@ -864,14 +974,12 @@ body{font-family:'Jost',sans-serif;background:var(--off-white);color:var(--text-
       </div>
       <div class="ig-tile-overlay">
         <div class="ig-tile-label">Transformation</div>
-        <div class="ig-tile-sub">Before & After</div>
+        <div class="ig-tile-sub">Before and After</div>
       </div>
     </div>
-
-    <!-- Tile 6 — Photo post -->
     <div class="ig-tile reveal" style="transition-delay:.30s"
          role="link" tabindex="0" aria-label="Instagram post — Saree draping"
-         data-url="https://www.instagram.com/p/REPLACE_POST_ID_6/"
+         data-url="https://www.instagram.com/glowpavismakeover/"
          onclick="openIgPost(this)" onkeydown="if(event.key==='Enter')openIgPost(this)">
       <span class="ig-tile-emoji" aria-hidden="true">🥻</span>
       <div class="ig-tile-overlay">
@@ -879,11 +987,9 @@ body{font-family:'Jost',sans-serif;background:var(--off-white);color:var(--text-
         <div class="ig-tile-sub">Kanjivaram Look</div>
       </div>
     </div>
-
-    <!-- Tile 7 — Photo post -->
     <div class="ig-tile reveal" style="transition-delay:.36s"
          role="link" tabindex="0" aria-label="Instagram post — Mehendi look"
-         data-url="https://www.instagram.com/p/REPLACE_POST_ID_7/"
+         data-url="https://www.instagram.com/glowpavismakeover/"
          onclick="openIgPost(this)" onkeydown="if(event.key==='Enter')openIgPost(this)">
       <span class="ig-tile-emoji" aria-hidden="true">🌸</span>
       <div class="ig-tile-overlay">
@@ -891,11 +997,9 @@ body{font-family:'Jost',sans-serif;background:var(--off-white);color:var(--text-
         <div class="ig-tile-sub">Boho Bride</div>
       </div>
     </div>
-
-    <!-- Tile 8 — Video post -->
     <div class="ig-tile reveal" style="transition-delay:.42s"
          role="link" tabindex="0" aria-label="Instagram post — Airbrush tutorial"
-         data-url="https://www.instagram.com/p/REPLACE_POST_ID_8/"
+         data-url="https://www.instagram.com/glowpavismakeover/"
          onclick="openIgPost(this)" onkeydown="if(event.key==='Enter')openIgPost(this)">
       <span class="ig-tile-emoji" aria-hidden="true">💨</span>
       <div class="ig-play-icon" aria-hidden="true">
@@ -906,14 +1010,142 @@ body{font-family:'Jost',sans-serif;background:var(--off-white);color:var(--text-
         <div class="ig-tile-sub">HD Finish Demo</div>
       </div>
     </div>
-
-  </div><!-- /.ig-grid -->
+  </div>
 
   <div class="ig-cta-row reveal">
     <a href="https://instagram.com/glowpavismakeover" target="_blank" rel="noopener" class="ig-follow-btn" aria-label="Follow on Instagram">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
       Follow on Instagram
     </a>
+  </div>
+</section>
+
+<!-- ══ TESTIMONIALS CAROUSEL ══ -->
+<section class="carousel-section" id="reviews" aria-labelledby="reviews-heading">
+  <div class="container">
+    <div class="carousel-hdr reveal">
+      <div class="section-eyebrow" style="justify-content:center">
+        <div class="eyebrow-line"></div><span>Love Notes</span><div class="eyebrow-line"></div>
+      </div>
+      <h2 class="section-title" id="reviews-heading" style="text-align:center">Words from our<br><em>glowing brides</em></h2>
+      <p class="carousel-subtitle">Every review tells a story of trust and beauty that lives far beyond the wedding day.</p>
+    </div>
+  </div>
+  <div class="carousel-outer" style="padding:0.5rem 0 2rem">
+    <div class="carousel-track">
+      <article class="review-card">
+        <div class="review-quote-mark">"</div>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"I sat in Pavi's chair terrified I wouldn't look like myself. Two hours later I walked out and my mother burst into tears, the good kind. She doesn't cover you up. She reveals you."</p>
+        <div class="review-author">
+          <div class="author-avatar rose">DV</div>
+          <div><span class="author-name">Dharini V.</span><span class="author-meta">Bridal Client · Madurai · Oct 2024</span></div>
+        </div>
+      </article>
+      <article class="review-card">
+        <div class="review-quote-mark">"</div>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"The makeup lasted 14 hours through all the ceremonies, the crying, and the dancing. Every single photo came out flawless. My photographer said my makeup was the best she had ever seen on a bride."</p>
+        <div class="review-author">
+          <div class="author-avatar gold">PK</div>
+          <div><span class="author-name">Preethi K.</span><span class="author-meta">Bridal Client · Chennai · Jan 2025</span></div>
+        </div>
+      </article>
+      <article class="review-card">
+        <div class="review-quote-mark">"</div>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"My skin is sensitive and I was nervous. Pavi was so gentle and patient. She tested every product first and I had zero reactions. I genuinely glowed from within. Worth every rupee."</p>
+        <div class="review-author">
+          <div class="author-avatar blush">AM</div>
+          <div><span class="author-name">Archana M.</span><span class="author-meta">Bridal + Skin · Madurai · Mar 2025</span></div>
+        </div>
+      </article>
+      <article class="review-card">
+        <div class="review-quote-mark">"</div>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"I booked Pavi for my reception and she exceeded every expectation. The airbrush finish was so light I forgot I had makeup on, yet I looked absolutely radiant in every single photo."</p>
+        <div class="review-author">
+          <div class="author-avatar copper">SR</div>
+          <div><span class="author-name">Sowmya R.</span><span class="author-meta">Reception Makeup · Madurai · Dec 2024</span></div>
+        </div>
+      </article>
+      <article class="review-card">
+        <div class="review-quote-mark">"</div>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Pavi did makeup for me and three of my bridesmaids. We all looked amazing and completely different from one another. She understood each of our personalities. That is true artistry."</p>
+        <div class="review-author">
+          <div class="author-avatar rose">NB</div>
+          <div><span class="author-name">Nandhini B.</span><span class="author-meta">Bridal + Bridesmaids · Trichy · Feb 2025</span></div>
+        </div>
+      </article>
+      <article class="review-card">
+        <div class="review-quote-mark">"</div>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"The pre-bridal glow sessions transformed my skin completely. By the wedding day, I didn't need heavy coverage at all. My skin was just beautiful on its own. Pavi's skin care expertise is unmatched."</p>
+        <div class="review-author">
+          <div class="author-avatar gold">KP</div>
+          <div><span class="author-name">Kavitha P.</span><span class="author-meta">Pre-Bridal Package · Madurai · Nov 2024</span></div>
+        </div>
+      </article>
+      <!-- Duplicate for seamless loop -->
+      <article class="review-card">
+        <div class="review-quote-mark">"</div>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"I sat in Pavi's chair terrified I wouldn't look like myself. Two hours later I walked out and my mother burst into tears, the good kind. She doesn't cover you up. She reveals you."</p>
+        <div class="review-author">
+          <div class="author-avatar rose">DV</div>
+          <div><span class="author-name">Dharini V.</span><span class="author-meta">Bridal Client · Madurai · Oct 2024</span></div>
+        </div>
+      </article>
+      <article class="review-card">
+        <div class="review-quote-mark">"</div>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"The makeup lasted 14 hours through all the ceremonies, the crying, and the dancing. Every single photo came out flawless. My photographer said my makeup was the best she had ever seen on a bride."</p>
+        <div class="review-author">
+          <div class="author-avatar gold">PK</div>
+          <div><span class="author-name">Preethi K.</span><span class="author-meta">Bridal Client · Chennai · Jan 2025</span></div>
+        </div>
+      </article>
+      <article class="review-card">
+        <div class="review-quote-mark">"</div>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"My skin is sensitive and I was nervous. Pavi was so gentle and patient. She tested every product first and I had zero reactions. I genuinely glowed from within. Worth every rupee."</p>
+        <div class="review-author">
+          <div class="author-avatar blush">AM</div>
+          <div><span class="author-name">Archana M.</span><span class="author-meta">Bridal + Skin · Madurai · Mar 2025</span></div>
+        </div>
+      </article>
+      <article class="review-card">
+        <div class="review-quote-mark">"</div>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"I booked Pavi for my reception and she exceeded every expectation. The airbrush finish was so light I forgot I had makeup on, yet I looked absolutely radiant in every single photo."</p>
+        <div class="review-author">
+          <div class="author-avatar copper">SR</div>
+          <div><span class="author-name">Sowmya R.</span><span class="author-meta">Reception Makeup · Madurai · Dec 2024</span></div>
+        </div>
+      </article>
+      <article class="review-card">
+        <div class="review-quote-mark">"</div>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Pavi did makeup for me and three of my bridesmaids. We all looked amazing and completely different from one another. She understood each of our personalities. That is true artistry."</p>
+        <div class="review-author">
+          <div class="author-avatar rose">NB</div>
+          <div><span class="author-name">Nandhini B.</span><span class="author-meta">Bridal + Bridesmaids · Trichy · Feb 2025</span></div>
+        </div>
+      </article>
+      <article class="review-card">
+        <div class="review-quote-mark">"</div>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"The pre-bridal glow sessions transformed my skin completely. By the wedding day, I didn't need heavy coverage at all. My skin was just beautiful on its own. Pavi's skin care expertise is unmatched."</p>
+        <div class="review-author">
+          <div class="author-avatar gold">KP</div>
+          <div><span class="author-name">Kavitha P.</span><span class="author-meta">Pre-Bridal Package · Madurai · Nov 2024</span></div>
+        </div>
+      </article>
+    </div>
+  </div>
+  <div class="carousel-cta-row">
+    <a href="https://www.instagram.com/glowpavis/" target="_blank" rel="noopener">See More Reviews on Instagram →</a>
   </div>
 </section>
 
@@ -970,8 +1202,8 @@ body{font-family:'Jost',sans-serif;background:var(--off-white);color:var(--text-
         <a href="./about.html">About Us</a>
         <a href="./faq.html">FAQ</a>
         <a href="./privacy-policy.html">Privacy Policy</a>
-        <a href="./terms.html">Terms &amp; Conditions</a>
-        <a href="./booking-cancellation.html">Booking &amp; Cancellation</a>
+        <a href="./terms.html">Terms and Conditions</a>
+        <a href="./booking-cancellation.html">Booking and Cancellation</a>
       </div>
     </div>
   </div>
@@ -996,9 +1228,9 @@ window.addEventListener('scroll', () => {
   nav.classList.toggle('scrolled', window.scrollY > 80);
 }, { passive: true });
 
-/* ══ MOBILE NAV (FIXED — no smoothScrollTo dependency) ══ */
-const hamburger    = document.getElementById('hamburgerBtn');
-const mobileNav    = document.getElementById('mobileNav');
+/* ══ MOBILE NAV ══ */
+const hamburger     = document.getElementById('hamburgerBtn');
+const mobileNav     = document.getElementById('mobileNav');
 const mobileOverlay = document.getElementById('mobileOverlay');
 
 function openMobileNav() {
@@ -1041,16 +1273,41 @@ const revealObs = new IntersectionObserver(entries => {
 }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
 
-/* ══ FAQ ACCORDION ══ */
-document.querySelectorAll('.faq-item').forEach(item => {
-  item.addEventListener('click', () => {
-    const isOpen = item.classList.contains('open');
-    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
-    if (!isOpen) item.classList.add('open');
-  });
-});
+/* ══ FAQ ACCORDION — only one open at a time ══ */
+(function () {
+  const items = Array.from(document.querySelectorAll('.faq-item'));
 
-/* ══ BEFORE / AFTER SLIDER ══ */
+  function closeItem(el) {
+    el.classList.remove('open');
+    const ans = el.querySelector('.faq-a');
+    if (ans) ans.style.maxHeight = '0px';
+  }
+
+  function openItem(el) {
+    el.classList.add('open');
+    const ans = el.querySelector('.faq-a');
+    if (ans) ans.style.maxHeight = ans.scrollHeight + 'px';
+  }
+
+  items.forEach(item => {
+    // Set initial closed state explicitly
+    const ans = item.querySelector('.faq-a');
+    if (ans) ans.style.maxHeight = '0px';
+
+    item.addEventListener('click', () => {
+      const isOpen = item.classList.contains('open');
+      // Close every item first
+      items.forEach(closeItem);
+      // If it wasn't open, open only this one
+      if (!isOpen) openItem(item);
+    });
+  });
+})();
+
+/* ══ BEFORE / AFTER SLIDER (fixed) ══
+   Uses CSS variable --slider-w so the after-inner always
+   fills the full slider width regardless of panel clipping.
+*/
 document.querySelectorAll('.ba-slider').forEach(slider => {
   const afterPanel = slider.querySelector('.ba-after-panel');
   const afterInner = slider.querySelector('.ba-after-inner');
@@ -1058,41 +1315,76 @@ document.querySelectorAll('.ba-slider').forEach(slider => {
   const card       = slider.closest('.ba-card');
   let pct = 50, dragging = false;
 
-  function setSlider(x) {
-    const rect = slider.getBoundingClientRect();
-    pct = Math.min(100, Math.max(0, ((x - rect.left) / rect.width) * 100));
-    afterPanel.style.width = pct + '%';
-    afterInner.style.minWidth = rect.width + 'px';
-    handle.style.left = pct + '%';
+  function getSliderW() {
+    return slider.getBoundingClientRect().width;
   }
-  function initSlider() {
-    const rect = slider.getBoundingClientRect();
-    afterPanel.style.width = pct + '%';
-    afterInner.style.minWidth = rect.width + 'px';
-    handle.style.left = pct + '%';
-  }
-  initSlider();
-  window.addEventListener('resize', initSlider, { passive: true });
 
-  slider.addEventListener('mousedown', e => { dragging = true; card.classList.add('dragging'); setSlider(e.clientX); e.preventDefault(); });
+  function setSlider(clientX) {
+    const rect = slider.getBoundingClientRect();
+    pct = Math.min(100, Math.max(0, ((clientX - rect.left) / rect.width) * 100));
+    applySlider();
+  }
+
+  function applySlider() {
+    const w = getSliderW();
+    afterPanel.style.width = pct + '%';
+    // Keep after-inner the full slider width so background fills correctly
+    afterInner.style.setProperty('--slider-w', w + 'px');
+    afterInner.style.width = w + 'px';
+    handle.style.left = pct + '%';
+  }
+
+  // Init on load and on resize
+  applySlider();
+  const resizeObs = new ResizeObserver(applySlider);
+  resizeObs.observe(slider);
+
+  // Mouse
+  slider.addEventListener('mousedown', e => {
+    dragging = true;
+    card.classList.add('dragging');
+    setSlider(e.clientX);
+    e.preventDefault();
+  });
   window.addEventListener('mousemove', e => { if (dragging) setSlider(e.clientX); });
-  window.addEventListener('mouseup', () => { dragging = false; card.classList.remove('dragging'); });
-  slider.addEventListener('touchstart', e => { dragging = true; card.classList.add('dragging'); setSlider(e.touches[0].clientX); }, { passive: true });
-  slider.addEventListener('touchmove', e => { if (dragging) { setSlider(e.touches[0].clientX); e.preventDefault(); } }, { passive: false });
+  window.addEventListener('mouseup',   () => { dragging = false; card.classList.remove('dragging'); });
+
+  // Touch
+  slider.addEventListener('touchstart', e => {
+    dragging = true;
+    card.classList.add('dragging');
+    setSlider(e.touches[0].clientX);
+  }, { passive: true });
+  slider.addEventListener('touchmove', e => {
+    if (dragging) {
+      setSlider(e.touches[0].clientX);
+      e.preventDefault();
+    }
+  }, { passive: false });
   slider.addEventListener('touchend', () => { dragging = false; card.classList.remove('dragging'); });
 });
 
-/* ══ INSTAGRAM TILE CLICK ══
-   உங்க real post URL-ஐ data-url-ல போட்டா,
-   click பண்ணும்போது direct Instagram-க்கு open ஆகும்.
+/* ══ INSTAGRAM TILES ══
+   Tiles with a real URL open in a new tab.
+   Tiles still using the profile fallback URL open the profile.
 */
 function openIgPost(tile) {
   const url = tile.getAttribute('data-url');
-  if (url && !url.includes('REPLACE_POST_ID')) {
+  if (url) {
     window.open(url, '_blank', 'noopener,noreferrer');
   }
 }
 </script>
 <script src="./supabase-loader.js"></script>
+<script>
+// Dropdown hover fix
+(function(){
+  document.querySelectorAll(".nav-dropdown").forEach(function(dd){
+    var timer;
+    dd.addEventListener("mouseenter",function(){clearTimeout(timer);dd.classList.add("dd-open");});
+    dd.addEventListener("mouseleave",function(){timer=setTimeout(function(){dd.classList.remove("dd-open");},120);});
+  });
+})();
+</script>
 </body>
 </html>

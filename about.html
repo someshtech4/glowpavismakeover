@@ -401,7 +401,34 @@
     
     #mobileTimeline{display:none !important}
   }
-  </style>
+  
+    /* ═══ UNIFIED CAROUSEL CSS ═══ */
+    .carousel-section{background:var(--cream);padding:5rem 0;overflow:hidden}
+    .carousel-hdr{text-align:center;margin-bottom:3rem}
+    .carousel-subtitle{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-style:italic;color:var(--text-light);margin-top:0.8rem;line-height:1.7}
+    .carousel-outer{position:relative;overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+    .carousel-track{display:flex;gap:1.4rem;width:max-content;animation:carousel-scroll 36s linear infinite}
+    .carousel-track:hover{animation-play-state:paused}
+    @keyframes carousel-scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+    .review-card{background:var(--white);border-radius:20px;padding:1.8rem;border:1px solid rgba(197,132,106,0.12);position:relative;overflow:hidden;transition:box-shadow 0.4s,transform 0.4s;width:340px;flex-shrink:0}
+    .review-card:hover{box-shadow:0 20px 44px rgba(0,0,0,0.09);transform:translateY(-2px)}
+    .review-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--blush-deep),var(--gold),var(--blush-deep))}
+    .review-quote-mark{position:absolute;top:0.8rem;right:1.2rem;font-family:'Bodoni Moda','Playfair Display',serif;font-size:4rem;color:rgba(201,168,76,0.08);line-height:1;pointer-events:none}
+    .review-stars{display:flex;gap:0.25rem;margin-bottom:0.8rem;color:var(--gold);font-size:0.9rem}
+    .review-text{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-style:italic;color:var(--text-mid);line-height:1.8;margin-bottom:1.3rem;position:relative;z-index:1}
+    .review-author{display:flex;align-items:center;gap:0.8rem}
+    .author-avatar{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:500;color:var(--white);flex-shrink:0}
+    .author-avatar.rose{background:linear-gradient(135deg,var(--rose-gold),var(--copper))}
+    .author-avatar.gold{background:linear-gradient(135deg,var(--gold-dark),var(--gold))}
+    .author-avatar.blush{background:linear-gradient(135deg,var(--blush-deep),var(--rose-gold))}
+    .author-avatar.copper{background:linear-gradient(135deg,var(--copper),var(--copper-light))}
+    .author-avatar.green{background:linear-gradient(135deg,#2D5A4A,#3D7A62)}
+    .author-name{font-size:0.88rem;font-weight:500;color:var(--text-dark);display:block}
+    .author-meta{font-size:0.72rem;color:var(--text-light);margin-top:0.15rem;display:block}
+    .carousel-cta-row{text-align:center;margin-top:2.5rem}
+    .carousel-cta-row a{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.76rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold-dark);border-bottom:1px solid rgba(201,168,76,0.3);padding-bottom:2px;transition:all 0.3s}
+    .carousel-cta-row a:hover{color:var(--copper);border-color:var(--copper)}
+</style>
   <meta name="description" content="Meet Pavi, Madurai's passionate bridal makeup artist with 8+ years of experience. Learn her story, values, and the artistry behind Glow Pavi's Makeover.">
   <meta name="keywords" content="about Glow Pavi, bridal makeup artist Madurai, Pavi makeup artist story, best makeup artist Madurai">
   <meta name="robots" content="index, follow">
@@ -415,6 +442,7 @@
   <meta name="twitter:title" content="About Pavi — Story Behind Glow Pavi's Makeover">
   <meta name="twitter:description" content="8+ years of bridal artistry, 500+ brides transformed. Meet the face behind Glow Pavi's Makeover in Madurai.">
   <link rel="canonical" href="https://glowpavismakeover.com/about.html">
+  <link rel="stylesheet" href="./shared.css">
 </head>
 <body>
 
@@ -865,6 +893,136 @@
 </section>
 
 <!-- ══ FOOTER ══ -->
+
+<!-- ===== TESTIMONIALS CAROUSEL ===== -->
+<section class="carousel-section" id="reviews" aria-labelledby="reviews-heading">
+  <div class="container">
+    <div class="carousel-hdr reveal">
+      <div class="section-eyebrow" style="justify-content:center">
+        <div class="eyebrow-line"></div><span>Kind Words</span><div class="eyebrow-line"></div>
+      </div>
+      <h2 class="section-title" id="reviews-heading" style="text-align:center">Brides who trusted<br><em>Pavi's artistry</em></h2>
+      <p class="carousel-subtitle">Every word here is a story of trust, beauty, and an unforgettable day.</p>
+    </div>
+  </div>
+  <div class="carousel-outer" style="padding:0.5rem 0 2rem">
+    <div class="carousel-track">
+      <article class="review-card">
+        <div class="review-quote-mark">"</div>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"I sat in Pavi's chair terrified I wouldn't look like myself. Two hours later I walked out and my mother burst into tears — the good kind. She doesn't cover you up, she reveals you."</p>
+        <div class="review-author">
+          <div class="author-avatar rose">DV</div>
+          <div><span class="author-name">Dharini V.</span><span class="author-meta">Bridal Client · Madurai · Oct 2024</span></div>
+        </div>
+      </article>
+      <article class="review-card">
+        <div class="review-quote-mark">"</div>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"The makeup lasted 14 hours — through all the ceremonies, the crying, the dancing. Every single photo came out flawless. My photographer called it the best bridal makeup she'd seen."</p>
+        <div class="review-author">
+          <div class="author-avatar gold">PK</div>
+          <div><span class="author-name">Preethi K.</span><span class="author-meta">Bridal Client · Chennai · Jan 2025</span></div>
+        </div>
+      </article>
+      <article class="review-card">
+        <div class="review-quote-mark">"</div>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"My skin is sensitive and I was nervous. Pavi was so gentle and patient — she tested every product first and I had zero reactions. I genuinely glowed from within."</p>
+        <div class="review-author">
+          <div class="author-avatar blush">AM</div>
+          <div><span class="author-name">Archana M.</span><span class="author-meta">Bridal + Skin · Madurai · Mar 2025</span></div>
+        </div>
+      </article>
+      <article class="review-card">
+        <div class="review-quote-mark">"</div>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Booked Pavi for my reception and she exceeded every expectation. The airbrush finish was so light I forgot I had makeup on, yet I looked absolutely radiant in every photo."</p>
+        <div class="review-author">
+          <div class="author-avatar copper">SR</div>
+          <div><span class="author-name">Sowmya R.</span><span class="author-meta">Reception Makeup · Madurai · Dec 2024</span></div>
+        </div>
+      </article>
+      <article class="review-card">
+        <div class="review-quote-mark">"</div>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Pavi did makeup for me and three of my bridesmaids. We all looked amazing and completely different — she understood each of our personalities. That is true artistry."</p>
+        <div class="review-author">
+          <div class="author-avatar rose">NB</div>
+          <div><span class="author-name">Nandhini B.</span><span class="author-meta">Bridal + Bridesmaids · Trichy · Feb 2025</span></div>
+        </div>
+      </article>
+      <article class="review-card">
+        <div class="review-quote-mark">"</div>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"The pre-bridal glow sessions transformed my skin completely. By the wedding day, I didn't even need heavy coverage — my skin was just beautiful. Pavi's skin care expertise is unmatched."</p>
+        <div class="review-author">
+          <div class="author-avatar gold">KP</div>
+          <div><span class="author-name">Kavitha P.</span><span class="author-meta">Pre-Bridal Package · Madurai · Nov 2024</span></div>
+        </div>
+      </article>
+      <!-- Duplicates for seamless loop -->
+      <article class="review-card">
+        <div class="review-quote-mark">"</div>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"I sat in Pavi's chair terrified I wouldn't look like myself. Two hours later I walked out and my mother burst into tears — the good kind. She doesn't cover you up, she reveals you."</p>
+        <div class="review-author">
+          <div class="author-avatar rose">DV</div>
+          <div><span class="author-name">Dharini V.</span><span class="author-meta">Bridal Client · Madurai · Oct 2024</span></div>
+        </div>
+      </article>
+      <article class="review-card">
+        <div class="review-quote-mark">"</div>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"The makeup lasted 14 hours — through all the ceremonies, the crying, the dancing. Every single photo came out flawless. My photographer called it the best bridal makeup she'd seen."</p>
+        <div class="review-author">
+          <div class="author-avatar gold">PK</div>
+          <div><span class="author-name">Preethi K.</span><span class="author-meta">Bridal Client · Chennai · Jan 2025</span></div>
+        </div>
+      </article>
+      <article class="review-card">
+        <div class="review-quote-mark">"</div>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"My skin is sensitive and I was nervous. Pavi was so gentle and patient — she tested every product first and I had zero reactions. I genuinely glowed from within."</p>
+        <div class="review-author">
+          <div class="author-avatar blush">AM</div>
+          <div><span class="author-name">Archana M.</span><span class="author-meta">Bridal + Skin · Madurai · Mar 2025</span></div>
+        </div>
+      </article>
+      <article class="review-card">
+        <div class="review-quote-mark">"</div>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Booked Pavi for my reception and she exceeded every expectation. The airbrush finish was so light I forgot I had makeup on, yet I looked absolutely radiant in every photo."</p>
+        <div class="review-author">
+          <div class="author-avatar copper">SR</div>
+          <div><span class="author-name">Sowmya R.</span><span class="author-meta">Reception Makeup · Madurai · Dec 2024</span></div>
+        </div>
+      </article>
+      <article class="review-card">
+        <div class="review-quote-mark">"</div>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Pavi did makeup for me and three of my bridesmaids. We all looked amazing and completely different — she understood each of our personalities. That is true artistry."</p>
+        <div class="review-author">
+          <div class="author-avatar rose">NB</div>
+          <div><span class="author-name">Nandhini B.</span><span class="author-meta">Bridal + Bridesmaids · Trichy · Feb 2025</span></div>
+        </div>
+      </article>
+      <article class="review-card">
+        <div class="review-quote-mark">"</div>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"The pre-bridal glow sessions transformed my skin completely. By the wedding day, I didn't even need heavy coverage — my skin was just beautiful. Pavi's skin care expertise is unmatched."</p>
+        <div class="review-author">
+          <div class="author-avatar gold">KP</div>
+          <div><span class="author-name">Kavitha P.</span><span class="author-meta">Pre-Bridal Package · Madurai · Nov 2024</span></div>
+        </div>
+      </article>
+    </div>
+  </div>
+  <div class="carousel-cta-row">
+    <a href="https://www.instagram.com/glowpavis/" target="_blank" rel="noopener">See More Reviews on Instagram →</a>
+  </div>
+</section>
+
 <footer>
   <div class="footer-main">
     <div>
@@ -999,5 +1157,15 @@ const countObs = new IntersectionObserver(entries => {
 countEls.forEach(el => countObs.observe(el));
 </script>
 <script src="./supabase-loader.js"></script>
+<script>
+// Dropdown hover fix
+(function(){
+  document.querySelectorAll(".nav-dropdown").forEach(function(dd){
+    var timer;
+    dd.addEventListener("mouseenter",function(){clearTimeout(timer);dd.classList.add("dd-open");});
+    dd.addEventListener("mouseleave",function(){timer=setTimeout(function(){dd.classList.remove("dd-open");},120);});
+  });
+})();
+</script>
 </body>
 </html>

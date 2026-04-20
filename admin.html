@@ -18,7 +18,7 @@
 }
 html,body{height:100%;font-family:'Jost',sans-serif;background:#f5ede6;color:var(--text-dark)}
 
-/* LOGIN */
+/* ══ LOGIN ══ */
 #loginScreen{display:flex;align-items:center;justify-content:center;min-height:100vh;background:linear-gradient(135deg,#1a0e08,#0d0806);position:fixed;inset:0;z-index:9999;transition:opacity 0.4s}
 #loginScreen.hidden{opacity:0;pointer-events:none}
 .login-box{background:rgba(255,255,255,0.05);border:1px solid rgba(201,168,76,0.2);border-radius:20px;padding:2.5rem 2rem;width:100%;max-width:400px;text-align:center}
@@ -34,11 +34,11 @@ html,body{height:100%;font-family:'Jost',sans-serif;background:#f5ede6;color:var
 .login-err{color:#e8594a;font-size:0.76rem;margin-top:0.7rem;display:none}
 .login-err.show{display:block}
 
-/* LAYOUT */
+/* ══ LAYOUT ══ */
 #adminLayout{display:flex;min-height:100vh}
 
-/* SIDEBAR */
-.sidebar{width:var(--sidebar-w);background:linear-gradient(180deg,#1a0e08,#0d0806);position:fixed;top:0;left:0;height:100vh;display:flex;flex-direction:column;z-index:100;border-right:1px solid rgba(201,168,76,0.1);overflow-y:auto}
+/* ══ SIDEBAR ══ */
+.sidebar{width:var(--sidebar-w);background:linear-gradient(180deg,#1a0e08,#0d0806);position:fixed;top:0;left:0;height:100vh;display:flex;flex-direction:column;z-index:100;border-right:1px solid rgba(201,168,76,0.1);overflow-y:auto;transition:transform 0.35s cubic-bezier(0.77,0,0.175,1)}
 .sidebar-logo{padding:1.5rem 1.2rem 1.2rem;border-bottom:1px solid rgba(201,168,76,0.1)}
 .sidebar-logo h1{font-family:'Bodoni Moda',serif;font-size:1rem;color:#fff;line-height:1.3}
 .sidebar-logo h1 em{font-style:italic;color:var(--gold-light)}
@@ -52,34 +52,45 @@ html,body{height:100%;font-family:'Jost',sans-serif;background:#f5ede6;color:var
 .logout-btn{width:100%;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:6px;padding:0.55rem;color:rgba(255,255,255,0.35);font-family:'Jost',sans-serif;font-size:0.72rem;cursor:pointer;transition:all 0.2s;letter-spacing:0.06em}
 .logout-btn:hover{background:rgba(192,57,43,0.2);border-color:rgba(192,57,43,0.4);color:#e8594a}
 
-/* MAIN */
-.main{margin-left:var(--sidebar-w);flex:1;display:flex;flex-direction:column}
-.topbar{background:#fff;border-bottom:1px solid rgba(197,132,106,0.15);padding:0 1.8rem;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
+/* ══ MOBILE SIDEBAR ══ */
+.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:99;opacity:0;transition:opacity 0.3s}
+.sidebar-overlay.show{opacity:1}
+.hamburger-admin{display:none;align-items:center;justify-content:center;width:38px;height:38px;background:transparent;border:1px solid rgba(197,132,106,0.25);border-radius:8px;cursor:pointer;flex-shrink:0}
+.hamburger-admin span{display:block;width:18px;height:2px;background:var(--text-dark);border-radius:2px;transition:all 0.3s;position:relative}
+.hamburger-admin span::before,.hamburger-admin span::after{content:'';position:absolute;width:18px;height:2px;background:var(--text-dark);border-radius:2px;left:0;transition:all 0.3s}
+.hamburger-admin span::before{top:-5px}
+.hamburger-admin span::after{top:5px}
+
+/* ══ MAIN ══ */
+.main{margin-left:var(--sidebar-w);flex:1;display:flex;flex-direction:column;min-width:0}
+.topbar{background:#fff;border-bottom:1px solid rgba(197,132,106,0.15);padding:0 1.8rem;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;gap:1rem}
+.topbar-left{display:flex;align-items:center;gap:0.8rem}
 .topbar-title{font-family:'Bodoni Moda',serif;font-size:1.1rem;color:var(--text-dark)}
-.conn-status{display:flex;align-items:center;gap:0.5rem;font-size:0.7rem;color:var(--text-light)}
-.conn-dot{width:8px;height:8px;border-radius:50%;background:#ccc;transition:background 0.3s}
+.conn-status{display:flex;align-items:center;gap:0.5rem;font-size:0.7rem;color:var(--text-light);white-space:nowrap}
+.conn-dot{width:8px;height:8px;border-radius:50%;background:#ccc;transition:background 0.3s;flex-shrink:0}
 .conn-dot.ok{background:#2a7a4f}
 .conn-dot.err{background:#c0392b}
 
-/* PANELS */
+/* ══ PANELS ══ */
 .panel{display:none;padding:1.5rem;flex:1}
 .panel.active{display:block}
 
-/* CARDS */
+/* ══ CARDS ══ */
 .card{background:#fff;border:1px solid rgba(197,132,106,0.15);border-radius:14px;padding:1.5rem;margin-bottom:1.2rem}
 .card h2{font-family:'Bodoni Moda',serif;font-size:1rem;color:var(--text-dark);margin-bottom:0.3rem}
 .card-sub{font-size:0.76rem;color:var(--text-light);margin-bottom:1.2rem;line-height:1.6}
 
-/* FORM */
+/* ══ FORM ══ */
 .frow{display:grid;grid-template-columns:1fr 1fr;gap:0.8rem;margin-bottom:0.8rem}
 .frow.full{grid-template-columns:1fr}
+.frow.tri{grid-template-columns:1fr 1fr 1fr}
 .fg{display:flex;flex-direction:column;gap:0.35rem}
 .fg label{font-size:0.68rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-mid)}
 .fg input,.fg textarea,.fg select{border:1px solid rgba(197,132,106,0.25);border-radius:7px;padding:0.65rem 0.8rem;font-family:'Jost',sans-serif;font-size:0.83rem;color:var(--text-dark);background:var(--off-white);outline:none;transition:border-color 0.3s;width:100%}
-.fg input:focus,.fg textarea:focus{border-color:var(--gold)}
+.fg input:focus,.fg textarea:focus,.fg select:focus{border-color:var(--gold)}
 .fg textarea{resize:vertical;min-height:80px}
 
-/* BEFORE/AFTER UPLOAD UI */
+/* ══ BEFORE/AFTER UPLOAD UI ══ */
 .ba-upload-section{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
 .ba-slot{border:2px dashed rgba(201,168,76,0.3);border-radius:12px;padding:1.2rem;text-align:center;position:relative;background:rgba(201,168,76,0.02);transition:all 0.3s}
 .ba-slot.before-slot{border-color:rgba(197,132,106,0.4);background:rgba(197,132,106,0.03)}
@@ -92,17 +103,8 @@ html,body{height:100%;font-family:'Jost',sans-serif;background:#f5ede6;color:var
 .ba-slot-icon{font-size:1.8rem;display:block;margin-bottom:0.3rem}
 .ba-slot-text{font-size:0.75rem;color:var(--text-light)}
 .ba-slot-text strong{color:var(--text-mid)}
-.ba-preview{width:100%;height:120px;object-fit:cover;border-radius:8px;display:none;margin-top:0.5rem}
 
-/* BA PAIRS LIST */
-.ba-pairs{margin-top:1rem}
-.ba-pair{display:grid;grid-template-columns:1fr 1fr auto;gap:0.8rem;align-items:center;background:var(--off-white);border:1px solid rgba(197,132,106,0.15);border-radius:10px;padding:0.8rem;margin-bottom:0.6rem}
-.ba-pair img{width:100%;height:80px;object-fit:cover;border-radius:6px;display:block}
-.ba-pair-del{background:rgba(192,57,43,0.1);border:1px solid rgba(192,57,43,0.2);border-radius:6px;padding:0.4rem 0.7rem;color:#c0392b;font-size:0.72rem;cursor:pointer;transition:all 0.2s;white-space:nowrap}
-.ba-pair-del:hover{background:#c0392b;color:#fff}
-.ba-pair-label{font-size:0.62rem;text-align:center;color:var(--text-light);margin-top:0.3rem;letter-spacing:0.08em;text-transform:uppercase}
-
-/* GALLERY UPLOAD */
+/* ══ GALLERY UPLOAD ══ */
 .upload-zone{border:2px dashed rgba(201,168,76,0.3);border-radius:12px;padding:1.8rem;text-align:center;cursor:pointer;transition:all 0.3s;background:rgba(201,168,76,0.02);position:relative}
 .upload-zone:hover,.upload-zone.drag{border-color:var(--gold);background:rgba(201,168,76,0.07)}
 .upload-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
@@ -110,79 +112,133 @@ html,body{height:100%;font-family:'Jost',sans-serif;background:#f5ede6;color:var
 .uz-text{font-size:0.8rem;color:var(--text-light)}
 .uz-text strong{color:var(--gold-dark)}
 
-/* IMAGE GRID */
-.img-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:0.8rem;margin-top:1rem}
+/* ══ IMAGE GRID ══ */
+.img-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:0.8rem;margin-top:1rem}
 .img-item{position:relative;border-radius:8px;overflow:hidden;aspect-ratio:1;background:#f0e8e0}
 .img-item img{width:100%;height:100%;object-fit:cover;display:block}
 .img-overlay{position:absolute;inset:0;background:rgba(13,8,6,0);display:flex;align-items:center;justify-content:center;transition:background 0.2s}
 .img-item:hover .img-overlay{background:rgba(13,8,6,0.55)}
 .img-del{opacity:0;background:rgba(192,57,43,0.8);border:none;border-radius:6px;padding:0.35rem 0.6rem;color:#fff;font-size:0.7rem;cursor:pointer;transform:translateY(6px);transition:all 0.2s}
 .img-item:hover .img-del{opacity:1;transform:translateY(0)}
-.img-main-badge{position:absolute;top:0.3rem;left:0.3rem;background:var(--gold);color:var(--dark);font-size:0.55rem;font-weight:700;letter-spacing:0.1em;padding:0.12rem 0.35rem;border-radius:3px;text-transform:uppercase}
 .img-caption{position:absolute;bottom:0;left:0;right:0;background:rgba(13,8,6,0.65);padding:0.3rem 0.4rem;font-size:0.62rem;color:rgba(255,255,255,0.75);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
-/* BUTTONS */
+/* ══ BUTTONS ══ */
 .btn{display:inline-flex;align-items:center;gap:0.45rem;padding:0.65rem 1.3rem;border-radius:50px;border:none;cursor:pointer;font-family:'Jost',sans-serif;font-size:0.76rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;transition:all 0.3s}
 .btn-gold{background:linear-gradient(135deg,var(--gold),var(--copper));color:#fff;box-shadow:0 4px 16px rgba(201,168,76,0.3)}
 .btn-gold:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(201,168,76,0.4)}
 .btn-gold:disabled{opacity:0.5;cursor:not-allowed;transform:none}
 .btn-outline{background:transparent;border:1px solid rgba(197,132,106,0.3);color:var(--text-mid)}
 .btn-outline:hover{border-color:var(--gold);color:var(--text-dark)}
-.btn-actions{display:flex;gap:0.7rem;align-items:center;margin-top:1rem;padding-top:1rem;border-top:1px solid rgba(197,132,106,0.1)}
+.btn-danger{background:rgba(192,57,43,0.1);border:1px solid rgba(192,57,43,0.25);color:#c0392b}
+.btn-danger:hover{background:#c0392b;color:#fff}
+.btn-success{background:rgba(42,122,79,0.1);border:1px solid rgba(42,122,79,0.25);color:var(--success)}
+.btn-success:hover{background:var(--success);color:#fff}
+.btn-actions{display:flex;gap:0.7rem;align-items:center;margin-top:1rem;padding-top:1rem;border-top:1px solid rgba(197,132,106,0.1);flex-wrap:wrap}
 
-/* TABS */
+/* ══ TABS ══ */
 .tabs{display:flex;gap:0.4rem;margin-bottom:1rem;flex-wrap:wrap}
 .tab{padding:0.45rem 0.9rem;border-radius:30px;border:1px solid rgba(197,132,106,0.25);background:transparent;color:var(--text-light);font-family:'Jost',sans-serif;font-size:0.72rem;cursor:pointer;transition:all 0.2s;letter-spacing:0.05em}
 .tab.active{background:linear-gradient(135deg,var(--gold),var(--copper));color:#fff;border-color:transparent}
 .tab:hover:not(.active){border-color:var(--gold);color:var(--text-dark)}
 
-/* STATS */
+/* ══ STATS ══ */
 .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:0.8rem;margin-bottom:1.2rem}
 .stat-card{background:#fff;border:1px solid rgba(197,132,106,0.15);border-radius:12px;padding:1.2rem;display:flex;align-items:center;gap:0.8rem}
 .stat-icon{width:38px;height:38px;border-radius:8px;background:linear-gradient(135deg,rgba(201,168,76,0.15),rgba(197,132,106,0.1));display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
 .stat-num{font-family:'Bodoni Moda',serif;font-size:1.5rem;color:var(--text-dark);line-height:1}
 .stat-label{font-size:0.65rem;color:var(--text-light);letter-spacing:0.06em;text-transform:uppercase;margin-top:0.15rem}
 
-/* TOAST */
+/* ══ BOOKINGS TABLE ══ */
+.bookings-filter{display:flex;gap:0.6rem;flex-wrap:wrap;margin-bottom:1rem;align-items:center}
+.bookings-filter input{border:1px solid rgba(197,132,106,0.25);border-radius:7px;padding:0.5rem 0.8rem;font-family:'Jost',sans-serif;font-size:0.8rem;color:var(--text-dark);background:var(--off-white);outline:none;transition:border-color 0.3s;min-width:180px}
+.bookings-filter input:focus{border-color:var(--gold)}
+.bookings-filter select{border:1px solid rgba(197,132,106,0.25);border-radius:7px;padding:0.5rem 0.8rem;font-family:'Jost',sans-serif;font-size:0.8rem;color:var(--text-dark);background:var(--off-white);outline:none;cursor:pointer}
+.table-wrap{overflow-x:auto;border-radius:10px;border:1px solid rgba(197,132,106,0.15)}
+table{width:100%;border-collapse:collapse;font-size:0.8rem}
+thead th{background:var(--cream);color:var(--text-mid);font-size:0.65rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:0.75rem 1rem;text-align:left;border-bottom:1px solid rgba(197,132,106,0.15);white-space:nowrap}
+tbody tr{border-bottom:1px solid rgba(197,132,106,0.08);transition:background 0.15s}
+tbody tr:last-child{border-bottom:none}
+tbody tr:hover{background:rgba(201,168,76,0.04)}
+tbody td{padding:0.8rem 1rem;color:var(--text-dark);vertical-align:middle}
+.badge{display:inline-flex;align-items:center;padding:0.2rem 0.65rem;border-radius:20px;font-size:0.65rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;white-space:nowrap}
+.badge-pending{background:rgba(245,158,11,0.12);color:#92400e;border:1px solid rgba(245,158,11,0.25)}
+.badge-confirmed{background:rgba(42,122,79,0.1);color:var(--success);border:1px solid rgba(42,122,79,0.2)}
+.badge-cancelled{background:rgba(192,57,43,0.08);color:#c0392b;border:1px solid rgba(192,57,43,0.15)}
+.badge-completed{background:rgba(99,102,241,0.1);color:#4338ca;border:1px solid rgba(99,102,241,0.2)}
+.td-actions{display:flex;gap:0.4rem;flex-wrap:nowrap}
+.td-btn{padding:0.28rem 0.6rem;border-radius:5px;border:none;font-family:'Jost',sans-serif;font-size:0.65rem;font-weight:500;cursor:pointer;transition:all 0.2s;white-space:nowrap}
+.td-btn-confirm{background:rgba(42,122,79,0.1);color:var(--success);border:1px solid rgba(42,122,79,0.2)}
+.td-btn-confirm:hover{background:var(--success);color:#fff}
+.td-btn-cancel{background:rgba(192,57,43,0.08);color:#c0392b;border:1px solid rgba(192,57,43,0.15)}
+.td-btn-cancel:hover{background:#c0392b;color:#fff}
+.td-btn-del{background:rgba(0,0,0,0.05);color:var(--text-light);border:1px solid rgba(0,0,0,0.08)}
+.td-btn-del:hover{background:rgba(192,57,43,0.1);color:#c0392b}
+.booking-note{font-size:0.72rem;color:var(--text-light);font-style:italic;max-width:160px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pagination{display:flex;gap:0.4rem;align-items:center;margin-top:1rem;flex-wrap:wrap}
+.page-btn{padding:0.35rem 0.7rem;border-radius:6px;border:1px solid rgba(197,132,106,0.25);background:transparent;color:var(--text-mid);font-family:'Jost',sans-serif;font-size:0.72rem;cursor:pointer;transition:all 0.2s}
+.page-btn:hover,.page-btn.active{background:var(--gold);border-color:var(--gold);color:#fff}
+.page-btn:disabled{opacity:0.35;cursor:not-allowed}
+.booking-count{font-size:0.72rem;color:var(--text-light);margin-left:auto}
+
+/* ══ TOAST ══ */
 #toast{position:fixed;bottom:1.5rem;right:1.5rem;z-index:9999;display:flex;flex-direction:column;gap:0.5rem;pointer-events:none}
 .toast-item{background:var(--dark2);color:#fff;padding:0.75rem 1rem;border-radius:8px;font-size:0.8rem;display:flex;align-items:center;gap:0.5rem;box-shadow:0 6px 25px rgba(0,0,0,0.3);border-left:3px solid var(--gold);animation:tin 0.3s ease;min-width:260px}
 .toast-item.success{border-left-color:#2a7a4f}
 .toast-item.error{border-left-color:#c0392b}
 @keyframes tin{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)}}
 
-/* SECTION DIVIDER */
+/* ══ MISC ══ */
 .divider{height:1px;background:rgba(197,132,106,0.12);margin:1rem 0}
-
-/* INFO BOX */
 .info-box{background:rgba(201,168,76,0.07);border:1px solid rgba(201,168,76,0.2);border-radius:8px;padding:0.8rem 1rem;font-size:0.78rem;color:var(--text-mid);line-height:1.6;margin-bottom:1rem}
-
-/* EMPTY */
+.info-box.info-red{background:rgba(192,57,43,0.06);border-color:rgba(192,57,43,0.2);color:#7a2c2c}
 .empty{text-align:center;padding:2rem;color:var(--text-light);font-size:0.82rem;font-style:italic}
-
-/* SPIN */
 @keyframes spin{to{transform:rotate(360deg)}}
 .spin{display:inline-block;width:12px;height:12px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin 0.7s linear infinite}
+
+/* ══ RESPONSIVE ══ */
+@media(max-width:900px){
+  .sidebar{transform:translateX(-100%)}
+  .sidebar.mobile-open{transform:translateX(0)}
+  .sidebar-overlay{display:block}
+  .main{margin-left:0}
+  .hamburger-admin{display:flex}
+  .stats-row{grid-template-columns:1fr 1fr}
+  .frow{grid-template-columns:1fr}
+  .frow.tri{grid-template-columns:1fr 1fr}
+  .ba-upload-section{grid-template-columns:1fr}
+  .panel{padding:1rem}
+  .topbar{padding:0 1rem}
+}
+@media(max-width:600px){
+  .stats-row{grid-template-columns:1fr 1fr}
+  .frow.tri{grid-template-columns:1fr}
+  .booking-note{max-width:90px}
+  .td-actions{flex-wrap:wrap}
+}
 </style>
 </head>
 <body>
 
-<!-- LOGIN -->
+<!-- ══ LOGIN ══ -->
 <div id="loginScreen">
   <div class="login-box">
     <div class="login-logo">Glow <em>Pavi's</em></div>
     <div class="login-sub">Admin Panel</div>
-    <div class="lf"><label>Username</label><input type="text" id="lu" placeholder="admin"></div>
-    <div class="lf"><label>Password</label><input type="password" id="lp" placeholder="••••••••"></div>
+    <div class="lf"><label>Username</label><input type="text" id="lu" placeholder="admin" autocomplete="username"></div>
+    <div class="lf"><label>Password</label><input type="password" id="lp" placeholder="••••••••" autocomplete="current-password"></div>
     <button class="login-btn" onclick="doLogin()">Sign In →</button>
     <div class="login-err" id="lerr">Wrong username or password!</div>
   </div>
 </div>
 
-<!-- ADMIN -->
+<!-- ══ ADMIN LAYOUT ══ -->
 <div id="adminLayout" style="display:none">
 
+  <!-- Sidebar overlay (mobile) -->
+  <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
   <!-- SIDEBAR -->
-  <aside class="sidebar">
+  <aside class="sidebar" id="sidebar">
     <div class="sidebar-logo">
       <h1>Glow <em>Pavi's</em></h1>
       <p>Admin Panel</p>
@@ -191,11 +247,13 @@ html,body{height:100%;font-family:'Jost',sans-serif;background:#f5ede6;color:var
       <div class="nav-sec">Overview</div>
       <div class="nav-item active" data-p="dashboard" onclick="go(this)"><span class="ni">📊</span>Dashboard</div>
       <div class="nav-sec">Pages</div>
-      <div class="nav-item" data-p="home" onclick="go(this)"><span class="ni">🏠</span>Home Page</div>
-      <div class="nav-item" data-p="bridal" onclick="go(this)"><span class="ni">💍</span>Bridal Makeup</div>
-      <div class="nav-item" data-p="party" onclick="go(this)"><span class="ni">🎉</span>Party Makeup</div>
+      <div class="nav-item" data-p="home"     onclick="go(this)"><span class="ni">🏠</span>Home Page</div>
+      <div class="nav-item" data-p="bridal"   onclick="go(this)"><span class="ni">💍</span>Bridal Makeup</div>
+      <div class="nav-item" data-p="party"    onclick="go(this)"><span class="ni">🎉</span>Party Makeup</div>
       <div class="nav-item" data-p="skincare" onclick="go(this)"><span class="ni">🌿</span>Skin Care</div>
-      <div class="nav-item" data-p="about" onclick="go(this)"><span class="ni">✨</span>About Page</div>
+      <div class="nav-item" data-p="about"    onclick="go(this)"><span class="ni">✨</span>About Page</div>
+      <div class="nav-sec">Management</div>
+      <div class="nav-item" data-p="bookings" onclick="go(this)"><span class="ni">📅</span>Bookings</div>
       <div class="nav-sec">Settings</div>
       <div class="nav-item" data-p="settings" onclick="go(this)"><span class="ni">⚙️</span>Supabase Config</div>
     </div>
@@ -207,20 +265,25 @@ html,body{height:100%;font-family:'Jost',sans-serif;background:#f5ede6;color:var
   <main class="main">
     <!-- TOPBAR -->
     <div class="topbar">
-      <div class="topbar-title" id="ttitle">Dashboard</div>
+      <div class="topbar-left">
+        <button class="hamburger-admin" onclick="toggleSidebar()" aria-label="Menu">
+          <span></span>
+        </button>
+        <div class="topbar-title" id="ttitle">Dashboard</div>
+      </div>
       <div class="conn-status">
         <div class="conn-dot" id="cdot"></div>
         <span id="ctext">Not connected</span>
       </div>
     </div>
 
-    <!-- ══ DASHBOARD ══ -->
+    <!-- ══════════ DASHBOARD ══════════ -->
     <div class="panel active" id="panel-dashboard">
       <div class="stats-row">
         <div class="stat-card"><div class="stat-icon">🖼️</div><div><div class="stat-num" id="s-total">—</div><div class="stat-label">Total Images</div></div></div>
         <div class="stat-card"><div class="stat-icon">💍</div><div><div class="stat-num" id="s-bridal">—</div><div class="stat-label">Bridal</div></div></div>
         <div class="stat-card"><div class="stat-icon">🎉</div><div><div class="stat-num" id="s-party">—</div><div class="stat-label">Party</div></div></div>
-        <div class="stat-card"><div class="stat-icon">🌿</div><div><div class="stat-num" id="s-skin">—</div><div class="stat-label">Skin Care</div></div></div>
+        <div class="stat-card"><div class="stat-icon">📅</div><div><div class="stat-num" id="s-bookings">—</div><div class="stat-label">Bookings</div></div></div>
       </div>
       <div class="card">
         <h2>Welcome to Admin Panel 🌸</h2>
@@ -229,6 +292,7 @@ html,body{height:100%;font-family:'Jost',sans-serif;background:#f5ede6;color:var
           <button class="btn btn-gold" onclick="goById('bridal')">💍 Bridal Gallery</button>
           <button class="btn btn-gold" onclick="goById('party')">🎉 Party Gallery</button>
           <button class="btn btn-gold" onclick="goById('skincare')">🌿 Skin Care Gallery</button>
+          <button class="btn btn-gold" onclick="goById('bookings')">📅 Bookings</button>
           <button class="btn btn-outline" onclick="goById('settings')">⚙️ Settings</button>
         </div>
       </div>
@@ -239,7 +303,7 @@ html,body{height:100%;font-family:'Jost',sans-serif;background:#f5ede6;color:var
       </div>
     </div>
 
-    <!-- ══ HOME PAGE ══ -->
+    <!-- ══════════ HOME PAGE ══════════ -->
     <div class="panel" id="panel-home">
       <div class="card">
         <h2>🏠 Home Page — Hero Text</h2>
@@ -274,14 +338,14 @@ html,body{height:100%;font-family:'Jost',sans-serif;background:#f5ede6;color:var
 
       <div class="card">
         <h2>🏠 Home — Bento Card Images</h2>
-        <p class="card-sub">Upload background images for the 3 service cards on the home page.</p>
-        <div class="tabs">
+        <p class="card-sub">Upload background images for the service cards and hero background on the home page.</p>
+        <div class="tabs" id="home-tabs">
           <button class="tab active" onclick="setTab(this,'home-tabs','bridal_card')">Bridal Card</button>
           <button class="tab" onclick="setTab(this,'home-tabs','party_card')">Party Card</button>
           <button class="tab" onclick="setTab(this,'home-tabs','skin_card')">Skin Card</button>
           <button class="tab" onclick="setTab(this,'home-tabs','hero_bg')">Hero BG</button>
         </div>
-        <div class="upload-zone" id="home-tabs-zone">
+        <div class="upload-zone">
           <input type="file" accept="image/*" multiple onchange="uploadGallery('home',currentTab['home-tabs'],this.files,this)">
           <div class="uz-icon">📁</div>
           <div class="uz-text"><strong>Click or drag</strong> image here</div>
@@ -290,7 +354,7 @@ html,body{height:100%;font-family:'Jost',sans-serif;background:#f5ede6;color:var
       </div>
     </div>
 
-    <!-- ══ BRIDAL PAGE ══ -->
+    <!-- ══════════ BRIDAL PAGE ══════════ -->
     <div class="panel" id="panel-bridal">
       <div class="card">
         <h2>💍 Bridal — Hero Text</h2>
@@ -307,7 +371,6 @@ html,body{height:100%;font-family:'Jost',sans-serif;background:#f5ede6;color:var
         </div>
       </div>
 
-      <!-- BEFORE / AFTER -->
       <div class="card">
         <h2>💍 Bridal — Before / After Images</h2>
         <p class="card-sub">Upload <strong>Before</strong> image and <strong>After</strong> image separately. They will appear in the transformation slider on the bridal page.</p>
@@ -328,10 +391,9 @@ html,body{height:100%;font-family:'Jost',sans-serif;background:#f5ede6;color:var
         </div>
         <div class="divider"></div>
         <strong style="font-size:0.75rem;color:var(--text-mid);letter-spacing:0.08em;text-transform:uppercase">Uploaded Before/After Images</strong>
-        <div id="bridal-ba-grid" style="margin-top:0.8rem"><div class="empty">No images yet.</div></div>
+        <div class="img-grid" id="bridal-ba-grid" style="margin-top:0.8rem"><div class="empty">No images yet.</div></div>
       </div>
 
-      <!-- INSTAGRAM / PORTFOLIO -->
       <div class="card">
         <h2>💍 Bridal — Instagram Grid Photos</h2>
         <p class="card-sub">These photos appear in the Instagram grid section at the bottom of the bridal page. Upload multiple at once.</p>
@@ -344,7 +406,7 @@ html,body{height:100%;font-family:'Jost',sans-serif;background:#f5ede6;color:var
       </div>
     </div>
 
-    <!-- ══ PARTY PAGE ══ -->
+    <!-- ══════════ PARTY PAGE ══════════ -->
     <div class="panel" id="panel-party">
       <div class="card">
         <h2>🎉 Party — Hero Text</h2>
@@ -381,7 +443,7 @@ html,body{height:100%;font-family:'Jost',sans-serif;background:#f5ede6;color:var
         </div>
         <div class="divider"></div>
         <strong style="font-size:0.75rem;color:var(--text-mid);letter-spacing:0.08em;text-transform:uppercase">Uploaded Before/After Images</strong>
-        <div id="party-ba-grid" style="margin-top:0.8rem"><div class="empty">No images yet.</div></div>
+        <div class="img-grid" id="party-ba-grid" style="margin-top:0.8rem"><div class="empty">No images yet.</div></div>
       </div>
 
       <div class="card">
@@ -396,7 +458,7 @@ html,body{height:100%;font-family:'Jost',sans-serif;background:#f5ede6;color:var
       </div>
     </div>
 
-    <!-- ══ SKIN CARE PAGE ══ -->
+    <!-- ══════════ SKIN CARE PAGE ══════════ -->
     <div class="panel" id="panel-skincare">
       <div class="card">
         <h2>🌿 Skin Care — Hero Text</h2>
@@ -433,7 +495,7 @@ html,body{height:100%;font-family:'Jost',sans-serif;background:#f5ede6;color:var
         </div>
         <div class="divider"></div>
         <strong style="font-size:0.75rem;color:var(--text-mid);letter-spacing:0.08em;text-transform:uppercase">Uploaded Before/After Images</strong>
-        <div id="skincare-ba-grid" style="margin-top:0.8rem"><div class="empty">No images yet.</div></div>
+        <div class="img-grid" id="skincare-ba-grid" style="margin-top:0.8rem"><div class="empty">No images yet.</div></div>
       </div>
 
       <div class="card">
@@ -448,7 +510,7 @@ html,body{height:100%;font-family:'Jost',sans-serif;background:#f5ede6;color:var
       </div>
     </div>
 
-    <!-- ══ ABOUT PAGE ══ -->
+    <!-- ══════════ ABOUT PAGE ══════════ -->
     <div class="panel" id="panel-about">
       <div class="card">
         <h2>✨ About — Pavi's Story</h2>
@@ -480,14 +542,101 @@ html,body{height:100%;font-family:'Jost',sans-serif;background:#f5ede6;color:var
       </div>
     </div>
 
-    <!-- ══ SETTINGS ══ -->
+    <!-- ══════════ BOOKINGS ══════════ -->
+    <div class="panel" id="panel-bookings">
+      <div class="card">
+        <h2>📅 Bookings Overview</h2>
+        <p class="card-sub">View and manage all booking enquiries submitted through the website.</p>
+        <div class="info-box">
+          💡 Bookings are saved to the <strong>gp_bookings</strong> table in Supabase. Use Confirm / Cancel buttons to update status. WhatsApp enquiries are also listed here if you save them manually.
+        </div>
+        <div class="bookings-filter">
+          <input type="text" id="bk-search" placeholder="🔍 Search name, phone, service…" oninput="filterBookings()">
+          <select id="bk-status" onchange="filterBookings()">
+            <option value="">All Status</option>
+            <option value="pending">Pending</option>
+            <option value="confirmed">Confirmed</option>
+            <option value="cancelled">Cancelled</option>
+            <option value="completed">Completed</option>
+          </select>
+          <select id="bk-service" onchange="filterBookings()">
+            <option value="">All Services</option>
+            <option value="bridal">Bridal Makeup</option>
+            <option value="party">Party Makeup</option>
+            <option value="skincare">Skin Care</option>
+            <option value="other">Other</option>
+          </select>
+          <button class="btn btn-gold" onclick="loadBookings()" style="padding:0.5rem 1rem">↺ Refresh</button>
+        </div>
+        <div class="table-wrap">
+          <table id="bk-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Service</th>
+                <th>Date Requested</th>
+                <th>Status</th>
+                <th>Note</th>
+                <th>Submitted</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="bk-tbody">
+              <tr><td colspan="9" class="empty">Configure Supabase to view bookings.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div style="display:flex;align-items:center;gap:0.5rem;margin-top:0.8rem;flex-wrap:wrap">
+          <div class="pagination" id="bk-pagination"></div>
+          <div class="booking-count" id="bk-count"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>➕ Add Manual Booking</h2>
+        <p class="card-sub">Record a WhatsApp or phone enquiry directly from here.</p>
+        <div class="frow">
+          <div class="fg"><label>Customer Name</label><input id="bk-name" placeholder="Name"></div>
+          <div class="fg"><label>Phone Number</label><input id="bk-phone" placeholder="+91 98765 43210"></div>
+        </div>
+        <div class="frow tri">
+          <div class="fg">
+            <label>Service</label>
+            <select id="bk-svc">
+              <option value="bridal">Bridal Makeup</option>
+              <option value="party">Party Makeup</option>
+              <option value="skincare">Skin Care</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="fg"><label>Requested Date</label><input type="date" id="bk-date"></div>
+          <div class="fg">
+            <label>Status</label>
+            <select id="bk-stat">
+              <option value="pending">Pending</option>
+              <option value="confirmed">Confirmed</option>
+            </select>
+          </div>
+        </div>
+        <div class="frow full">
+          <div class="fg"><label>Notes / Message</label><textarea id="bk-note" placeholder="Any notes or customer message…" style="min-height:70px"></textarea></div>
+        </div>
+        <div class="btn-actions">
+          <button class="btn btn-gold" onclick="addBooking()">➕ Add Booking</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════ SETTINGS ══════════ -->
     <div class="panel" id="panel-settings">
       <div class="card">
         <h2>⚙️ Supabase Connection</h2>
-        <p class="card-sub">Your Supabase credentials. Already saved!</p>
+        <p class="card-sub">Credentials are auto-configured from your site. Override here if needed — saved to localStorage.</p>
         <div class="frow">
           <div class="fg"><label>Project URL</label><input id="supa-url" placeholder="https://xxx.supabase.co"></div>
-          <div class="fg"><label>Anon Key</label><input id="supa-key" type="password" placeholder="eyJ..."></div>
+          <div class="fg"><label>Anon Key</label><input id="supa-key" type="password" placeholder="eyJ…"></div>
         </div>
         <div class="btn-actions">
           <button class="btn btn-gold" onclick="saveConfig()">💾 Save & Test</button>
@@ -497,13 +646,62 @@ html,body{height:100%;font-family:'Jost',sans-serif;background:#f5ede6;color:var
       </div>
 
       <div class="card">
-        <h2>🔑 Change Admin Password</h2>
+        <h2>🗄️ Database Setup</h2>
+        <p class="card-sub">Run this SQL in your Supabase SQL Editor to create the required tables (if not done already).</p>
+        <div class="info-box">Copy the SQL below and run it in Supabase → SQL Editor → New Query</div>
+        <textarea style="width:100%;font-family:monospace;font-size:0.72rem;background:#f5ede6;border:1px solid rgba(197,132,106,0.2);border-radius:8px;padding:0.8rem;min-height:180px;color:var(--text-dark);resize:vertical" readonly>-- Gallery table
+CREATE TABLE IF NOT EXISTS gp_gallery (
+  id bigserial PRIMARY KEY,
+  page text NOT NULL,
+  section text NOT NULL,
+  url text NOT NULL,
+  storage_path text,
+  alt_text text,
+  is_main boolean DEFAULT false,
+  created_at timestamptz DEFAULT now()
+);
+
+-- Content (text) table
+CREATE TABLE IF NOT EXISTS gp_content (
+  id bigserial PRIMARY KEY,
+  page text NOT NULL,
+  section text NOT NULL,
+  key text NOT NULL,
+  value text,
+  updated_at timestamptz DEFAULT now(),
+  UNIQUE(page,section,key)
+);
+
+-- Bookings table
+CREATE TABLE IF NOT EXISTS gp_bookings (
+  id bigserial PRIMARY KEY,
+  name text,
+  phone text,
+  service text,
+  requested_date date,
+  status text DEFAULT 'pending',
+  note text,
+  created_at timestamptz DEFAULT now()
+);
+
+-- Enable RLS (adjust policies as needed)
+ALTER TABLE gp_gallery ENABLE ROW LEVEL SECURITY;
+ALTER TABLE gp_content ENABLE ROW LEVEL SECURITY;
+ALTER TABLE gp_bookings ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Public read gallery" ON gp_gallery FOR SELECT USING (true);
+CREATE POLICY "Public read content" ON gp_content FOR SELECT USING (true);</textarea>
+      </div>
+
+      <div class="card">
+        <h2>🔑 Change Admin Credentials</h2>
+        <p class="card-sub">Update the username and password for this admin panel. Stored locally in your browser.</p>
+        <div class="info-box info-red">⚠️ Credentials are stored in browser localStorage only. Anyone with access to this browser can log in.</div>
         <div class="frow">
-          <div class="fg"><label>New Username</label><input id="new-user" placeholder="admin"></div>
-          <div class="fg"><label>New Password</label><input id="new-pass" type="password" placeholder="New password"></div>
+          <div class="fg"><label>New Username</label><input id="new-user" placeholder="admin" autocomplete="off"></div>
+          <div class="fg"><label>New Password</label><input id="new-pass" type="password" placeholder="New password" autocomplete="new-password"></div>
         </div>
         <div class="btn-actions">
-          <button class="btn btn-gold" onclick="saveCreds()">💾 Update</button>
+          <button class="btn btn-gold" onclick="saveCreds()">💾 Update Credentials</button>
         </div>
       </div>
     </div>
@@ -516,21 +714,27 @@ html,body{height:100%;font-family:'Jost',sans-serif;background:#f5ede6;color:var
 
 <script>
 // ══════════════════════════════════════════════════
-// CONFIG
+// CONFIG — Hardcoded from supabase-loader.js
 // ══════════════════════════════════════════════════
 var BUCKET = 'glow-pavi-images';
+var HARDCODED_URL = 'https://ubtkkiyrzxntjwpyyoal.supabase.co';
+var HARDCODED_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVidGtraXlyenhudGp3cHl5b2FsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY1MzU3MDMsImV4cCI6MjA5MjExMTcwM30.4WiNMGPMMs99pvPjzeIyyWDBUiYMt7BMONWNXNh32kY';
 var supaUrl = '';
 var supaKey = '';
 
 // Tab state per tab-group
-var currentTab = {
-  'home-tabs': 'bridal_card'
-};
+var currentTab = { 'home-tabs': 'bridal_card' };
 
-// Page titles
+// Bookings state
+var allBookings = [];
+var bkPage = 1;
+var BK_PER_PAGE = 15;
+
+// Panel titles
 var PAGE_TITLES = {
   dashboard:'Dashboard', home:'Home Page', bridal:'Bridal Makeup',
-  party:'Party Makeup', skincare:'Skin Care', about:'About Page', settings:'Settings'
+  party:'Party Makeup', skincare:'Skin Care', about:'About Page',
+  bookings:'Bookings', settings:'Settings'
 };
 
 // ══════════════════════════════════════════════════
@@ -542,20 +746,16 @@ function doLogin() {
   var su = localStorage.getItem('gp_user') || 'admin';
   var sp = localStorage.getItem('gp_pass') || 'glowpavi2024';
   if (u === su && p === sp) {
-    document.getElementById('loginScreen').classList.add('hidden');
-    setTimeout(function(){ document.getElementById('loginScreen').style.display='none'; },400);
+    var ls = document.getElementById('loginScreen');
+    ls.classList.add('hidden');
+    setTimeout(function(){ ls.style.display='none'; }, 400);
     document.getElementById('adminLayout').style.display = 'flex';
     initAdmin();
   } else {
     document.getElementById('lerr').classList.add('show');
   }
 }
-function doLogout() {
-  location.reload();
-}
-document.getElementById('lp').addEventListener('keydown', function(e){ if(e.key==='Enter') doLogin(); });
-document.getElementById('lu').addEventListener('keydown', function(e){ if(e.key==='Enter') doLogin(); });
-
+function doLogout() { location.reload(); }
 function saveCreds() {
   var u = document.getElementById('new-user').value.trim();
   var p = document.getElementById('new-pass').value.trim();
@@ -565,18 +765,62 @@ function saveCreds() {
   toast('Credentials updated ✓','success');
 }
 
+document.addEventListener('DOMContentLoaded', function() {
+  document.getElementById('lp').addEventListener('keydown', function(e){ if(e.key==='Enter') doLogin(); });
+  document.getElementById('lu').addEventListener('keydown', function(e){ if(e.key==='Enter') doLogin(); });
+});
+
 // ══════════════════════════════════════════════════
 // INIT
 // ══════════════════════════════════════════════════
 function initAdmin() {
-  supaUrl = localStorage.getItem('gp_supa_url') || '';
-  supaKey = localStorage.getItem('gp_supa_key') || '';
-  if (supaUrl) {
-    document.getElementById('supa-url').value = supaUrl;
-    document.getElementById('supa-key').value = supaKey;
-    testConn(false);
-  }
+  // Use localStorage if saved, else auto-fill from hardcoded credentials
+  supaUrl = localStorage.getItem('gp_supa_url') || HARDCODED_URL;
+  supaKey = localStorage.getItem('gp_supa_key') || HARDCODED_KEY;
+  // Always save so Settings panel shows correctly
+  localStorage.setItem('gp_supa_url', supaUrl);
+  localStorage.setItem('gp_supa_key', supaKey);
+  document.getElementById('supa-url').value = supaUrl;
+  document.getElementById('supa-key').value = supaKey;
+  testConn(false);
   loadStats();
+  setupDragDrop();
+  loadAllTextContent();
+}
+
+// ══════════════════════════════════════════════════
+// LOAD ALL TEXT CONTENT FROM DB INTO FORM FIELDS
+// ══════════════════════════════════════════════════
+function loadAllTextContent() {
+  // Fetch all content rows in one call
+  dbFetch('/rest/v1/gp_content?select=page,section,key,value').then(function(rows) {
+    if (!rows || !rows.length) return;
+    rows.forEach(function(r) {
+      var elId = r.page + '_' + r.section + '_' + r.key;
+      var el = document.getElementById(elId);
+      if (el && r.value !== null && r.value !== undefined) {
+        el.value = r.value;
+      }
+    });
+  }).catch(function() {});
+}
+
+// ══════════════════════════════════════════════════
+// MOBILE SIDEBAR
+// ══════════════════════════════════════════════════
+function toggleSidebar() {
+  var sb = document.getElementById('sidebar');
+  var ov = document.getElementById('sidebarOverlay');
+  var isOpen = sb.classList.contains('mobile-open');
+  if (isOpen) { closeSidebar(); }
+  else {
+    sb.classList.add('mobile-open');
+    ov.classList.add('show');
+  }
+}
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('mobile-open');
+  document.getElementById('sidebarOverlay').classList.remove('show');
 }
 
 // ══════════════════════════════════════════════════
@@ -585,35 +829,35 @@ function initAdmin() {
 function go(el) {
   document.querySelectorAll('.nav-item').forEach(function(n){ n.classList.remove('active'); });
   el.classList.add('active');
-  var p = el.getAttribute('data-p');
-  showPanel(p);
+  showPanel(el.getAttribute('data-p'));
+  closeSidebar();
 }
 function goById(p) {
   document.querySelectorAll('.nav-item').forEach(function(n){
-    if (n.getAttribute('data-p') === p) n.classList.add('active');
-    else n.classList.remove('active');
+    n.classList.toggle('active', n.getAttribute('data-p') === p);
   });
   showPanel(p);
 }
 function showPanel(p) {
   document.querySelectorAll('.panel').forEach(function(x){ x.classList.remove('active'); });
-  document.getElementById('panel-'+p).classList.add('active');
+  var panel = document.getElementById('panel-'+p);
+  if (panel) panel.classList.add('active');
   document.getElementById('ttitle').textContent = PAGE_TITLES[p] || p;
 
-  // Load grids when switching pages
-  if (p==='bridal')   { loadGrid('bridal','before_after','bridal-ba-grid'); loadGrid('bridal','instagram','bridal-ig-grid'); }
-  if (p==='party')    { loadGrid('party','before_after','party-ba-grid'); loadGrid('party','gallery','party-gallery-grid'); }
-  if (p==='skincare') { loadGrid('skincare','before_after','skincare-ba-grid'); loadGrid('skincare','gallery','skincare-gallery-grid'); }
-  if (p==='about')    { loadGrid('about','profile','about-profile-grid'); }
-  if (p==='home')     { loadGrid('home', currentTab['home-tabs'], 'home-gallery-grid'); }
+  if (p==='bridal')   { loadGrid('bridal','before_after','bridal-ba-grid'); loadGrid('bridal','instagram','bridal-ig-grid'); loadPageText('bridal'); }
+  if (p==='party')    { loadGrid('party','before_after','party-ba-grid'); loadGrid('party','gallery','party-gallery-grid'); loadPageText('party'); }
+  if (p==='skincare') { loadGrid('skincare','before_after','skincare-ba-grid'); loadGrid('skincare','gallery','skincare-gallery-grid'); loadPageText('skincare'); }
+  if (p==='about')    { loadGrid('about','profile','about-profile-grid'); loadPageText('about'); }
+  if (p==='home')     { loadGrid('home', currentTab['home-tabs'], 'home-gallery-grid'); loadPageText('home'); }
   if (p==='dashboard'){ loadStats(); }
+  if (p==='bookings') { loadBookings(); }
 }
 
 // ══════════════════════════════════════════════════
 // TABS
 // ══════════════════════════════════════════════════
 function setTab(el, groupId, section) {
-  el.closest('.tabs').querySelectorAll('.tab').forEach(function(t){ t.classList.remove('active'); });
+  document.getElementById(groupId).querySelectorAll('.tab').forEach(function(t){ t.classList.remove('active'); });
   el.classList.add('active');
   currentTab[groupId] = section;
   loadGrid('home', section, 'home-gallery-grid');
@@ -631,13 +875,15 @@ function dbFetch(endpoint, opts) {
       'apikey': supaKey,
       'Authorization': 'Bearer ' + supaKey,
       'Content-Type': 'application/json',
-      'Prefer': opts.prefer || 'return=representation'
+      'Prefer': opts.prefer !== undefined ? opts.prefer : 'return=representation'
     }, opts.headers || {}),
     body: opts.body ? JSON.stringify(opts.body) : undefined
   }).then(function(r){
     if (!r.ok) return r.json().then(function(e){ throw new Error(e.message||'API error '+r.status); });
     if (opts.method==='DELETE') return null;
-    return r.json();
+    var ct = r.headers.get('content-type') || '';
+    if (ct.indexOf('json') > -1) return r.json();
+    return null;
   });
 }
 
@@ -681,7 +927,7 @@ function getImages(page, section) {
 }
 
 // ══════════════════════════════════════════════════
-// UPLOAD — GALLERY (multiple images)
+// UPLOAD — GALLERY (multiple)
 // ══════════════════════════════════════════════════
 function uploadGallery(page, section, files, inputEl) {
   if (!files||files.length===0) return;
@@ -689,16 +935,21 @@ function uploadGallery(page, section, files, inputEl) {
   var arr = Array.from(files);
   var done = 0;
 
+  // BUG FIX: Correct grid ID resolution for ALL sections
+  function resolveGridId(pg, sec) {
+    if (sec === 'instagram') return 'bridal-ig-grid';
+    if (sec === 'profile')   return 'about-profile-grid';
+    if (sec === 'gallery')   return pg + '-gallery-grid';
+    // home bento tabs
+    if (sec === 'bridal_card' || sec === 'party_card' || sec === 'skin_card' || sec === 'hero_bg') return 'home-gallery-grid';
+    return pg + '-' + sec + '-grid';
+  }
+
   function next(i) {
     if (i >= arr.length) {
       if (done > 0) {
         loadStats();
-        // Reload correct grid
-        var gridId = page+'-gallery-grid';
-        if (section==='instagram') gridId = 'bridal-ig-grid';
-        if (section==='profile')   gridId = 'about-profile-grid';
-        if (section.indexOf('_card')>-1||section==='hero_bg') gridId = 'home-gallery-grid';
-        loadGrid(page, section, gridId);
+        loadGrid(page, section, resolveGridId(page, section));
       }
       if (inputEl) inputEl.value = '';
       return;
@@ -724,7 +975,7 @@ function uploadGallery(page, section, files, inputEl) {
 }
 
 // ══════════════════════════════════════════════════
-// UPLOAD — SINGLE (before or after)
+// UPLOAD — SINGLE (before / after)
 // ══════════════════════════════════════════════════
 function uploadSingle(page, section, type, inputEl) {
   var files = inputEl.files;
@@ -736,13 +987,11 @@ function uploadSingle(page, section, type, inputEl) {
   var path = page+'/'+section+'/'+type+'_'+Date.now()+'_'+safe;
   toast('Uploading '+type+' image…');
   uploadFile(file, path).then(function(url){
-    // alt_text stores "before" or "after" so loader knows which is which
     return insertImage(page, section, url, path, type);
   }).then(function(){
     toast(type.charAt(0).toUpperCase()+type.slice(1)+' image uploaded ✓','success');
     loadStats();
-    var gridId = page+'-ba-grid';
-    loadGrid(page, section, gridId);
+    loadGrid(page, section, page+'-ba-grid');
     inputEl.value='';
   }).catch(function(e){
     toast('Failed: '+e.message,'error');
@@ -758,14 +1007,14 @@ function loadGrid(page, section, gridId) {
   if (!supaUrl) { grid.innerHTML='<div class="empty">Configure Supabase first.</div>'; return; }
   grid.innerHTML='<div class="empty">Loading…</div>';
   getImages(page, section).then(function(rows){
-    if (!rows.length) { grid.innerHTML='<div class="empty">No images yet. Upload one above!</div>'; return; }
+    if (!rows||!rows.length) { grid.innerHTML='<div class="empty">No images yet. Upload one above!</div>'; return; }
     var html = '';
     rows.forEach(function(r){
       var label = r.alt_text ? r.alt_text : '';
       html += '<div class="img-item" id="ii-'+r.id+'">';
-      html += '<img src="'+r.url+'" alt="'+label+'" loading="lazy">';
+      html += '<img src="'+r.url+'" alt="'+esc(label)+'" loading="lazy">';
       html += '<div class="img-overlay"><button class="img-del" onclick="delImg('+r.id+',\''+escQ(r.storage_path||'')+'\',\''+page+'\',\''+section+'\',\''+gridId+'\')">🗑 Delete</button></div>';
-      if (label) html += '<div class="img-caption">'+label+'</div>';
+      if (label) html += '<div class="img-caption">'+esc(label)+'</div>';
       html += '</div>';
     });
     grid.innerHTML = html;
@@ -774,7 +1023,8 @@ function loadGrid(page, section, gridId) {
   });
 }
 
-function escQ(s){ return s.replace(/'/g,"\\'"); }
+function escQ(s){ return String(s).replace(/\\/g,'\\\\').replace(/'/g,"\\'"); }
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
 function delImg(id, path, page, section, gridId) {
   if (!confirm('Delete this image?')) return;
@@ -860,23 +1110,173 @@ function loadStats() {
     dbFetch('/rest/v1/gp_gallery?select=id'),
     dbFetch('/rest/v1/gp_gallery?page=eq.bridal&select=id'),
     dbFetch('/rest/v1/gp_gallery?page=eq.party&select=id'),
-    dbFetch('/rest/v1/gp_gallery?page=eq.skincare&select=id'),
+    dbFetch('/rest/v1/gp_bookings?select=id'),
     dbFetch('/rest/v1/gp_gallery?order=created_at.desc&limit=6&select=*')
   ]).then(function(r){
-    document.getElementById('s-total').textContent  = r[0].length||0;
-    document.getElementById('s-bridal').textContent = r[1].length||0;
-    document.getElementById('s-party').textContent  = r[2].length||0;
-    document.getElementById('s-skin').textContent   = r[3].length||0;
-    var recent = r[4];
+    document.getElementById('s-total').textContent  = (r[0]||[]).length;
+    document.getElementById('s-bridal').textContent = (r[1]||[]).length;
+    document.getElementById('s-party').textContent  = (r[2]||[]).length;
+    document.getElementById('s-bookings').textContent = (r[3]||[]).length;
+    var recent = r[4] || [];
     var rg = document.getElementById('recent-grid');
     if (!recent.length) { rg.innerHTML='<div class="empty">No images yet.</div>'; return; }
     var html='<div class="img-grid">';
     recent.forEach(function(im){
-      html+='<div class="img-item"><img src="'+im.url+'" loading="lazy"><div class="img-caption">'+im.page+' / '+im.section+'</div></div>';
+      html+='<div class="img-item"><img src="'+im.url+'" loading="lazy"><div class="img-caption">'+esc(im.page)+' / '+esc(im.section)+'</div></div>';
     });
     html+='</div>';
     rg.innerHTML=html;
   }).catch(function(){});
+}
+
+// ══════════════════════════════════════════════════
+// BOOKINGS
+// ══════════════════════════════════════════════════
+function loadBookings() {
+  if (!supaUrl) {
+    document.getElementById('bk-tbody').innerHTML='<tr><td colspan="9" class="empty">Configure Supabase first.</td></tr>';
+    return;
+  }
+  document.getElementById('bk-tbody').innerHTML='<tr><td colspan="9" class="empty">Loading…</td></tr>';
+  dbFetch('/rest/v1/gp_bookings?order=created_at.desc&select=*').then(function(rows){
+    allBookings = rows || [];
+    bkPage = 1;
+    renderBookings();
+  }).catch(function(e){
+    document.getElementById('bk-tbody').innerHTML='<tr><td colspan="9" class="empty">Error: '+esc(e.message)+'</td></tr>';
+  });
+}
+
+function filterBookings() {
+  bkPage = 1;
+  renderBookings();
+}
+
+function renderBookings() {
+  var search = (document.getElementById('bk-search').value || '').toLowerCase();
+  var statusF = document.getElementById('bk-status').value;
+  var serviceF = document.getElementById('bk-service').value;
+
+  var filtered = allBookings.filter(function(b){
+    var matchSearch = !search ||
+      (b.name||'').toLowerCase().indexOf(search) > -1 ||
+      (b.phone||'').toLowerCase().indexOf(search) > -1 ||
+      (b.note||'').toLowerCase().indexOf(search) > -1 ||
+      (b.service||'').toLowerCase().indexOf(search) > -1;
+    var matchStatus  = !statusF  || b.status === statusF;
+    var matchService = !serviceF || b.service === serviceF;
+    return matchSearch && matchStatus && matchService;
+  });
+
+  var total = filtered.length;
+  var totalPages = Math.max(1, Math.ceil(total / BK_PER_PAGE));
+  if (bkPage > totalPages) bkPage = totalPages;
+  var start = (bkPage - 1) * BK_PER_PAGE;
+  var paged = filtered.slice(start, start + BK_PER_PAGE);
+
+  var tbody = document.getElementById('bk-tbody');
+  if (!paged.length) {
+    tbody.innerHTML='<tr><td colspan="9" class="empty">No bookings found.</td></tr>';
+    document.getElementById('bk-count').textContent = '';
+    document.getElementById('bk-pagination').innerHTML = '';
+    return;
+  }
+
+  var SERVICE_LABELS = { bridal:'💍 Bridal', party:'🎉 Party', skincare:'🌿 Skin Care', other:'Other' };
+  var STATUS_CLASS   = { pending:'badge-pending', confirmed:'badge-confirmed', cancelled:'badge-cancelled', completed:'badge-completed' };
+
+  var html = '';
+  paged.forEach(function(b, idx){
+    var created = b.created_at ? new Date(b.created_at).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}) : '—';
+    var reqDate  = b.requested_date ? new Date(b.requested_date).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}) : '—';
+    var badge = STATUS_CLASS[b.status] || 'badge-pending';
+    var svcLabel = SERVICE_LABELS[b.service] || (b.service || '—');
+    html += '<tr>';
+    html += '<td style="color:var(--text-light)">'+(start+idx+1)+'</td>';
+    html += '<td><strong>'+esc(b.name||'—')+'</strong></td>';
+    html += '<td><a href="tel:'+esc(b.phone||'')+'" style="color:var(--gold-dark);text-decoration:none">'+esc(b.phone||'—')+'</a></td>';
+    html += '<td>'+esc(svcLabel)+'</td>';
+    html += '<td>'+reqDate+'</td>';
+    html += '<td><span class="badge '+badge+'">'+esc(b.status||'pending')+'</span></td>';
+    html += '<td><div class="booking-note" title="'+esc(b.note||'')+'">'+esc(b.note||'—')+'</div></td>';
+    html += '<td style="color:var(--text-light);font-size:0.72rem">'+created+'</td>';
+    html += '<td><div class="td-actions">';
+    if (b.status !== 'confirmed' && b.status !== 'completed') {
+      html += '<button class="td-btn td-btn-confirm" onclick="updateBookingStatus('+b.id+',\'confirmed\')">✓</button>';
+    }
+    if (b.status !== 'cancelled') {
+      html += '<button class="td-btn td-btn-cancel" onclick="updateBookingStatus('+b.id+',\'cancelled\')">✕</button>';
+    }
+    if (b.status !== 'completed') {
+      html += '<button class="td-btn td-btn-confirm" onclick="updateBookingStatus('+b.id+',\'completed\')" style="font-size:0.6rem">Done</button>';
+    }
+    html += '<button class="td-btn td-btn-del" onclick="deleteBooking('+b.id+')">🗑</button>';
+    html += '</div></td>';
+    html += '</tr>';
+  });
+  tbody.innerHTML = html;
+
+  // Pagination
+  document.getElementById('bk-count').textContent = total + ' booking' + (total!==1?'s':'');
+  var pagHtml = '';
+  pagHtml += '<button class="page-btn" onclick="bkGoPage('+(bkPage-1)+')" '+(bkPage<=1?'disabled':'')+'>‹</button>';
+  for (var i=1; i<=totalPages; i++) {
+    if (totalPages > 7 && (i>2 && i<bkPage-1)) { if(i===3) pagHtml+='<span style="color:var(--text-light);font-size:0.72rem">…</span>'; continue; }
+    if (totalPages > 7 && (i>bkPage+1 && i<totalPages-1)) { if(i===bkPage+2) pagHtml+='<span style="color:var(--text-light);font-size:0.72rem">…</span>'; continue; }
+    pagHtml += '<button class="page-btn'+(i===bkPage?' active':'')+'" onclick="bkGoPage('+i+')">'+i+'</button>';
+  }
+  pagHtml += '<button class="page-btn" onclick="bkGoPage('+(bkPage+1)+')" '+(bkPage>=totalPages?'disabled':'')+'>›</button>';
+  document.getElementById('bk-pagination').innerHTML = pagHtml;
+}
+
+function bkGoPage(p) {
+  bkPage = p;
+  renderBookings();
+}
+
+function updateBookingStatus(id, status) {
+  dbFetch('/rest/v1/gp_bookings?id=eq.'+id, {
+    method:'PATCH',
+    body:{ status:status }
+  }).then(function(){
+    toast('Status updated to '+status+' ✓','success');
+    // Update local allBookings so re-render is instant
+    allBookings.forEach(function(b){ if(b.id===id) b.status=status; });
+    renderBookings();
+    loadStats();
+  }).catch(function(e){ toast('Update failed: '+e.message,'error'); });
+}
+
+function deleteBooking(id) {
+  if (!confirm('Delete this booking record?')) return;
+  dbFetch('/rest/v1/gp_bookings?id=eq.'+id, { method:'DELETE', prefer:'' }).then(function(){
+    toast('Booking deleted','success');
+    allBookings = allBookings.filter(function(b){ return b.id !== id; });
+    renderBookings();
+    loadStats();
+  }).catch(function(e){ toast('Delete failed: '+e.message,'error'); });
+}
+
+function addBooking() {
+  if (!supaUrl) { toast('Configure Supabase first!','error'); return; }
+  var name  = document.getElementById('bk-name').value.trim();
+  var phone = document.getElementById('bk-phone').value.trim();
+  var svc   = document.getElementById('bk-svc').value;
+  var date  = document.getElementById('bk-date').value;
+  var stat  = document.getElementById('bk-stat').value;
+  var note  = document.getElementById('bk-note').value.trim();
+  if (!name||!phone) { toast('Name and phone are required','error'); return; }
+  dbFetch('/rest/v1/gp_bookings', {
+    method:'POST',
+    body:{ name:name, phone:phone, service:svc, requested_date:date||null, status:stat, note:note }
+  }).then(function(){
+    toast('Booking added ✓','success');
+    document.getElementById('bk-name').value='';
+    document.getElementById('bk-phone').value='';
+    document.getElementById('bk-date').value='';
+    document.getElementById('bk-note').value='';
+    loadBookings();
+  }).catch(function(e){ toast('Failed: '+e.message,'error'); });
 }
 
 // ══════════════════════════════════════════════════
@@ -885,33 +1285,48 @@ function loadStats() {
 function toast(msg, type) {
   var c = document.getElementById('toast');
   var el = document.createElement('div');
-  el.className='toast-item '+(type||'');
-  el.textContent=msg;
+  el.className = 'toast-item '+(type||'');
+  el.textContent = msg;
   c.appendChild(el);
   setTimeout(function(){
     el.style.opacity='0';
     el.style.transition='opacity 0.3s';
-    setTimeout(function(){ el.remove(); },300);
-  },3000);
+    setTimeout(function(){ if(el.parentNode) el.remove(); }, 300);
+  }, 3000);
 }
 
 // ══════════════════════════════════════════════════
-// DRAG & DROP
+// LOAD TEXT FOR A SPECIFIC PAGE INTO FORM FIELDS
 // ══════════════════════════════════════════════════
-document.querySelectorAll('.upload-zone,.ba-slot').forEach(function(z){
-  z.addEventListener('dragover',function(e){ e.preventDefault(); z.classList.add('drag'); });
-  z.addEventListener('dragleave',function(){ z.classList.remove('drag'); });
-  z.addEventListener('drop',function(e){
-    e.preventDefault(); z.classList.remove('drag');
-    var inp=z.querySelector('input[type=file]');
-    if (inp&&e.dataTransfer.files.length){
-      var dt=new DataTransfer();
-      Array.from(e.dataTransfer.files).forEach(function(f){ dt.items.add(f); });
-      inp.files=dt.files;
-      inp.dispatchEvent(new Event('change',{bubbles:true}));
-    }
+function loadPageText(page) {
+  dbFetch('/rest/v1/gp_content?page=eq.' + page + '&select=section,key,value').then(function(rows) {
+    if (!rows || !rows.length) return;
+    rows.forEach(function(r) {
+      var el = document.getElementById(page + '_' + r.section + '_' + r.key);
+      if (el && r.value !== null && r.value !== undefined) el.value = r.value;
+    });
+  }).catch(function() {});
+}
+
+// ══════════════════════════════════════════════════
+// DRAG & DROP (called after login)
+// ══════════════════════════════════════════════════
+function setupDragDrop() {
+  document.querySelectorAll('.upload-zone,.ba-slot').forEach(function(z){
+    z.addEventListener('dragover',function(e){ e.preventDefault(); z.classList.add('drag'); });
+    z.addEventListener('dragleave',function(){ z.classList.remove('drag'); });
+    z.addEventListener('drop',function(e){
+      e.preventDefault(); z.classList.remove('drag');
+      var inp = z.querySelector('input[type=file]');
+      if (inp && e.dataTransfer.files.length){
+        var dt = new DataTransfer();
+        Array.from(e.dataTransfer.files).forEach(function(f){ dt.items.add(f); });
+        inp.files = dt.files;
+        inp.dispatchEvent(new Event('change',{bubbles:true}));
+      }
+    });
   });
-});
+}
 </script>
 </body>
 </html>

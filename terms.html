@@ -366,5 +366,15 @@ const obs=new IntersectionObserver(e=>{e.forEach(en=>{if(en.isIntersecting){en.t
 revs.forEach(el=>obs.observe(el));
 
 </script>
+<script>
+// Dropdown hover fix
+(function(){
+  document.querySelectorAll(".nav-dropdown").forEach(function(dd){
+    var timer;
+    dd.addEventListener("mouseenter",function(){clearTimeout(timer);dd.classList.add("dd-open");});
+    dd.addEventListener("mouseleave",function(){timer=setTimeout(function(){dd.classList.remove("dd-open");},120);});
+  });
+})();
+</script>
 </body>
 </html>

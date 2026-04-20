@@ -332,7 +332,34 @@
     .journey-mobile{display:none !important}
     .journey-desktop{display:block !important}
   }
-  </style>
+  
+    /* ═══ UNIFIED CAROUSEL CSS ═══ */
+    .carousel-section{background:var(--cream);padding:5rem 0;overflow:hidden}
+    .carousel-hdr{text-align:center;margin-bottom:3rem}
+    .carousel-subtitle{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-style:italic;color:var(--text-light);margin-top:0.8rem;line-height:1.7}
+    .carousel-outer{position:relative;overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+    .carousel-track{display:flex;gap:1.4rem;width:max-content;animation:carousel-scroll 36s linear infinite}
+    .carousel-track:hover{animation-play-state:paused}
+    @keyframes carousel-scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+    .review-card{background:var(--white);border-radius:20px;padding:1.8rem;border:1px solid rgba(197,132,106,0.12);position:relative;overflow:hidden;transition:box-shadow 0.4s,transform 0.4s;width:340px;flex-shrink:0}
+    .review-card:hover{box-shadow:0 20px 44px rgba(0,0,0,0.09);transform:translateY(-2px)}
+    .review-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--blush-deep),var(--gold),var(--blush-deep))}
+    .review-quote-mark{position:absolute;top:0.8rem;right:1.2rem;font-family:'Bodoni Moda','Playfair Display',serif;font-size:4rem;color:rgba(201,168,76,0.08);line-height:1;pointer-events:none}
+    .review-stars{display:flex;gap:0.25rem;margin-bottom:0.8rem;color:var(--gold);font-size:0.9rem}
+    .review-text{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-style:italic;color:var(--text-mid);line-height:1.8;margin-bottom:1.3rem;position:relative;z-index:1}
+    .review-author{display:flex;align-items:center;gap:0.8rem}
+    .author-avatar{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:500;color:var(--white);flex-shrink:0}
+    .author-avatar.rose{background:linear-gradient(135deg,var(--rose-gold),var(--copper))}
+    .author-avatar.gold{background:linear-gradient(135deg,var(--gold-dark),var(--gold))}
+    .author-avatar.blush{background:linear-gradient(135deg,var(--blush-deep),var(--rose-gold))}
+    .author-avatar.copper{background:linear-gradient(135deg,var(--copper),var(--copper-light))}
+    .author-avatar.green{background:linear-gradient(135deg,#2D5A4A,#3D7A62)}
+    .author-name{font-size:0.88rem;font-weight:500;color:var(--text-dark);display:block}
+    .author-meta{font-size:0.72rem;color:var(--text-light);margin-top:0.15rem;display:block}
+    .carousel-cta-row{text-align:center;margin-top:2.5rem}
+    .carousel-cta-row a{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.76rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold-dark);border-bottom:1px solid rgba(201,168,76,0.3);padding-bottom:2px;transition:all 0.3s}
+    .carousel-cta-row a:hover{color:var(--copper);border-color:var(--copper)}
+</style>
   <meta name="description" content="Professional skin care treatments in Madurai — facials, clean-ups, de-tan, brightening & more. Glow Pavi's Makeover offers personalised skin care for every skin type.">
   <meta name="keywords" content="skin care Madurai, facial Madurai, clean-up Madurai, de-tan Madurai, skin brightening Madurai, best skin care salon Madurai">
   <meta name="robots" content="index, follow">
@@ -346,6 +373,7 @@
   <meta name="twitter:title" content="Skin Care Treatments in Madurai | Glow Pavi's Makeover">
   <meta name="twitter:description" content="Professional facials, clean-ups & brightening treatments in Madurai. Book your skin care session at Glow Pavi's Makeover.">
   <link rel="canonical" href="https://glowpavismakeover.com/skin-care.html">
+  <link rel="stylesheet" href="./shared.css">
 </head>
 <body>
 
@@ -885,6 +913,205 @@
 </section>
 
 <!-- FOOTER -->
+
+<!-- ===== BEFORE / AFTER ===== -->
+<section class="ba-section" id="transformation" aria-labelledby="ba-heading">
+  <div class="container">
+    <div class="ba-header reveal">
+      <div class="section-eyebrow" style="justify-content:center">
+        <div class="eyebrow-line"></div><span>Real Results</span><div class="eyebrow-line"></div>
+      </div>
+      <h2 class="section-title" id="ba-heading" style="text-align:center">Skin that speaks<br><em>for itself</em></h2>
+    </div>
+  </div>
+  <div class="ba-grid">
+    <article class="ba-card reveal">
+      <div class="ba-slider" data-pct="50">
+        <div class="ba-before-panel"><div class="ba-emoji-wrap">🌿</div></div>
+        <div class="ba-after-panel"><div class="ba-after-inner"><div class="ba-emoji-wrap">✨</div></div></div>
+        <div class="ba-handle">
+          <div class="ba-handle-line"></div>
+          <div class="ba-handle-circle"><span class="ba-handle-arrows">◀▶</span></div>
+          <div class="ba-handle-line"></div>
+        </div>
+        <div class="ba-labels"><span class="ba-lbl before">Before</span><span class="ba-lbl after">After</span></div>
+        <div class="ba-hint">Drag to reveal</div>
+      </div>
+      <div class="ba-body">
+        <div class="ba-occasion">Glow Facial</div>
+        <div class="ba-name">Kavitha P.</div>
+        <p class="ba-detail">Pre-Bridal Package · 4 sessions · Madurai</p>
+      </div>
+    </article>
+    <article class="ba-card reveal" style="transition-delay:0.12s">
+      <div class="ba-slider" data-pct="50">
+        <div class="ba-before-panel"><div class="ba-emoji-wrap">🌿</div></div>
+        <div class="ba-after-panel"><div class="ba-after-inner"><div class="ba-emoji-wrap">💫</div></div></div>
+        <div class="ba-handle">
+          <div class="ba-handle-line"></div>
+          <div class="ba-handle-circle"><span class="ba-handle-arrows">◀▶</span></div>
+          <div class="ba-handle-line"></div>
+        </div>
+        <div class="ba-labels"><span class="ba-lbl before">Before</span><span class="ba-lbl after">After</span></div>
+        <div class="ba-hint">Drag to reveal</div>
+      </div>
+      <div class="ba-body">
+        <div class="ba-occasion">Pigmentation Care</div>
+        <div class="ba-name">Lakshmi M.</div>
+        <p class="ba-detail">Pigmentation Treatment · 3 sessions · Madurai</p>
+      </div>
+    </article>
+    <article class="ba-card reveal" style="transition-delay:0.24s">
+      <div class="ba-slider" data-pct="50">
+        <div class="ba-before-panel"><div class="ba-emoji-wrap">🌿</div></div>
+        <div class="ba-after-panel"><div class="ba-after-inner"><div class="ba-emoji-wrap">🌸</div></div></div>
+        <div class="ba-handle">
+          <div class="ba-handle-line"></div>
+          <div class="ba-handle-circle"><span class="ba-handle-arrows">◀▶</span></div>
+          <div class="ba-handle-line"></div>
+        </div>
+        <div class="ba-labels"><span class="ba-lbl before">Before</span><span class="ba-lbl after">After</span></div>
+        <div class="ba-hint">Drag to reveal</div>
+      </div>
+      <div class="ba-body">
+        <div class="ba-occasion">Tan Removal</div>
+        <div class="ba-name">Nandhini B.</div>
+        <p class="ba-detail">Tan Removal + Brightening · Madurai</p>
+      </div>
+    </article>
+  </div>
+  <p class="ba-note reveal">Drag the slider to reveal the transformation. Real photos will replace placeholders — follow us on Instagram to see our latest skin results.</p>
+</section>
+
+<!-- ===== TESTIMONIALS CAROUSEL ===== -->
+<section class="carousel-section" id="reviews" aria-labelledby="reviews-heading">
+  <div class="container">
+    <div class="carousel-hdr reveal">
+      <div class="section-eyebrow" style="justify-content:center">
+        <div class="eyebrow-line"></div><span>Client Stories</span><div class="eyebrow-line"></div>
+      </div>
+      <h2 class="section-title" id="reviews-heading" style="text-align:center">Glowing skin,<br><em>glowing reviews</em></h2>
+      <p class="carousel-subtitle">Hear from clients whose skin journey transformed with Glow Pavi's care.</p>
+    </div>
+  </div>
+  <div class="carousel-outer" style="padding:0.5rem 0 2rem">
+    <div class="carousel-track">
+      <article class="review-card">
+        <div class="review-quote-mark">"</div>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"The pre-bridal glow sessions completely transformed my skin. By wedding day I barely needed foundation — my skin just glowed. Pavi's skin knowledge is extraordinary."</p>
+        <div class="review-author">
+          <div class="author-avatar green">KP</div>
+          <div><span class="author-name">Kavitha P.</span><span class="author-meta">Pre-Bridal Package · Madurai</span></div>
+        </div>
+      </article>
+      <article class="review-card">
+        <div class="review-quote-mark">"</div>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"I had stubborn pigmentation for years. After 3 sessions with Pavi, my skin tone evened out dramatically. I finally feel confident without makeup. Truly life-changing."</p>
+        <div class="review-author">
+          <div class="author-avatar gold">LM</div>
+          <div><span class="author-name">Lakshmi M.</span><span class="author-meta">Pigmentation Treatment · Madurai</span></div>
+        </div>
+      </article>
+      <article class="review-card">
+        <div class="review-quote-mark">"</div>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"My skin used to be so dull before events. The cleanup Pavi does is so thorough — I walked out literally glowing. Now I book a session before every major function."</p>
+        <div class="review-author">
+          <div class="author-avatar blush">SR</div>
+          <div><span class="author-name">Swathi R.</span><span class="author-meta">Deep Cleanup · Trichy</span></div>
+        </div>
+      </article>
+      <article class="review-card">
+        <div class="review-quote-mark">"</div>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Pavi recommended the right products for my oily skin and the glow facial is now my monthly ritual. My skin hasn't looked this healthy in years. Thank you!"</p>
+        <div class="review-author">
+          <div class="author-avatar rose">AM</div>
+          <div><span class="author-name">Archana M.</span><span class="author-meta">Monthly Facials · Madurai</span></div>
+        </div>
+      </article>
+      <article class="review-card">
+        <div class="review-quote-mark">"</div>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"I was sceptical about skin care but after my first session I was converted. Pavi explained every step and product. I finally understand my own skin. Highly recommended!"</p>
+        <div class="review-author">
+          <div class="author-avatar copper">DV</div>
+          <div><span class="author-name">Dharini V.</span><span class="author-meta">Skin Consultation · Madurai</span></div>
+        </div>
+      </article>
+      <article class="review-card">
+        <div class="review-quote-mark">"</div>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Pavi's tan removal treatment gave me back my natural glow after years of sun damage. The results after just two sessions were visible to everyone who knew me."</p>
+        <div class="review-author">
+          <div class="author-avatar green">NB</div>
+          <div><span class="author-name">Nandhini B.</span><span class="author-meta">Tan Removal · Madurai</span></div>
+        </div>
+      </article>
+      <!-- Duplicates for seamless loop -->
+      <article class="review-card">
+        <div class="review-quote-mark">"</div>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"The pre-bridal glow sessions completely transformed my skin. By wedding day I barely needed foundation — my skin just glowed. Pavi's skin knowledge is extraordinary."</p>
+        <div class="review-author">
+          <div class="author-avatar green">KP</div>
+          <div><span class="author-name">Kavitha P.</span><span class="author-meta">Pre-Bridal Package · Madurai</span></div>
+        </div>
+      </article>
+      <article class="review-card">
+        <div class="review-quote-mark">"</div>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"I had stubborn pigmentation for years. After 3 sessions with Pavi, my skin tone evened out dramatically. I finally feel confident without makeup. Truly life-changing."</p>
+        <div class="review-author">
+          <div class="author-avatar gold">LM</div>
+          <div><span class="author-name">Lakshmi M.</span><span class="author-meta">Pigmentation Treatment · Madurai</span></div>
+        </div>
+      </article>
+      <article class="review-card">
+        <div class="review-quote-mark">"</div>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"My skin used to be so dull before events. The cleanup Pavi does is so thorough — I walked out literally glowing. Now I book a session before every major function."</p>
+        <div class="review-author">
+          <div class="author-avatar blush">SR</div>
+          <div><span class="author-name">Swathi R.</span><span class="author-meta">Deep Cleanup · Trichy</span></div>
+        </div>
+      </article>
+      <article class="review-card">
+        <div class="review-quote-mark">"</div>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Pavi recommended the right products for my oily skin and the glow facial is now my monthly ritual. My skin hasn't looked this healthy in years. Thank you!"</p>
+        <div class="review-author">
+          <div class="author-avatar rose">AM</div>
+          <div><span class="author-name">Archana M.</span><span class="author-meta">Monthly Facials · Madurai</span></div>
+        </div>
+      </article>
+      <article class="review-card">
+        <div class="review-quote-mark">"</div>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"I was sceptical about skin care but after my first session I was converted. Pavi explained every step and product. I finally understand my own skin. Highly recommended!"</p>
+        <div class="review-author">
+          <div class="author-avatar copper">DV</div>
+          <div><span class="author-name">Dharini V.</span><span class="author-meta">Skin Consultation · Madurai</span></div>
+        </div>
+      </article>
+      <article class="review-card">
+        <div class="review-quote-mark">"</div>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Pavi's tan removal treatment gave me back my natural glow after years of sun damage. The results after just two sessions were visible to everyone who knew me."</p>
+        <div class="review-author">
+          <div class="author-avatar green">NB</div>
+          <div><span class="author-name">Nandhini B.</span><span class="author-meta">Tan Removal · Madurai</span></div>
+        </div>
+      </article>
+    </div>
+  </div>
+  <div class="carousel-cta-row">
+    <a href="https://www.instagram.com/glowpavis/" target="_blank" rel="noopener">See More on Instagram →</a>
+  </div>
+</section>
+
 <footer>
   <div class="footer-main">
     <div>
@@ -1022,7 +1249,36 @@ mobileNodes.forEach((n, i) => {
   mobileJObs.observe(n);
 });
 </script>
-<script src="./supabase-loader.js"></script>
+<script src="./supabase-loader.js">
+/* ═══ BEFORE/AFTER DRAG SLIDER ═══ */
+document.querySelectorAll('.ba-slider').forEach(function(slider){
+  var afterPanel=slider.querySelector('.ba-after-panel');
+  var afterInner=slider.querySelector('.ba-after-inner');
+  var handle=slider.querySelector('.ba-handle');
+  var card=slider.closest('.ba-card');
+  var pct=parseFloat(slider.dataset.pct)||50;
+  var dragging=false;
+  function setSlider(x){var rect=slider.getBoundingClientRect();pct=Math.min(100,Math.max(0,((x-rect.left)/rect.width)*100));if(afterPanel)afterPanel.style.width=pct+'%';if(afterInner)afterInner.style.minWidth=rect.width+'px';if(handle)handle.style.left=pct+'%';}
+  function initSlider(){var rect=slider.getBoundingClientRect();if(afterPanel)afterPanel.style.width=pct+'%';if(afterInner)afterInner.style.minWidth=rect.width+'px';if(handle)handle.style.left=pct+'%';}
+  initSlider();window.addEventListener('resize',initSlider,{passive:true});
+  slider.addEventListener('mousedown',function(e){dragging=true;if(card)card.classList.add('dragging');setSlider(e.clientX);e.preventDefault();});
+  window.addEventListener('mousemove',function(e){if(dragging)setSlider(e.clientX);});
+  window.addEventListener('mouseup',function(){dragging=false;if(card)card.classList.remove('dragging');});
+  slider.addEventListener('touchstart',function(e){dragging=true;if(card)card.classList.add('dragging');setSlider(e.touches[0].clientX);},{passive:true});
+  slider.addEventListener('touchmove',function(e){if(dragging){setSlider(e.touches[0].clientX);e.preventDefault();}},{passive:false});
+  slider.addEventListener('touchend',function(){dragging=false;if(card)card.classList.remove('dragging');});
+});
+</script>
 
+<script>
+// Dropdown hover fix
+(function(){
+  document.querySelectorAll(".nav-dropdown").forEach(function(dd){
+    var timer;
+    dd.addEventListener("mouseenter",function(){clearTimeout(timer);dd.classList.add("dd-open");});
+    dd.addEventListener("mouseleave",function(){timer=setTimeout(function(){dd.classList.remove("dd-open");},120);});
+  });
+})();
+</script>
 </body>
 </html>

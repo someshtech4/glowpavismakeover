@@ -562,5 +562,15 @@ function searchFAQ(query) {
   document.getElementById('noResults').style.display = totalVisible === 0 ? 'block' : 'none';
 }
 </script>
+<script>
+// Dropdown hover fix
+(function(){
+  document.querySelectorAll(".nav-dropdown").forEach(function(dd){
+    var timer;
+    dd.addEventListener("mouseenter",function(){clearTimeout(timer);dd.classList.add("dd-open");});
+    dd.addEventListener("mouseleave",function(){timer=setTimeout(function(){dd.classList.remove("dd-open");},120);});
+  });
+})();
+</script>
 </body>
 </html>
